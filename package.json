@@ -1,0 +1,29 @@
+{
+  "name": "clinica_escola",
+  "version": "1.0.0",
+  "description": "Projeto de conclusão de curso, software desenvolvido para clinica escola",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AllisonSBahls/tcc-clinicaescola.git"
+  },
+  "author": "Allison Sousa Bahls",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AllisonSBahls/tcc-clinicaescola/issues"
+  },
+  "homepage": "https://github.com/AllisonSBahls/tcc-clinicaescola#readme",
+  "dependencies": {
+    "consign": "^0.1.6",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.1",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui": "^3.23.5",
+    "swagger-ui-dist": "^3.23.5"
+  }
+}
