@@ -1,0 +1,73 @@
+paths:
+  /supervisores:
+    get:
+      tags:
+      - Supervisor
+      summary: Listar todos os supervisor da clinica
+      produces:
+      - application/json
+      responses:
+        405:
+          description: Invalid input
+        200:
+          description: Listagem dos supervisores cadastradas
+
+  /supervisor/create:
+    post:
+      tags:
+        - Supervisor
+      summary: Cadastra um novo supervisor a clinica
+      produces:
+        - applicaton/json
+      parameters:
+        - name: id
+          description: Supervisor Object
+          in: body
+      responses:
+        200:
+          description: Cadastrado com sucesso
+  /supervisor/updade/{id}:
+    put:
+      tags:
+        - Supervisor
+      summary: Alterar os dados de um supervisor cadastrado
+      produces:
+        - applicaton/json
+      parameters:
+        - name: id
+          description: Supervisor id
+          in: path
+          require: true
+      responses:
+        200:
+          description: Alterado com sucesso
+  /supervisor/delete/{id}:
+      delete:
+        tags:
+          - Supervisor
+        summary: Deletar um supervisor cadastrado
+        produces:
+          - applicaton/json
+        parameters:
+          - name: id
+            description: Supervisor id
+            require: true
+            in: path
+        responses:
+          200:
+            description: Deletado com sucesso
+  /supervisor/find/{id}:
+      get:
+        tags:
+          - Supervisor
+        summary: Retornar os dados de apenas um supervisor já cadastrado
+        produces:
+          - applicaton/json
+        parameters:
+          - name: id
+            description: Supervisor id
+            require: true
+            in: path
+        responses:
+          200:
+            description: Listado com sucesso 
