@@ -1,70 +1,70 @@
 paths:
-  /supervisores:
+  /agendamento:
     get:
       tags:
-      - Supervisor
-      summary: Listar todos os supervisor da clinica
+      - Agendamento 
+      summary: Listar todas as consultas marcadas de acordo com o dia
       produces:
       - application/json
       responses:
         405:
-          description: Invalid input
+          description: Entrada invalida
         200:
-          description: Listagem dos supervisores cadastradas
+          description: Array das consultas marcadas
 
-  /supervisor/create:
+  /andemaneto/agendar:
     post:
       tags:
-        - Supervisor
-      summary: Cadastra um novo supervisor a clinica
+        - Agenda
+      summary: Agendar uma nova consulta para o paciente
       produces:
         - applicaton/json
       parameters:
-        - name: id
-          description: Supervisor Object
+        - name: Consultas
+          description: Consultas Object
           in: body
       responses:
         200:
-          description: Cadastrado com sucesso
-  /supervisor/updade/{id}:
+          description: Consulta marcada com sucesso
+  /consulta/updade/{idConsulta}:
     put:
       tags:
-        - Supervisor
-      summary: Alterar os dados de um supervisor cadastrado
+        - Consulta
+      summary: Alterar os dados de uma consulta cadastrado
       produces:
         - applicaton/json
       parameters:
-        - name: id
-          description: Supervisor id
+        - name: idConsulta
+          description: Consulta id
           in: path
           require: true
       responses:
         200:
           description: Alterado com sucesso
-  /supervisor/delete/{id}:
-      delete:
+  /consulta/cancel/{idConsulta}:
+      put:
         tags:
-          - Supervisor
-        summary: Deletar um supervisor cadastrado
+          - Consulta
+        summary: Cancelar uma consulta cadastrada
         produces:
           - applicaton/json
         parameters:
-          - name: id
-            description: Supervisor id
+          - name: idConsulta
+            description: Consulta id
             require: true
             in: path
         responses:
           200:
-            description: Deletado com sucesso
-  /supervisor/find/{id}:
+            description: Cancelada com sucesso
+  /consulta/find/{idConsulta}:
       get:
         tags:
-          - Supervisor
-        summary: Retornar os dados de apenas um supervisor já cadastrado
+          - Consulta
+        summary: Retornar os dados de uma consulta marcada
         produces:
           - applicaton/json
         parameters:
-          - name: id
+          - name: idConsulta
             description: Supervisor id
             require: true
             in: path
