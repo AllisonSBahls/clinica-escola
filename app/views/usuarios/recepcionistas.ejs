@@ -44,18 +44,17 @@
 
 	    <div class="container">
 
-	    	<% if(noticias.length > 0) { %>
-	    		<% for(var i = 0; i < noticias.length; i++) {%>
+	    	<% if(recepcionistas.length > 0) { %>
+	    		<% for(var i = 0; i < recepcionistas.length; i++) {%>
 			    	<div class="row">
 			    		<div class="col-md-12">
 			    			<div class="noticia_wrapper">
-				    			<span class="noticia_autor"><%=noticias[i].autor%></span>
-				    			<a href="noticia?id_noticia=<%= noticias[i].id_noticia %>" class="noticia_titulo"><%=noticias[i].titulo%></a>
-				    			<span class="noticia_data"><%=noticias[i].data_noticia%></span>
-				    			<br />
-				    			<p class="noticia_resumo">
-				    				<%=noticias[i].noticia%>
-				    			</p>
+				    			<span class="noticia_autor"><%=recepcionistas[i].nomeRecepcionista%></span>
+				    			<a href="recepcionistas?idRecepcionista=<%= recepcionistas[i].idRecepcionista %>" class="noticia_titulo"><%=recepcionistas[i].emailRecepcionista%></a>
+				    			<span class="noticia_data"><%=recepcionistas[i].telefoneRecepcionista%></span>
+								<h1><%= recepcionistas[i].emailRecepcionista %></h1>
+								<br />
+								
 				    		</div>
 				    	</div>
 					</div>

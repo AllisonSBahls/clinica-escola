@@ -1,20 +1,20 @@
 module.exports = function (application) {
 
 	//Rota que retorna os usuários cadastrados
-	application.get('/recepcionistas', function (req, res) {
-		application.app.controllers.recepcionistas.recepcionistas(application, req, res);
+	application.get('/estagiarios', function (req, res) {
+		application.app.controllers.estagiarios.estagiarios(application, req, res);
 	});
 
 	//Rotas que leva a uma recepcionista
-	application.get('/recepcionista', function (req, res) {
-		application.app.controllers.recepcionistas.recepcionista(application, req, res);
+	application.get('/estagiario', function (req, res) {
+		application.app.controllers.estagiarios.estagiario(application, req, res);
 	});
 	//Rotas para inserir
-	application.post('/recepcionista/save', function (req, res) {
-		application.app.controllers.recepcionistas.recepcionista_save(application, req, res);
+	application.post('/estagiario/save', function (req, res) {
+		application.app.controllers.estagiarios.estagiario_save(application, req, res);
 	});
 	//Rotas que leva a uma recepcionista
-	application.get('/recepcionista/form_include_recep', function (req, res) {
-		application.app.controllers.recepcionistas.form_include_recep(application, req, res);
+	application.get('/estagiario/form_include_estag', function (req, res) {
+		application.app.controllers.estagiarios.form_include_estag(application, req, res);
 	});
 }

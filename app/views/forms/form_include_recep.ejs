@@ -1,85 +1,63 @@
 <!DOCTYPE HTML>
 <html lang="pt-br">
-	<head>
-		<meta charset="UTF-8">
 
-		<title>Portal de notícias</title>
-		
-		<!-- JQuery -->
-		<script src="js/jquery-2.2.1.js"></script>
+<head>
+	<meta charset="UTF-8">
 
-		<!-- bootstrap - link cdn -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	
-		<!-- incluindo css -->
-		<link href="css/style.css" rel="stylesheet">
+	<title>Portal de notícias</title>
 
-		<!-- favicon -->
-		<link rel="shortcut icon" href="images/favicon.ico" />
-	</head>
+	<!-- JQuery -->
+	<script src="js/jquery-2.2.1.js"></script>
 
-	<body>
+	<!-- bootstrap - link cdn -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-		<nav class="navbar navbar-default navbar-static-top">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					
-					<img src="images/logo.png" />
-				</div>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="index.html">HOME</a></li>
-					</ul>
-				</div>
+	<!-- incluindo css -->
+	<link href="css/style.css" rel="stylesheet">
+
+	<!-- favicon -->
+	<link rel="shortcut icon" href="images/favicon.ico" />
+</head>
+
+<body>		
+
+	<!-- Default form register -->
+	<form class="text-center border border-light p-5" action="/recepcionista/save" method="POST">
+
+		<p class="h4 mb-4">Registrar</p>
+
+		<div class="form-row mb-4">
+			<div class="col">
+				<!-- Nome -->
+				<input type="text" id="nomeRecepcionista" name="nomeRecepcionista"  class="form-control" placeholder="Nome Completo">
 			</div>
-		</nav>
+			<div class="col">
+				<!-- Last name -->
+				<input type="text" id="telefoneRecepcionista" name="telefoneRecepcionista" class="form-control" placeholder="Telefone">
+			</div>
+		</div>
 
+		<!-- E-mail -->
+		<input type="email" id="emailRecepcionista" name="emailRecepcionista" class="form-control mb-4" placeholder="E-mail">
 
-	    <div class="container">
-		
-	    	<div class="row">
-	    		<div class="col-md-12">
-	    			<form action="/noticias/salvar" method="post">
-						<div class="form-group">
-							<label for="titulo">Título:</label>
-							<input type="text" class="form-control" id="titulo" name="titulo">
-						</div>
+		<!-- Password -->
+		<input type="password" id="senha" name="senha" class="form-control" placeholder="Senha"
+			aria-describedby="defaultRegisterFormPasswordHelpBlock">
 
-						<div class="form-group">
-							<label for="pwd">Resumo:</label>
-							<input type="text" class="form-control" id="resumo" name="resumo">
-						</div>
-						
-						<div class="form-group">
-							<label for="pwd">Autor:</label>
-							<input type="text" class="form-control" id="autor" name="autor">
-						</div>
-
-						<div class="form-group">
-							<label for="pwd">Data:</label>
-							<input type="date" class="form-control" id="data_noticia" name="data_noticia">
-						</div>
-
-						<div class="form-group">
-							<label for="pwd">Notícia:</label>
-							<textarea class="form-control" id="noticia" name="noticia"></textarea>
-						</div>
-
-
-						<button type="submit" class="btn btn-default">Cadastrar</button>
-						</form>
-		    	</div>
-	    	</div>
-	    </div>
 	
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	
-	</body>
+		<!-- Sign up button -->
+		<button class="btn btn-info my-4 btn-block" type="submit">Confirmar</button>
+
+	</form>
+	<!-- Default form register -->
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+		crossorigin="anony	
+
+</body>
+
 </html>

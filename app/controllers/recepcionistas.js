@@ -16,19 +16,30 @@ module.exports.recepcionista = function(application, req, res){
 	recepcionistasModel.getRecepcionista(idRecepcionistas, function(error, result){
 		res.render("usuarios/recepcionista", {recepcionista : result})
 })
-
-module.exports.recepcionista_save = function(application, req, res){
-	var recepcionista = req.body;
-	res.render("forms/form_include_recep", {recepcionista : recepcionista});
-	
-	var connection = application.config.dbConnection();
-	var recepcionistasModel = new application.app.models.RecepcionistasDAO(connection);
-	recepcionistasModel.saveRecepcionista(recepcionista, function (error, result){
-		res.render("/recepcionistas");
-	});	
 }
 
-module.exports.formulario_inclusao_noticia = function(application, req, res){
+module.exports.form_include_recep = function(application, req, res){
 	res.render("forms/form_include_recep", {recepcionista : {}});
 }
+
+module.exports.recepcionista_save = function(application, req, res){
+	var recepcionista = req.body;	
+	var connection = application.config.dbConnection();
+	var recepcionistasModel = new application.app.models.RecepcionistasDAO(connection);
+	
+	recepcionistasModel.saveRecepcionista(recepcionista, function (error, result){
+		res.redirect('/recepcionistas');
+	});
 }
+
+module.exports.recepcionista_delete = function(application, req, res){
+	var idRecepcionista = req.body;
+	var connection = application.config.dbConnection();
+	var recepcionistaModel = new application.app.models.RecepcionistasDAO(connection);
+
+	recepcionistaModel.deleteRecepcionista(idRecepcionista, function(req, res){
+		res.render("")
+	});
+}
+
+
