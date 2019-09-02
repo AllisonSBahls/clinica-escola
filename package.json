@@ -22,7 +22,8 @@
     "express": "^4.17.1",
     "mysql": "^2.17.1",
     "nodemon": "^1.19.1",
-    "swagger": "^0.7.5",
-    "swagger-jsdoc": "^3.4.0"
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui": "^3.23.5",
+    "swagger-ui-dist": "^3.23.5"
   }
 }

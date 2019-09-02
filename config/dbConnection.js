@@ -4,8 +4,8 @@ var connMysql = function(){
     return connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: '',
-        database: 'clinicaescola'
+        password: 'root',
+        database: 'dbclinica'
     });
 }
 
