@@ -14,7 +14,7 @@ module.exports = function (application) {
 		application.app.controllers.supervisores.supervisor_save(application, req, res);
 	});
 	//Rotas que leva a uma recepcionista
-	application.get('/supervisor/form_include_superv', function (req, res) {
-		application.app.controllers.supervisores.form_include_superv(application, req, res);
+	application.get('/supervisor/adminsupervisor', function (req, res) {
+		application.app.controllers.supervisores.form_admin_superv(application, req, res);
 	});
 }

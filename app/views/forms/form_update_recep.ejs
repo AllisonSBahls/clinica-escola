@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Portal de notícias</title>
+
+    <!-- JQuery -->
+    <script src="js/jquery-2.2.1.js"></script>
+
+    <!-- bootstrap - link cdn -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- in<cluindo css -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico" />
+</head>
+
+<body>
+
+    <!-- Default form register -->
+    <form class="text-center border border-light p-5" action="/recepcionista/update" method="POST">
+
+        <p class="h4 mb-4">Registrar</p>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <!-- Nome -->
+                <input type="text" id="nomeRecepcionista" name="nomeRecepcionista" class="form-control"
+                    placeholder="Nome Completo" value="<%= recepcionista.nomeRecepcionista %>">
+            </div>
+            <div class="col">
+                <!-- Last name -->
+                <input type="text" id="telefoneRecepcionista" name="telefoneRecepcionista" class="form-control"
+                    placeholder="Telefone" value="<%= recepcionista.telefoneRecepcionista %>">
+            </div>
+        </div>
+
+        <!-- E-mail -->
+        <input type="email" id="emailRecepcionista" name="emailRecepcionista" class="form-control mb-4"
+            placeholder="E-mail" value="<%= recepcionista.emailRecepcionista %>">
+
+        <!-- Password -->
+        <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha"
+            aria-describedby="defaultRegisterFormPasswordHelpBlock">
+        <input type="hidden" name="idRecepcionista" value="<%= recepcionista.idRecepcionista %>">
+
+        <!-- Sign up button -->
+
+        <button class="btn btn-info my-4 btn-block" type="submit">Alterar</button>
+    </form>
+    <!-- Default form register -->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anony	
+
+</body>
+
+</html>

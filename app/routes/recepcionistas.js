@@ -1,5 +1,5 @@
 module.exports = function (application) {
-
+	
 	//Rota que retorna os usuários cadastrados
 	application.get('/recepcionistas', function (req, res) {
 		application.app.controllers.recepcionistas.recepcionistas(application, req, res);
@@ -9,7 +9,7 @@ module.exports = function (application) {
 	application.get('/recepcionista', function (req, res) {
 		application.app.controllers.recepcionistas.recepcionista(application, req, res);
 	});
-	
+
 	//Rotas para inserir
 	application.post('/recepcionista/save', function (req, res) {
 		application.app.controllers.recepcionistas.recepcionista_save(application, req, res);
@@ -21,12 +21,12 @@ module.exports = function (application) {
 	});
 
 	//Deletar
-	application.get('/recepcionista/delete', function(req, res){
+	application.get('/recepcionista/delete', function (req, res) {
 		application.app.controllers.recepcionistas.recepcionista_delete(application, req, res);
 	});
 
 	//Alterar
-
-	
-	
-};
+	application.post('/recepcionista/update', function (req, res, next) {
+		application.app.controllers.recepcionistas.recepcionista_update(application, req, res);
+	});
+}

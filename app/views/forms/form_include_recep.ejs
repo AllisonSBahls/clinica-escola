@@ -10,7 +10,8 @@
 	<script src="js/jquery-2.2.1.js"></script>
 
 	<!-- bootstrap - link cdn -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -22,41 +23,48 @@
 	<link rel="shortcut icon" href="images/favicon.ico" />
 </head>
 
-<body>		
+<body>
 
 	<!-- Default form register -->
-	<form class="text-center border border-light p-5" action="/recepcionista/save" method="POST">
+	<% if(recepcionista.idRecepcionista > 0) { %>
+	<form class="text-center border border-light p-5" action="/recepcionista/update" method="POST">
 
-		<p class="h4 mb-4">Registrar</p>
+		<p class="h4 mb-4">Alterar dados</p>
+		<% } else {%>
+		<form class="text-center border border-light p-5" action="/recepcionista/save" method="POST">
 
-		<div class="form-row mb-4">
-			<div class="col">
-				<!-- Nome -->
-				<input type="text" id="nomeRecepcionista" name="nomeRecepcionista"  class="form-control" placeholder="Nome Completo">
+			<p class="h4 mb-4">Registrar nova Recepcionista</p>
+			<% } %>
+			<div class="form-row mb-4">
+				<div class="col">
+					<!-- Nome -->
+					<input type="text" id="nomeRecepcionista" name="nomeRecepcionista" class="form-control"
+						placeholder="Nome Completo" value="<%= recepcionista.nomeRecepcionista %>">
+				</div>
+				<div class="col">
+					<!-- Last name -->
+					<input type="text" id="telefoneRecepcionista" name="telefoneRecepcionista" class="form-control"
+						placeholder="Telefone" value="<%= recepcionista.telefoneRecepcionista %>">
+				</div>
 			</div>
-			<div class="col">
-				<!-- Last name -->
-				<input type="text" id="telefoneRecepcionista" name="telefoneRecepcionista" class="form-control" placeholder="Telefone">
-			</div>
-		</div>
 
-		<!-- E-mail -->
-		<input type="email" id="emailRecepcionista" name="emailRecepcionista" class="form-control mb-4" placeholder="E-mail">
+			<!-- E-mail -->
+			<input type="email" id="emailRecepcionista" name="emailRecepcionista" class="form-control mb-4"
+				placeholder="E-mail" value="<%= recepcionista.emailRecepcionista %>">
 
-		<!-- Password -->
-		<input type="password" id="senha" name="senha" class="form-control" placeholder="Senha"
-			aria-describedby="defaultRegisterFormPasswordHelpBlock">
+			<!-- Password -->
+			<input type="password" id="senha" name="senha" class="form-control" placeholder="Senha"
+				aria-describedby="defaultRegisterFormPasswordHelpBlock">
+			<input type="hidden" value="<%= recepcionista.idRecepcionista %>">
 
-	
-		<!-- Sign up button -->
-		<button class="btn btn-info my-4 btn-block" type="submit">Confirmar</button>
+			<!-- Sign up button -->
+			<button class="btn btn-info my-4 btn-block" type="submit">Confirmar</button>
 
-	</form>
-	<!-- Default form register -->
+		</form>
+		<!-- Default form register -->
 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-		crossorigin="anony	
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+			integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anony	
 
 </body>
 
