@@ -11,9 +11,9 @@ module.exports.recepcionista = function(application, req, res){
 	var connection = application.config.dbConnection();
 	var recepcionistasModel = new application.app.models.RecepcionistasDAO(connection);
 	
-	var idRecepcionistas = req.query;
+	var idRecepcionista = req.query;
 
-	recepcionistasModel.getRecepcionista(idRecepcionistas, function(error, result){
+	recepcionistasModel.getRecepcionista(idRecepcionista, function(error, result){
 		res.render("usuarios/recepcionista", {recepcionista : result})
 })
 }
@@ -33,12 +33,13 @@ module.exports.recepcionista_save = function(application, req, res){
 }
 
 module.exports.recepcionista_delete = function(application, req, res){
-	var idRecepcionista = req.body;
 	var connection = application.config.dbConnection();
 	var recepcionistaModel = new application.app.models.RecepcionistasDAO(connection);
+	
+	var idRecepcionista = req.query;
 
-	recepcionistaModel.deleteRecepcionista(idRecepcionista, function(req, res){
-		res.render("")
+	recepcionistaModel.deleteRecepcionista(idRecepcionista, function(req, result){
+		res.redirect('/recepcionistas');
 	});
 }
 

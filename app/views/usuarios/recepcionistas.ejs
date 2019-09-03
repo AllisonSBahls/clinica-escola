@@ -50,11 +50,10 @@
 			    		<div class="col-md-12">
 			    			<div class="noticia_wrapper">
 				    			<span class="noticia_autor"><%=recepcionistas[i].nomeRecepcionista%></span>
-				    			<a href="recepcionistas?idRecepcionista=<%= recepcionistas[i].idRecepcionista %>" class="noticia_titulo"><%=recepcionistas[i].emailRecepcionista%></a>
-				    			<span class="noticia_data"><%=recepcionistas[i].telefoneRecepcionista%></span>
-								<h1><%= recepcionistas[i].emailRecepcionista %></h1>
+				    			<a href="recepcionista?idRecepcionista=<%= recepcionistas[i].idRecepcionista %>" class="noticia_titulo"><%=recepcionistas[i].emailRecepcionista%></a>
+								<span class="noticia_data"><%=recepcionistas[i].telefoneRecepcionista%></span>
+							    <a class="btn btn-danger delete" onclick="return confirm('Are You sure?')" href="recepcionista/delete?idRecepcionista=<%=recepcionistas[i].idRecepcionista%>">Delete</a>                       
 								<br />
-								
 				    		</div>
 				    	</div>
 					</div>

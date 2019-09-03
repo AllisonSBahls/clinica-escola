@@ -21,7 +21,7 @@ module.exports = function (application) {
 	});
 
 	//Deletar
-	application.delete('recepcionista/delete', function(req, res){
+	application.get('/recepcionista/delete', function(req, res){
 		application.app.controllers.recepcionistas.recepcionista_delete(application, req, res);
 	});
 
