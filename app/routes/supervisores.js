@@ -6,7 +6,7 @@ module.exports = function (application) {
 	});
 
 	//Rotas que leva a uma recepcionista
-	application.get('/supervisor', function (req, res) {
+	application.get('/supervisor/profile', function (req, res) {
 		application.app.controllers.supervisores.supervisor(application, req, res);
 	});
 	//Rotas para inserir
@@ -15,6 +15,17 @@ module.exports = function (application) {
 	});
 	//Rotas que leva a uma recepcionista
 	application.get('/supervisor/adminsupervisor', function (req, res) {
-		application.app.controllers.supervisores.form_admin_superv(application, req, res);
+		application.app.controllers.supervisores.form_admin_supervisor(application, req, res);
 	});
+
+	//Deletar
+	application.get('/supervisor/delete', function (req, res) {
+		application.app.controllers.supervisores.supervisor_delete(application, req, res);
+	});
+
+	//Alterar
+	application.post('/supervisor/update', function (req, res, next) {
+		application.app.controllers.supervisores.supervisor_update(application, req, res);
+	});
+
 }

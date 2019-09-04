@@ -6,7 +6,7 @@ module.exports = function (application) {
 	});
 
 	//Rotas que leva a uma recepcionista
-	application.get('/estagiario', function (req, res) {
+	application.get('/estagiario/profile', function (req, res) {
 		application.app.controllers.estagiarios.estagiario(application, req, res);
 	});
 	//Rotas para inserir
@@ -14,7 +14,18 @@ module.exports = function (application) {
 		application.app.controllers.estagiarios.estagiario_save(application, req, res);
 	});
 	//Rotas que leva a uma recepcionista
-	application.get('/estagiario/form_include_estag', function (req, res) {
-		application.app.controllers.estagiarios.form_include_estag(application, req, res);
+	application.get('/estagiario/adminestagiario', function (req, res) {
+		application.app.controllers.estagiarios.form_admin_estagiario(application, req, res);
 	});
+
+	//Deletar
+	application.get('/estagiario/delete', function (req, res) {
+		application.app.controllers.estagiarios.estagiario_delete(application, req, res);
+	});
+
+	//Alterar
+	application.post('/estagiario/update', function (req, res, next) {
+		application.app.controllers.estagiarios.estagiario_update(application, req, res);
+	});
+	
 }

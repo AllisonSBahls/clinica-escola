@@ -14,12 +14,12 @@ module.exports.recepcionista = function (application, req, res) {
 	var idRecepcionista = req.query;
 
 	recepcionistasModel.getRecepcionista(idRecepcionista, function (error, result) {
-		res.render("forms/form_update_recep", { recepcionista: result[0] })
+		res.render("forms/form_admin_recep", { recepcionista: result[0] })
 	})
 }
 
 module.exports.form_include_recep = function (application, req, res) {
-	res.render("forms/form_include_recep", { recepcionista: {} });
+	res.render("forms/form_admin_recep", { recepcionista: {} });
 }
 
 module.exports.recepcionista_save = function (application, req, res) {
