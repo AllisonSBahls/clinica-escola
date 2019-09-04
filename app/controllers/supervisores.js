@@ -1,9 +1,16 @@
+
+var moment = require('moment');
+
+exports.app = function(req, res) {
+	res.render('forms/form_admin_supervisor', { moment: moment });
+}
+
 module.exports.supervisores = function (application, req, res) {
 	var connection = application.config.dbConnection();
 	var supervisorModel = new application.app.models.SupervisoresDAO(connection);
 
 	supervisorModel.getSupervisores(function (error, result) {
-		res.render("usuarios/supervisores/supervisores", { supervisores: result });
+		res.render("users/supervisores", { supervisores: result });
 	});
 }
 
@@ -29,11 +36,11 @@ module.exports.supervisor_save = function (application, req, res) {
 	var supervisorModel = new application.app.models.SupervisoresDAO(connection);
 
 	supervisorModel.saveSupervisor(supervisor, function (error, result) {
-		res.redirect('/recepcionistas');
+		res.redirect('/supervisores');
 	});
 }
 
-module.exports.recepcionista_delete = function (application, req, res) {
+module.exports.supervisor_delete = function (application, req, res) {
 	var connection = application.config.dbConnection();
 	var supervisorModel = new application.app.models.SupervisoresDAO(connection);
 
@@ -44,10 +51,11 @@ module.exports.recepcionista_delete = function (application, req, res) {
 	});
 }
 
-module.exports.recepcionista_update = function (application, req, res) {
+module.exports.supervisor_update = function (application, req, res) {
 
 	var connection = application.config.dbConnection();
 	var supervisorModel = new application.app.models.SupervisoresDAO(connection);
+
 
 	supervisorModel.updateSupervisor(req.body.nomeSupervisor, req.body.emailSupervisor, req.body.telefoneSupervisor, req.body.idSupervisor, function (error, result) {
 		res.redirect('/supervisores');

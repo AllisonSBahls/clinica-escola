@@ -3,7 +3,7 @@ module.exports.recepcionistas = function (application, req, res) {
 	var recepcionistasModel = new application.app.models.RecepcionistasDAO(connection);
 
 	recepcionistasModel.getRecepcionistas(function (error, result) {
-		res.render("usuarios/recepcionistas", { recepcionistas: result });
+		res.render("users/recepcionistas", { recepcionistas: result });
 	});
 }
 

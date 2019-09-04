@@ -6,7 +6,7 @@ module.exports = function (application) {
 	});
 
 	//Rotas que leva a uma recepcionista
-	application.get('/paciente', function (req, res) {
+	application.get('/paciente/profile', function (req, res) {
 		application.app.controllers.pacientes.paciente(application, req, res);
 	});
 	//Rotas para inserir

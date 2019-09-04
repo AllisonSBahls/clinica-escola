@@ -6,7 +6,7 @@ module.exports = function (application) {
 	});
 
 	//Rotas que leva a uma recepcionista
-	application.get('/recepcionista', function (req, res) {
+	application.get('/recepcionista/profile', function (req, res) {
 		application.app.controllers.recepcionistas.recepcionista(application, req, res);
 	});
 
@@ -16,7 +16,7 @@ module.exports = function (application) {
 	});
 
 	//Rotas que leva a uma recepcionista
-	application.get('/recepcionista/form_include_recep', function (req, res) {
+	application.get('/recepcionista/adminrecepcionista', function (req, res) {
 		application.app.controllers.recepcionistas.form_include_recep(application, req, res);
 	});
 
