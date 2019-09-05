@@ -19,8 +19,8 @@ EstagiarioDAO.prototype.deleteEstagiario = function(idEstagiario, callback){
 
 }
 
-EstagiarioDAO.prototype.updateEstagiario = function(nomeEstagiario, emailEstagiario, telefoneEstagiario, periodo, idEstagiario, callback){
-	this._connection.query('update estagiarios set nomeEstagiario=?, emailEstagiario=?, telefoneEstagiario=? where idEstagiario = ?',[nomeEstagiario, emailEstagiario, telefoneEstagiario, idEstagiario], callback)
+EstagiarioDAO.prototype.updateEstagiario = function(nomeEstagiario, emailEstagiario, telefoneEstagiario, curso, periodo, idEstagiario, callback){
+	this._connection.query('update estagiarios set nomeEstagiario=?, emailEstagiario=?, telefoneEstagiario=?, curso=?, periodo=? where idEstagiario = ?',[nomeEstagiario, emailEstagiario, telefoneEstagiario, curso, periodo, idEstagiario], callback)
 }
 	
 

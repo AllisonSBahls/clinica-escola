@@ -109,8 +109,12 @@
                                                         data-placeholder="Selecione">
                                                         <% if (paciente.sexo == 1) {  %>
                                                         <option value="1">Feminino</option>
+                                                        <option value="2">Masculino</option>
+
                                                         <%  }else{ %>
                                                         <option value="2">Masculino</option>
+                                                        <option value="1">Feminino</option>
+
                                                         <% } %>
                                                     </select>
                                                 </div>
@@ -131,8 +135,8 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label">Data Nascimento</label>
                                                     <input type="date" id="dataNascimento" name="dataNascimento"
-                                                        class="form-control form-control-alternative"
-                                                        placeholder="Telefone" value="<%= paciente.dataNascimento %>">
+                                                        class="form-control form-control-alternative "
+                                                        placeholder="Data de Nascimento" value="<%= moment(paciente.dataNascimento).format('YYYY-MM-DD') %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">

@@ -1,3 +1,9 @@
+var moment = require('moment');
+module.exports.data = function(req, res) {
+    // send moment to your ejs
+    res.render('forms/form_admin_pacientes', { moment: moment });
+}
+
 module.exports.pacientes = function (application, req, res) {
 	var connection = application.config.dbConnection();
 	var pacientesModel = new application.app.models.PacientesDAO(connection);

@@ -3,7 +3,7 @@ module.exports.estagiarios = function (application, req, res) {
 	var estagiariosModel = new application.app.models.EstagiariosDAO(connection);
 
 	estagiariosModel.getEstagiarios(function (error, result) {
-		res.render("usuarios/estagiarios", { estagiarios: result });
+		res.render("users/estagiarios", { estagiarios: result });
 	});
 }
 
@@ -48,7 +48,7 @@ module.exports.estagiario_update = function (application, req, res) {
 	var connection = application.config.dbConnection();
 	var estagiariosModel = new application.app.models.EstagiariosDAO(connection);	
 	
-	estagiariosModel.updateEstagiario(req.body.nomeEstagiario, req.body.emailEstagiario, req.body.telefoneEstagiario, req.body.periodo, req.body.dataCadastrado, req.body.idEstagiario, function (error, result) {
+	estagiariosModel.updateEstagiario(req.body.nomeEstagiario, req.body.emailEstagiario, req.body.telefoneEstagiario, req.body.curso, req.body.periodo, req.body.idEstagiario, function (error, result) {
 		res.redirect('/estagiarios');
 	});
 }

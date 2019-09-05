@@ -2,5 +2,5 @@
   //  res.render("home/index");
 //}
 module.exports.home = function(application, req, res){
-	res.render("home/index");
+	res.render("home/login");
 }
