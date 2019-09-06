@@ -17,11 +17,14 @@
   },
   "homepage": "https://github.com/AllisonSBahls/tcc-clinicaescola#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "consign": "^0.1.6",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "mysql": "^2.17.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   }
 }

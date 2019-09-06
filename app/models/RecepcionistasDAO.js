@@ -23,6 +23,9 @@ RecepcionistaDAO.prototype.updateRecepcionista = function(nomeRecepcionista, ema
 	this._connection.query('update recepcionistas set nomeRecepcionista=?, emailRecepcionista=?, telefoneRecepcionista=? where idRecepcionista = ?',[nomeRecepcionista, emailRecepcionista, telefoneRecepcionista, idRecepcionista], callback)
 }
 	
+RecepcionistaDAO.prototype.verificarEmail = function(emailRecepcionista, callback){
+	this._connection.query('SELECT * FROM recepcionistas where emailRecepcionista=' + emailRecepcionista, callback)
+}
 module.exports = function(){
 	return RecepcionistaDAO;
 }

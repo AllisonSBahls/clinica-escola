@@ -54,5 +54,9 @@ module.exports.estagiario_update = function (application, req, res) {
 }
 
 
+module.exports.users_save = function(application, res, res){
+	
+}
+
 
 
