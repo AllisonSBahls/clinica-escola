@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<% include ../layout %>
+
+<body>
+    <!-- Sidenav -->
+    <% include ../partials/sidebar %>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <% include ../partials/navbar %>
+        <!-- Header -->
+        <% include ../partials/profile/header %>
+        <!-- Page content -->
+
+        <div class="container-fluid mt--7">
+            <div class="row">
+                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                </div>
+                <div class="col-xl-10 order-xl-w">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Recepcionista</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form action="/superisor/update/<%= master[0].id %>" method="POST">
+                                    <h6 class="heading-small text-muted mb-4">Informações da Recepcionista</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-username">Nome
+                                                        Completo</label>
+                                                    <input type="text" id="nomeRecepcionista" name="name"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Nome Completo"
+                                                        value="<%= master[0].name %>">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Contato</label>
+                                                    <input type="text" id="telefoneRecepcionista"
+                                                        name="phone"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Telefone"
+                                                        value="<%= master[0].phone %>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Endereço de
+                                                        E-mail</label>
+                                                    <input type="email" id="emailRecepcionista"
+                                                        name="email"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="E-mail"
+                                                        value="<%= master[0].email %>">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                        for="input-email">Permissoes</label>
+                                                    <% //if (permissoes.length > 0) { %>
+                                                    <input type="text" id="fkPermissoes" name="fkPermissoes"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="E-mail" value="<%= master[0].permissionID %>">
+                        
+                                                    <!-- <select class="form-control" name="permissionID" id="permissionID"
+														data-placeholder="Selecione">
+														<% //for (var i = 0; i < permissoes.length; i++) {  %>
+														<option value="<%= //permissoes[i].id %>"
+															selected="select"> <%=//permissoes[i].permissao  %>
+														</option>
+														<% //} %>
+													</select>
+
+                                                    <% //} %> -->
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-last-name">Data de
+                                                        Registro</label>
+                                                    <input type="text" id="dataRegistro" name="dataRegistro"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Registro" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-info"
+                                                        value="Alterar Senha"></input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4" />
+
+                                    <hr class="my-4" />
+                                    <input type="hidden" value="<%= master[0].id  %>"
+                                        id="idSupervisor" name="id">
+                                    <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <% include ../partials/footer %>
+
+        </div>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <% include ../partials/scripts %>
+
+</body>
+
+</html>
