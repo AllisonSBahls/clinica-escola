@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const permissao = require('./app/routes/permissao');
 const secretary = require('./app/routes/secretary');
 const master = require('./app/routes/master');
+const trainee = require('./app/routes/trainee');
+
 
 const app = express();
 
@@ -22,6 +24,7 @@ app.use(bodyParser.json());
 app.use('/permissao', permissao);
 app.use('/secretary', secretary);
 app.use('/supervisor', master);
+app.use('/estagiario', trainee);
 
 //Inicialização do Servidor
 app.listen(3000, function(){
