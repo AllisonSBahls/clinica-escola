@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<% include ../layout %>
+
+<body>
+    <!-- Sidenav -->
+    <% include ../partials/sidebar %>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <% include ../partials/navbar %>
+        <!-- Header -->
+        <% include ../partials/header %>
+        <!-- Page content -->
+        <div style="justify-content: center !important" class="row mt-4">
+            <div class="col-xl-11 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Supervisores</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Nome Completo</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(permissoes.length > 0 ) {%>
+                                    <% for (var i = 0; i < permissoes.length; i++) { %>
+                                <tr>
+                                    <th scope="row">
+                                        <%= permissoes[i].permissao %>
+                                    </th>
+                                    
+                                    <td>
+                                        <a class="btn btn-danger delete"
+                                            onclick="return confirm('Você confirma a exclusão?')"
+                                            href="permissao/delete/<%= permissoes[i].id %>">Excluir</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary primary"
+                                            href="permissao/profile/<%= permissoes[i].id %>">Alterar</a>
+                                    </td>
+
+
+                                    <% } %>
+                                    <% } %>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <% include ../partials/footer %>
+
+    </div>
+    </div>
+
+    <% include ../partials/scripts %>
+
+</body>
+
+</html>
