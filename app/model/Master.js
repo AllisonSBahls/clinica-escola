@@ -1,11 +1,32 @@
-const bd = require("./dbConnection");
 
 const bd = require('./dbConnection');
-const Master = bd.sequelize.define('Supervisors', {
-    name: {
-        type: bd.Sequelize.STRING,
-    },
-})
+const Permissao = require("./Permissoes");
 
-//Permissoes.sync({force: true})
-module.exports = Permissoes;
+const Master = bd.sequelize.define('supervisors', {
+    name: {
+        type: bd.Sequelize.STRING
+    },
+    email: {
+        type: bd.Sequelize.STRING
+    },
+    phone: {
+        type: bd.Sequelize.STRING
+    },
+    password: {
+        type: bd.Sequelize.STRING
+    },
+    permissionID: {
+        type: bd.Sequelize.INTEGER,
+        references: {
+            model: 'permissoes',
+            key: 'id',
+        }
+    }
+});
+
+//Permissao.belongsTo(Master);
+
+//Master.sync({force: true});
+
+
+module.exports = Master;
