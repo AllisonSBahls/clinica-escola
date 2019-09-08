@@ -6,7 +6,7 @@ class MasterController {
     form_admin_master(req, res) {
         Permission.findAll()
             .then(function (permissoes) {
-                res.render("forms/form_admin_master", { permissoes: permissoes })
+                res.render("forms/form_register_master", { permissoes: permissoes })
             });
     }
 
@@ -19,13 +19,13 @@ class MasterController {
             permissionID: req.body.permissionID
 
         }).then(function () {
-            res.redirect('/master');
+            res.redirect('/supervisor');
         }).catch(function (erro) {
             res.send("erro" + erro);
         })
     }
 
-    master(req, res) {
+    masters(req, res) {
         Master.findAll()
             .then(function (masters) { // a variavel dentro de permissoes recebera todas as informações da master
                 res.render("pages/master", { masters: masters })
@@ -36,7 +36,7 @@ class MasterController {
         Master.destroy({
             where: { 'id': req.params.id }
         }).then(function () {
-            res.redirect('/master');
+            res.redirect('/supervisor');
         }).catch(function (erro) {
             res.send("erro" + erro);
         })
@@ -67,7 +67,7 @@ class MasterController {
             },
             { where: { 'id': req.params.id } }
         ).then((master) => {
-            res.redirect("/master");
+            res.redirect("/supervisor");
         }).catch((erro) => {
             res.send("erro" + erro);
         })
