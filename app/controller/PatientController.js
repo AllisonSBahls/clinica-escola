@@ -5,11 +5,11 @@ const bcrypt = require("bcryptjs");
 class PatientController {
 
     form_admin_patient(req, res) {
-            Permission.findAll()
-                .then(function (permissoes) {
-                    res.render("forms/form_register_patient", {error: {}, permissoes: permissoes })
-                });
-}
+        Permission.findAll()
+            .then(function (permissoes) {
+                res.render("forms/form_register_patient", { error: {}, permissoes: permissoes })
+            });
+    }
 
     patient_register(req, res) {
 
@@ -20,17 +20,21 @@ class PatientController {
         if (error.length > 0) {
             Permission.findAll()
                 .then(function (permissoes) {
-                    res.render("forms/form_register_patient", {error: error, permissoes: permissoes })
+                    res.render("forms/form_register_patient", { error: error, permissoes: permissoes })
                 });
 
         } else {
+            var generateHash = function (password) {
+                return bcrypt.hash(password, bcrypt.genSalt(10), null);
+            };
+            var patientPassword = generateHash(req.body.password);
             Patient.create({
                 name: req.body.name,
                 email: req.body.email,
                 phone: req.body.phone,
                 dateBirth: req.body.dateBirth,
                 gender: req.body.gender,
-                password: req.body.password,
+                password: patientPassword,
                 NivelPermissaoId: req.body.NivelPermissaoId
             }).then(function () {
                 req.flash("sucess_msg", "Paciente Registrado com sucesso");
@@ -38,7 +42,9 @@ class PatientController {
             }).catch(function (erro) {
                 res.send("erro" + erro);
             })
+
         }
+
     }
 
     patients(req, res) {

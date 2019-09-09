@@ -1,31 +1,52 @@
 const LocalStrategy = require('passport-local').Strategy;
-const Patient = require('../app/model/Patient');
+const User = require('../app/model/User');
 const bcrypt = require('bcryptjs');
 
 module.exports = function (passport) {
-    passport.use('local-signin',
-        new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (email, password, done) => {
-            Patient.findAll ({
-                where: { email: email }
-            }).then((patient) => {
-                bcrypt.compare(patient.password, password, (err, isMatch) => {
-                    if (isMatch) {
-                        return done(null, patient);
-                    } else {
-                        console.log(password);
-                        console.log(Patient.password);
-                        return done(null, false, { message: 'Password incorrect' });
-                    }
-                });
-            });
-        })
-    );
 
-    passport.serializeUser(function (patient, done) {
-        done(null, patient);
+    passport.use('local-signin',
+        new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, function (req, email, password, done) {
+
+            var Users = User;
+            var isValidPassword = function (userpass, password) {
+                return bcrypt.compareSync(password, userpass);
+            }
+            User.findOne({ where: { email: email } }).then(function (user) {
+                if (!user) {
+                    return done(null, false, { message: 'Email não existe' });
+                }
+                if (!isValidPassword(user.password, password)) {
+                    return done(null, false, { message: 'Incorrect password.' });
+                } else {
+                    console.log('Acessado com sucesso')
+                    return done(null, user);
+                }
+            }).catch(function (err) {
+
+                console.log("Error:", err);
+
+                return done(null, false, { message: 'Something went wrong with your Signin' });
+            });
+        }
+        ));
+
+    passport.serializeUser(function (user, done) {
+        done(null, user.id);
     });
 
-    passport.deserializeUser(function(patient, done) {
-        done(null, patient);
-});
+
+    // used to deserialize the user
+    passport.deserializeUser(function (id, done) {
+        User.findOne({
+            where: {id: id}
+        }).then(function (user) {
+            if (user) {
+                done(null, user);
+            }
+            else {
+                done(user.errors, null);
+            }
+        });
+
+    });
 };

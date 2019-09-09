@@ -20,15 +20,11 @@ const Trainee = bd.sequelize.define('trainees', {
     },
     password: {
         type: bd.Sequelize.STRING
-    },
-    permissionID: {
-        type: bd.Sequelize.INTEGER,
-        references: {
-            model: 'permissoes',
-            key: 'id',
-        }
     }
+   
 });
+
+Trainee.belongsTo(Permissao, {as : 'NivelPermissao', foreingKey: {name: 'fk_permissao_estagiario'}});
 
 //Permissao.belongsTo(Trainee);
 

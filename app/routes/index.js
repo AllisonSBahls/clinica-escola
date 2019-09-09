@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 router.post('/login', passport.authenticate('local-signin', {
     successRedirect: '/paciente',
     failureRedirect: '/',
-    session: false
+    failureFlash: true
 }
 ));
 

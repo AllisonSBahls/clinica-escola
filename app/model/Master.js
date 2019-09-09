@@ -15,16 +15,11 @@ const Master = bd.sequelize.define('supervisors', {
     password: {
         type: bd.Sequelize.STRING
     },
-    permissionID: {
-        type: bd.Sequelize.INTEGER,
-        references: {
-            model: 'permissoes',
-            key: 'id',
-        }
-    }
 });
 
-//Permissao.belongsTo(Master);
+Master.belongsTo(Permissao, {as : 'NivelPermissao', foreingKey: {name: 'fk_permissao_master'}});
+
+
 
 //Master.sync({force: true});
 

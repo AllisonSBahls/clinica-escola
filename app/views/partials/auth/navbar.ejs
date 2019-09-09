@@ -37,6 +37,9 @@
             <span class="nav-link-inner--text">Register</span>
           </a>
         </li>
+        <% if (req.user) { %>
+          
+          <% }else{ %>
         <li class="nav-item">
           <a class="nav-link nav-link-icon" href="/login">
             <i class="ni ni-key-25"></i>
@@ -49,6 +52,7 @@
             <span class="nav-link-inner--text">Profile</span>
           </a>
         </li>
+      <%} %>
       </ul>
     </div>
   </div>

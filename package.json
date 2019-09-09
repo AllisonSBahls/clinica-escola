@@ -4,7 +4,8 @@
   "description": "Projeto Node.js Clininica Escola",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 100000",
+    "start": "node app.js"
   },
   "author": "Allison Sousa Bahls",
   "license": "ISC",
@@ -21,5 +22,10 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "sequelize": "^5.18.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0"
   }
 }

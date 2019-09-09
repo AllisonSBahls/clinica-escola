@@ -26,15 +26,6 @@ const Patient = bd.sequelize.define('patients', {
     password: {
         type: bd.Sequelize.STRING
     },
-},{
-    hooks:{
-        beforeCreate: patient => {
-            const salt = 10;
-            patient.set('password', bcrypt.hash(patient.password), salt);
-        }
-    },
-
-    
 });
 
 Patient.belongsTo(Permissao, {as : 'NivelPermissao', foreingKey: {name: 'fk_permissao_paciente'}});

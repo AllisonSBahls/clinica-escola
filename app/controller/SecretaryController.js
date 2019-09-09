@@ -1,32 +1,44 @@
 const Secretary = require('../model/Secretary');
 const Permission = require('../model/Permissoes');
-
+const User = require('../model/User');
+const bcrypt = require('bcryptjs')
 class SecretaryController {
 
     form_admin_secretary(req, res) {
-        Permission.findAll()
+        Permission.findAll({})
             .then(function (permissoes) {
                 res.render("forms/form_admin_secretary", { permissoes: permissoes })
             });
     }
 
     secretary_register(req, res) {
-        Secretary.create({
-            name: req.body.name,
+        var generateHash = function (password) {
+            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+        };
+        var patientPassword = generateHash(req.body.password);
+        User.create({
             email: req.body.email,
-            phone: req.body.phone,
-            password: req.body.password,
-            permissionID: req.body.permissionID
-
-        }).then(function () {
-            res.redirect('/secretary');
-        }).catch(function (erro) {
-            res.send("erro" + erro);
+            password: patientPassword,
+            permissionID: 2
+        }).then(function (user) {
+            Secretary.create({
+                name: req.body.name,
+                phone: req.body.phone,
+                userSecretaryId: user.id
+            }).then(function () {
+                res.redirect('/secretary');
+            }).catch(function (erro) {
+                res.send("erro" + erro);
+            })
         })
     }
 
     secretary(req, res) {
-        Secretary.findAll()
+        Secretary.findAll({
+            include: [{
+                model: User, as: 'userSecretary',
+            }],
+        })
             .then(function (secretaries) { // a variavel dentro de permissoes recebera todas as informações da secretary
                 res.render("pages/secretary", { secretaries: secretaries })
             });
