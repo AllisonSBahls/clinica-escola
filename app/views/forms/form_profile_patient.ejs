@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<% include ../layout %>
+
+<body>
+    <!-- Sidenav -->
+    <% include ../partials/sidebar %>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <% include ../partials/navbar %>
+        <!-- Header -->
+        <% include ../partials/profile/header %>
+        <!-- Page content -->
+
+        <div class="container-fluid mt--7">
+            
+            <div class="row">
+                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                </div>
+                <div class="col-xl-10 order-xl-w">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Supervisores</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form action="/paciente/update/<%= patient[0].id %>" method="POST">
+                                    <h6 class="heading-small text-muted mb-4">Informações da Recepcionista</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-username">Nome
+                                                        Completo</label>
+                                                    <input type="text" id="nomeRecepcionista" name="name"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Nome Completo"
+                                                        value="<%= patient[0].name %>">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Contato</label>
+                                                    <input type="text" id="telefoneRecepcionista"
+                                                        name="phone"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Telefone"
+                                                        value="<%= patient[0].phone %>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-username">Data de Nascimento</label>
+                                                <input type="date" id="datA" name="dateBirth"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="Curso"  value="<%= moment.utc(patient[0].dateBirth).format('YYYY-MM-DD') %>">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <% if (patient[0].id > 0) { %>
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Genero</label>
+                                                    <select class="form-control" name="genero" id="gender"
+                                                        data-placeholder="Selecione">
+                                                        <% if (patient[0].gender == 1) {  %>
+                                                        <option value="1">Feminino</option>
+                                                        <option value="2">Masculino</option>
+                                                        <%  }else{ %>
+                                                        <option value="2">Masculino</option>
+                                                        <option value="1">Feminino</option>
+
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                                
+                                                <% } %>
+
+                                        </div>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Endereço de
+                                                        E-mail</label>
+                                                    <input type="email" id="emailRecepcionista"
+                                                        name="email"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="E-mail"
+                                                        value="<%= patient[0].email %>">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                        for="input-email">Permissoes</label>
+                                                    <input type="text" id="fkPermissoes" name="fkPermissoes"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="E-mail" value="<%= patient[0].NivelPermissao.permissao %>">
+                        
+                                                
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-last-name">Data de
+                                                        Registro</label>
+                                                    <input type="text" id="dataRegistro" name="dataRegistro"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Registro" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-info"
+                                                        value="Alterar Senha"></input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4" />
+
+                                    <hr class="my-4" />
+                                    <input type="hidden" value="<%= patient[0].id  %>"
+                                        id="idSupervisor" name="id">
+                                    <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <% include ../partials/footer %>
+
+        </div>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <% include ../partials/scripts %>
+
+</body>
+
+</html>
