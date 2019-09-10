@@ -1,12 +1,8 @@
-
 const bd = require('./dbConnection');
-const Permissao = require("./Permissoes");
+const User = require('./User');
 
 const Trainee = bd.sequelize.define('trainees', {
     name: {
-        type: bd.Sequelize.STRING
-    },
-    email: {
         type: bd.Sequelize.STRING
     },
     phone: {
@@ -17,16 +13,11 @@ const Trainee = bd.sequelize.define('trainees', {
     },
     period: {
         type: bd.Sequelize.INTEGER
-    },
-    password: {
-        type: bd.Sequelize.STRING
-    }
-   
+    },   
 });
 
-Trainee.belongsTo(Permissao, {as : 'NivelPermissao', foreingKey: {name: 'fk_permissao_estagiario'}});
+Trainee.belongsTo(User, {as : 'userTrainee', foreingKey: {name: 'fk_user_trainee'}});
 
-//Permissao.belongsTo(Trainee);
 
 //Trainee.sync({force: true});
 

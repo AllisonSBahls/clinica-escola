@@ -55,6 +55,6 @@ app.use('/estagiario', trainee);
 app.use('/paciente', patient);
 
 //Inicialização do Servidor
-app.listen(3000, function(){
+app.listen(4000, function(){
 	console.log('Servidor ON');
 });

@@ -4,7 +4,7 @@ const router = express.Router();
 const PatientController = require('../controller/PatientController');
 const controller = new PatientController();
 
-router.post('/save', (req, res) =>{
+router.post('/save', async (req, res) =>{
     controller.patient_register(req, res)
 });
 

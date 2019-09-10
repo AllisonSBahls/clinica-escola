@@ -1,6 +1,7 @@
 const Master = require('../model/Master');
 const Permission = require('../model/Permissoes');
-
+const User = require('../model/User');
+const bcrypt = require('bcryptjs');
 class MasterController {
 
     form_admin_master(req, res) {
@@ -10,14 +11,26 @@ class MasterController {
             });
     }
 
-    master_register(req, res) {
+    async master_register(req, res) {
+
+        var generateHash = function (password) {
+            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+        };
+        var masterPassword = generateHash(req.body.password);
+
+        //Registrar o usuario do supervisor
+        const { email } = req.body;
+        const user = await User.create({
+            email: email,
+            password: masterPassword,
+            NivelPermissaoId: 1
+        });
+
+        //Registrar informações pessoais do supervisor
         Master.create({
             name: req.body.name,
-            email: req.body.email,
             phone: req.body.phone,
-            password: req.body.password,
-            permissionID: req.body.permissionID
-
+            userMasterId: user.id
         }).then(function () {
             res.redirect('/supervisor');
         }).catch(function (erro) {
@@ -26,8 +39,12 @@ class MasterController {
     }
 
     masters(req, res) {
-        Master.findAll()
-            .then(function (masters) { // a variavel dentro de permissoes recebera todas as informações da master
+        Master.findAll({
+            include: [{
+                model: User, as: 'userMaster'
+            }]
+        })
+            .then(function (masters) {
                 res.render("pages/master", { masters: masters })
             });
     }
@@ -43,36 +60,44 @@ class MasterController {
     }
 
     profileMaster(req, res) {
-        Permission.findAll().
-            then((permissoes) => {
-                Master.findAll({
-                    where: { 'id': req.params.id }
-                }).then((master) => {
-                    res.render("forms/form_profile_master", { master: master, permissoes: permissoes });
+        Master.findAll({
+            where: { 'id': req.params.id },
+            include: [{
+                model: User, as: 'userMaster',
+            },]
+        }).then((master) => {
+            res.render("forms/form_profile_master", { master: master });
 
-                })
-            }).catch((erro) => {
-                res.send("erro" + erro);
-            })
-
-    }
-
-    updateMaster(req, res) {
-        Master.update(
-            {
-                name: req.body.name,
-                email: req.body.email,
-                phone: req.body.phone,
-                permissionID: req.body.permissionID
-            },
-            { where: { 'id': req.params.id } }
-        ).then((master) => {
-            res.redirect("/supervisor");
         }).catch((erro) => {
             res.send("erro" + erro);
         })
     }
 
+
+    updateMaster(req, res) {
+        User.update({ 
+            email : req.body.email
+        },
+        {where: { id: req.params.idUser }}
+        ).then(function () {
+            res.redirect('/supervisor');
+        }).catch(function (erro) {
+            res.send("erro" + erro);
+        })
+
+
+        Master.update({
+            name: req.body.name,
+            phone: req.body.phone,
+            userMasterId: user.id
+        },
+        { where: { 'id': req.params.id } }
+        ).then(function () {
+            res.redirect('/supervisor');
+        }).catch(function (erro) {
+            res.send("erro" + erro);
+        })
+    }
 }
 
 module.exports = MasterController;

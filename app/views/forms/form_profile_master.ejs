@@ -59,21 +59,20 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-email">Endereço de
                                                         E-mail</label>
-                                                    <input type="email" id="emailRecepcionista"
+                                                    <input type="email" id="email"
                                                         name="email"
                                                         class="form-control form-control-alternative"
                                                         placeholder="E-mail"
-                                                        value="<%= master[0].email %>">
+                                                        value="<%= master[0].userMaster.email %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label"
-                                                        for="input-email">Permissoes</label>
-                                                    <% //if (permissoes.length > 0) { %>
+                                                        for="input-email">Permissão</label>
                                                     <input type="text" id="fkPermissoes" name="fkPermissoes"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="E-mail" value="<%= master[0].permissionID %>">
+                                                        placeholder="E-mail" value="Supervisor">
                         
                                                     <!-- <select class="form-control" name="permissionID" id="permissionID"
 														data-placeholder="Selecione">
@@ -99,7 +98,7 @@
                                                         Registro</label>
                                                     <input type="text" id="dataRegistro" name="dataRegistro"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Registro" value="">
+                                                        placeholder="Registro" value="<%= moment(master[0].createdAt).format('DD/MM/YYYY')  %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -113,8 +112,11 @@
                                     <hr class="my-4" />
 
                                     <hr class="my-4" />
+                                    <input type="hidden" value="<%= master[0].userMaster.id  %>"
+                                    id="idUser" name="idUser">
+                                
                                     <input type="hidden" value="<%= master[0].id  %>"
-                                        id="idSupervisor" name="id">
+                                        id="id" name="id">
                                     <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
                                 </form>
                         </div>

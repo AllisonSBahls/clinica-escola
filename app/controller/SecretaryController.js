@@ -15,6 +15,8 @@ class SecretaryController {
         var generateHash = function (password) {
             return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
         };
+
+        
         var patientPassword = generateHash(req.body.password);
         User.create({
             email: req.body.email,

@@ -1,6 +1,7 @@
 const Patient = require('../model/Patient');
 const Permission = require('../model/Permissoes');
 const bcrypt = require("bcryptjs");
+const User = require('../model/User');
 
 class PatientController {
 
@@ -11,7 +12,7 @@ class PatientController {
             });
     }
 
-    patient_register(req, res) {
+    async patient_register(req, res) {
 
         var error = []
         if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
@@ -24,18 +25,24 @@ class PatientController {
                 });
 
         } else {
+
             var generateHash = function (password) {
-                return bcrypt.hash(password, bcrypt.genSalt(10), null);
+                return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
             };
-            var patientPassword = generateHash(req.body.password);
+            var masterPassword = generateHash(req.body.password);
+    
+            //Registrar o usuario do paciente
+            const permission = 4;
+            const { email } = req.body;
+            const user = await User.create({ email, masterPassword, permission });
+            
+            //Registrar um novo usuário
             Patient.create({
                 name: req.body.name,
-                email: req.body.email,
                 phone: req.body.phone,
                 dateBirth: req.body.dateBirth,
                 gender: req.body.gender,
-                password: patientPassword,
-                NivelPermissaoId: req.body.NivelPermissaoId
+                userPatient: user.id
             }).then(function () {
                 req.flash("sucess_msg", "Paciente Registrado com sucesso");
                 res.redirect('/paciente');
@@ -48,8 +55,11 @@ class PatientController {
     }
 
     patients(req, res) {
-        Patient.findAll()
-            .then(function (patients) { // a variavel dentro de permissoes recebera todas as informações da patient
+        Patient.findAll({
+            include: [{
+                model: User, as: 'userPatient'
+            }]
+        }).then(function (patients) { // a variavel dentro de permissoes recebera todas as informações da patient
                 res.render("pages/patient", { patients: patients })
             });
     }
@@ -69,7 +79,7 @@ class PatientController {
         Patient.findAll({
             where: { 'id': req.params.id },
             include: [{
-                model: Permission, as: 'NivelPermissao',
+                model: USer, as: 'userPatient',
             }],
 
         }).then((patient) => {
@@ -86,12 +96,9 @@ class PatientController {
         Patient.update(
             {
                 name: req.body.name,
-                email: req.body.email,
                 phone: req.body.phone,
                 dateBirth: req.body.dateBirth,
                 gender: req.body.gender,
-                password: req.body.password,
-                fk_permissao_paciente: req.body.NivelPermissaoId
             },
             { where: { 'id': req.params.id } }
         ).then((patient) => {

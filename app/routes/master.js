@@ -4,7 +4,7 @@ const router = express.Router();
 const MasterController = require('../controller/MasterController');
 const controller = new MasterController();
 
-router.post('/save', (req, res) =>{
+router.post('/save', async (req, res) =>{
     controller.master_register(req, res)
 });
 
@@ -20,8 +20,8 @@ router.get('/delete/:id', (req, res) =>{
     controller.deleteMaster(req, res)
 });
 
-router.post('/update/:id', (req, res) =>{
-    controller.updateMaster(req, res)
+router.post('/update/:id', async (req, res) =>{
+    await controller.updateMaster(req, res)
 });
 
 

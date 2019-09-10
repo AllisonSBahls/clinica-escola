@@ -1,17 +1,8 @@
 const bd = require('./dbConnection');
-const Permissao = require("./Permissoes");
-const bcrypt = require("bcryptjs");
+const User = require("./User");
 
 const Patient = bd.sequelize.define('patients', {
-    id: {
-        autoIncrement: true,
-        primaryKey: true,
-        type: bd.Sequelize.INTEGER
-    },
     name: {
-        type: bd.Sequelize.STRING
-    },
-    email: {
         type: bd.Sequelize.STRING
     },
     phone: {
@@ -23,12 +14,9 @@ const Patient = bd.sequelize.define('patients', {
     gender: {
         type: bd.Sequelize.INTEGER
     },
-    password: {
-        type: bd.Sequelize.STRING
-    },
 });
 
-Patient.belongsTo(Permissao, {as : 'NivelPermissao', foreingKey: {name: 'fk_permissao_paciente'}});
+Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'}});
 
 
 //Patient.sync({force: true});

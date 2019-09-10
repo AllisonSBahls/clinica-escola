@@ -1,5 +1,4 @@
 const bd = require('./dbConnection');
-const Permissao = require("./Permissoes");
 const User = require('./User');
 
 const Secretary = bd.sequelize.define('secretaries', {
@@ -12,11 +11,8 @@ const Secretary = bd.sequelize.define('secretaries', {
     },
 });
 
-
 Secretary.belongsTo(User, {as : 'userSecretary', foreingKey: {name: 'fk_user_secretaria'}});
 
-
 //Secretary.sync({force: true});
-
 
 module.exports = Secretary;
