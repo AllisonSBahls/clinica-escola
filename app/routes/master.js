@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const {master} = require('../helpers/auth')
 const MasterController = require('../controller/MasterController');
 const controller = new MasterController();
 
@@ -25,7 +25,7 @@ router.post('/update/:id', async (req, res) =>{
 });
 
 
-router.get('/register', (req, res) =>{
+router.get('/register', master, (req, res) =>{
     controller.form_admin_master(req, res)
 });
 

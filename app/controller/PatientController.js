@@ -1,57 +1,50 @@
 const Patient = require('../model/Patient');
-const Permission = require('../model/Permissoes');
-const bcrypt = require("bcryptjs");
 const User = require('../model/User');
+const bcrypt = require('bcryptjs');
 
-class PatientController {
+class SecretaryController {
 
     form_admin_patient(req, res) {
-        Permission.findAll()
-            .then(function (permissoes) {
-                res.render("forms/form_register_patient", { error: {}, permissoes: permissoes })
-            });
+
+        res.render("forms/form_register_patient")
+
     }
 
     async patient_register(req, res) {
+        //Criptografa a Senha
+        var generateHash = function (password) {
+            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+        };
+        var secretaryPassword = generateHash(req.body.password);
 
-        var error = []
-        if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
-            error.push({ text: "Nome Inválido" })
-        }
-        if (error.length > 0) {
-            Permission.findAll()
-                .then(function (permissoes) {
-                    res.render("forms/form_register_patient", { error: error, permissoes: permissoes })
-                });
+        const { email, name, phone, dateBirth, gender } = req.body;
+        //Verificar Email Existente
+        const emailUser = await User.findAll({
+            where: { email: email }
+        })
 
+        if (emailUser.length > 0) {
+            console.log('email já existe')
+            res.redirect('/paciente')
         } else {
+            //Registrar o usuario do supervisor
+            const user = await User.create({
+                email: email,
+                password: secretaryPassword,
+                NivelPermissaoId: 4
+            });
 
-            var generateHash = function (password) {
-                return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-            };
-            var masterPassword = generateHash(req.body.password);
-    
-            //Registrar o usuario do paciente
-            const permission = 4;
-            const { email } = req.body;
-            const user = await User.create({ email, masterPassword, permission });
-            
-            //Registrar um novo usuário
+            //Registrar informações pessoais do supervisor
             Patient.create({
-                name: req.body.name,
-                phone: req.body.phone,
-                dateBirth: req.body.dateBirth,
-                gender: req.body.gender,
-                userPatient: user.id
+                name,
+                phone,
+                dateBirth,
+                gender,
+                userPatientId: user.id
             }).then(function () {
-                req.flash("sucess_msg", "Paciente Registrado com sucesso");
                 res.redirect('/paciente');
-            }).catch(function (erro) {
-                res.send("erro" + erro);
             })
-
         }
-
     }
 
     patients(req, res) {
@@ -59,9 +52,9 @@ class PatientController {
             include: [{
                 model: User, as: 'userPatient'
             }]
-        }).then(function (patients) { // a variavel dentro de permissoes recebera todas as informações da patient
-                res.render("pages/patient", { patients: patients })
-            });
+        }).then(function (patients) {
+            res.render("pages/patient", { patients: patients })
+        });
     }
 
     deletePatient(req, res) {
@@ -75,39 +68,36 @@ class PatientController {
     }
 
     profilePatient(req, res) {
-
         Patient.findAll({
             where: { 'id': req.params.id },
             include: [{
-                model: USer, as: 'userPatient',
-            }],
-
+                model: User, as: 'userPatient',
+            },]
         }).then((patient) => {
             res.render("forms/form_profile_patient", { patient: patient });
 
-
         }).catch((erro) => {
             res.send("erro" + erro);
         })
-
     }
+
 
     updatePatient(req, res) {
-        Patient.update(
-            {
-                name: req.body.name,
-                phone: req.body.phone,
-                dateBirth: req.body.dateBirth,
-                gender: req.body.gender,
-            },
-            { where: { 'id': req.params.id } }
-        ).then((patient) => {
-            res.redirect("/paciente");
-        }).catch((erro) => {
+        const { email, name, phone, dateBirth, gender } = req.body;
+
+        Patient.update({
+            name,
+            phone,
+            dateBirth,
+            gender
+        }, { where: { 'id': req.params.id } }
+        ).then(function () {
+            res.redirect('/paciente');
+        }).catch(function (erro) {
             res.send("erro" + erro);
         })
     }
-
 }
 
-module.exports = PatientController;
+
+module.exports = SecretaryController;

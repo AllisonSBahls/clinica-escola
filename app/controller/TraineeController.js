@@ -1,37 +1,60 @@
 const Trainee = require('../model/Trainee');
-const Permission = require('../model/Permissoes');
+const User = require('../model/User');
+const bcrypt = require('bcryptjs');
 
-class TraineeController {
+class SecretaryController {
 
     form_admin_trainee(req, res) {
-        Permission.findAll()
-            .then(function (permissoes) {
-                res.render("forms/form_register_trainee", { permissoes: permissoes })
-            });
+
+        res.render("forms/form_register_trainee")
+
     }
 
-    trainee_register(req, res) {
-        Trainee.create({
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: req.body.password,
-            course: req.body.course,
-            period: req.body.period,
-            permissionID: req.body.permissionID
+    async trainee_register(req, res) {
+        //Criptografa a Senha
+        var generateHash = function (password) {
+            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+        };
+        var secretaryPassword = generateHash(req.body.password);
 
-        }).then(function () {
-            res.redirect('/estagiario');
-        }).catch(function (erro) {
-            res.send("erro" + erro);
+        const { email, name, phone, course, period } = req.body;
+        //Verificar Email Existente
+        const emailUser = await User.findAll({
+            where: { email: email }
         })
+
+        if (emailUser.length > 0) {
+            console.log('email já existe')
+            res.redirect('/estagiario')
+        } else {
+            //Registrar o usuario do supervisor
+            const user = await User.create({
+                email: email,
+                password: secretaryPassword,
+                NivelPermissaoId: 3
+            });
+
+            //Registrar informações pessoais do supervisor
+            Trainee.create({
+                name,
+                phone,
+                course,
+                period,
+                userTraineeId: user.id
+            }).then(function () {
+                res.redirect('/estagiario');
+            })
+        }
     }
 
     trainees(req, res) {
-        Trainee.findAll()
-            .then(function (trainees) { // a variavel dentro de permissoes recebera todas as informações da trainee
-                res.render("pages/trainee", { trainees: trainees })
-            });
+        Trainee.findAll({
+            include: [{
+                model: User, as: 'userTrainee'
+            }]
+        }).then(function (trainees) {
+            res.render("pages/trainee", { trainees: trainees })
+        });
     }
 
     deleteTrainee(req, res) {
@@ -45,38 +68,36 @@ class TraineeController {
     }
 
     profileTrainee(req, res) {
-        Permission.findAll().
-            then((permissoes) => {
-                Trainee.findAll({
-                    where: { 'id': req.params.id }
-                }).then((trainee) => {
-                    res.render("forms/form_profile_trainee", { trainee: trainee, permissoes: permissoes });
+        Trainee.findAll({
+            where: { 'id': req.params.id },
+            include: [{
+                model: User, as: 'userTrainee',
+            },]
+        }).then((trainee) => {
+            res.render("forms/form_profile_trainee", { trainee: trainee });
 
-                })
-            }).catch((erro) => {
-                res.send("erro" + erro);
-            })
-
-    }
-
-    updateTrainee(req, res) {
-        Trainee.update(
-            {
-                name: req.body.name,
-                email: req.body.email,
-                phone: req.body.phone,
-                course: req.body.course,
-                period: req.body.period,
-                permissionID: req.body.permissionID
-            },
-            { where: { 'id': req.params.id } }
-        ).then((trainee) => {
-            res.redirect("/estagiario");
         }).catch((erro) => {
             res.send("erro" + erro);
         })
     }
 
+
+    updateTrainee(req, res) {
+        const { email, name, phone, period, course } = req.body;
+
+        Trainee.update({
+            name,
+            phone,
+            period,
+            course
+        }, { where: { 'id': req.params.id } }
+        ).then(function () {
+            res.redirect('/estagiario');
+        }).catch(function (erro) {
+            res.send("erro" + erro);
+        })
+    }
 }
 
-module.exports = TraineeController;
+
+module.exports = SecretaryController;

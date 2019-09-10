@@ -1,47 +1,62 @@
 const Secretary = require('../model/Secretary');
 const Permission = require('../model/Permissoes');
 const User = require('../model/User');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+
 class SecretaryController {
 
     form_admin_secretary(req, res) {
-        Permission.findAll({})
+        Permission.findAll()
             .then(function (permissoes) {
-                res.render("forms/form_admin_secretary", { permissoes: permissoes })
+                res.render("forms/form_register_secretary", { permissoes: permissoes })
             });
     }
 
-    secretary_register(req, res) {
+    async secretary_register(req, res) {
+
+        //Criptografa a Senha
         var generateHash = function (password) {
             return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
         };
+        var secretaryPassword = generateHash(req.body.password);
 
-        
-        var patientPassword = generateHash(req.body.password);
-        User.create({
-            email: req.body.email,
-            password: patientPassword,
-            permissionID: 2
-        }).then(function (user) {
+        const { email, name, phone } = req.body;
+        //Verificar Email Existente
+        const emailUser = await User.findAll({
+            where: { email: email }
+        })
+
+        if (emailUser.length > 0) {
+            console.log('email já existe')
+            res.redirect('/secretary')
+        } else {
+            //Registrar o usuario do supervisor
+            const user = await User.create({
+                email: email,
+                password: secretaryPassword,
+                NivelPermissaoId: 2
+            });
+
+            //Registrar informações pessoais do supervisor
             Secretary.create({
-                name: req.body.name,
-                phone: req.body.phone,
+                name,
+                phone,
                 userSecretaryId: user.id
             }).then(function () {
                 res.redirect('/secretary');
             }).catch(function (erro) {
                 res.send("erro" + erro);
             })
-        })
+        }
     }
 
-    secretary(req, res) {
+    secretaries(req, res) {
         Secretary.findAll({
             include: [{
-                model: User, as: 'userSecretary',
-            }],
+                model: User, as: 'userSecretary'
+            }]
         })
-            .then(function (secretaries) { // a variavel dentro de permissoes recebera todas as informações da secretary
+            .then(function (secretaries) {
                 res.render("pages/secretary", { secretaries: secretaries })
             });
     }
@@ -57,36 +72,45 @@ class SecretaryController {
     }
 
     profileSecretary(req, res) {
-        Permission.findAll().
-            then((permissoes) => {
-                Secretary.findAll({
-                    where: { 'id': req.params.id }
-                }).then((secretary) => {
-                    res.render("forms/form_profile_secretary", { secretary: secretary, permissoes: permissoes });
+        Secretary.findAll({
+            where: { 'id': req.params.id },
+            include: [{
+                model: User, as: 'userSecretary',
+            },]
+        }).then((secretary) => {
+            res.render("forms/form_profile_secretary", { secretary: secretary });
 
-                })
-            }).catch((erro) => {
-                res.send("erro" + erro);
-            })
-
-    }
-
-    updateSecretary(req, res) {
-        Secretary.update(
-            {
-                name: req.body.name,
-                email: req.body.email,
-                phone: req.body.phone,
-                permissionID: req.body.permissionID
-            },
-            { where: { 'id': req.params.id } }
-        ).then((secretary) => {
-            res.redirect("/secretary");
         }).catch((erro) => {
             res.send("erro" + erro);
         })
     }
 
+
+    updateSecretary(req, res) {
+        const { email, name, phone } = req.body;
+        // const emailUser = await User.findAll({
+        //     where: { email: email }
+        // })
+        // if (emailUser.length > 0) {
+        //     console.log('email já existe')
+        //     res.redirect('/secretary')
+        // } else {
+        //     User.update({
+        //         email,
+        //     },{where: { id: parseInt(req.body.idUser)}});
+
+        //Registrar informações pessoais do supervisor
+        Secretary.update({
+            name,
+            phone,
+        }, { where: { 'id': req.params.id } }
+        ).then(function () {
+            res.redirect('/secretary');
+        }).catch(function (erro) {
+            res.send("erro" + erro);
+        })
+    }
 }
+
 
 module.exports = SecretaryController;

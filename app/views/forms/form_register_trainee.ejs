@@ -22,7 +22,7 @@
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Supervisores</h3>
+                                    <h3 class="mb-0">Estagiários</h3>
                                 </div>
 
                             </div>
@@ -30,7 +30,7 @@
                         <div class="card-body">
 
                             <form action="/estagiario/save" method="POST">
-                                <h6 class="heading-small text-muted mb-4">Informações do Supervisor</h6>
+                                <h6 class="heading-small text-muted mb-4">Informações do Estagiario</h6>
                                 <div class="pl-lg-4">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -57,16 +57,14 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-username">Curso</label>
                                                 <input type="text" id="curso" name="course"
-                                                    class="form-control form-control-alternative"
-                                                    placeholder="Curso">
+                                                    class="form-control form-control-alternative" placeholder="Curso">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Periodo</label>
                                                 <input type="text" id="periodo" name="period"
-                                                    class="form-control form-control-alternative"
-                                                    placeholder="Periodo">
+                                                    class="form-control form-control-alternative" placeholder="Periodo">
                                             </div>
 
                                         </div>
@@ -80,31 +78,13 @@
                                                     class="form-control form-control-alternative" placeholder="E-mail">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-email">Permissoes</label>
-                                                <% if (permissoes.length > 0) { %>
-                                                <!-- <input type="text" id="fkPermissoes" name="fkPermissoes"
-                                                        class="form-control form-control-alternative"
-                                                        placeholder="E-mail" value="<%=// recepcionista.fkPermissoes %>">
-                         -->
-                                                <select class="form-control" name="permissionID" id="permissionID"
-                                                    data-placeholder="Selecione">
-                                                    <% for (var i = 0; i < permissoes.length; i++) {  %>
-                                                    <option value="<%= permissoes[i].id %>" selected="select">
-                                                        <%=permissoes[i].permissao  %>
-                                                    </option>
-                                                    <% } %>
-                                                </select>
-                                                <% } %>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Senha</label>
-                                                <input type="text" id="senha" name="password"
+                                                <input type="password" id="senha" name="password"
                                                     class="form-control form-control-alternative" placeholder="Senha"
                                                     value="">
                                             </div>

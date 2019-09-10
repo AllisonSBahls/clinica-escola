@@ -14,11 +14,6 @@
         <!-- Page content -->
 
         <div class="container-fluid mt--7">
-            <% if (error){ %>
-            <%   for(var i = 0; i < error.length; i++){ %>
-            <div class="alert alert-danger"><%= error[i].text %></div>
-            <% } %>
-            <% } %>
             <div class="row">
 
                 <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -94,21 +89,12 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="input-email">Permissoes</label>
-                                                <% if (permissoes.length > 0) { %>
-                                                <!-- <input type="text" id="fkPermissoes" name="fkPermissoes"
-                                                        class="form-control form-control-alternative"
-                                                        placeholder="E-mail" value="<%=// recepcionista.fkPermissoes %>">
-                         -->
-                                                <select class="form-control" name="NivelPermissaoId"
-                                                    id="NivelPermissaoId" data-placeholder="Selecione">
-                                                    <% for (var i = 0; i < permissoes.length; i++) {  %>
-                                                    <option value="<%= permissoes[i].id %>" selected="select">
-                                                        <%=permissoes[i].permissao  %>
-                                                    </option>
-                                                    <% } %>
-                                                </select>
-                                                <% } %>
+
+                                                <input type="text" id="fkPermissoes" name="fkPermissoes"
+                                                    class="form-control form-control-alternative" placeholder="E-mail"
+                                                    value="Recepcionista">
+
+
                                             </div>
                                         </div>
                                     </div>

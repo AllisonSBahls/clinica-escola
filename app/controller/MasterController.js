@@ -1,6 +1,5 @@
 const Master = require('../model/Master');
 const Permission = require('../model/Permissoes');
-const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 class MasterController {
 
@@ -13,31 +12,40 @@ class MasterController {
 
     async master_register(req, res) {
 
+        const { email, name, phone } = req.body;
+        //Verificar Email Existente
+        const emailUser = await User.findAll({
+            where: { email: email }
+        })
+
         var generateHash = function (password) {
             return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
         };
         var masterPassword = generateHash(req.body.password);
 
         //Registrar o usuario do supervisor
-        const { email } = req.body;
-        const user = await User.create({
-            email: email,
-            password: masterPassword,
-            NivelPermissaoId: 1
-        });
+        if (emailUser.length > 0) {
+            console.log('email já existe')
+            res.redirect('/supervisor/register')
 
-        //Registrar informações pessoais do supervisor
-        Master.create({
-            name: req.body.name,
-            phone: req.body.phone,
-            userMasterId: user.id
-        }).then(function () {
-            res.redirect('/supervisor');
-        }).catch(function (erro) {
-            res.send("erro" + erro);
-        })
+        } else {
+            const user = await User.create({
+                email,
+                password: masterPassword,
+                NivelPermissaoId: 1
+            });
+            //Registrar informações pessoais do supervisor
+            Master.create({
+                name,
+                phone,
+                userMasterId: user.id
+            }).then(function () {
+                res.redirect('/supervisor');
+            }).catch(function (erro) {
+                res.send("erro" + erro);
+            })
+        }
     }
-
     masters(req, res) {
         Master.findAll({
             include: [{
@@ -73,29 +81,19 @@ class MasterController {
         })
     }
 
-
     updateMaster(req, res) {
-        User.update({ 
-            email : req.body.email
-        },
-        {where: { id: req.params.idUser }}
-        ).then(function () {
-            res.redirect('/supervisor');
-        }).catch(function (erro) {
-            res.send("erro" + erro);
-        })
-
-
+        // const user = User.update({
+        //     email: req.body.email
+        // }, {
+        //     where: { id: parseInt(req.body.idUser) }
+        // });
         Master.update({
             name: req.body.name,
             phone: req.body.phone,
-            userMasterId: user.id
         },
-        { where: { 'id': req.params.id } }
+            { where: { 'id': req.params.id } }
         ).then(function () {
             res.redirect('/supervisor');
-        }).catch(function (erro) {
-            res.send("erro" + erro);
         })
     }
 }

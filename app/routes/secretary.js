@@ -1,5 +1,4 @@
 const express = require("express");
-const {secretary}= require("../helpers/secretary")
 const router = express.Router();
 
 const SecretaryController = require('../controller/SecretaryController');
@@ -10,7 +9,7 @@ router.post('/save', (req, res) =>{
 });
 
 router.get('/', (req, res) =>{
-    controller.secretary(req, res)
+    controller.secretaries(req, res)
 });
 
 router.get('/profile/:id', (req, res) =>{
@@ -26,7 +25,7 @@ router.post('/update/:id', (req, res) =>{
 });
 
 
-router.get('/register', secretary, (req, res) =>{
+router.get('/register', (req, res) =>{
     controller.form_admin_secretary(req, res)
 });
 

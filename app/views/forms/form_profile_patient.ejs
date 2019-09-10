@@ -94,7 +94,7 @@
                                                         name="email"
                                                         class="form-control form-control-alternative"
                                                         placeholder="E-mail"
-                                                        value="<%= patient[0].email %>">
+                                                        value="<%= patient[0].userPatient.email %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -103,7 +103,7 @@
                                                         for="input-email">Permissoes</label>
                                                     <input type="text" id="fkPermissoes" name="fkPermissoes"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="E-mail" value="<%= patient[0].NivelPermissao.permissao %>">
+                                                        placeholder="E-mail" value="Paciente">
                         
                                                 
                                                 </div>
@@ -120,7 +120,7 @@
                                                         Registro</label>
                                                     <input type="text" id="dataRegistro" name="dataRegistro"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Registro" value="">
+                                                        placeholder="Registro" value="<%= moment(patient[0].createdAt).format('DD/MM/YYYY')  %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
