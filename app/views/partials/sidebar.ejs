@@ -6,7 +6,7 @@
     </button>
     <!-- Brand -->
     <a class="navbar-brand pt-0" href="/">
-      <img src="img/brand/blue.png" class="navbar-brand-img" alt="...">
+      <!-- <img src="/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
     </a>
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
@@ -25,7 +25,7 @@
         <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="media align-items-center">
             <span class="avatar avatar-sm rounded-circle">
-              <img alt="Image placeholder" src="img/theme/team-1-800x800.jpg">
+              <img alt="Image placeholder" src="/img/theme/team-1-800x800.jpg">
             </span>
           </div>
         </a>
@@ -63,52 +63,101 @@
       </form>
       <!-- Navigation -->
       <ul class="navbar-nav">
+        <% if (user.NivelPermissaoId == 1  || user.NivelPermissaoId == 2) { %>
         <li class="nav-item">
           <a class="nav-link" href="/">
-            <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            <i class="ni ni-tv-2 text-primary"></i> Inicio
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/profile">
-            <i class="ni ni-single-02 text-yellow"></i> User profile
+            <i class="ni ni-single-02 text-yellow"></i> Consultas
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/icons">
-            <i class="ni ni-planet text-blue"></i> Icons
+            <i class="ni ni-planet text-blue"></i> Agendamentos
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/maps">
-            <i class="ni ni-pin-3 text-orange"></i> Maps
+            <i class="ni ni-pin-3 text-orange"></i> Pacientes
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/tables">
-            <i class="ni ni-bullet-list-67 text-red"></i> Tables
+            <i class="ni ni-bullet-list-67 text-red"></i> Estagiarios
           </a>
-        </li>
-        <% if (user) { %>
-          
-          <% }else{ %>
         <li class="nav-item">
           <a class="nav-link" href="#">
-            <i class="ni ni-key-25 text-info"></i> Login
+            <i class="ni ni-key-25 text-info"></i> Recepcionistas
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">
-            <i class="ni ni-circle-08 text-pink"></i> Register
+            <i class="ni ni-circle-08 text-pink"></i> Supervisores
           </a>
         </li>
-        <% } %>
+        <% } else if (user.NivelPermissaoId == 3) {  %>
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="ni ni-tv-2 text-primary"></i> Inicio
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">
+              <i class="ni ni-single-02 text-yellow"></i> Minhas Consultas
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/icons">
+              <i class="ni ni-planet text-blue"></i> Meus Agendamentos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="ni ni-key-25 text-info"></i> Relatóro Diário
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="ni ni-circle-08 text-pink"></i> Supervisor
+            </a>
+          </li>
+          <% } else if (user.NivelPermissaoId == 4) {  %>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="ni ni-tv-2 text-primary"></i> Inicio
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">
+                <i class="ni ni-single-02 text-yellow"></i> Minhas Consultas
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/icons">
+                <i class="ni ni-planet text-blue"></i> Meus Agendamentos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="ni ni-key-25 text-info"></i> Meu Perfil
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="ni ni-circle-08 text-pink"></i> Informações da Clínica
+              </a>
+            </li>
+            <% } %>
       </ul>
       <!-- Divider -->
       <hr class="my-3">
       <!-- Heading -->
-      <h6 class="navbar-heading text-muted">Documentation</h6>
+      <h6 class="navbar-heading text-muted"></h6>
       <!-- Navigation -->
-      <ul class="navbar-nav mb-md-3">
+      <!-- <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
           <a class="nav-link" href="https://argon-dashboard-nodejs.creative-tim.com/docs/getting-started/overview">
             <i class="ni ni-spaceship"></i> Getting started
@@ -124,7 +173,7 @@
             <i class="ni ni-ui-04"></i> Components
           </a>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </nav>

@@ -4,9 +4,9 @@ class IndexController {
          res.render("index/login")
     }
 
-    // login(req, res, next){
-
-    // }
+    dashboard(req, res){
+        res.render('index/dashboard')
+    }
 }
 
 

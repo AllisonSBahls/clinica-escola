@@ -4,7 +4,7 @@ const router = express.Router();
 const PermissaoController = require('../controller/PermissaoController');
 const controller = new PermissaoController();
 
-router.post('/save', (req, res) =>{
+router.post('/save', async (req, res) =>{
     controller.permissao_register(req, res)
 });
 

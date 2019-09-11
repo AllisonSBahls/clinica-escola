@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local-signin', {
-    successRedirect: '/paciente',
+    successRedirect: '/dashboard',
     failureRedirect: '/',
     failureFlash: true
 }
@@ -25,8 +25,15 @@ function isLoggedIn(req, res, next) {
     res.redirect('/signin');
 }
 
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('sucess_msg', 'Deslogado com sucesso')
+    res.redirect('/')
+});
 
-
+router.get('/dashboard', (req, res) => {
+    controller.dashboard(req, res)
+});
 
 
 module.exports = router;

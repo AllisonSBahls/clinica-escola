@@ -1,31 +1,32 @@
 const express = require("express");
 const router = express.Router();
+const {admin} = require('../helpers/auth')
 
 const SecretaryController = require('../controller/SecretaryController');
 const controller = new SecretaryController();
 
-router.post('/save', (req, res) =>{
+router.post('/save', admin, async (req, res) =>{
     controller.secretary_register(req, res)
 });
 
-router.get('/', (req, res) =>{
+router.get('/', admin, (req, res) =>{
     controller.secretaries(req, res)
 });
 
-router.get('/profile/:id', (req, res) =>{
+router.get('/profile/:id', admin, (req, res) =>{
     controller.profileSecretary(req, res)
 });
 
-router.get('/delete/:id', (req, res) =>{
+router.get('/delete/:id', admin, (req, res) =>{
     controller.deleteSecretary(req, res)
 });
 
-router.post('/update/:id', (req, res) =>{
+router.post('/update/:id', admin, (req, res) =>{
     controller.updateSecretary(req, res)
 });
 
 
-router.get('/register', (req, res) =>{
+router.get('/register', admin, (req, res) =>{
     controller.form_admin_secretary(req, res)
 });
 

@@ -1,6 +1,7 @@
 const Master = require('../model/Master');
 const Permission = require('../model/Permissoes');
 const bcrypt = require('bcryptjs');
+const User = require('../model/User')
 class MasterController {
 
     form_admin_master(req, res) {
@@ -41,8 +42,6 @@ class MasterController {
                 userMasterId: user.id
             }).then(function () {
                 res.redirect('/supervisor');
-            }).catch(function (erro) {
-                res.send("erro" + erro);
             })
         }
     }
