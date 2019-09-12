@@ -5,9 +5,7 @@ const bcrypt = require('bcryptjs');
 class SecretaryController {
 
     form_admin_patient(req, res) {
-
         res.render("forms/form_register_patient")
-
     }
 
     async patient_register(req, res) {
@@ -53,8 +51,11 @@ class SecretaryController {
                 model: User, as: 'userPatient'
             }]
         }).then(function (patients) {
-            res.render("pages/patient", { patients: patients })
-        });
+            res.render("pages/patient", { patients: patients})
+        }).catch(function (err){
+            console.log('erro')
+            res.redirect('partials/404');
+        })
     }
 
     deletePatient(req, res) {

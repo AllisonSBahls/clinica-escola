@@ -5,10 +5,7 @@ const User = require('../model/User')
 class MasterController {
 
     form_admin_master(req, res) {
-        Permission.findAll()
-            .then(function (permissoes) {
-                res.render("forms/form_register_master", { permissoes: permissoes })
-            });
+        res.render("forms/form_register_master")
     }
 
     async master_register(req, res) {
@@ -26,9 +23,8 @@ class MasterController {
 
         //Registrar o usuario do supervisor
         if (emailUser.length > 0) {
-            console.log('email já existe')
             res.redirect('/supervisor/register')
-
+            req.flash('error_msg', 'Email já existe');
         } else {
             const user = await User.create({
                 email,
@@ -41,7 +37,11 @@ class MasterController {
                 phone,
                 userMasterId: user.id
             }).then(function () {
+                req.flash('success_msg', 'Supervisor cadastrado com sucesso');
                 res.redirect('/supervisor');
+            }).catch((err) => {
+                req.flash('error_msg', 'Houve um erro ao salvar o supervisor');
+                res.redirect('/')
             })
         }
     }
@@ -52,7 +52,7 @@ class MasterController {
             }]
         })
             .then(function (masters) {
-                res.render("pages/master", { masters: masters })
+                res.render("pages/master", { masters: masters})
             });
     }
 

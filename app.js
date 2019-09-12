@@ -16,7 +16,7 @@ const app = express();
 
 //Sessões
 app.use(session({
-	secret: 'secret',
+	secret: '****clinicasecretschool***',
 	resave: true,
 	saveUninitialized: true
 }));
@@ -26,7 +26,7 @@ app.use(passport.session());
 
 app.use(flash());
 app.use((req, res, next) => {
-	res.locals.sucess_msg = req.flash('sucess_msg');
+	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.user = req.user || null;
 	next();
@@ -49,7 +49,7 @@ app.use(bodyParser.json());
 //Rotas
 app.use('/', index);
 app.use('/permissao', permissao);
-app.use('/secretary', secretary);
+app.use('/recepcionista', secretary);
 app.use('/supervisor', master);
 app.use('/estagiario', trainee);
 app.use('/paciente', patient);

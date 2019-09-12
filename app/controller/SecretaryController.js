@@ -28,7 +28,7 @@ class SecretaryController {
 
         if (emailUser.length > 0) {
             console.log('email já existe')
-            res.redirect('/secretary')
+            res.redirect('/recepcionista')
         } else {
             //Registrar o usuario do supervisor
             const user = await User.create({
@@ -43,7 +43,7 @@ class SecretaryController {
                 phone,
                 userSecretaryId: user.id
             }).then(function () {
-                res.redirect('/secretary');
+                res.redirect('/recepcionista');
             }).catch(function (erro) {
                 res.send("erro" + erro);
             })
@@ -65,7 +65,7 @@ class SecretaryController {
         Secretary.destroy({
             where: { 'id': req.params.id }
         }).then(function () {
-            res.redirect('/secretary');
+            res.redirect('/recepcionista');
         }).catch(function (erro) {
             res.send("erro" + erro);
         })
@@ -105,7 +105,7 @@ class SecretaryController {
             phone,
         }, { where: { 'id': req.params.id } }
         ).then(function () {
-            res.redirect('/secretary');
+            res.redirect('/recepcionista');
         }).catch(function (erro) {
             res.send("erro" + erro);
         })

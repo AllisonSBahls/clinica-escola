@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-
 const IndexController = require('../controller/IndexController');
 const controller = new IndexController();
 
@@ -16,6 +15,10 @@ router.post('/login', passport.authenticate('local-signin', {
     failureFlash: true
 }
 ));
+
+router.get('/errornotfound', (req, res) => {
+    controller.notfound(req, res);
+})
 
 
 function isLoggedIn(req, res, next) {

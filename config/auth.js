@@ -13,12 +13,11 @@ module.exports = function (passport) {
             }
             User.findOne({ where: { email: email } }).then(function (user) {
                 if (!user) {
-                    return done(null, false, { message: 'Email não existe' });
+                    return done(null, false, { message: 'Email ou Senha Inválidas' });
                 }
                 if (!isValidPassword(user.password, password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
+                    return done(null, false, { message: 'Email ou Senha Inválidas' });
                 } else {
-                    console.log('Acessado com sucesso')
                     return done(null, user);
                 }
             }).catch(function (err) {
@@ -38,7 +37,7 @@ module.exports = function (passport) {
     // used to deserialize the user
     passport.deserializeUser(function (id, done) {
         User.findOne({
-            where: {id: id}
+            where: { id: id }
         }).then(function (user) {
             if (user) {
                 done(null, user);

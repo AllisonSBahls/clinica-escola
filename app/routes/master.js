@@ -5,14 +5,10 @@ const MasterController = require('../controller/MasterController');
 const controller = new MasterController();
 
 router.post('/save', admin, async (req, res) =>{
-    controller.master_register(req, res)
-});
+    await controller.master_register(req, res)
+})
 
-// router.get('/', admin, (req, res) =>{
-//     controller.dashboard(req, res)
-// });
-
-router.get('/supervisores', admin, (req, res) =>{
+router.get('/', admin, (req, res) =>{
     controller.masters(req, res)
 });
 
@@ -29,7 +25,7 @@ router.post('/update/:id', admin, async (req, res) =>{
 });
 
 
-router.get('/register', admin, (req, res) =>{
+router.get('/register', admin,  (req, res) =>{
     controller.form_admin_master(req, res)
 });
 

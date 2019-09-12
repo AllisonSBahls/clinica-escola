@@ -7,6 +7,10 @@ class IndexController {
     dashboard(req, res){
         res.render('index/dashboard')
     }
+
+    notfound(req, res){
+        res.render('partials/404')
+    }
 }
 
 
