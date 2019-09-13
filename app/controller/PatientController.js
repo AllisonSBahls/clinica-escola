@@ -21,9 +21,21 @@ class SecretaryController {
             where: { email: email }
         })
 
+        var erros = [];
         if (emailUser.length > 0) {
-            console.log('email já existe')
-            res.redirect('/paciente')
+            erros.push({ texto: 'E-mail já esta sendo utilizado' })
+        }
+        if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
+            erros.push({ texto: 'Nome invalido' })
+        }
+        if (!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
+            erros.push({ texto: 'E-mail invalido' })
+        }
+        if (!req.body.password || typeof req.body.password == undefined || req.body.password == null) {
+            erros.push({ texto: 'Senha invalida' })
+        }
+        if (erros.length > 0) {
+            res.render('forms/form_register_master', { erros: erros })
         } else {
             //Registrar o usuario do supervisor
             const user = await User.create({

@@ -19,6 +19,8 @@
                 </div>
                 <div class="col-xl-10 order-xl-w">
                     <div class="card bg-secondary shadow">
+                            <% include ../partials/message %>
+
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
@@ -103,18 +105,16 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <input type="submit" class="btn btn-info"
-                                                        value="Alterar Senha"></input>
+                                                    <a class="btn btn-primary primary"
+                                                    href="../../user/profile/<%= master[0].userMaster.id %>">Alterar</a>
+                                         
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <hr class="my-4" />
 
-                                    <hr class="my-4" />
-                                    <input type="hidden" value="<%= master[0].userMaster.id  %>"
-                                    id="idUser" name="idUser">
-                                
+                                    <hr class="my-4" />                                
                                     <input type="hidden" value="<%= master[0].id  %>"
                                         id="id" name="id">
                                     <input type="submit" class="btn btn-info" value="Salvar Registro"></input>

@@ -13,10 +13,10 @@ module.exports = function (passport) {
             }
             User.findOne({ where: { email: email } }).then(function (user) {
                 if (!user) {
-                    return done(null, false, { message: 'Email ou Senha Inválidas' });
+                    return done(null, false, { message: 'Esta conta não existe' });
                 }
                 if (!isValidPassword(user.password, password)) {
-                    return done(null, false, { message: 'Email ou Senha Inválidas' });
+                    return done(null, false, { message: 'Senha Inválida' });
                 } else {
                     return done(null, user);
                 }

@@ -56,6 +56,9 @@
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Acessar</button>
                 </div>
+                <% if (error.length > 0) {%>
+                  <div class="alert alert-danger"><%= error %></div>
+                <% } %>                  
               </form>
             </div>
           </div>

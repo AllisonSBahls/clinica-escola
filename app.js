@@ -6,6 +6,7 @@ const secretary = require('./app/routes/secretary');
 const master = require('./app/routes/master');
 const trainee = require('./app/routes/trainee');
 const patient = require('./app/routes/patient');
+const users = require('./app/routes/user');
 const index = require('./app/routes/index');
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -28,6 +29,7 @@ app.use(flash());
 app.use((req, res, next) => {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash("error")
 	res.locals.user = req.user || null;
 	next();
 });
@@ -53,6 +55,14 @@ app.use('/recepcionista', secretary);
 app.use('/supervisor', master);
 app.use('/estagiario', trainee);
 app.use('/paciente', patient);
+app.use('/user', users);
+
+//Rotas não encontradas
+app.use(function(req, res, next) {
+	var err = new Error('Página não encontrada');
+	err.status = 404;
+	next(err);
+  });
 
 //Inicialização do Servidor
 app.listen(4000, function(){

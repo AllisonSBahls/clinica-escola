@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const {users} = require('../helpers/auth')
 const IndexController = require('../controller/IndexController');
 const controller = new IndexController();
 
@@ -16,7 +17,7 @@ router.post('/login', passport.authenticate('local-signin', {
 }
 ));
 
-router.get('/errornotfound', (req, res) => {
+router.get('/pagenotfound', (req, res) => {
     controller.notfound(req, res);
 })
 
@@ -34,7 +35,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 });
 
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', users, (req, res) => {
     controller.dashboard(req, res)
 });
 

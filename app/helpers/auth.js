@@ -6,25 +6,33 @@ module.exports = {
                 return next();
             } else {
                 req.flash('error_msg', 'Erro por favor consulte o administrador')
-                res.redirect('/errornotfound')
+                res.redirect('/pagenotfound')
             }
         } else {
             req.flash('error_msg', 'Erro por favor consulte o administrador')
-            res.redirect('/errornotfound')
+            res.redirect('/pagenotfound')
         }
     },
 
-    function(req, res, next) {
+    secretary: function(req, res, next) {
         if (req.isAuthenticated()) {
             if (req.user.NivelPermissaoId == 2) {
                 return next();
             } else {
                 req.flash('error_msg', 'Erro por favor consulte o administrador')
-                res.redirect('/errornotfound')
+                res.redirect('/pagenotfound')
             }
         } else {
             req.flash('error_msg', 'Erro por favor consulte o administrador')
-            res.redirect('/errornotfound')
+            res.redirect('/pagenotfound')
+        }
+    },
+    users: function(req, res, next) {
+        if (req.isAuthenticated()) {
+                return next();            
+        } else {
+            req.flash('error_msg', 'Erro por favor consulte o administrador')
+            res.redirect('/pagenotfound')
         }
     },
 
@@ -34,11 +42,11 @@ module.exports = {
                 return next();
             } else {
                 req.flash('error_msg', 'Erro por favor consulte o administrador')
-                res.redirect('/errornotfound')
+                res.redirect('/pagenotfound')
             }
         } else {
             req.flash('error_msg', 'Erro por favor consulte o administrador')
-            res.redirect('/errornotfound')
+            res.redirect('/pagenotfound')
         }
     },
 
@@ -48,11 +56,11 @@ module.exports = {
                 return next();
             } else {
                 req.flash('error_msg', 'Erro por favor consulte o administrador')
-                res.redirect('/errornotfound')
+                res.redirect('/pagenotfound')
             }
         } else {
             req.flash('error_msg', 'Erro por favor consulte o administrador')
-            res.redirect('/errornotfound')
+            res.redirect('/pagenotfound')
         }
 
     },
@@ -63,11 +71,11 @@ module.exports = {
                 return next();
             } else {
                 req.flash('error_msg', 'Erro por favor consulte o administrador')
-                res.redirect('/errornotfound')
+                res.redirect('/pagenotfound')
             }
         } else {
             req.flash('error_msg', 'Erro por favor consulte o administrador')
-            res.redirect('/errornotfound')
+            res.redirect('/pagenotfound')
 
         }
     }
