@@ -18,8 +18,6 @@ const Trainee = bd.sequelize.define('trainees', {
 
 Trainee.belongsTo(User, {as : 'userTrainee', foreingKey: {name: 'fk_user_trainee'}});
 
-
 //Trainee.sync({force: true});
-
 
 module.exports = Trainee;

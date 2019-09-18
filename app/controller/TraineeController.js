@@ -2,7 +2,7 @@ const Trainee = require('../model/Trainee');
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 
-class SecretaryController {
+class TraineeController {
 
     form_admin_trainee(req, res) {
 
@@ -54,11 +54,14 @@ class SecretaryController {
                 period,
                 userTraineeId: user.id
             }).then(function () {
+                req.flash("success_msg", "Estagiario cadastrada com sucesso");
                 res.redirect('/estagiario');
-            })
-        }
+            }).catch(function (erro) {
+                req.flash("error_msg", "Ocorreu um erro ao salvar o estagiario");
+                res.send("erro" + erro);
+        })
     }
-
+}
     trainees(req, res) {
         Trainee.findAll({
             include: [{
@@ -73,11 +76,13 @@ class SecretaryController {
         Trainee.destroy({
             where: { 'id': req.params.id }
         }).then(function () {
-            res.redirect('/estagiario');
-        }).catch(function (erro) {
-            res.send("erro" + erro);
-        })
-    }
+            req.flash("success_msg", "Estagiario deletado com sucesso");
+                res.redirect('/estagiario');
+            }).catch(function (erro) {
+                req.flash("error_msg", "Ocorreu um erro ao deletar o estagiario");
+                res.send("erro" + erro);
+    })
+}
 
     profileTrainee(req, res) {
         Trainee.findAll({
@@ -104,12 +109,14 @@ class SecretaryController {
             course
         }, { where: { 'id': req.params.id } }
         ).then(function () {
+            req.flash("success_msg", "Estagiario alterado com sucesso");
             res.redirect('/estagiario');
         }).catch(function (erro) {
+            req.flash("error_msg", "Ocorreu um erro ao alterar o estagiario");
             res.send("erro" + erro);
         })
     }
 }
 
 
-module.exports = SecretaryController;
+module.exports = TraineeController;

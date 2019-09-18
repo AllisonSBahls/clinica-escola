@@ -103,18 +103,13 @@
                                                         placeholder="Registro" value="<%= moment(master[0].createdAt).format('DD/MM/YYYY')  %>">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <a class="btn btn-primary primary"
-                                                    href="../../user/profile/<%= master[0].userMaster.id %>">Alterar</a>
-                                         
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <hr class="my-4" />
 
-                                    <hr class="my-4" />                                
+                                    <hr class="my-4" />    
+                                    <input type="hidden" value="<%= master[0].userMaster.id  %>"
+                                    id="id" name="idUser">                            
                                     <input type="hidden" value="<%= master[0].id  %>"
                                         id="id" name="id">
                                     <input type="submit" class="btn btn-info" value="Salvar Registro"></input>

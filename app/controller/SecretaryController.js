@@ -41,7 +41,7 @@ class SecretaryController {
         }
         if (erros.length > 0) {
             res.render('forms/form_register_master', { erros: erros })
-        }else {
+        } else {
             //Registrar o usuario do supervisor
             const user = await User.create({
                 email: email,
@@ -55,9 +55,10 @@ class SecretaryController {
                 phone,
                 userSecretaryId: user.id
             }).then(function () {
-                req.flash("success_msg", "Supervisor cadastrado com sucesso");
+                req.flash("success_msg", "Recepcionista cadastrada com sucesso");
                 res.redirect('/recepcionista');
             }).catch(function (erro) {
+                req.flash("error_msg", "Ocorreu um erro ao salvar a recepcionista");
                 res.send("erro" + erro);
             })
         }
@@ -78,8 +79,10 @@ class SecretaryController {
         Secretary.destroy({
             where: { 'id': req.params.id }
         }).then(function () {
+            req.flash("success_msg", "Recepcionista deletada com sucesso");
             res.redirect('/recepcionista');
         }).catch(function (erro) {
+            req.flash("error_msg", "Ocorreu um erro ao deletar a recepcionista");
             res.send("erro" + erro);
         })
     }
@@ -118,8 +121,10 @@ class SecretaryController {
             phone,
         }, { where: { 'id': req.params.id } }
         ).then(function () {
+            req.flash("success_msg", "Recepcionista alterada com sucesso");
             res.redirect('/recepcionista');
         }).catch(function (erro) {
+            req.flash("error_msg", "Ocorreu um erro ao alterar a recepcionista");
             res.send("erro" + erro);
         })
     }

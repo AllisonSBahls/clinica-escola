@@ -51,12 +51,12 @@ class MasterController {
                 phone,
                 userMasterId: user.id
             }).then(() => {
-                res.redirect('/supervisor');
                 req.flash("success_msg", "Supervisor cadastrado com sucesso");
+                res.redirect('/supervisor');
 
             }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro ao salvar o supervisor');
-                res.redirect('/')
+                res.redirect('/supervisor')
             })
         }
     }
@@ -75,7 +75,8 @@ class MasterController {
         Master.destroy({
             where: { 'id': req.params.id }
         }).then(function () {
-            res.redirect('/supervisor');
+            req.flash("success_msg", "Supervisor deletado com sucesso");
+            res.redirect('/supervisor');;
         }).catch(function (erro) {
             res.send("erro" + erro);
         })
@@ -96,26 +97,12 @@ class MasterController {
     }
 
     async updateMaster(req, res) {
-        const emailUser = await User.findAll({
-            where: { id: parseInt(req.body.idUser) }
-        })
-
-        if (emailUser.email == req.body.email) {
-            Master.update({
-                name: req.body.name,
-                phone: req.body.phone,
-            },
-                { where: { 'id': req.params.id } }
-            ).then(function () {
-                res.redirect('/supervisor');
-            })
-        } else {
             const newEmail = await User.findAll({
                 where: { email: req.body.email }
             })
-            if (newEmail > 0) {
-                req.flash('error_msg', 'Email já existe');
-                res.render('/supervisor/register')
+            if (newEmail || newEmail > 0) {
+               console.log('email já existe')
+                res.render('/supervisor')
             } else {
                 const user = User.update({
                     email: req.body.email
@@ -129,9 +116,11 @@ class MasterController {
                 },
                     { where: { 'id': req.params.id } }
                 ).then(function () {
+                    req.flash('success_msg', 'Supervisor alterado com sucesso');
                     res.redirect('/supervisor');
+                }).catch((err)=>{
+                    req.flash('error_msg', 'Erro ao cadastrar o supervisor ' + err);
                 })
-            }
         }
 
     }

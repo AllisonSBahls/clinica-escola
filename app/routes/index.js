@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const {users} = require('../helpers/auth')
+const PatienteController = require('../controller/PatientController');
+const patient = new PatienteController();
 const IndexController = require('../controller/IndexController');
 const controller = new IndexController();
 
@@ -39,5 +41,12 @@ router.get('/dashboard', users, (req, res) => {
     controller.dashboard(req, res)
 });
 
+router.get('/signup',(req, res)=>{
+    controller.signup(req, res);
+})
+
+router.post('/save', async (req, res)=>{
+    controller.signup_save(req, res);
+})
 
 module.exports = router;

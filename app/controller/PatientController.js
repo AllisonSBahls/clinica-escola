@@ -52,7 +52,12 @@ class SecretaryController {
                 gender,
                 userPatientId: user.id
             }).then(function () {
+                req.flash("success_msg", "Paciente cadastrado com sucesso");
                 res.redirect('/paciente');
+            }).catch(function(err) {
+                req.flash("error_msg", "Erro ao cadastrado o paciente");
+                res.redirect('/supervisor');
+
             })
         }
     }
@@ -74,8 +79,10 @@ class SecretaryController {
         Patient.destroy({
             where: { 'id': req.params.id }
         }).then(function () {
+            req.flash("success_msg", "Paciente deletado com sucesso");
             res.redirect('/paciente');
         }).catch(function (erro) {
+            req.flash("error_msg", "Ocorreu um erro ao deletar o paciente");
             res.send("erro" + erro);
         })
     }
@@ -105,8 +112,10 @@ class SecretaryController {
             gender
         }, { where: { 'id': req.params.id } }
         ).then(function () {
+            req.flash("success_msg", "Paciente alterado com sucesso");
             res.redirect('/paciente');
         }).catch(function (erro) {
+            req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
             res.send("erro" + erro);
         })
     }

@@ -28,7 +28,7 @@ class UserController {
         };
         var masterPassword = generateHash(password);
 
-        if (emailUser == email && emailUser.length > 0) {
+        if (emailUser && emailUser.length > 0) {
             req.flash('error_msg', 'Email já existe');
             res.redirect('/supervisor')
         } else {
