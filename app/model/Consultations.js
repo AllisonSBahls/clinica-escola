@@ -4,7 +4,6 @@ const Secretary = require("./Secretary");
 const Trainee = require("./Trainee");
 const Patient = require("./Patient");
 
-
 const Consultation = bd.sequelize.define('consultations', {
     dateStart: {
         type: bd.Sequelize.DATE
@@ -16,6 +15,10 @@ const Consultation = bd.sequelize.define('consultations', {
     description:{
         type: bd.Sequelize.STRING,
         allowNul: true,
+    },
+    color:{
+        type: bd.Sequelize.STRING,
+        allowNul: true,
     }
 
 });
@@ -23,7 +26,6 @@ const Consultation = bd.sequelize.define('consultations', {
 Consultation.belongsTo(Secretary, {as : 'consultSecretary', foreingKey: {name: 'fk_consult_secretary'}});
 Consultation.belongsTo(Patient, {as : 'consultPatient', foreingKey: {name: 'fk_consult_patient'}});
 Consultation.belongsTo(Trainee, {as : 'consultTrainee', foreingKey: {name: 'fk_consult_trainee'}});
-
 
 //Consultation.sync({force: true});       
 

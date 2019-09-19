@@ -4,11 +4,13 @@ const Secretary = require('../model/Secretary');
 const Trainee = require('../model/Trainee');
 class ConsultationController {
 
-    Consultations(req, res) {
+    consultations(req, res) {
         Consultation.findAll({
             include: [{
                 model: Patient, as: 'consultPatient'
             }]
+        }).then((consultation)=>{
+            res.render('partials/calendar', {consultation: consultation})
         })
     }
 }

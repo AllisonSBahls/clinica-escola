@@ -7,6 +7,9 @@ const patient = new PatienteController();
 const IndexController = require('../controller/IndexController');
 const controller = new IndexController();
 
+const ConsultController = require('../controller/ConsultationController');
+const consult = new ConsultController();
+
 
 router.get('/', (req, res) => {
     controller.index(req, res)
@@ -47,6 +50,10 @@ router.get('/signup',(req, res)=>{
 
 router.post('/save', async (req, res)=>{
     controller.signup_save(req, res);
+});
+
+router.get('/calendar',(req, res)=>{    
+   consult.consultations(req, res)
 })
 
 module.exports = router;
