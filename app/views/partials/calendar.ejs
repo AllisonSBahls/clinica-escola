@@ -1,72 +1,9 @@
---
 <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset='utf-8' />
-    <link href='css/main.min.css' rel='stylesheet' />
-    <link href='css/calendar.min.css' rel='stylesheet' />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src='js/main.min.js'></script>
-    <script src='js/interaction.min.js'></script>
-    <script src='js/calendar.min.js'></script>
-    <script src='js/locales/pt-br.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'pt-br',
-                plugins: ['interaction', 'dayGrid'],
-                //defaultDate: '2019-04-12',
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-
-                events: [
-                    '<% if (consultation.length > 0) {%>',
-                    '<% for (var i = 0; i < consultation.length; i++) {%>',
-                    {
-                        title: '<%= consultation[i].consultPatient.name  %>',
-                        start: '<%= moment(consultation[i].dateStart).add(4, "hours").format()  %>',
-
-                    },
-
-                    '<% } %>',
-                    '<% } %>',
-                ],
-
-                eventClick: function (info) {
-                    info.jsEvent.preventDefault();
-                    $('#viewConsult').modal('show');
-                }
-
-            });
-
-            calendar.render();
-        });
-
-    </script>
-
-    <style>
-        body {
-            margin: 40px 10px;
-            padding: 0;
-            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
-        }
-
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
+<html lang="en">
+<% include ../layout %>
+<% include ./scripts %>
 
 <body>
-
     <div id='calendar'></div>
     <div class="modal fade" id="viewConsult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -79,12 +16,89 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <dl class="row">
+                        <dt class="col-sm-3">Número da Consulta</dt>
+                        <dd class="col-sm-9" id="id"></dd>
+
+                        <dt class="col-sm-3">Paciente</dt>
+                        <dd class="col-sm-9" id="patient"></dd>
+
+                        <dt class="col-sm-3">Data/Hora da Consulta</dt>
+                        <dd class="col-sm-9" id="dateStart"></dd>
+
+                        <dt class="col-sm-3">Estagiario</dt>
+                        <dd class="col-sm-9" id="trainee"></dd>
+                    </dl>
+
                 </div>
             </div>
         </div>
     </div>
 
+
+    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Consulta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/recepcionista/save" method="POST">
+                        <h6 class="heading-small text-muted mb-4">Informações da Consulta</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Paciente</label>
+                                        <select class="form-control" name="patientId" id="patientId"
+                                            data-placeholder="Selecione">
+                                            <% if (patients.length > 0) { %>
+                                            <% for (var i = 0; i < patients.length; i++) { %>    
+                                            <option value='<%= patients[i].id %>'><%= patients[i].name %></option>
+                                            <% } %>
+                                            <% } %>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Data/Hora da Consulta</label>
+                                        <input type="text" id="dateStart" name="dateStart"
+                                            class="form-control form-control-alternative" require
+                                            placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Estagiário</label>
+                                        <select class="form-control" name="patientId" id="patientId"
+                                        data-placeholder="Selecione">
+                                        <% if (trainees.length > 0) { %>
+                                        <% for (var i = 0; i < trainees.length; i++) { %>    
+                                        <option value='<%= trainees[i].id %>'><%= trainees[i].name %></option>
+                                        <% } %>
+                                        <% } %>
+
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

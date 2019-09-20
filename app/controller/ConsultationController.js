@@ -4,15 +4,24 @@ const Secretary = require('../model/Secretary');
 const Trainee = require('../model/Trainee');
 class ConsultationController {
 
-    consultations(req, res) {
+   async consultations(req, res) {
+        const patients = await Patient.findAll();
+
+        const trainees = await Trainee.findAll();
+
         Consultation.findAll({
             include: [{
-                model: Patient, as: 'consultPatient'
+                model: Patient, as: 'consultPatient',
+            },{
+                model: Trainee, as: 'consultTrainee',
+            },{
+                model: Secretary, as: 'consultSecretary',
             }]
         }).then((consultation)=>{
-            res.render('partials/calendar', {consultation: consultation})
+            res.render('partials/calendar', {consultation: consultation, patients: patients, trainees:trainees});
         })
     }
+
 }
 
 module.exports = ConsultationController;
