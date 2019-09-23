@@ -44,6 +44,7 @@ router.get('/dashboard', users, (req, res) => {
     controller.dashboard(req, res)
 });
 
+
 router.get('/signup',(req, res)=>{
     controller.signup(req, res);
 })

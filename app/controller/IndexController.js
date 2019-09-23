@@ -1,22 +1,80 @@
 const Patient = require('../model/Patient');
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
+const Secretary = require('../model/Secretary');
+const Trainee = require('../model/Trainee');
+const Consultation = require('../model/Consultations');
+const moment= require( 'moment' );
+const { Op } = require('sequelize')
+
 
 class IndexController {
-
     index(req, res) {
-         res.render("index/login")
+        res.render("index/login")
     }
 
-    dashboard(req, res){
-        res.render('index/dashboard')
+    async dashboard(req, res) {
+        const patients = await Patient.findAll();
+        const trainees = await Trainee.findAll();
+        const consult = await Consultation.findAll({
+            where: {
+                dateStart: {
+                    [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+                },
+            include: [{
+                model: Patient, as: 'consultPatient',
+            }, {
+                model: Trainee, as: 'consultTrainee',
+            }, {
+                model: Secretary, as: 'consultSecretary',
+            }]
+        });
+
+        Consultation.findAll({
+            include: [{
+                model: Patient, as: 'consultPatient',
+            }, {
+                model: Trainee, as: 'consultTrainee',
+            }, {
+                model: Secretary, as: 'consultSecretary',
+            }]
+        }).then((consultation) => {
+            res.render('index/dashboard', {consult: consult, consultation: consultation, patients: patients, trainees: trainees });
+
+        }).catch((err) => {
+            res.send('erro' + err)
+        })
+
     }
 
-    signup(req,res){
+
+
+    // consult_day(req, res) {
+    //     console.log(req.body.dateConsultStart)
+       
+    //     // Consultation.findAll({
+    //     //     where: { dateStart: datetime },
+    //     //     include: [{
+    //     //         model: Patient, as: 'consultPatient',
+    //     //     }, {
+    //     //         model: Trainee, as: 'consultTrainee',
+    //     //     }, {
+    //     //         model: Secretary, as: 'consultSecretary',
+    //     //     }]
+    //     // }).then((consult) => {
+    //     //     console.log(consult)
+    //        //  res.render('index/dashboard');
+    //     // }).catch((err) => {
+    //     //     res.send('erro' + err)
+    //     // })
+    // }
+
+
+    signup(req, res) {
         res.render('index/register')
     }
 
-    notfound(req, res){
+    notfound(req, res) {
         res.render('partials/404')
     }
 
@@ -61,9 +119,9 @@ class IndexController {
                 name,
                 phone,
                 userPatientId: user.id
-            }).then(function (){
+            }).then(function () {
                 res.redirect('/');
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err)
             })
         }
