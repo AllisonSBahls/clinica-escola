@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<% include ../layout %>
+<% include ./custom %>
+
+<body>
+        <!-- Sidenav -->
+        <% include ../partials/sidebar %>
+        <!-- Main content -->
+        <div class="main-content">
+            <!-- Top navbar -->
+            <% include ../partials/navbar %>
+            <!-- Header -->
+            <% include ../partials/header %>
+    <div id='calendar'></div>
+    
+    <div class="modal fade" id="viewConsult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detalhes da Consulta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">Número da Consulta</dt>
+                        <dd class="col-sm-9" id="id"></dd>
+
+                        <dt class="col-sm-3">Paciente</dt>
+                        <dd class="col-sm-9" id="patient"></dd>
+
+                        <dt class="col-sm-3">Data/Hora da Consulta</dt>
+                        <dd class="col-sm-9" id="dateStart"></dd>
+
+                        <dt class="col-sm-3">Estagiario</dt>
+                        <dd class="col-sm-9" id="trainee"></dd>
+                    </dl>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Consulta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/consultation/save" method="POST">
+                        <h6 class="heading-small text-muted mb-4">Informações da Consulta</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Paciente</label>
+                                        <select class="form-control" name="patientId" id="patientId"
+                                            data-placeholder="Selecione">
+                                            <% if (patients.length > 0) { %>
+                                            <% for (var i = 0; i < patients.length; i++) { %>    
+                                            <option value='<%= patients[i].id %>'><%= patients[i].name %></option>
+                                            <% } %>
+                                            <% } %>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Data/Hora da Consulta</label>
+                                        <input type="text" id="dateStart" name="dateStart"
+                                            class="form-control form-control-alternative">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Estagiário</label>
+                                        <select class="form-control" name="traineeId" id="traineeId"
+                                        data-placeholder="Selecione">
+                                        <% if (trainees.length > 0) { %>
+                                        <% for (var i = 0; i < trainees.length; i++) { %>    
+                                        <option value='<%= trainees[i].id %>'><%= trainees[i].name %></option>
+                                        <% } %>
+                                        <% } %>
+
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <input type="submit" class="btn btn-info" value="Marcar Consulta"></input>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+     <% include ../partials/footer %>
+
+    </div>
+    <% include ../partials/scripts %>
+</body>
+
+</html>

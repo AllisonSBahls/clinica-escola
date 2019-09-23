@@ -71,7 +71,7 @@ class IndexController {
 
 
     signup(req, res) {
-        res.render('index/register')
+        res.render('index/register', {erros: {}})
     }
 
     notfound(req, res) {

@@ -7,17 +7,16 @@
     var ptBr = {
         code: "pt-br",
         buttonText: {
-            September: "Setembro",
             prev: "Anterior",
             next: "Próximo",
             today: "Hoje",
             month: "Mês",
             week: "Semana",
             day: "Dia",
-            list: "Consultas"
+            list: "Compromissos"
         },
         weekLabel: "Sm",
-        allDayText: "Dia Inteiro",
+        allDayText: "dia inteiro",
         eventLimitText: function (n) {
             return "mais +" + n;
         },
