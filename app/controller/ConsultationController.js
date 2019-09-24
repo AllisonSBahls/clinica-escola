@@ -9,7 +9,64 @@ class ConsultationController {
    async consultations(req, res) {
         const patients = await Patient.findAll();
         const trainees = await Trainee.findAll();
+
+        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+            Consultation.findAll({
+                include: [{
+                    model: Patient, as: 'consultPatient',
+                },{
+                    model: Trainee, as: 'consultTrainee',
+                },{
+                    model: Secretary, as: 'consultSecretary',
+                }]
+            }).then((consultation)=>{
+                res.render('partials/calendar', {consultation: consultation, patients: patients, trainees:trainees});
+            
+            })
+        }else if(req.user.NivelPermissaoId == 3){
+
+            Consultation.findAll({
+                include: [{
+                    model: Patient, as: 'consultPatient',
+                },{
+                    model: Trainee, as: 'consultTrainee',
+                },{
+                    model: Secretary, as: 'consultSecretary',
+                }],
+                where: {userTraineesId: patientId.id}
+
+            }).then((consultation)=>{
+                res.render('partials/calendar', {consultation: consultation, patients: patients, trainees:trainees});
+            
+            })
+        }else if(req.user.NivelPermissaoId == 4){
+            await Patient.findOne({
+                where: {userPatientId: req.user.id}
+            }).then((patient)=>{
+            Consultation.findAll({
+                include: [{
+                    model: Patient, as: 'consultPatient',
+                },{
+                    model: Trainee, as: 'consultTrainee',
+                },{
+                    model: Secretary, as: 'consultSecretary',
+                }],
+                where: {consultPatientId: patient.id}
+                }).then((consultation)=>{
+                     res.render('partials/calendar', {consultation: consultation, patients: patients, trainees:trainees});
+            
+            })
+        }).catch((err)=>{
+            res.send(`erro`)
+        })
+        }
+    }
+
+    async consultationsPatients(req, res) {
+        const patients = await Patient.findAll();
+        const trainees = await Trainee.findAll();
         Consultation.findAll({
+            where:{consultPatientId: req.user.id},
             include: [{
                 model: Patient, as: 'consultPatient',
             },{

@@ -8,12 +8,16 @@ class UserController {
         User.findAll({
             where: { 'id': req.params.id },
         }).then((users) => {
+            consonle.log(users)
             res.render("forms/form_profile_user", { users: users });
 
         }).catch((erro) => {
             res.send("erro" + erro);
         })
     }
+
+
+
 
 
     async updateUser(req, res) {
