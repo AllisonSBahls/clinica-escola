@@ -94,13 +94,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/supervisores">
+          <a class="nav-link" href="/supervisor">
             <i class="ni ni-circle-08 text-pink"></i> Supervisores
           </a>
         </li>
         <% } else if (user.NivelPermissaoId == 3) {  %>
           <li class="nav-item">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="/dashboard">
               <i class="ni ni-tv-2 text-primary"></i> Inicio
             </a>
           </li>
@@ -126,12 +126,12 @@
           </li>
           <% } else if (user.NivelPermissaoId == 4) {  %>
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/dashboard">
                 <i class="ni ni-tv-2 text-primary"></i> Inicio
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile">
+              <a class="nav-link" href="/calendar">
                 <i class="ni ni-single-02 text-yellow"></i> Minhas Consultas
               </a>
             </li>
@@ -141,7 +141,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="/user/perfil">
                 <i class="ni ni-key-25 text-info"></i> Meu Perfil
               </a>
             </li>

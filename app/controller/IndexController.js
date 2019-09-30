@@ -2,6 +2,7 @@ const Patient = require('../model/Patient');
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 const Secretary = require('../model/Secretary');
+const Master = require('../model/Master');
 const Trainee = require('../model/Trainee');
 const Consultation = require('../model/Consultations');
 const moment= require( 'moment' );
@@ -9,6 +10,7 @@ const { Op } = require('sequelize')
 
 
 class IndexController {
+
     index(req, res) {
         res.render("index/login")
     }
@@ -16,7 +18,115 @@ class IndexController {
     async dashboard(req, res) {
         const patients = await Patient.findAll();
         const trainees = await Trainee.findAll();
+        
+    if (req.user.NivelPermissaoId == 1) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
         const consult = await Consultation.findAll({
+            where: {
+                dateStart: {
+                    [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+                },
+            include: [{
+                model: Patient, as: 'consultPatient',
+            }, {
+                model: Trainee, as: 'consultTrainee',
+            }, {
+                model: Secretary, as: 'consultSecretary',
+            }]
+        });
+        Consultation.findAll({
+            include: [{
+                model: Patient, as: 'consultPatient',
+            }, {
+                model: Trainee, as: 'consultTrainee',
+            }, {
+                model: Secretary, as: 'consultSecretary',
+            }]
+        }).then((consultation) => {
+            res.render('index/dashboard', {masterProfile: masterProfile,  consult: consult, consultation: consultation, patients: patients, trainees: trainees });
+
+        }).catch((err) => {
+            res.send('erro' + err)
+        })
+
+     }else if (req.user.NivelPermissaoId == 2) {
+            const secretaryProfile = await Secretary.findOne({
+                where: {userSecretaryId: req.user.id} });
+            const consult = await Consultation.findAll({
+                where: {
+                    dateStart: {
+                        [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+                    },
+                include: [{
+                    model: Patient, as: 'consultPatient',
+                }, {
+                    model: Trainee, as: 'consultTrainee',
+                }, {
+                    model: Secretary, as: 'consultSecretary',
+                }]
+            });
+            Consultation.findAll({
+                include: [{
+                    model: Patient, as: 'consultPatient',
+                }, {
+                    model: Trainee, as: 'consultTrainee',
+                }, {
+                    model: Secretary, as: 'consultSecretary',
+                }]
+            }).then((consultation) => {
+                res.render('index/dashboard', {secretaryProfile: secretaryProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
+    
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+
+    }else if(req.user.NivelPermissaoId == 4){
+        const patientProfile = await Patient.findOne({
+        where: {userPatientId: req.user.id} });
+
+        const consult = await Consultation.findAll({
+            where: {
+                consultPatientId: patientProfile.id, 
+                dateStart: {
+                    [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+                },
+            include: [{
+                model: Patient, as: 'consultPatient',
+            }, {
+                model: Trainee, as: 'consultTrainee',
+            }, {
+                model: Secretary, as: 'consultSecretary',
+            }]
+        });
+
+        Consultation.findAll({
+            where: {
+                consultPatientId: patientProfile.id
+            },
+            include: [{
+                model: Patient, as: 'consultPatient',
+            }, {
+                model: Trainee, as: 'consultTrainee',
+            }, {
+                model: Secretary, as: 'consultSecretary',
+            }]
+        }).then((consultation) => {
+            res.render('index/dashboard', {patientProfile: patientProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
+
+        }).catch((err) => {
+            res.send('erro' + err)
+        })
+
+
+    }else if(req.user.NivelPermissaoId == 3){
+        const traineeProfile = await Trainee.findOne({
+            where: {userTraineeId: req.user.id} });
+
+        const consult = await Consultation.findAll({
+            where: {
+                traineeConsultId: traineeProfile.id
+            },
             where: {
                 dateStart: {
                     [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
@@ -31,6 +141,9 @@ class IndexController {
         });
 
         Consultation.findAll({
+            where: {
+                traineeConsultId: traineeProfile.id
+            },
             include: [{
                 model: Patient, as: 'consultPatient',
             }, {
@@ -38,37 +151,15 @@ class IndexController {
             }, {
                 model: Secretary, as: 'consultSecretary',
             }]
+
         }).then((consultation) => {
-            res.render('index/dashboard', {consult: consult, consultation: consultation, patients: patients, trainees: trainees });
+            res.render('index/dashboard', {traineeProfile:traineeProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
 
         }).catch((err) => {
             res.send('erro' + err)
         })
-
-    }
-
-
-
-    // consult_day(req, res) {
-    //     console.log(req.body.dateConsultStart)
-       
-    //     // Consultation.findAll({
-    //     //     where: { dateStart: datetime },
-    //     //     include: [{
-    //     //         model: Patient, as: 'consultPatient',
-    //     //     }, {
-    //     //         model: Trainee, as: 'consultTrainee',
-    //     //     }, {
-    //     //         model: Secretary, as: 'consultSecretary',
-    //     //     }]
-    //     // }).then((consult) => {
-    //     //     console.log(consult)
-    //        //  res.render('index/dashboard');
-    //     // }).catch((err) => {
-    //     //     res.send('erro' + err)
-    //     // })
-    // }
-
+    }    
+} 
 
     signup(req, res) {
         res.render('index/register', {erros: {}})

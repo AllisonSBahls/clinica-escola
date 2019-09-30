@@ -1,14 +1,21 @@
 const Secretary = require('../model/Secretary');
 const Permission = require('../model/Permissoes');
 const User = require('../model/User');
+const Master = require('../model/Master');
+
 const bcrypt = require('bcryptjs');
 
 class SecretaryController {
 
-    form_admin_secretary(req, res) {
+    async form_admin_secretary(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
+
         Permission.findAll()
             .then(function (permissoes) {
-                res.render("forms/form_register_secretary", { permissoes: permissoes })
+                res.render("forms/form_register_secretary", { permissoes: permissoes, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile  })
             });
     }
 
@@ -64,14 +71,18 @@ class SecretaryController {
         }
     }
 
-    secretaries(req, res) {
+    async secretaries(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
         Secretary.findAll({
             include: [{
                 model: User, as: 'userSecretary'
             }]
         })
             .then(function (secretaries) {
-                res.render("pages/secretary", { secretaries: secretaries })
+                res.render("pages/secretary", { secretaries: secretaries, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile})
             });
     }
 

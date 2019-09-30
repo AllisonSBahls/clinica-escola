@@ -1,13 +1,18 @@
 const Trainee = require('../model/Trainee');
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
+const Secretary = require('../model/Secretary');
+const Master = require('../model/Master');
 
 class TraineeController {
 
-    form_admin_trainee(req, res) {
+    async form_admin_trainee(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
 
-        res.render("forms/form_register_trainee")
-
+        res.render("forms/form_register_trainee", {masterProfile: masterProfile, secretaryrProfile: secretaryrProfile})
     }
 
     async trainee_register(req, res) {
@@ -62,13 +67,18 @@ class TraineeController {
         })
     }
 }
-    trainees(req, res) {
+    async trainees(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
+
         Trainee.findAll({
             include: [{
                 model: User, as: 'userTrainee'
             }]
         }).then(function (trainees) {
-            res.render("pages/trainee", { trainees: trainees })
+            res.render("pages/trainee", { trainees: trainees, secretaryrProfile:secretaryrProfile, masterProfile:masterProfile })
         });
     }
 

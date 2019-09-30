@@ -5,7 +5,6 @@
 <script src='js/locales/pt-br.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -16,25 +15,26 @@
             plugins: ['interaction', 'dayGrid'],
             //defaultDate: '2019-04-12',
             editable: true,
+            
             eventLimit: true, // allow "more" link when too many events
             events: [
                 '<% if (consultation.length > 0) {%>',
                 '<% for (var i = 0; i < consultation.length; i++) {%>',
                 {
                     id: '<%= consultation[i].id  %>',
-                    title: '<%= consultation[i].consultPatient.name %>',
+                    title: '<%= consultation[i].consultPatient.name%>',
                     start: '<%= moment(consultation[i].dateStart).format()  %>',
                     end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
                     extendedProps: {
                         trainee: '<%= consultation[i].consultTraineeId %>',
                         secretary: '<%= consultation[i].consultSecretaryId  %>',
                     },
-
+                    textColor: '#fff',
                 },
-
                 '<% } %>',
                 '<% } %>',
             ],
+
             eventClick: function (info) {
                 info.jsEvent.preventDefault();
                 $('#viewConsult #id').text(info.event.id);
@@ -57,6 +57,5 @@
 
         calendar.render();
     });
-
     
 </script>

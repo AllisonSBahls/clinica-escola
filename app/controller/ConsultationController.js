@@ -2,15 +2,19 @@ const Consultation = require('../model/Consultations');
 const Patient = require('../model/Patient');
 const Secretary = require('../model/Secretary');
 const Trainee = require('../model/Trainee');
+const Master = require('../model/Master');
+const IndexController = require('./IndexController');
 const moment= require( 'moment' );
 
-class ConsultationController {
+class ConsultationController extends IndexController {
 
    async consultations(req, res) {
         const patients = await Patient.findAll();
         const trainees = await Trainee.findAll();
 
-        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+        if (req.user.NivelPermissaoId == 1) {
+            const masterProfile = await Master.findOne({
+                where: {userMasterId: req.user.id} });
             Consultation.findAll({
                 include: [{
                     model: Patient, as: 'consultPatient',
@@ -20,11 +24,12 @@ class ConsultationController {
                     model: Secretary, as: 'consultSecretary',
                 }]
             }).then((consultation)=>{
-                res.render('partials/calendar', {consultation: consultation, patients: patients, trainees:trainees});
+                res.render('partials/calendar', {masterProfile: masterProfile, consultation: consultation, patients: patients, trainees:trainees});
             
             })
-        }else if(req.user.NivelPermissaoId == 3){
-
+        }else if(req.user.NivelPermissaoId == 2){
+            const secretaryProfile = await Secretary.findOne({
+                where: {userSecretaryId: req.user.id} });
             Consultation.findAll({
                 include: [{
                     model: Patient, as: 'consultPatient',
@@ -36,13 +41,31 @@ class ConsultationController {
                 where: {userTraineesId: patientId.id}
 
             }).then((consultation)=>{
-                res.render('partials/calendar', {consultation: consultation, patients: patients, trainees:trainees});
+                res.render('partials/calendar', {secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees:trainees});
+            
+            })
+        }else if(req.user.NivelPermissaoId == 3){
+            const traineeProfile = await Trainee.findOne({
+                where: {userTraineeId: req.user.id} });
+            Consultation.findAll({
+                include: [{
+                    where: {consultTraineeId: traineeProfile.id},
+                    model: Patient, as: 'consultPatient',
+                },{
+                    model: Trainee, as: 'consultTrainee',
+                },{
+                    model: Secretary, as: 'consultSecretary',
+                }],
+                where: {userTraineesId: patientId.id}
+
+            }).then((consultation)=>{
+                res.render('partials/calendar', {traineeProfile:traineeProfile, consultation: consultation, patients: patients, trainees:trainees});
             
             })
         }else if(req.user.NivelPermissaoId == 4){
             await Patient.findOne({
                 where: {userPatientId: req.user.id}
-            }).then((patient)=>{
+            }).then((patientProfile)=>{
             Consultation.findAll({
                 include: [{
                     model: Patient, as: 'consultPatient',
@@ -51,11 +74,13 @@ class ConsultationController {
                 },{
                     model: Secretary, as: 'consultSecretary',
                 }],
-                where: {consultPatientId: patient.id}
+                where: {consultPatientId: patientProfile.id}
                 }).then((consultation)=>{
-                     res.render('partials/calendar', {consultation: consultation, patients: patients, trainees:trainees});
+                     res.render('partials/calendar', {patientProfile:patientProfile, consultation: consultation, patients: patients, trainees:trainees});
             
-            })
+            }).catch((err)=>{
+                res.send('erro' + err);
+            });
         }).catch((err)=>{
             res.send(`erro`)
         })

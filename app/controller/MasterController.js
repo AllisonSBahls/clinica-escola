@@ -1,13 +1,19 @@
 const Master = require('../model/Master');
-const Permission = require('../model/Permissoes');
 const bcrypt = require('bcryptjs');
 const User = require('../model/User')
+const Secretary = require('../model/Secretary');
+
 class MasterController {
 
-    form_admin_master(req, res) {
-        res.render("forms/form_register_master", { erros: {} })
-    }
 
+    async form_admin_master(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
+        
+        res.render("forms/form_register_master", { erros: {}, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
+    }
     async master_register(req, res) {
 
         const { email, name, phone } = req.body;
@@ -52,7 +58,7 @@ class MasterController {
                 userMasterId: user.id
             }).then(() => {
                 req.flash("success_msg", "Supervisor cadastrado com sucesso");
-                res.redirect('/supervisor');
+                res.redirect('/supervisor', {masterProfile: masterProfile});
 
             }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro ao salvar o supervisor');
@@ -60,14 +66,18 @@ class MasterController {
             })
         }
     }
-    masters(req, res) {
+    async masters(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
         Master.findAll({
             include: [{
                 model: User, as: 'userMaster'
             }]
         })
             .then(function (masters) {
-                res.render("pages/master", { masters: masters })
+                res.render("pages/master", { masters: masters, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
             });
     }
 
@@ -83,13 +93,16 @@ class MasterController {
     }
 
     profileMaster(req, res) {
+        const masterProfile = Master.findOne({
+            where: {userMasterId: req.user.id} });
+
         Master.findAll({
             where: { 'id': req.params.id },
             include: [{
                 model: User, as: 'userMaster',
             },]
         }).then((master) => {
-            res.render("forms/form_profile_master", { master: master });
+            res.render("forms/form_profile_master", { master: master, masterProfile: masterProfile });
 
         }).catch((erro) => {
             res.send("erro" + erro);

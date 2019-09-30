@@ -1,11 +1,19 @@
 const Patient = require('../model/Patient');
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
+const Master = require('../model/Master');
+const Secretary = require('../model/Secretary');
+
 
 class SecretaryController {
 
-    form_admin_patient(req, res) {
-        res.render("forms/form_register_patient")
+    async form_admin_patient(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
+
+        res.render("forms/form_register_patient",  {masterProfile:masterProfile, secretaryrProfile:secretaryrProfile})
     }
 
     async patient_register(req, res) {
@@ -62,13 +70,18 @@ class SecretaryController {
         }
     }
 
-    patients(req, res) {
+    async patients(req, res) {
+        const masterProfile = await Master.findOne({
+            where: {userMasterId: req.user.id} });
+        const secretaryrProfile = await Secretary.findOne({
+            where: {userSecretaryId: req.user.id} });
+
         Patient.findAll({
             include: [{
                 model: User, as: 'userPatient'
             }]
         }).then(function (patients) {
-            res.render("pages/patient", { patients: patients})
+            res.render("pages/patient", { patients: patients, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile})
         }).catch(function (err){
             console.log('erro')
             res.redirect('partials/404');
