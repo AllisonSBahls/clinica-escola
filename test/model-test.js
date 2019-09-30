@@ -3,6 +3,8 @@ const Patient = require('../app/model/Patient');
 const Trainee = require('../app/model/Trainee');
 const Secretary = require('../app/model/Secretary');
 const Master = require('../app/model/Master');
+const Schedule = require('../app/model/Schedule');
+const PatientSchedule = require('../app/model/PatientSchedules')
 const Consultation = require('../app/model/Consultations');
 const User = require('../app/model/User');
 const bcrypt = require('bcryptjs');
@@ -33,6 +35,12 @@ describe('Criando as Tabelas', function () {
             done();
         })
     })
+    it('Criar Agendamentos', async function (done) {
+        await Schedule.sync({ force: true }).then(() => {
+            done();
+        })
+    })
+
     it('Criar Estagiario', async function (done) {
         await Trainee.sync({ force: true }).then(() => {
             done();
@@ -45,6 +53,11 @@ describe('Criando as Tabelas', function () {
     })
     it('Criar Consulta', async function (done) {
         await Consultation.sync({ force: true }).then(() => {
+            done();
+        })
+    })
+    it('Criar Horarios', async function (done) {
+        await PatientSchedule.sync({ force: true }).then(() => {
             done();
         })
     })

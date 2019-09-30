@@ -5,6 +5,9 @@ const Secretary = require('../model/Secretary');
 const Master = require('../model/Master');
 const Trainee = require('../model/Trainee');
 const Consultation = require('../model/Consultations');
+const Schedule = require('../model/Schedule');
+const teste = require('../model/PatientSchedules');
+
 const moment= require( 'moment' );
 const { Op } = require('sequelize')
 
@@ -35,6 +38,8 @@ class IndexController {
                 model: Secretary, as: 'consultSecretary',
             }]
         });
+        const schedule = await Schedule.findAll();
+        console.log(schedule)
         Consultation.findAll({
             include: [{
                 model: Patient, as: 'consultPatient',

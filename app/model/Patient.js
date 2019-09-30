@@ -1,4 +1,5 @@
 const bd = require('./dbConnection');
+const Schedules = require('./Schedule');
 const User = require("./User");
 
 const Patient = bd.sequelize.define('patients', {

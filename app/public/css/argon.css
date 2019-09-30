@@ -8012,8 +8012,7 @@ button.bg-dark:focus
 
 .bg-default
 {
-    background-color: blue !important;
-}
+    background-image: linear-gradient(to right top, #5f9b7d, #4b9f9a, #4ea0b4, #6b9ec3, #909ac5);}
 
 a.bg-default:hover,
 a.bg-default:focus,
@@ -15026,8 +15025,9 @@ button.bg-lighter:focus
 }
 
 .bg-gradient-primary
-{
-    background: linear-gradient(87deg, #44da92 0, #007b3e 100%) !important;
+{ 
+    /* background: linear-gradient(87deg, #44da92 0, #007b3e 100%) !important; */
+ background-image: linear-gradient(to right bottom, #5f9b7d, #4b9f9a, #4ea0b4, #6b9ec3, #909ac5);
 }
 
 .bg-gradient-secondary
@@ -15085,10 +15085,10 @@ button.bg-lighter:focus
     background: linear-gradient(87deg, black 0, black 100%) !important;
 }
 
-.bg-gradient-blue
+/* .bg-gradient-blue
 {
     background: linear-gradient(87deg, #44da92 0, #007b3e 100%) !important;
-}
+} */
 
 .bg-gradient-indigo
 {
@@ -15381,10 +15381,10 @@ button.section-darker:focus
     background-color: black !important;
 }
 
-.bg-gradient-primary
+/* .bg-gradient-primary
 {
     background: linear-gradient(87deg, #44da92 0, #007b3e 100%) !important;
-}
+} */
 
 .bg-gradient-secondary
 {
