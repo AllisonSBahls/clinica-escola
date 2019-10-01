@@ -3,10 +3,10 @@ const Patient = require('../app/model/Patient');
 const Trainee = require('../app/model/Trainee');
 const Secretary = require('../app/model/Secretary');
 const Master = require('../app/model/Master');
-const Schedule = require('../app/model/Schedule');
-const PatientSchedule = require('../app/model/PatientSchedules')
+// const Schedule = require('../app/model/Schedules');
 const Consultation = require('../app/model/Consultations');
 const User = require('../app/model/User');
+const Procedure = require('../app/model/Procedure')
 const bcrypt = require('bcryptjs');
 
 var generateHash = function (password) {
@@ -19,6 +19,15 @@ describe('Criando as Tabelas', function () {
             done();
         })
 
+    })
+    it('Criar Procedimentos', async function (done) {
+        Procedure.sync({ force: true }).then(() => {
+            return Procedure.create({
+                typeProcedure: 'Triagem',
+            }).then(()=>{
+            done();
+          });
+        });
     })
     it('Criar Usuario', async function (done) {
         await User.sync({ force: true }).then(() => {
@@ -35,32 +44,30 @@ describe('Criando as Tabelas', function () {
             done();
         })
     })
-    it('Criar Agendamentos', async function (done) {
-        await Schedule.sync({ force: true }).then(() => {
-            done();
-        })
-    })
 
     it('Criar Estagiario', async function (done) {
         await Trainee.sync({ force: true }).then(() => {
             done();
         })
     })
+  
     it('Criar Paciente', async function (done) {
         await Patient.sync({ force: true }).then(() => {
             done();
         })
     })
+    // it('Criar Agendamentos', async function (done) {
+    //     await Schedule.sync({ force: true }).then(() => {
+    //         done();
+    //     })
+    // })
+
     it('Criar Consulta', async function (done) {
         await Consultation.sync({ force: true }).then(() => {
             done();
         })
     })
-    it('Criar Horarios', async function (done) {
-        await PatientSchedule.sync({ force: true }).then(() => {
-            done();
-        })
-    })
+
 })
 describe('Verificando os cadastro no Model', function () {
     it('should list ALL Permissao GET', function (done) {

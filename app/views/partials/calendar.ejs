@@ -23,7 +23,7 @@
         <!-- Header -->
         <% include ../partials/header %>
 
-        <div style = "width: 90%; margin: auto" id='calendar-container' class="pt-4">
+        <div style="width: 90%; margin: auto" id='calendar-container' class="pt-4">
             <div id='calendar'></div>
         </div>
         <div class="modal fade" id="viewConsult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -74,6 +74,20 @@
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-lg-6">
+
+                                        <label class="form-control-label"></label>
+                                        <div class="form-group">
+                                            <input type="radio" id="typeSchedule" name="typeSchedule" value="1"
+                                                selected>Consulta<br>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="radio" id="typeSchedule" name="typeSchedule"
+                                                value="2">Agendamento<br>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6">
+
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-username">Paciente</label>
                                             <select class="form-control" name="patientId" id="patientId"
@@ -155,6 +169,7 @@
                     title: '<%= consultation[i].consultPatient.name %>',
                     start: '<%= moment(consultation[i].dateStart).format()  %>',
                     end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
+                    color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         trainee: '<%= consultation[i].consultTraineeId %>',
                         secretary: '<%= consultation[i].consultSecretaryId  %>',
@@ -164,6 +179,18 @@
 
                 '<% } %>',
                 '<% } %>',
+
+                // '<% //if (schedules.length > 0) {%>',
+                // '<% //for (var i = 0; i < schedules.length; i++) {%>',
+                // {
+                //     id: '<%=// schedules[i].id  %>',
+                //     title: '<%=// schedules[i].schedulePatient %>',
+                //     start: '<%=// moment(schedules[i].schedulePatient.dateStart).format()  %>',
+                // },
+                // '<% //console.log(schedules[i].schedulePatient.color) %>',
+
+                // '<% //} %>',
+                // '<// } %>',
             ],
             eventClick: function (info) {
                 info.jsEvent.preventDefault();

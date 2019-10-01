@@ -1,6 +1,6 @@
 const bd = require('./dbConnection');
-const Schedules = require('./Schedule');
 const User = require("./User");
+const Schedules = require("./Schedules");
 
 const Patient = bd.sequelize.define('patients', {
     name: {
@@ -18,6 +18,7 @@ const Patient = bd.sequelize.define('patients', {
 });
 
 Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'}});
+Patient.hasMany(Schedules, {as : 'schedulePatient', foreingKey: {name: 'fk_schedule_patient'}});
 
 
 //Patient.sync({force: true});
