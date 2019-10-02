@@ -43,7 +43,7 @@ class SecretaryController {
             erros.push({ texto: 'Senha invalida' })
         }
         if (erros.length > 0) {
-            res.render('forms/form_register_master', { erros: erros })
+            res.render('forms/form_register_patient', { erros: erros, masterProfile:{} })
         } else {
             //Registrar o usuario do supervisor
             const user = await User.create({

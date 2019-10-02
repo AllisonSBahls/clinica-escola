@@ -11,7 +11,6 @@ class ConsultationController extends IndexController {
     async consultations(req, res) {
         const patients = await Patient.findAll();
         const trainees = await Trainee.findAll();
-
         if (req.user.NivelPermissaoId == 1) {
             const masterProfile = await Master.findOne({
                 where: { userMasterId: req.user.id }
@@ -107,17 +106,19 @@ class ConsultationController extends IndexController {
         })
     }
 
-    consult_save(req, res) {
+    async consult_save(req, res) {
         //converter formato brasileiro para SQL
+
+
         var newDt = moment(req.body.dateStart, "DD/MM/YYYY HH:mm:ss")
         var datetime = moment(newDt).format('YYYY-MM-DD HH:mm:ss');
 
-        if (req.body.typeSchedule == 1) {
+        if (req.body.typeSchedule == 1 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             Consultation.create({
                 dateStart: datetime,
                 consultPatientId: req.body.patientId,
                 consultTraineeId: req.body.traineeId,
-                color: '#0AAA25',
+                color: '#2B56E2',
                 typeSchedule: req.body.typeSchedule,
             }).then(function () {
                 req.flash("success_msg", "Consulta marcada com sucesso");
@@ -127,21 +128,24 @@ class ConsultationController extends IndexController {
                 res.redirect('/calendar');
 
             })
-        } else if(req.body.typeSchedule == 2){
-            Consultation.create({
+        } else{
+            await Patient.findOne({
+                where: {userPatientId: req.user.id} 
+            }).then((patient) => {
+                Consultation.create({
                 dateStart: datetime,
-                consultPatientId: req.body.patientId,
-                consultTraineeId: req.body.traineeId,
-                color: '#BCFCB0',
-                typeSchedule: req.body.typeSchedule,
+                consultPatientId: patient.id,
+                typeSchedule: 2,
+                color: '#1FA576',
             }).then(function () {
-                req.flash("success_msg", "Consulta marcada com sucesso");
+                req.flash("success_msg", "Agendamento marcado com sucesso");
                 res.redirect('/calendar');
             }).catch(function (err) {
                 req.flash("error_msg", "Erro ao marcar a consulta");
                 res.redirect('/calendar');
 
             })
+        })
         }
     }
 }

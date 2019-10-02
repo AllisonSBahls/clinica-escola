@@ -72,7 +72,7 @@
                   <% for (var i = 0; i < consult.length; i++) {%>
                       <label class="form-control-label">Paciente: <%= consult[i].consultPatient.name %></label>
                       <label class="form-control-label">Data: <%= moment(consult[i].dateStart).format('DD/MM/YYYY')%> Horario: <%=moment(consult[i].dateStart).format('HH:mm') %></label>
-                      <label class="form-control-label">Atendente: <%= consult[i].consultTrainee.name%></label>
+                      <label class="form-control-label">Atendente: <%= consult[i].consultTrainee%></label>
                       <hr class="my-2" />
                       <% } %>
                   <% } %>
@@ -100,10 +100,9 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Horario</th>
+                    <th scope="col">Estagiário</th>
                   </tr>
                 </thead>
                 <tbody>

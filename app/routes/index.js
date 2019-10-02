@@ -53,7 +53,7 @@ router.post('/save', async (req, res)=>{
     controller.signup_save(req, res);
 });
 
-router.get('/calendar',(req, res)=>{    
+router.get('/calendar', users, (req, res)=>{    
    consult.consultations(req, res)
 })
 

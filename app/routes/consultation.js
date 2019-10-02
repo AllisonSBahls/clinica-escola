@@ -6,7 +6,7 @@ const {users} = require('../helpers/auth')
 const ConsultController = require('../controller/ConsultationController');
 const controller = new ConsultController();
 
-router.post('/save', (req, res) =>{
+router.post('/save', users, (req, res) =>{
     controller.consult_save(req, res)
 })
 
