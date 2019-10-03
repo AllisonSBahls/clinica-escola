@@ -7,7 +7,7 @@ const IndexController = require('./IndexController');
 const moment = require('moment');
 
 class ConsultationController extends IndexController {
-
+    // Site para fotos Lorem Picsum
     async consultations(req, res) {
         const patients = await Patient.findAll();
         const trainees = await Trainee.findAll();
@@ -128,24 +128,38 @@ class ConsultationController extends IndexController {
                 res.redirect('/calendar');
 
             })
-        } else{
-            await Patient.findOne({
-                where: {userPatientId: req.user.id} 
-            }).then((patient) => {
+        } else if (req.body.typeSchedule == 2 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
                 Consultation.create({
                 dateStart: datetime,
-                consultPatientId: patient.id,
-                typeSchedule: 2,
+                consultPatientId: req.body.patientId,
+                consultTraineeId: req.body.traineeId,
+                typeSchedule: req.body.typeSchedule,
                 color: '#1FA576',
             }).then(function () {
                 req.flash("success_msg", "Agendamento marcado com sucesso");
                 res.redirect('/calendar');
             }).catch(function (err) {
-                req.flash("error_msg", "Erro ao marcar a consulta");
+                req.flash("error_msg", "Erro ao marcar o agendamento");
                 res.redirect('/calendar');
 
             })
-        })
+        }else{
+            await Patient.findOne({
+                where: {userPatientId: req.user.id}
+            }).then((patient)=>{
+                Consultation.create({
+                    dateStart: datetime,
+                    consultPatientId: patient.id,
+                    color: '#1FA576',
+                }).then(function () {
+                    req.flash("success_msg", "Agendamento marcado com sucesso");
+                    res.redirect('/calendar');
+                }).catch(function (err) {
+                    req.flash("error_msg", "Erro ao marcar o agendamento");
+                    res.redirect('/calendar');
+    
+                })
+            })
         }
     }
 }
