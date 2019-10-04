@@ -126,7 +126,7 @@ class IndexController {
 
         const consult = await Consultation.findAll({
             where: {
-                traineeConsultId: traineeProfile.id
+                consultTraineeId: traineeProfile.id
             },
             where: {
                 dateStart: {
@@ -143,7 +143,7 @@ class IndexController {
 
         Consultation.findAll({
             where: {
-                traineeConsultId: traineeProfile.id
+                consultTraineeId: traineeProfile.id
             },
             include: [{
                 model: Patient, as: 'consultPatient',

@@ -7,6 +7,7 @@ const master = require('./app/routes/master');
 const trainee = require('./app/routes/trainee');
 const patient = require('./app/routes/patient');
 const users = require('./app/routes/user');
+const reports = require('./app/routes/reports');
 const consultation = require('./app/routes/consultation');
 const index = require('./app/routes/index');
 const session = require('express-session');
@@ -52,6 +53,7 @@ app.use(bodyParser.json());
 //Rotas
 app.use('/', index);
 app.use('/permissao', permissao);
+app.use('/relatorios', reports);
 app.use('/recepcionista', secretary);
 app.use('/supervisor', master);
 app.use('/estagiario', trainee);

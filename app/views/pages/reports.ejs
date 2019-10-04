@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<% include ../layout %>
+
+<body>
+    <!-- Sidenav -->
+    <% include ../partials/sidebar %>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <% include ../partials/navbar %>
+        <!-- Header -->
+        <% include ../partials/header %>
+        <!-- Page content -->
+
+        <div style="justify-content: center !important" class="row mt-4">
+            <div class="col-xl-11 mb-5 mb-xl-0">
+                <div class="card shadow">
+                        <% include ../partials/message %>
+
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Pacientes</h3>
+                            </div>
+                            <a href="/paciente/register"  class="btn btn-outline-success">Cadastrar</a>
+                            <a href=""  class="btn btn-outline-primary">Filtrar</a>
+                        </div>
+                    </div>
+                    
+
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Data do Relatório</th>
+                                    <th scope="col">Paciente</th>
+                                    <th scope="col">Supervisor</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+
+                                    <!-- <th scope="col">Bounce rate</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(patients.length > 0 ) {%>
+                                <% for (var i = 0; i < patients.length; i++) { %>
+                                <tr>
+                                    <th scope="row">
+                                        <%= patients[i].name %>
+                                    </th>
+                                    <td>
+                                        <%= patients[i].userPatient.email %>
+                                    </td>
+                                    <td>
+                                        <%= patients[i].phone %>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger delete"
+                                            onclick="return confirm('Você confirma a exclusão?')"
+                                            href="paciente/delete/<%= patients[i].id %>">Excluir</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary primary"
+                                            href="paciente/profile/<%= patients[i].id %>">Visualizar</a>
+                                    </td>
+
+
+                                    <% } %>
+                                    <% } %>
+                                    <!-- <td>
+                              <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                            </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <% include ../partials/footer %>
+
+    </div>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <% include ../partials/scripts %>
+
+</body>
+
+</html>

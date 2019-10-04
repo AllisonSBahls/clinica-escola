@@ -18,6 +18,7 @@
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "hybrid-crypto-js": "^0.2.2",
     "moment": "^2.24.0",
     "mysql2": "^1.7.0",
     "passport": "^0.4.0",
