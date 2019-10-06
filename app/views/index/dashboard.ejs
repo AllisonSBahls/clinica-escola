@@ -14,7 +14,7 @@
     <!-- Page content -->
     <div class="container-fluid mt--7 pt-md-6">
       <div class="row">
-        <div class="col-lg-6 mb-5 mb-xl-0">
+        <div class="col-lg-7 mb-5 mb-xl-0">
           <div class="card bg-gradient-default shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
@@ -25,29 +25,33 @@
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                       <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                      <a href="#" class="nav-link py-1 px-1 active" data-toggle="tab">
+                      <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
                         <span class="d-none d-md-block">Nova Consulta</span>
                       </a>
                     </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                        <a href="#" class="nav-link py-1 px-1 active" data-toggle="tab">
-                            <span class="d-none d-md-block">Ver Calendario</span>
-                        </a>
-                      </li>
+                      <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                          <a href="#" class="nav-link py-1 px-1 active" data-toggle="tab">
+                              <span class="d-none d-md-block">Ver Consultas</span>
+                          </a>
+                        </li>
+                        <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                            <a href="#" class="nav-link py-1 px-1 deactive" data-toggle="tab">
+                                <span class="d-none d-md-block">Ver Agendamentos</span>
+                            </a>
+                          </li>
                   </ul>
                 </div>
               </div>
             </div>
             
             <div class="card-body">
-              <% include ../partials/custom %>
-              <div style="font-size: 14px" id='calendar'></div>
+              <div style="font-size: 14px" id='calendarDashboard'></div>
 
 
             </div>
           </div>
         </div>
-        <div class="col-xl-6" id="viewConsultDashboard">
+        <div class="col-xl-5" id="viewConsultDashboard">
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">  
@@ -126,44 +130,70 @@
             </div>
           </div>
         </div>
-        
-        <div class="modal fade" id="viewConsult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detalhes da Consulta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <dl class="row">
-                        <dt class="col-sm-3">Número da Consulta</dt>
-                        <dd class="col-sm-9" id="id"></dd>
 
-                        <dt class="col-sm-3">Paciente</dt>
-                        <dd class="col-sm-9" id="patient"></dd>
-
-                        <dt class="col-sm-3">Data/Hora da Consulta</dt>
-                        <dd class="col-sm-9" id="dateStart"></dd>
-
-                        <dt class="col-sm-3">Estagiario</dt>
-                        <dd class="col-sm-9" id="trainee"></dd>
-                    </dl>
-
-                </div>
-            </div>
-        </div>
-    </div>
-        
+    <% include ../partials/schedulesModal %>  
       </div>
       <!-- Footer -->
       <% include ../partials/footer %>
     </div>
+
   </div>
   <!-- Include scripts -->
   <% include ../partials/scripts %>
+
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendarDashboard');
+
+        var calendarDashboard = new FullCalendar.Calendar(calendarEl, {
+            locale: 'pt-br',
+            plugins: ['interaction', 'dayGrid', 'moment'],
+            //defaultDate: '2019-04-12',
+            editable: true,
+            
+            eventLimit: true, // allow "more" link when too many events
+            events: [
+                '<% if (consultation.length > 0) {%>',
+                '<% for (var i = 0; i < consultation.length; i++) {%>',
+                {
+                    id: '<%= consultation[i].id  %>',
+                    title: '<%= consultation[i].consultPatient.name%>',
+                    start: '<%= moment(consultation[i].dateStart).format()  %>',
+                    end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
+                    color: '<%= consultation[i].color  %>',
+                    extendedProps: {
+                        trainee: '<%= consultation[i].consultTraineeId %>',
+                        secretary: '<%= consultation[i].consultSecretaryId  %>',
+                    },
+                    textColor: '#fff',
+                },
+                '<% } %>',
+                '<% } %>',
+            ],
+
+            eventClick: function (info) {
+                info.jsEvent.preventDefault();
+                $('#viewConsult #id').text(info.event.id);
+                $('#viewConsult #patient').text(info.event.title);
+                $('#viewConsult #dateStart').text(info.event.start.toLocaleString());
+                $('#viewConsult #trainee').text(info.event.extendedProps.trainee);
+                $('#viewConsult #secretary').text(info.event.extendedProps.secretary);
+                $('#viewConsult').modal('show');
+            },
+
+            selectable: true,
+            select: function (info) {
+                $('#register #dateStart').val(info.start.toLocaleString());
+                $('#viewConsultDashboard #dateConsult').val(info.start.toLocaleString());
+                // $('#register').modal('show');
+            },
+        
+        });
+
+        calendarDashboard.render();
+    });
+</script>
 
 </html>

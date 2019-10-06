@@ -3,23 +3,25 @@ const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
 const moment = require('moment');
 const crypto = require('crypto');
+const alg = 'aes-256-ctr';
+const pwd = '$2fdp$vfs.)vk4DS$2fdp$vfs.)vk4DS'
 
-var RSA = require('hybrid-crypto-js').RSA;
-var Crypt = require('hybrid-crypto-js').Crypt;
+// var RSA = require('hybrid-crypto-js').RSA;
+// var Crypt = require('hybrid-crypto-js').Crypt;
 
-var crypt = new Crypt();
-var rsa = new RSA();
+// var crypt = new Crypt();
+// var rsa = new RSA();
 
-var entropy = 'Random string, integer or float';
-var crypt = new Crypt({ entropy: entropy });
-var rsa = new RSA({ entropy: entropy });
 
-var crypt = new Crypt({ md: 'sha512' });
+// rsa.generateKeyPair(function (keyPair) {
+//         publicKey = keyPair.publicKey;
+//         privateKey = keyPair.privateKey;
+// })
 
 
 class ReportController {
-
-    async report(req, res) {
+   
+    async report_register(req, res) {
         const traineeProfile = await Trainee.findOne({
             where: { userTraineeId: req.user.id }
         });
@@ -31,51 +33,97 @@ class ReportController {
     }
 
     async report_save(req, res) {
-         let reportCrypt = req.body.report; 
-        // const cipher = crypto.createCipher(alg, pwd)
-        // const crypted = cipher.update(reportCrypt, 'utf8', 'hex')
-        // console.log(crypted)
-        // const decipher = crypto.createDecipher(alg, pwd)
-        // const reportDecrypt = decipher.update(crypted, 'hex', 'utf8')
-        // console.log(reportDecrypt)
-
-        // var decryptStringWithRsaPrivateKey = function (toDecrypt, relativeOrAbsolutePathtoPrivateKey) {
-        //     var absolutePath = path.resolve(relativeOrAbsolutePathtoPrivateKey);
-        //     var privateKey = fs.readFileSync(absolutePath, "utf8");
-        //     var buffer = new Buffer(toDecrypt, "base64");
-        //     var decrypted = crypto.privateDecrypt(privateKey, buffer);
-        //     return decrypted.toString("utf8");
-        // };
-
-        // module.exports = {
-        //     encryptStringWithRsaPublicKey: encryptStringWithRsaPublicKey,
-        //     decryptStringWithRsaPrivateKey: decryptStringWithRsaPrivateKey
-        // }
-
+        let reportCrypt = req.body.report;
         let traineeProfile = await Trainee.findOne({
             where: { userTraineeId: req.user.id }
         });
+       
+    //        var privateKey = keyPair.privateKey;
 
-        rsa.generateKeyPair(function(keyPair) {
-            var publicKey = keyPair.publicKey;
-            var privateKey = keyPair.privateKey;
-        
-            var encrypted = crypt.encrypt(publicKey, reportCrypt);
-            var decrypted = crypt.decrypt(privateKey, encrypted);
-            console.log(decrypted)
+            // var encrypted = crypt.encrypt(publicKey, reportCrypt);
+  //          var decrypted = crypt.decrypt(privateKey, encrypted);
+//           console.log(decrypted)
+            const iv = crypto.randomBytes(16)
+            const cipher = crypto.createCipheriv(alg, pwd, iv)
+            const cryptedReport = cipher.update(reportCrypt, 'utf8', 'hex') + cipher.final('hex');
+            const crypted = iv.toString('hex') +':'+cryptedReport;
             Report.create({
-            reports: encrypted,
-            dateSend: moment(),
-            reportTraineeId: traineeProfile.id,
-            reportMasterId: req.body.masterId,
-        }).then(function () {
-            res.redirect('/dashboard');
-        }).catch(function (erro) {
-            res.send("erro" + erro);
+                reports: crypted,
+                dateSend: moment(),
+                reportTraineeId: traineeProfile.id,
+                reportMasterId: req.body.masterId,
+            }).then(function () {
+                res.redirect('/relatorios');
+            }).catch(function (erro) {
+                res.send("erro" + erro);
+            })
+        //  });
+    }
+
+    async report_find(req, res) {
+ 
+        let traineeProfile = await Trainee.findOne({
+            where: { userTraineeId: req.user.id }
+        });
+        let masterProfile = await Master.findOne({
+            where: { userMasterId: req.user.id }
+        });
+
+
+        Report.findOne({
+            where: { 'id': req.params.id },
+            include: [{
+                model: Master, as: 'reportMaster',
+            }, {
+                model: Trainee, as: 'reportTrainee',
+
+            }]
+        }).then((report) => {     
+            const parts = report.reports.split(':')
+            const decipher = crypto.createDecipheriv(alg, pwd, new Buffer.from(parts[0], 'hex')); 
+            const reportDecrypt =  decipher.update(parts[1], 'hex', 'utf8') + decipher.final('utf8')
+            res.render('forms/form_report_view', { reportDecrypt:reportDecrypt, report: report, traineeProfile: traineeProfile, masterProfile: masterProfile })
+        }).catch((err) => {
+            res.send('erros' + err);
         })
-    });
 
     }
+
+    async reports(req, res) {
+        if (req.user.NivelPermissaoId == 3) {
+            let traineeProfile = await Trainee.findOne({
+                where: { userTraineeId: req.user.id }
+            });
+            Report.findAll({
+                where: { reportTraineeid: traineeProfile.id },
+                include: [{
+                    model: Master, as: 'reportMaster'
+                }]
+            }).then((reports) => {
+                res.render('pages/reports', { reports: reports, traineeProfile: traineeProfile })
+            }).catch((err) => {
+                res.send('erros' + err);
+            })
+
+        } else if (req.user.NivelPermissaoId == 1) {
+            let masterProfile = await Master.findOne({
+                where: { userMasterId: req.user.id }
+            });
+            Report.findAll({
+                where: { reportMasterid: masterProfile.id },
+                include: [{
+                    model: Trainee, as: 'reportTrainee'
+                }]
+            }).then((reports) => {
+                res.render('pages/reports', { reports: reports, masterProfile: masterProfile })
+            }).catch((err) => {
+                res.send('erros' + err);
+            })
+        } else {
+            res.render('partials/404');
+        }
+    }
+
 }
 
 module.exports = ReportController;

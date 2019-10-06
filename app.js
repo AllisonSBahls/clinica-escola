@@ -10,6 +10,7 @@ const users = require('./app/routes/user');
 const reports = require('./app/routes/reports');
 const consultation = require('./app/routes/consultation');
 const index = require('./app/routes/index');
+const test = require('./app/routes/test');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -60,7 +61,7 @@ app.use('/estagiario', trainee);
 app.use('/paciente', patient);
 app.use('/user', users);
 app.use('/consultation', consultation);
-
+app.use('/test', test);
 //Rotas não encontradas
 // app.use(function(req, res, next) {
 // 	var err = new Error('Página não encontrada');
