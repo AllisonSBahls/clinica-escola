@@ -10,5 +10,8 @@ router.post('/save', users, (req, res) =>{
     controller.consult_save(req, res)
 })
 
+router.post('/delete', users, (req, res) =>{
+    controller.deleteSchedules(req, res)
+});
 
 module.exports = router;

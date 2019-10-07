@@ -18,9 +18,9 @@
         <div style="width: 80%; margin: auto;" id='calendar-container' class="pt-4">
             <div id='calendarSchedules'></div>
         </div>
-        
+
         <% include ./schedulesModal %>
-        </div>
+    </div>
     </div>
 
 
@@ -31,7 +31,7 @@
 <% include ./scripts %>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendarSchedules');
 
         var calendarSchedules = new FullCalendar.Calendar(calendarEl, {
@@ -58,8 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
-                        trainee: '<%= consultation[i].consultTraineeId %>',
-                        secretary: '<%= consultation[i].consultSecretaryId  %>',
+                        trainee: '<%= consultation[i].consultTrainee.name %>',
+                        description: '<%= consultation[i].description  %>',
+                        typeSchedule: '<%= consultation[i].typeSchedule  %>',
                     },
                     textColor: '#fff',
 
@@ -72,20 +73,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
             eventClick: function (info) {
                 info.jsEvent.preventDefault();
-                $('#viewConsult #id').text(info.event.id);
-                $('#viewConsult #patient').text(info.event.title);
-                 $('#viewConsult #dateStart').text(info.event.start.toLocaleString() );
-                $('#viewConsult #trainee').text(info.event.extendedProps.trainee);
-                $('#viewConsult #secretary').text(info.event.extendedProps.secretary);
-                $('#viewConsult').modal('show');
+                if (info.event.extendedProps.typeSchedule == 1) {
+                    $('#viewConsult #id').val(info.event.id);
+                    $('#viewConsult #patient').val(info.event.title);
+                    $('#viewConsult #dateStart').val(info.event.start.toLocaleString());
+                    $('#viewConsult #trainee').val(info.event.extendedProps.trainee);
+                    $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
+                    $('#viewConsult #description').val(info.event.extendedProps.description);
+                    $('#viewConsult').modal('show');
 
+                } else if (info.event.extendedProps.typeSchedule == 2) {
+                    $('#viewConsultPatient #id').val(info.event.id);
+                    $('#viewConsultPatient #patient').val(info.event.title);
+                    $('#viewConsultPatient #dateStart').val(info.event.start.toLocaleString());
+                    $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
+                    $('#viewConsultPatient').modal('show');
+                }
             },
 
             selectable: true,
             select: function (info) {
-
                 // alert('selected ' + info.start.toLocaleString());
-                
                 $('#register #dateStart').val(info.start.toLocaleString());
                 $('#viewConsultDashboard #dateConsult').val(info.start.toLocaleString());
                 $('#register').modal('show');

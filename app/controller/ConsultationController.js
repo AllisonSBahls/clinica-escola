@@ -24,7 +24,7 @@ class ConsultationController extends IndexController {
                     model: Secretary, as: 'consultSecretary',
                 }]
             }).then((consultation) => {
-                res.render('partials/calendar', {masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('partials/calendar', { masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             })
         } else if (req.user.NivelPermissaoId == 2) {
             const secretaryProfile = await Secretary.findOne({
@@ -108,8 +108,6 @@ class ConsultationController extends IndexController {
 
     async consult_save(req, res) {
         //converter formato brasileiro para SQL
-
-
         var newDt = moment(req.body.dateStart, "DD/MM/YYYY HH:mm:ss")
         var datetime = moment(newDt).format('YYYY-MM-DD HH:mm:ss');
 
@@ -128,8 +126,8 @@ class ConsultationController extends IndexController {
                 res.redirect('/calendar');
 
             })
-        } else if (req.body.typeSchedule == 2 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
-                Consultation.create({
+        } else if (req.body.typeSchedule == 2 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+            Consultation.create({
                 dateStart: datetime,
                 consultPatientId: req.body.patientId,
                 consultTraineeId: req.body.traineeId,
@@ -143,10 +141,10 @@ class ConsultationController extends IndexController {
                 res.redirect('/calendar');
 
             })
-        }else{
+        } else {
             await Patient.findOne({
-                where: {userPatientId: req.user.id}
-            }).then((patient)=>{
+                where: { userPatientId: req.user.id }
+            }).then((patient) => {
                 Consultation.create({
                     dateStart: datetime,
                     consultPatientId: patient.id,
@@ -157,9 +155,37 @@ class ConsultationController extends IndexController {
                 }).catch(function (err) {
                     req.flash("error_msg", "Erro ao marcar o agendamento");
                     res.redirect('/calendar');
-    
+
                 })
             })
+        }
+    }
+
+    async deleteSchedules(req, res) {
+            Consultation.destroy({
+                where: { id: req.body.consultationId }
+            }).then((consult) => {
+                req.flash("success_msg", "Agendamento Cancelado com Sucesso")
+                res.redirect('/dashboard')
+            }).catch((err) => {
+                res.send("Não é possivel cancelar o agendamento" + err)
+            })
+
+    }
+
+    async updateSchedule(req, res){
+        if (req.body.typeSchedule == 1) {
+            Consultation.update({
+                where: {id: req.body.typeScheduleSchedules },
+                typeSchedule: 3,
+                color: '992F2F'
+            }).then((consult) => {
+                req.flash("success_msg", "Agendamento Cancelado com Sucesso")
+                res, redirect('/calendar')
+            }).catch((err) => {
+                res.send("Não é possivel cancelar o agendamento")
+            })
+
         }
     }
 }

@@ -10,6 +10,13 @@ $(document).ready(function () {
     };
 });
 
+function update() {
+    document.getElementById("updateSchedules").submit();
+}
+
+function deletar() {
+    document.getElementById("deleteSchedules").submit();
+}
 
 
     

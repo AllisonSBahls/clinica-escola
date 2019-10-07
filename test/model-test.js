@@ -56,13 +56,12 @@ describe('Criando as Tabelas', function () {
             done();
         })
     })
-    // it('Criar Agendamentos', async function (done) {
-    //     await Schedule.sync({ force: true }).then(() => {
-    //         done();
-    //     })
-    // })
-
     it('Criar Consulta', async function (done) {
+        await Consultation.sync({ force: true }).then(() => {
+            done();
+        })
+    })
+    it('Criar Reports', async function (done) {
         await Consultation.sync({ force: true }).then(() => {
             done();
         })
@@ -112,6 +111,7 @@ describe('Verificando os cadastro no Model', function () {
                 done();
             })
     })
+
 
     it('Registar um PACIENTE e seu Usuário', function (done) {
         var secretaryPassword = generateHash('12345');
