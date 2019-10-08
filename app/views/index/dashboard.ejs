@@ -164,7 +164,7 @@
                     end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
-                        trainee: '<%= consultation[i].consultTrainee.name %>',
+                        trainee: '<%= consultation[i].consultTrainee %>',
                         secretary: '<%= consultation[i].consultSecretaryId  %>',
                         description: '<%= consultation[i].description  %>',
                         typeSchedule: '<%= consultation[i].typeSchedule  %>',

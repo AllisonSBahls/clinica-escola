@@ -37,6 +37,10 @@ class IndexController {
             }]
         });
         Consultation.findAll({
+            where: {
+                typeSchedule: {
+                    [Op.ne]: 3 }
+                },
             include: [{
                 model: Patient, as: 'consultPatient',
             }, {

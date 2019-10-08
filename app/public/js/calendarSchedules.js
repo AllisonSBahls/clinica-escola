@@ -17,6 +17,10 @@ function update() {
 function deletar() {
     document.getElementById("deleteSchedules").submit();
 }
+function cancelar() {
+    document.getElementById("cancelSchedules").submit();
+}
+
 
 
     

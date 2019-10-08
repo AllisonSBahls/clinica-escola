@@ -10,6 +10,14 @@ const Reports = bd.sequelize.define('reports', {
     dateSend: {
         type: bd.Sequelize.DATE,
         allowNull: false,
+    },
+    namePatient: {
+        type: bd.Sequelize.DATE,
+        allowNull: false,
+    },
+    infoPatient: {
+        type: bd.Sequelize.DATE,
+        allowNull: true,
     }
 });
 

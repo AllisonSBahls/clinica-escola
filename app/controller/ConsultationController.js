@@ -5,6 +5,7 @@ const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
 const IndexController = require('./IndexController');
 const moment = require('moment');
+const { Op } = require('sequelize')
 
 class ConsultationController extends IndexController {
     // Site para fotos Lorem Picsum
@@ -16,6 +17,10 @@ class ConsultationController extends IndexController {
                 where: { userMasterId: req.user.id }
             });
             Consultation.findAll({
+                where: {
+                    typeSchedule: {
+                        [Op.ne]: 3 }
+                    },
                 include: [{
                     model: Patient, as: 'consultPatient',
                 }, {
@@ -31,6 +36,11 @@ class ConsultationController extends IndexController {
                 where: { userSecretaryId: req.user.id }
             });
             Consultation.findAll({
+                where: {
+                    typeSchedule: {
+                        [Op.ne]: 3
+                    },
+                },
                 include: [{
                     model: Patient, as: 'consultPatient',
                 }, {
@@ -162,31 +172,31 @@ class ConsultationController extends IndexController {
     }
 
     async deleteSchedules(req, res) {
-            Consultation.destroy({
-                where: { id: req.body.consultationId }
-            }).then((consult) => {
-                req.flash("success_msg", "Agendamento Cancelado com Sucesso")
-                res.redirect('/dashboard')
-            }).catch((err) => {
-                res.send("Não é possivel cancelar o agendamento" + err)
-            })
+        Consultation.destroy({
+            where: { id: req.body.consultationId }
+        }).then((consult) => {
+            req.flash("success_msg", "Agendamento Cancelado com Sucesso")
+            res.redirect('/dashboard')
+        }).catch((err) => {
+            res.send("Não é possivel cancelar o agendamento" + err)
+        })
 
     }
 
-    async updateSchedule(req, res){
-        if (req.body.typeSchedule == 1) {
-            Consultation.update({
-                where: {id: req.body.typeScheduleSchedules },
-                typeSchedule: 3,
-                color: '992F2F'
-            }).then((consult) => {
-                req.flash("success_msg", "Agendamento Cancelado com Sucesso")
-                res, redirect('/calendar')
-            }).catch((err) => {
-                res.send("Não é possivel cancelar o agendamento")
-            })
-
-        }
+    async cancelamentoSchedule(req, res) {
+        Consultation.update({
+            typeSchedule: 3,
+            color: '#992F2F'
+        }, {
+            where: {
+                id: req.body.cancelId
+            },
+        }).then((consult) => {
+            req.flash("success_msg", "Consulta Cancelado com Sucesso")
+            res.redirect('/calendar')
+        }).catch((err) => {
+            res.send("Não é possivel cancelar o agendamento" + err)
+        })
     }
 }
 

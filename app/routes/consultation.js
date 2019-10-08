@@ -14,4 +14,8 @@ router.post('/delete', users, (req, res) =>{
     controller.deleteSchedules(req, res)
 });
 
+router.post('/cancelamento', users, (req, res) =>{
+    controller.cancelamentoSchedule(req, res)
+});
+
 module.exports = router;
