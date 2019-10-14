@@ -13,7 +13,7 @@ const Reports = bd.sequelize.define('reports', {
     },
     namePatient: {
         type: bd.Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     infoPatient: {
         type: bd.Sequelize.DATE,

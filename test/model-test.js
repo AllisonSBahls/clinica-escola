@@ -3,6 +3,10 @@ const Patient = require('../app/model/Patient');
 const Trainee = require('../app/model/Trainee');
 const Secretary = require('../app/model/Secretary');
 const Master = require('../app/model/Master');
+const Reports = require('../app/model/Reports');
+const Wait = require('../app/model/Wait');
+
+
 // const Schedule = require('../app/model/Schedules');
 const Consultation = require('../app/model/Consultations');
 const User = require('../app/model/User');
@@ -62,7 +66,12 @@ describe('Criando as Tabelas', function () {
         })
     })
     it('Criar Reports', async function (done) {
-        await Consultation.sync({ force: true }).then(() => {
+        await Reports.sync({ force: true }).then(() => {
+            done();
+        })
+    })
+    it('Criar Espera', async function (done) {
+        await Wait.sync({ force: true }).then(() => {
             done();
         })
     })

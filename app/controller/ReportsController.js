@@ -50,6 +50,8 @@ class ReportController {
             Report.create({
                 reports: crypted,
                 dateSend: moment(),
+                namePatient: req.body.namePatient,
+                infoPatient: req.body.infoPatient,
                 reportTraineeId: traineeProfile.id,
                 reportMasterId: req.body.masterId,
             }).then(function () {

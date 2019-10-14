@@ -1,8 +1,10 @@
 const Consultation = require('../model/Consultations');
-const Patient = require('../model/Patient');
 const Secretary = require('../model/Secretary');
 const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
+const Patient = require('../model/Patient');
+const Wait = require('../model/Wait');
+
 const IndexController = require('./IndexController');
 const moment = require('moment');
 const { Op } = require('sequelize')
@@ -11,6 +13,14 @@ class ConsultationController extends IndexController {
     // Site para fotos Lorem Picsum
     async consultations(req, res) {
         const patients = await Patient.findAll();
+
+        const waitPatients = await Wait.findAll({
+            where:{dateExit: null},
+            include: [{
+                model: Patient, as: 'waitPatient',
+            }],
+         
+        });
         const trainees = await Trainee.findAll();
         if (req.user.NivelPermissaoId == 1) {
             const masterProfile = await Master.findOne({
@@ -29,7 +39,7 @@ class ConsultationController extends IndexController {
                     model: Secretary, as: 'consultSecretary',
                 }]
             }).then((consultation) => {
-                res.render('partials/calendar', { masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('partials/calendar', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             })
         } else if (req.user.NivelPermissaoId == 2) {
             const secretaryProfile = await Secretary.findOne({
@@ -122,6 +132,7 @@ class ConsultationController extends IndexController {
         var datetime = moment(newDt).format('YYYY-MM-DD HH:mm:ss');
 
         if (req.body.typeSchedule == 1 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+            if (req.body.patientId != null){
             Consultation.create({
                 dateStart: datetime,
                 consultPatientId: req.body.patientId,
@@ -130,12 +141,36 @@ class ConsultationController extends IndexController {
                 typeSchedule: req.body.typeSchedule,
             }).then(function () {
                 req.flash("success_msg", "Consulta marcada com sucesso");
-                res.redirect('/calendar');
+                res.redirect('/dashboard');
             }).catch(function (err) {
                 req.flash("error_msg", "Erro ao marcar a consulta");
-                res.redirect('/calendar');
+                res.redirect('/dashboard');
+            })
+        }else {
+            const waitId = await Wait.findOne({
+                where: {waitPatientId: req.body.patientWaitId},
+            })
+            await Wait.update({
+                dateExit: moment(),
+            },{
+                where: {id : waitId.id}
+            });
+
+            Consultation.create({
+                dateStart: datetime,
+                consultPatientId: req.body.patientWaitId,
+                consultTraineeId: req.body.traineeId,
+                color: '#2B56E2',
+                typeSchedule: req.body.typeSchedule,
+            }).then(function () {
+                req.flash("success_msg", "Consulta marcada com sucesso");
+                res.redirect('/dashboard');
+            }).catch(function (err) {
+                req.flash("error_msg", "Erro ao marcar a consulta");
+                res.redirect('/dashboard');
 
             })
+        }
         } else if (req.body.typeSchedule == 2 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             Consultation.create({
                 dateStart: datetime,
@@ -145,10 +180,10 @@ class ConsultationController extends IndexController {
                 color: '#1FA576',
             }).then(function () {
                 req.flash("success_msg", "Agendamento marcado com sucesso");
-                res.redirect('/calendar');
+                res.redirect('/dashboard');
             }).catch(function (err) {
                 req.flash("error_msg", "Erro ao marcar o agendamento");
-                res.redirect('/calendar');
+                res.redirect('/dashboard');
 
             })
         } else {
@@ -161,10 +196,10 @@ class ConsultationController extends IndexController {
                     color: '#1FA576',
                 }).then(function () {
                     req.flash("success_msg", "Agendamento marcado com sucesso");
-                    res.redirect('/calendar');
+                    res.redirect('/dashboard');
                 }).catch(function (err) {
                     req.flash("error_msg", "Erro ao marcar o agendamento");
-                    res.redirect('/calendar');
+                    res.redirect('/dashboard');
 
                 })
             })

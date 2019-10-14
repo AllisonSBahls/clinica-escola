@@ -5,6 +5,7 @@ const Secretary = require('../model/Secretary');
 const Master = require('../model/Master');
 const Trainee = require('../model/Trainee');
 const Consultation = require('../model/Consultations');
+const Wait = require('../model/Wait');
 
 const moment= require( 'moment' );
 const { Op } = require('sequelize')
@@ -18,6 +19,15 @@ class IndexController {
 
     async dashboard(req, res) {
         const patients = await Patient.findAll();
+        
+        const waitPatients = await Wait.findAll({
+            where:{dateExit: null},
+            include: [{
+                model: Patient, as: 'waitPatient',
+            }],
+         
+        });
+
         const trainees = await Trainee.findAll();
         
     if (req.user.NivelPermissaoId == 1) {
@@ -49,7 +59,7 @@ class IndexController {
                 model: Secretary, as: 'consultSecretary',
             }]
         }).then((consultation) => {
-            res.render('index/dashboard', {masterProfile: masterProfile,  consult: consult, consultation: consultation, patients: patients, trainees: trainees });
+            res.render('index/dashboard', {waitPatients: waitPatients, masterProfile: masterProfile,  consult: consult, consultation: consultation, patients: patients, trainees: trainees });
 
         }).catch((err) => {
             res.send('erro' + err)

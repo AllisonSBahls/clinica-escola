@@ -168,6 +168,8 @@
                         secretary: '<%= consultation[i].consultSecretaryId  %>',
                         description: '<%= consultation[i].description  %>',
                         typeSchedule: '<%= consultation[i].typeSchedule  %>',
+                        patientId: '<%= consultation[i].consultPatient.id  %>',
+
                     },
                     textColor: '#fff',
                 },
@@ -188,6 +190,7 @@
 
                 } else if (info.event.extendedProps.typeSchedule == 2) {
                     $('#viewConsultPatient #id').val(info.event.id);
+                    $('#viewConsultPatient #patientIdHidden').val(info.event.extendedProps.patientId);
                     $('#viewConsultPatient #patient').val(info.event.title);
                     $('#viewConsultPatient #dateStart').val(info.event.start.toLocaleString());
                     $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
