@@ -35,5 +35,4 @@ Consultation.belongsTo(Trainee, {as : 'consultTrainee', foreingKey: {name: 'fk_c
 Consultation.belongsTo(Procedure, {as : 'typeProcedure', foreingKey: {name: 'fk_procedure'}});
 //Consultation.sync({force: true});       
 
-
 module.exports = Consultation;

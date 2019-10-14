@@ -4,13 +4,11 @@ const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
 const Patient = require('../model/Patient');
 const Wait = require('../model/Wait');
-
-const IndexController = require('./IndexController');
 const moment = require('moment');
-const { Op } = require('sequelize')
+const controllerModel = require('../helpers/Consultations')
 
-class ConsultationController extends IndexController {
-    // Site para fotos Lorem Picsum
+class ConsultationController {
+
     async consultations(req, res) {
         const patients = await Patient.findAll();
 
@@ -21,110 +19,73 @@ class ConsultationController extends IndexController {
             }],
          
         });
+
         const trainees = await Trainee.findAll();
+        
         if (req.user.NivelPermissaoId == 1) {
             const masterProfile = await Master.findOne({
                 where: { userMasterId: req.user.id }
             });
-            Consultation.findAll({
-                where: {
-                    typeSchedule: {
-                        [Op.ne]: 3 }
-                    },
-                include: [{
-                    model: Patient, as: 'consultPatient',
-                }, {
-                    model: Trainee, as: 'consultTrainee',
-                }, {
-                    model: Secretary, as: 'consultSecretary',
-                }]
-            }).then((consultation) => {
+            //Retornar todas as consultas como agendamento ou consulta marcada
+            await controllerModel.consultAll().then((consultation) => {
                 res.render('partials/calendar', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
-            })
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
+
         } else if (req.user.NivelPermissaoId == 2) {
             const secretaryProfile = await Secretary.findOne({
                 where: { userSecretaryId: req.user.id }
             });
-            Consultation.findAll({
-                where: {
-                    typeSchedule: {
-                        [Op.ne]: 3
-                    },
-                },
-                include: [{
-                    model: Patient, as: 'consultPatient',
-                }, {
-                    model: Trainee, as: 'consultTrainee',
-                }, {
-                    model: Secretary, as: 'consultSecretary',
-                }],
-                where: { userTraineesId: patientId.id }
-
-            }).then((consultation) => {
+            //Retornar todas as consultas como agendamento ou consulta marcada
+            await controllerModel.consultAll().then((consultation) => {
                 res.render('partials/calendar', { secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
 
-            })
         } else if (req.user.NivelPermissaoId == 3) {
             const traineeProfile = await Trainee.findOne({
                 where: { userTraineeId: req.user.id }
             });
-            Consultation.findAll({
-                include: [{
-                    where: { consultTraineeId: traineeProfile.id },
-                    model: Patient, as: 'consultPatient',
-                }, {
-                    model: Trainee, as: 'consultTrainee',
-                }, {
-                    model: Secretary, as: 'consultSecretary',
-                }],
-                where: { userTraineesId: patientId.id }
 
-            }).then((consultation) => {
+            // Retornar apenas as consultas do estagiário
+            await controllerModel.consultsTrainee(traineeProfile.id).then((consultation) => {
                 res.render('partials/calendar', { traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
-
-            })
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
         } else if (req.user.NivelPermissaoId == 4) {
-            await Patient.findOne({
+            const patientProfile = await Patient.findOne({
                 where: { userPatientId: req.user.id }
-            }).then((patientProfile) => {
-                Consultation.findAll({
-                    include: [{
-                        model: Patient, as: 'consultPatient',
-                    }, {
-                        model: Trainee, as: 'consultTrainee',
-                    }, {
-                        model: Secretary, as: 'consultSecretary',
-                    }],
-                    where: { consultPatientId: patientProfile.id }
-                }).then((consultation) => {
-                    res.render('partials/calendar', { patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
+            })
 
+            // RETORNAR AS CONSULTAS DO PACIENTE
+            await controllerModel.consultsPatient(patientProfile.id).then((consultation) => {
+                    res.render('partials/calendar', { patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
                 }).catch((err) => {
                     res.send('erro' + err);
                 });
-            }).catch((err) => {
-                res.send(`erro`)
-            })
         }
     }
 
-    async consultationsPatients(req, res) {
-        const patients = await Patient.findAll();
-        const trainees = await Trainee.findAll();
-        Consultation.findAll({
-            where: { consultPatientId: req.user.id },
-            include: [{
-                model: Patient, as: 'consultPatient',
-            }, {
-                model: Trainee, as: 'consultTrainee',
-            }, {
-                model: Secretary, as: 'consultSecretary',
-            }]
-        }).then((consultation) => {
-            res.render('partials/calendar', { consultation: consultation, patients: patients, trainees: trainees });
+    // async consultationsPatients(req, res) {
+    //     const patients = await Patient.findAll();
+    //     const trainees = await Trainee.findAll();
+    //     Consultation.findAll({
+    //         where: { consultPatientId: req.user.id },
+    //         include: [{
+    //             model: Patient, as: 'consultPatient',
+    //         }, {
+    //             model: Trainee, as: 'consultTrainee',
+    //         }, {
+    //             model: Secretary, as: 'consultSecretary',
+    //         }]
+    //     }).then((consultation) => {
+    //         res.render('partials/calendar', { consultation: consultation, patients: patients, trainees: trainees });
 
-        })
-    }
+    //     })
+    // }
 
     async consult_save(req, res) {
         //converter formato brasileiro para SQL
@@ -235,4 +196,5 @@ class ConsultationController extends IndexController {
     }
 }
 
-module.exports = ConsultationController;
+module.exports = ConsultationController; 
+

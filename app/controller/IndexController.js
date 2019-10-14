@@ -6,6 +6,7 @@ const Master = require('../model/Master');
 const Trainee = require('../model/Trainee');
 const Consultation = require('../model/Consultations');
 const Wait = require('../model/Wait');
+const controllerModel = require('../helpers/Consultations')
 
 const moment= require( 'moment' );
 const { Op } = require('sequelize')
@@ -33,6 +34,7 @@ class IndexController {
     if (req.user.NivelPermissaoId == 1) {
         const masterProfile = await Master.findOne({
             where: {userMasterId: req.user.id} });
+            
         const consult = await Consultation.findAll({
             where: {
                 dateStart: {
@@ -46,19 +48,8 @@ class IndexController {
                 model: Secretary, as: 'consultSecretary',
             }]
         });
-        Consultation.findAll({
-            where: {
-                typeSchedule: {
-                    [Op.ne]: 3 }
-                },
-            include: [{
-                model: Patient, as: 'consultPatient',
-            }, {
-                model: Trainee, as: 'consultTrainee',
-            }, {
-                model: Secretary, as: 'consultSecretary',
-            }]
-        }).then((consultation) => {
+
+        await controllerModel.consultAll().then((consultation) => {
             res.render('index/dashboard', {waitPatients: waitPatients, masterProfile: masterProfile,  consult: consult, consultation: consultation, patients: patients, trainees: trainees });
 
         }).catch((err) => {
@@ -81,15 +72,7 @@ class IndexController {
                     model: Secretary, as: 'consultSecretary',
                 }]
             });
-            Consultation.findAll({
-                include: [{
-                    model: Patient, as: 'consultPatient',
-                }, {
-                    model: Trainee, as: 'consultTrainee',
-                }, {
-                    model: Secretary, as: 'consultSecretary',
-                }]
-            }).then((consultation) => {
+            await controllerModel.consultAll().then((consultation) => {
                 res.render('index/dashboard', {secretaryProfile: secretaryProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
     
             }).catch((err) => {
@@ -115,18 +98,7 @@ class IndexController {
             }]
         });
 
-        Consultation.findAll({
-            where: {
-                consultPatientId: patientProfile.id
-            },
-            include: [{
-                model: Patient, as: 'consultPatient',
-            }, {
-                model: Trainee, as: 'consultTrainee',
-            }, {
-                model: Secretary, as: 'consultSecretary',
-            }]
-        }).then((consultation) => {
+        await controllerModel.consultsPatient( patientProfile.id, ).then((consultation) => {
             res.render('index/dashboard', {patientProfile: patientProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
 
         }).catch((err) => {
@@ -155,19 +127,7 @@ class IndexController {
             }]
         });
 
-        Consultation.findAll({
-            where: {
-                consultTraineeId: traineeProfile.id
-            },
-            include: [{
-                model: Patient, as: 'consultPatient',
-            }, {
-                model: Trainee, as: 'consultTrainee',
-            }, {
-                model: Secretary, as: 'consultSecretary',
-            }]
-
-        }).then((consultation) => {
+        await controllerModel.consultsTrainee(traineeProfile.id).then((consultation) => {
             res.render('index/dashboard', {traineeProfile:traineeProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
 
         }).catch((err) => {

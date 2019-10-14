@@ -8,6 +8,8 @@ const Patient = require('../model/Patient');
 
 class UserController {
 
+
+    
     profileUser(req, res) {
         User.findAll({
             where: { 'id': req.params.id },

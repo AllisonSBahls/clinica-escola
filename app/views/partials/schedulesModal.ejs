@@ -147,7 +147,7 @@
 
                 </form>
 
-                <form method="POST" id="waitPatient" action="wait/save">
+                <form method="POST" id="waitPatient" action="waits/save">
                     <input type="hidden" id="id" name="consultationId">
                     <input type="text" id="patientIdHidden" name="patientIdHidden">
                 </form>
@@ -177,14 +177,14 @@
                     <h6 class="heading-small text-muted mb-4">Consulta</h6>
                     <div class="pl-lg-3">
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="defaultInline1" name="typeSchedule"
+                            <input type="radio" class="custom-control-input" id="defaultInline2" name="typeSchedule"
                                 value="1" checked="checked">
-                            <label class="custom-control-label" for="defaultInline1">Consultar</label>
+                            <label class="custom-control-label" for="defaultInline2">Consultar</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="defaultInline2" name="typeSchedule"
+                            <input type="radio" class="custom-control-input" id="defaultInline3" name="typeSchedule"
                                 value="2">
-                            <label class="custom-control-label" for="defaultInline2">Agendar</label>
+                            <label class="custom-control-label" for="defaultInline3">Agendar</label>
                         </div>
                         <hr class="my-4" />
 
@@ -197,10 +197,9 @@
                                     <label class="form-control-label" for="input-username">Paciente</label>
                                     <select id="patientModal" name="patientId"
                                         class="form-control form-control-alternative">
+                                        <option value=''>Pacientes</option>
                                         <% if (patients.length > 0) { %>
                                         <% for (var i = 0; i < patients.length; i++) { %>
-                                        <option value=''>Pacientes</option>
-
                                         <option value='<%= patients[i].id %>'><%= patients[i].name %></option>
                                         <% } %>
                                         <% } %>
@@ -212,9 +211,9 @@
                                     <label class="form-control-label" for="input-username">Lisa de Espera</label>
                                     <select id="patientWaitModal" name="patientWaitId"
                                         class="form-control form-control-alternative" onchange="getHTML();">
+                                        <option value=''>Pacientes da Lista de Esperra</option>
                                         <% if (waitPatients.length > 0) { %>
                                         <% for (var i = 0; i < waitPatients.length; i++) { %>
-                                        <option value=''>Pacientes da Lista de Esperra</option>
                                         <option value='<%= waitPatients[i].waitPatient.id %>'><%= waitPatients[i].waitPatient.name %></option>
                                         <% } %>
                                         <% } %>
