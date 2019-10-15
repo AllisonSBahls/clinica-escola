@@ -16,6 +16,17 @@ const Trainee = bd.sequelize.define('trainees', {
     },   
 });
 
+
+Trainee.searchAllTrainees = async function (){
+    return await this.findAll();
+}
+
+Trainee.searchProfileTrainee = async function(req, res){
+    return await Trainee.findOne({
+        where: { userTraineeId: req.user.id }
+    });
+}
+
 Trainee.belongsTo(User, {as : 'userTrainee', foreingKey: {name: 'fk_user_trainee'}});
 
 //Trainee.sync({force: true});

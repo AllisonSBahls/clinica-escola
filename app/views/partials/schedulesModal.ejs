@@ -197,7 +197,7 @@
                                     <label class="form-control-label" for="input-username">Paciente</label>
                                     <select id="patientModal" name="patientId"
                                         class="form-control form-control-alternative">
-                                        <option value=''>Pacientes</option>
+                                        <option value='0'>Pacientes</option>
                                         <% if (patients.length > 0) { %>
                                         <% for (var i = 0; i < patients.length; i++) { %>
                                         <option value='<%= patients[i].id %>'><%= patients[i].name %></option>

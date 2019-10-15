@@ -13,6 +13,12 @@ const Secretary = bd.sequelize.define('secretaries', {
 
 Secretary.belongsTo(User, {as : 'userSecretary', foreingKey: {name: 'fk_user_secretaria'}});
 
+Secretary.searchProfileSecretary = async function(req, res) {
+    return await Secretary.findOne({
+        where: { userSecretaryId: req.user.id }
+    });
+}
+
 //Secretary.sync({force: true});
 
 module.exports = Secretary;

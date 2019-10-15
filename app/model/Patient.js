@@ -16,6 +16,19 @@ const Patient = bd.sequelize.define('patients', {
     },
 });
 
+Patient.searchAllPatients = async function (){
+    return await this.findAll();
+}       
+
+Patient.searchProfilePatient = async function (req, res){
+    return await this.findOne({
+        where: { userPatientId: req.user.id }
+   })
+}
+
+
+
+
 Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'}});
 
 

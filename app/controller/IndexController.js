@@ -49,9 +49,8 @@ class IndexController {
             }]
         });
 
-        await controllerModel.consultAll().then((consultation) => {
+        Consultation.searchAllConsults().then((consultation) => {
             res.render('index/dashboard', {waitPatients: waitPatients, masterProfile: masterProfile,  consult: consult, consultation: consultation, patients: patients, trainees: trainees });
-
         }).catch((err) => {
             res.send('erro' + err)
         })
@@ -72,9 +71,9 @@ class IndexController {
                     model: Secretary, as: 'consultSecretary',
                 }]
             });
-            await controllerModel.consultAll().then((consultation) => {
+            Consultation.searchAllConsults().then((consultation) => {
                 res.render('index/dashboard', {secretaryProfile: secretaryProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
-    
+
             }).catch((err) => {
                 res.send('erro' + err)
             })

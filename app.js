@@ -72,6 +72,7 @@ app.use('/test', test);
 //   });
 
 //Inicialização do Servidor
-app.listen(4000, function(){
+const PORT  = process.env.PORT || 4000
+app.listen(PORT, function(){
 	console.log('Servidor ON');
 });

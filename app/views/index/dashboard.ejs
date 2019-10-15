@@ -155,26 +155,37 @@
             
             eventLimit: true, // allow "more" link when too many events
             events: [
-                '<% if (consultation.length > 0) {%>',
-                '<% for (var i = 0; i < consultation.length; i++) {%>',
+            '<% for (var i = 0; i < consultation.length; i++) {%>',
+                '<% if (consultation[i].consultTraineeId != null) { %>',
                 {
                     id: '<%= consultation[i].id  %>',
-                    title: '<%= consultation[i].consultPatient.name%>',
+                    title: '<%= consultation[i].consultPatient.name %>',
                     start: '<%= moment(consultation[i].dateStart).format()  %>',
                     end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
-                        trainee: '<%= consultation[i].consultTrainee %>',
-                        secretary: '<%= consultation[i].consultSecretaryId  %>',
+                        trainee: '<%= consultation[i].consultTrainee.name %>',
                         description: '<%= consultation[i].description  %>',
                         typeSchedule: '<%= consultation[i].typeSchedule  %>',
-                        patientId: '<%= consultation[i].consultPatient.id  %>',
-
+                    },
+                    textColor: '#fff',
+                },
+                '<% } else { %>',
+                {
+                    id: '<%= consultation[i].id  %>',
+                    title: '<%= consultation[i].consultPatient.name %>',
+                    start: '<%= moment(consultation[i].dateStart).format()  %>',
+                    end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
+                    color: '<%= consultation[i].color  %>',
+                    extendedProps: {
+                        description: '<%= consultation[i].description  %>',
+                        typeSchedule: '<%= consultation[i].typeSchedule  %>',
                     },
                     textColor: '#fff',
                 },
                 '<% } %>',
                 '<% } %>',
+
             ],
 
             eventClick: function (info) {
