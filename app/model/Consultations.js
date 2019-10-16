@@ -4,6 +4,7 @@ const Secretary = require("./Secretary");
 const Trainee = require("./Trainee");
 const Patient = require("./Patient");
 const Procedure = require("./Procedure");
+const moment = require('moment');
 const { Op } = require('sequelize')
 
 const Consultation = bd.sequelize.define('consultations', {
@@ -94,6 +95,56 @@ Consultation.insertSchedules = async function (dateStart, idPatient, color, type
         consultPatientId: idPatient,
         color: color,
         typeSchedule: typeSchedule,
+    });
+}
+
+Consultation.deleteSchedules = function (consultationId) {
+    return this.destroy({
+        where: { id: consultationId }
+    });
+}
+
+Consultation.cancelConsultation = function (cancelId) {
+    return Consultation.update({
+        typeSchedule: 3,
+        color: '#992F2F'
+    }, {
+        where: {
+            id: cancelId
+        },
+    })
+}
+
+Consultation.searchConsultsWeek = async function (){
+    return await Consultation.findAll({
+        where: {
+            dateStart: {
+                [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+}
+
+Consultation.searchConsultWeekPatient  = async function (patientId){
+    return await Consultation.findAll({
+        where: {
+            consultPatientId: patientId, 
+            dateStart: {
+                [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
     });
 }
 

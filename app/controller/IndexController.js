@@ -19,36 +19,15 @@ class IndexController {
     }
 
     async dashboard(req, res) {
-        const patients = await Patient.findAll();
-        
-        const waitPatients = await Wait.findAll({
-            where:{dateExit: null},
-            include: [{
-                model: Patient, as: 'waitPatient',
-            }],
-         
-        });
+        const patients = await Patient.searchAllPatients();
+        const waitPatients = await Wait.searchWaitPatients();
+        const trainees = await Trainee.searchAllTrainees();
 
-        const trainees = await Trainee.findAll();
-        
+        const consult = await Consultation.searchConsultsWeek();
+
     if (req.user.NivelPermissaoId == 1) {
-        const masterProfile = await Master.findOne({
-            where: {userMasterId: req.user.id} });
+        const masterProfile = await Master.searchProfileMaster(req, res);
             
-        const consult = await Consultation.findAll({
-            where: {
-                dateStart: {
-                    [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
-                },
-            include: [{
-                model: Patient, as: 'consultPatient',
-            }, {
-                model: Trainee, as: 'consultTrainee',
-            }, {
-                model: Secretary, as: 'consultSecretary',
-            }]
-        });
-
         Consultation.searchAllConsults().then((consultation) => {
             res.render('index/dashboard', {waitPatients: waitPatients, masterProfile: masterProfile,  consult: consult, consultation: consultation, patients: patients, trainees: trainees });
         }).catch((err) => {
@@ -56,21 +35,8 @@ class IndexController {
         })
 
      }else if (req.user.NivelPermissaoId == 2) {
-            const secretaryProfile = await Secretary.findOne({
-                where: {userSecretaryId: req.user.id} });
-            const consult = await Consultation.findAll({
-                where: {
-                    dateStart: {
-                        [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
-                    },
-                include: [{
-                    model: Patient, as: 'consultPatient',
-                }, {
-                    model: Trainee, as: 'consultTrainee',
-                }, {
-                    model: Secretary, as: 'consultSecretary',
-                }]
-            });
+            const secretaryProfile = await Secretary.searchProfileSecretary();
+            
             Consultation.searchAllConsults().then((consultation) => {
                 res.render('index/dashboard', {secretaryProfile: secretaryProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
 
@@ -82,22 +48,9 @@ class IndexController {
         const patientProfile = await Patient.findOne({
         where: {userPatientId: req.user.id} });
 
-        const consult = await Consultation.findAll({
-            where: {
-                consultPatientId: patientProfile.id, 
-                dateStart: {
-                    [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
-                },
-            include: [{
-                model: Patient, as: 'consultPatient',
-            }, {
-                model: Trainee, as: 'consultTrainee',
-            }, {
-                model: Secretary, as: 'consultSecretary',
-            }]
-        });
+        const consult = await Consultation.searchConsultWeekPatient(patientProfile.id);
 
-        await controllerModel.consultsPatient( patientProfile.id, ).then((consultation) => {
+        controllerModel.consultsPatient( patientProfile.id, ).then((consultation) => {
             res.render('index/dashboard', {patientProfile: patientProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
 
         }).catch((err) => {

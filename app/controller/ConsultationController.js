@@ -4,8 +4,8 @@ const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
 const Patient = require('../model/Patient');
 const Wait = require('../model/Wait');
-const moment = require('moment');
 const dateFormat = require('../common/dateFormat')
+
 class ConsultationController {
 
     async consultations(req, res) {
@@ -129,9 +129,7 @@ class ConsultationController {
     }
 
     deleteSchedules(req, res) {
-        Consultation.destroy({
-            where: { id: req.body.consultationId }
-        }).then((consult) => {
+        Consultation.deleteSchedules(req.body.consultationId).then(() => {
             req.flash("success_msg", "Agendamento Cancelado com Sucesso")
             res.redirect('/dashboard')
         }).catch((err) => {
@@ -141,14 +139,7 @@ class ConsultationController {
     }
 
     async cancelamentoSchedule(req, res) {
-        Consultation.update({
-            typeSchedule: 3,
-            color: '#992F2F'
-        }, {
-            where: {
-                id: req.body.cancelId
-            },
-        }).then((consult) => {
+        Consultation.cancelConsultation(req.body.cancelId).then(() => {
             req.flash("success_msg", "Consulta Cancelado com Sucesso")
             res.redirect('/calendar')
         }).catch((err) => {
