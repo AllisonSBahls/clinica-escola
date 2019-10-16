@@ -1,15 +1,12 @@
 const Permission = require('../model/Permissoes');
 const User = require('../model/User');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('../common/generateHash');
 const Secretary = require('../model/Secretary');
 const Master = require('../model/Master');
 const Trainee = require('../model/Trainee');
 const Patient = require('../model/Patient');
 
 class UserController {
-
-
-    
     profileUser(req, res) {
         User.findAll({
             where: { 'id': req.params.id },
@@ -73,37 +70,34 @@ class UserController {
         }
     }
 
-    async updateUser(req, res) {
-        const { email, password } = req.body;
-        //Verificar Email Existente
-        const emailUser = await User.findAll({
-            where: { email: email }
-        })
+    async passwordUpdate(req, res) {
+        const {passwordCurrent, passwordNew, passwordConfirm } = req.body;
+        const passwordUser = await User.searchPasswordUser(req);
 
-        var generateHash = function (password) {
-            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+        if(!bcrypt.validPassword(passwordCurrent, passwordUser.password)){
+            console.log('senha invalida')
+        }else { 
+            if (passwordNew  ==  passwordConfirm){
+                var secretPassword = bcrypt.generateHash(passwordNew);
+                User.updatePassword(secretPassword, req).then(() => {
+                    res.redirect('/dashboard');
+                    req.flash("success_msg", "Senha alteradas com sucesso");
+                }).catch((err) => {
+                    req.flash('error_msg', 'Houve um erro ao alterar a senha');
+                    res.redirect('/')
+                });
+            }else{
+                console.log('As senhas não conferem')
+            }
         };
-        var masterPassword = generateHash(password);
-
-        if (emailUser && emailUser.length > 0) {
-            req.flash('error_msg', 'Email já existe');
-            res.redirect('/supervisor')
-        } else {
-            User.update({
-                email,
-                password: masterPassword
-            }, {
-                where: { id: req.params.id }
-            }).then(() => {
-                res.redirect('/');
-                req.flash("success_msg", "Informações de Usuário alteradas com sucesso");
-            }).catch((err) => {
-                req.flash('error_msg', 'Houve um erro ao salvar o supervisor');
-                res.redirect('/')
-            });
-        }
     }
+    
 
+    async passwordUser(req, res){
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
+        res.render('forms/form_password', {masterProfile:masterProfile, secretaryProfile:secretaryProfile})
+    }
 
 }
 

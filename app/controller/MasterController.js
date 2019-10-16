@@ -1,90 +1,55 @@
 const Master = require('../model/Master');
-const bcrypt = require('bcryptjs');
+const hash = require('../common/generateHash');
+const validate = require('../common/validateFields');
 const User = require('../model/User')
 const Secretary = require('../model/Secretary');
 
 class MasterController {
 
-
     async form_admin_master(req, res) {
-        const masterProfile = await Master.findOne({
-            where: {userMasterId: req.user.id} });
-        const secretaryrProfile = await Secretary.findOne({
-            where: {userSecretaryId: req.user.id} });
-        
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
+
         res.render("forms/form_register_master", { erros: {}, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
     }
-    async master_register(req, res) {
+    async masterRegister(req, res) {
+        const masterProfile = await Master.searchProfileMaster(req);
 
-        const { email, name, phone } = req.body;
+        const { email, name, phone, password } = req.body;
         //Verificar Email Existente
-        const emailUser = await User.findAll({
-            where: { email: email }
-        })
+        var secretPassword = hash.generateHash(password);
+        //Verificar Email Existente
+        const emailUser = await User.verifyEmail(email)
+        //Validar os campos
+        const erros = validate.validateFields(emailUser, email, name, password);
 
-        var generateHash = function (password) {
-            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-        };
-        var masterPassword = generateHash(req.body.password);
-
-        //Validar formulario
-        var erros = [];
-        if (emailUser.length > 0) {
-            erros.push({ texto: 'E-mail já esta sendo utilizado' })
+        if (erros) {
+            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile })
         }
-        if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
-            erros.push({ texto: 'Nome invalido' })
-        }
-        if (!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
-            erros.push({ texto: 'E-mail invalido' })
-        }
-        if (!req.body.password || typeof req.body.password == undefined || req.body.password == null) {
-            erros.push({ texto: 'Senha invalida' })
-        }
-        if (erros.length > 0) {
-            res.render('forms/form_register_master', { erros: erros })
-        }
-
         else {
-            const user = await User.create({
-                email,
-                password: masterPassword,
-                NivelPermissaoId: 1
-            });
-            //Registrar informações pessoais do supervisor
-            Master.create({
-                name,
-                phone,
-                userMasterId: user.id
-            }).then(() => {
+            //Registrar informações do supervisor
+            Master.insertUserMaster(email, secretPassword, name, phone).then(() => {
                 req.flash("success_msg", "Supervisor cadastrado com sucesso");
-                res.redirect('/supervisor', {masterProfile: masterProfile});
-
+                res.redirect('/supervisor');
             }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro ao salvar o supervisor');
-                res.redirect('/supervisor')
+                res.send('err', err)
             })
         }
     }
     async masters(req, res) {
-        const masterProfile = await Master.findOne({
-            where: {userMasterId: req.user.id} });
-        const secretaryrProfile = await Secretary.findOne({
-            where: {userSecretaryId: req.user.id} });
-        Master.findAll({
-            include: [{
-                model: User, as: 'userMaster'
-            }]
-        })
-            .then(function (masters) {
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
+
+        Master.searchMasters().then(function (masters) {
                 res.render("pages/master", { masters: masters, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
+            }).catch((err)=>{
+                res.send(err)
             });
     }
 
     deleteMaster(req, res) {
-        Master.destroy({
-            where: { 'id': req.params.id }
-        }).then(function () {
+        Master.deleteMaster(req.params.id).then(function () {
             req.flash("success_msg", "Supervisor deletado com sucesso");
             res.redirect('/supervisor');;
         }).catch(function (erro) {
@@ -96,47 +61,44 @@ class MasterController {
         const masterProfile = Master.findOne({
             where: {userMasterId: req.user.id} });
 
-        Master.findAll({
-            where: { 'id': req.params.id },
-            include: [{
-                model: User, as: 'userMaster',
-            },]
-        }).then((master) => {
+        Master.searchProfileMaster(req.params.id).then((master) => {
             res.render("forms/form_profile_master", { master: master, masterProfile: masterProfile });
-
         }).catch((erro) => {
             res.send("erro" + erro);
         })
     }
 
     async updateMaster(req, res) {
-            const newEmail = await User.findAll({
-                where: { email: req.body.email }
-            })
-            if (newEmail || newEmail > 0) {
-               console.log('email já existe')
-                res.render('/supervisor')
-            } else {
-                const user = User.update({
-                    email: req.body.email
-                }, {
-                    where: { id: parseInt(req.body.idUser) }
-                });
+        let {email, name, phone, idUser} = req.body;
+        
+        const emailUser = await User.searchEmailUser(idUser)
 
-                Master.update({
-                    name: req.body.name,
-                    phone: req.body.phone,
-                },
-                    { where: { 'id': req.params.id } }
-                ).then(function () {
+        //Verifica se o usuário manteve o e-mail;
+        if (emailUser.email == email) {
+            Master.updateProfileMaster(name, phone, req.params.id).then(function () {
+                req.flash('success_msg', 'Supervisor alterado com sucesso');
+                res.redirect('/supervisor');
+            }).catch((err)=>{
+                res.send('err', err)
+            });
+        }else {
+            const emailExist = await User.verifyEmail(email);
+            if(emailExist.length >  0){
+                req.flash('error_msg', 'E-mail já existe');
+                res.redirect('/supervisor');
+            }else{
+                await User.updateEmailUser(idUser, email);
+                Master.updateProfileMaster(name, phone, req.params.id).then(function () {
                     req.flash('success_msg', 'Supervisor alterado com sucesso');
                     res.redirect('/supervisor');
                 }).catch((err)=>{
-                    req.flash('error_msg', 'Erro ao cadastrar o supervisor ' + err);
-                })
+                    res.send('err', err)
+                });
+            }
         }
-
     }
+
+
 }
 
 module.exports = MasterController;

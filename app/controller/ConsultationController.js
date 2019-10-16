@@ -17,37 +17,32 @@ class ConsultationController {
         //Usuário Administrador
         if (req.user.NivelPermissaoId == 1) {
             //Busca o nome do usuário ADMINISTRADOR
-            const masterProfile = await Master.searchProfileMaster(req, res);
-
+            const masterProfile = await Master.searchProfileMaster(req);
             //Retornar todas as consultas como agendamento ou consulta marcada
             Consultation.searchAllConsults().then((consultation) => {
                 res.render('partials/calendar', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
-
             //Usuário Secretaria
         } else if (req.user.NivelPermissaoId == 2) {
             //Busca o nome do usuário SECRETARIA
-            const secretaryProfile = await Secretary.searchProfileSecretary();
+            const secretaryProfile = await Secretary.searchProfileSecretary(req);
             //Retornar todas as consultas como agendamento ou consulta marcada
             Consultation.searchAllConsults().then((consultation) => {
                 res.render('partials/calendar', { waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
-
         } else if (req.user.NivelPermissaoId == 3) {
             //Busca o nome do usuário Estagiário
-            const traineeProfile = await Trainee.searchProfileTrainee();
-
+            const traineeProfile = await Trainee.searchProfileTrainee(req);
             // Retornar apenas as consultas do estagiário
-            await Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
+            Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
                 res.render('partials/calendar', { traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
-
         } else if (req.user.NivelPermissaoId == 4) {
             //Busca o nome do usuário Pacientes
             const patientProfile = await Patient.searchProfilePatient(req);
@@ -63,7 +58,6 @@ class ConsultationController {
 
     async consult_save(req, res) {
         const { dateStart, patientId, traineeId, typeSchedule, patientWaitId } = req.body;
-
         //converter formato brasileiro para SQL
         const datetime = dateFormat(dateStart);
         //Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
@@ -79,7 +73,6 @@ class ConsultationController {
                     req.flash("error_msg", "Erro ao marcar a consulta");
                     res.redirect('/dashboard');
                 })
-
             } else {
                 Wait.searchUpdateWait(patientWaitId)
                 Consultation.insertConsults(datetime, patientWaitId, traineeId, typeSchedule, color).then(function () {
@@ -90,13 +83,12 @@ class ConsultationController {
                     res.redirect('/dashboard');
                 })
             }
-
             //Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
         } else if (typeSchedule == 2 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             //Caso seja agendamento a cor é Verde
             const color = '#1FA576';
             if (patientId != null) {
-                Consultation.insertSchedules(datetime, patientId, color, typeSchedule).then(function () {
+                Consultation.insertSchedules(datetime, patientId, color).then(function () {
                     req.flash("success_msg", "Agendamento marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -104,7 +96,7 @@ class ConsultationController {
                     res.redirect('/dashboard');
                 })
             } else {
-                Consultation.insertSchedules(datetime, patientWaitId, color, typeSchedule).then(function () {
+                Consultation.insertSchedules(datetime, patientWaitId, color).then(function () {
                     Wait.searchUpdateWait(patientWaitId)
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
@@ -117,13 +109,12 @@ class ConsultationController {
         } else {
             const color = '#1FA576';
             const patientProfile = await Patient.searchProfilePatient(req);
-            Consultation.insertSchedules(datetime, patientProfile.id, color, typeSchedule).then(function () {
+            Consultation.insertSchedules(datetime, patientProfile.id, color).then(function () {
                 req.flash("success_msg", "Agendamento marcado com sucesso");
                 res.redirect('/dashboard');
             }).catch(function (err) {
                 req.send("Erro ao marcar o agendamento",err);
                 res.redirect('/dashboard');
-
             })
         }
     }
@@ -135,7 +126,6 @@ class ConsultationController {
         }).catch((err) => {
             res.send("Não é possivel cancelar o agendamento" + err)
         })
-
     }
 
     async cancelamentoSchedule(req, res) {

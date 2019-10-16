@@ -21,7 +21,7 @@ Trainee.searchAllTrainees = async function (){
     return await this.findAll();
 }
 
-Trainee.searchProfileTrainee = async function(req, res){
+Trainee.searchProfileTrainee = async function(req){
     return await Trainee.findOne({
         where: { userTraineeId: req.user.id }
     });

@@ -5,7 +5,7 @@ const MasterController = require('../controller/MasterController');
 const controller = new MasterController();
 
 router.post('/save', admin, async (req, res) =>{
-    await controller.master_register(req, res)
+    await controller.masterRegister(req, res)
 })
 
 router.get('/', admin, (req, res) =>{

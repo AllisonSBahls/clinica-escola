@@ -89,12 +89,12 @@ Consultation.insertConsults = function (dateStart, idPatient, idTrainee, typeSch
     });
 }
 
-Consultation.insertSchedules = async function (dateStart, idPatient, color, typeSchedule) {
+Consultation.insertSchedules = async function (dateStart, idPatient, color) {
     return this.create({
         dateStart: dateStart,
         consultPatientId: idPatient,
         color: color,
-        typeSchedule: typeSchedule,
+        typeSchedule: 2,
     });
 }
 
@@ -148,6 +148,25 @@ Consultation.searchConsultWeekPatient  = async function (patientId){
     });
 }
 
+Consultation.searchConsultWeekTrainee  = async function (traineeId){
+    return await Consultation.findAll({
+        where: {
+            consultTraineeId: traineeId
+        },
+        where: {
+            dateStart: {
+                [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+    
+}
 
 Consultation.belongsTo(Secretary, { as: 'consultSecretary', foreingKey: { name: 'fk_consult_secretary' } });
 Consultation.belongsTo(Patient, { as: 'consultPatient', foreingKey: { name: 'fk_consult_patient' } });
