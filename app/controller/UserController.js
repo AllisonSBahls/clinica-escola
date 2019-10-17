@@ -1,4 +1,3 @@
-const Permission = require('../model/Permissoes');
 const User = require('../model/User');
 const bcrypt = require('../common/generateHash');
 const Secretary = require('../model/Secretary');

@@ -25,6 +25,17 @@ Patient.searchProfilePatient = async function (req){
         where: { userPatientId: req.user.id }
    })
 }
+Patient.searchAllPatientsUsers = function(){
+    return this.findAll({
+        include: [{
+            model: User, as: 'userPatient'
+        }]
+    })
+}
+
+Patient.searchOnePatient = function(id){
+
+}
 
 Patient.insertPatientRegister = function(email, password, name, phone){
     return User.create({
@@ -40,6 +51,30 @@ Patient.insertPatientRegister = function(email, password, name, phone){
         }).catch((err) => {
             console.log(err)
         });
+}
+
+Patient.insertPatient = function(email, password, name, phone, dateBirth, gender){
+    return User.create({
+        email:email,
+        password:password,
+        NivelPermissaoId: 4,
+    }).then((user) => {
+        this.create({
+            name:name,
+            phone:phone,
+            dateBirth: dateBirth,
+            gender: gender,
+            userPatientId: user.id
+        })
+    }).catch((err) => {
+        console.log(err)
+    });
+}
+
+Patient.deletePatient = function(id){
+    Patient.destroy({
+        where: { 'id': id }
+    })
 }
 
 

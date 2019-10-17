@@ -17,10 +17,6 @@ Master.searchProfileMaster = async function (req) {
     return await Master.findOne({
         where: { userMasterId: req.user.id }
     });
-
-    return await this.findOne({
-        where: { userPatientId: req.user.id }
-   })
 }
 
 Master.insertUserMaster = function (email, password, name, phone) {

@@ -6,7 +6,7 @@ const PatientController = require('../controller/PatientController');
 const controller = new PatientController();
 
 router.post('/save', admin, async (req, res) =>{
-    controller.patient_register(req, res)
+    controller.registerPatient(req, res)
 });
 
 router.get('/', admin, (req, res) =>{
