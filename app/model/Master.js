@@ -11,7 +11,7 @@ const Master = bd.sequelize.define('supervisors', {
     },
 });
 
-Master.belongsTo(User, { as: 'userMaster', foreingKey: { name: 'fk_user_master' } });
+Master.belongsTo(User, { as: 'userMaster', foreingKey: { name: 'fk_user_master' } , onDelete: 'cascade' });
 
 Master.searchProfileMaster = async function (req) {
     return await Master.findOne({
@@ -44,13 +44,13 @@ Master.searchMasters = function () {
 }
 
 Master.deleteMaster = function(id){
-    return Master.destroy({
+    return User.destroy({
         where: { 'id': id }
     })
 }
 
 Master.searchOneMaster = function(id){
-    return Master.findAll({
+    return Master.findOne({
         where: { 'id': id },
         include: [{
             model: User, as: 'userMaster',

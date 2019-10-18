@@ -18,69 +18,67 @@ var generateHash = function (password) {
 };
 
 describe('Criando as Tabelas', function () {
+
     it('Criar Permissao', async function (done) {
         await Permission.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
 
     })
     it('Criar Procedimentos', async function (done) {
-        Procedure.sync({ force: true }).then(() => {
-            return Procedure.create({
-                typeProcedure: 'Triagem',
-            }).then(()=>{
+        return await Procedure.sync({ force: true }).then(() => {
             done();
           });
         });
-    })
+
     it('Criar Usuario', async function (done) {
-        await User.sync({ force: true }).then(() => {
+        return await User.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
     it('Criar Master', async function (done) {
-        await Master.sync({ force: true }).then(() => {
+        return await Master.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
     it('Criar Recepcionista', async function (done) {
-        await Secretary.sync({ force: true }).then(() => {
+        return await Secretary.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
 
     it('Criar Estagiario', async function (done) {
-        await Trainee.sync({ force: true }).then(() => {
+        return await Trainee.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
   
     it('Criar Paciente', async function (done) {
-        await Patient.sync({ force: true }).then(() => {
+        return await Patient.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
     it('Criar Consulta', async function (done) {
-        await Consultation.sync({ force: true }).then(() => {
+        return await Consultation.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
     it('Criar Reports', async function (done) {
-        await Reports.sync({ force: true }).then(() => {
+        return await Reports.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
     it('Criar Espera', async function (done) {
-        await Wait.sync({ force: true }).then(() => {
+        return await Wait.sync({ force: true }).then(() => {
             done();
-        })
+        }).catch(done)
     })
 
 })
 describe('Verificando os cadastro no Model', function () {
     it('should list ALL Permissao GET', function (done) {
         Permission.findAll()
-            .then((permission) => {
+            .then(() => {
                 done();
             })
     })

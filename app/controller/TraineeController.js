@@ -1,64 +1,37 @@
 const Trainee = require('../model/Trainee');
 const User = require('../model/User');
-const bcrypt = require('bcryptjs');
 const Secretary = require('../model/Secretary');
 const Master = require('../model/Master');
+const hash = require('../common/generateHash');
+const validate = require('../common/validateFields');
 
 class TraineeController {
 
     async form_admin_trainee(req, res) {
-        const masterProfile = await Master.findOne({
-            where: {userMasterId: req.user.id} });
-        const secretaryrProfile = await Secretary.findOne({
-            where: {userSecretaryId: req.user.id} });
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
 
         res.render("forms/form_register_trainee", {masterProfile: masterProfile, secretaryrProfile: secretaryrProfile})
     }
 
-    async trainee_register(req, res) {
-        //Criptografa a Senha
-        var generateHash = function (password) {
-            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-        };
-        var secretaryPassword = generateHash(req.body.password);
+    async registerTrainee(req, res) {
+        const { email, name, phone, course, period, password } = req.body;
 
-        const { email, name, phone, course, period } = req.body;
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
+
+        var secretPassword = hash.generateHash(password);
+
         //Verificar Email Existente
-        const emailUser = await User.findAll({
-            where: { email: email }
-        })
+        const emailUser = await User.verifyEmail(email)
 
-        var erros = [];
-        if (emailUser.length > 0) {
-            erros.push({ texto: 'E-mail já esta sendo utilizado' })
-        }
-        if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
-            erros.push({ texto: 'Nome invalido' })
-        }
-        if (!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
-            erros.push({ texto: 'E-mail invalido' })
-        }
-        if (!req.body.password || typeof req.body.password == undefined || req.body.password == null) {
-            erros.push({ texto: 'Senha invalida' })
-        }
-        if (erros.length > 0) {
-            res.render('forms/form_register_master', { erros: erros })
+        const erros = validate.validateFields(emailUser, email, name, password);
+
+        if (erros) {
+            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
         } else {
-            //Registrar o usuario do supervisor
-            const user = await User.create({
-                email: email,
-                password: secretaryPassword,
-                NivelPermissaoId: 3
-            });
-
             //Registrar informações pessoais do supervisor
-            Trainee.create({
-                name,
-                phone,
-                course,
-                period,
-                userTraineeId: user.id
-            }).then(function () {
+            Trainee.insertTrainee(email, phone, course, period, secretPassword).then(function () {
                 req.flash("success_msg", "Estagiario cadastrada com sucesso");
                 res.redirect('/estagiario');
             }).catch(function (erro) {
@@ -68,24 +41,16 @@ class TraineeController {
     }
 }
     async trainees(req, res) {
-        const masterProfile = await Master.findOne({
-            where: {userMasterId: req.user.id} });
-        const secretaryrProfile = await Secretary.findOne({
-            where: {userSecretaryId: req.user.id} });
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
 
-        Trainee.findAll({
-            include: [{
-                model: User, as: 'userTrainee'
-            }]
-        }).then(function (trainees) {
+        Trainee.searchAllTraineesUsers().then(function (trainees) {
             res.render("pages/trainee", { trainees: trainees, secretaryrProfile:secretaryrProfile, masterProfile:masterProfile })
         });
     }
 
     deleteTrainee(req, res) {
-        Trainee.destroy({
-            where: { 'id': req.params.id }
-        }).then(function () {
+        Trainee.deleteTrainee(req.params.id).then(() => {
             req.flash("success_msg", "Estagiario deletado com sucesso");
                 res.redirect('/estagiario');
             }).catch(function (erro) {
@@ -95,12 +60,7 @@ class TraineeController {
 }
 
     profileTrainee(req, res) {
-        Trainee.findAll({
-            where: { 'id': req.params.id },
-            include: [{
-                model: User, as: 'userTrainee',
-            },]
-        }).then((trainee) => {
+        Trainee.searchOneTrainee(req.params.id).then((trainee) => {
             res.render("forms/form_profile_trainee", { trainee: trainee });
 
         }).catch((erro) => {
@@ -109,22 +69,37 @@ class TraineeController {
     }
 
 
-    updateTrainee(req, res) {
+    async updateTrainee(req, res) {
         const { email, name, phone, period, course } = req.body;
-
-        Trainee.update({
-            name,
-            phone,
-            period,
-            course
-        }, { where: { 'id': req.params.id } }
-        ).then(function () {
+        
+        const emailUser = await User.searchEmailUser(idUser)
+        if (emailUser.email == email) {
+                    
+        Trainee.updateTrainee(name, phone, period, course, req.params.id).then(function () {
             req.flash("success_msg", "Estagiario alterado com sucesso");
             res.redirect('/estagiario');
         }).catch(function (erro) {
             req.flash("error_msg", "Ocorreu um erro ao alterar o estagiario");
             res.send("erro" + erro);
         })
+
+        }else {
+            const emailExist = await User.verifyEmail(email);
+            if(emailExist.length >  0){
+                req.flash('error_msg', 'E-mail já existe');
+                res.redirect('/supervisor');
+            }else{
+                await User.updateEmailUser(idUser, email);
+                
+                Trainee.updateTrainee(name, phone, period, course, req.params.id).then(function () {
+                    req.flash("success_msg", "Estagiario alterado com sucesso");
+                    res.redirect('/estagiario');
+                }).catch(function (erro) {
+                    req.flash("error_msg", "Ocorreu um erro ao alterar o estagiario");
+                    res.send("erro" + erro);
+                })
+            }
+        }
     }
 }
 

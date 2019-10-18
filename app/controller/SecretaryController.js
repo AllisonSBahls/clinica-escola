@@ -2,23 +2,23 @@ const Secretary = require('../model/Secretary');
 const Permission = require('../model/Permissoes');
 const User = require('../model/User');
 const Master = require('../model/Master');
-
-const bcrypt = require('bcryptjs');
+const hash = require('../common/generateHash');
+const validate = require('../common/validateFields');
 
 class SecretaryController {
 
     async form_admin_secretary(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
         Permission.findAll()
             .then(function (permissoes) {
-                res.render("forms/form_register_secretary", { permissoes: permissoes, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile  })
+                res.render("forms/form_register_secretary", { permissoes: permissoes, masterProfile:masterProfile, secretaryProfile:secretaryProfile  })
             });
     }
 
     async registerSecretary(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
         const { email, name, phone, password } = req.body;
@@ -32,17 +32,10 @@ class SecretaryController {
         const erros = validate.validateFields(emailUser, email, name, password);
 
         if (erros) {
-            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
+            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryProfile:secretaryProfile  })
         } else {
-            //Registrar o usuario do supervisor
-            const user = await User.create({
-                email: email,
-                password: secretPassword,
-                NivelPermissaoId: 2
-            });
-
             //Registrar informações pessoais do supervisor
-            Secretary.insertSecretary(email, password, name, phone).then(function () {
+            Secretary.insertSecretary(email, secretPassword, name, phone).then(function () {
                 req.flash("success_msg", "Recepcionista cadastrada com sucesso");
                 res.redirect('/recepcionista');
             }).catch(function (erro) {
@@ -53,11 +46,11 @@ class SecretaryController {
     }
 
     async secretaries(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
         Secretary.searchAllSecretaries().then(function (secretaries) {
-                res.render("pages/secretary", { secretaries: secretaries, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile})
+                res.render("pages/secretary", { secretaries: secretaries, masterProfile:masterProfile, secretaryProfile:secretaryProfile})
             });
     }
 
@@ -72,45 +65,42 @@ class SecretaryController {
     }
 
     profileSecretary(req, res) {
-        Secretary.findAll({
-            where: { 'id': req.params.id },
-            include: [{
-                model: User, as: 'userSecretary',
-            },]
-        }).then((secretary) => {
-            res.render("forms/form_profile_secretary", { secretary: secretary });
-
+        Secretary.searchOneSecretary(req.params.id).then((secretary) => {
+            res.render("forms/form_profile_secretary", { secretary: secretary, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile });
         }).catch((erro) => {
             res.send("erro" + erro);
         })
     }
 
 
-    updateSecretary(req, res) {
+    async updateSecretary(req, res) {
         const { email, name, phone } = req.body;
-        // const emailUser = await User.findAll({
-        //     where: { email: email }
-        // })
-        // if (emailUser.length > 0) {
-        //     console.log('email já existe')
-        //     res.redirect('/secretary')
-        // } else {
-        //     User.update({
-        //         email,
-        //     },{where: { id: parseInt(req.body.idUser)}});
+        const emailUser = await User.searchEmailUser(idUser)
 
-        //Registrar informações pessoais do supervisor
-        Secretary.update({
-            name,
-            phone,
-        }, { where: { 'id': req.params.id } }
-        ).then(function () {
-            req.flash("success_msg", "Recepcionista alterada com sucesso");
-            res.redirect('/recepcionista');
-        }).catch(function (erro) {
-            req.flash("error_msg", "Ocorreu um erro ao alterar a recepcionista");
-            res.send("erro" + erro);
-        })
+        if (emailUser.email == email) {
+            Secretary.updateSecretary(name, phone, req.params.id).then(function () {
+                req.flash("success_msg", "Recepcionista alterada com sucesso");
+                res.redirect('/recepcionista');
+            }).catch(function (erro) {
+                req.flash("error_msg", "Ocorreu um erro ao alterar a recepcionista");
+                res.send("erro" + erro);
+            })
+        }else {
+            const emailExist = await User.verifyEmail(email);
+            if(emailExist.length >  0){
+                req.flash('error_msg', 'E-mail já existe');
+                res.redirect('/supervisor');
+            }else{
+                await User.updateEmailUser(idUser, email);
+                Secretary.updateSecretary(name, phone, req.params.id).then(function () {
+                    req.flash("success_msg", "Recepcionista alterada com sucesso");
+                    res.redirect('/recepcionista');
+                }).catch(function (erro) {
+                    req.flash("error_msg", "Ocorreu um erro ao alterar a recepcionista");
+                    res.send("erro" + erro);
+                })
+            }
+        }
     }
 }
 

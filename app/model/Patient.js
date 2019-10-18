@@ -34,7 +34,7 @@ Patient.searchAllPatientsUsers = function(){
 }
 
 Patient.searchOnePatient = function(id){
-    return Patient.findAll({
+    return Patient.findOne({
         where: { 'id': id },
         include: [{
             model: User, as: 'userPatient',
@@ -77,7 +77,7 @@ Patient.insertPatient = function(email, password, name, phone, dateBirth, gender
 }
 
 Patient.deletePatient = function(id){
-    return Patient.destroy({
+    return User.destroy({
         where: { 'id': id }
     })
 }
@@ -95,7 +95,7 @@ Patient.updateProfilePatient = function(name, phone, dateBirth, gender, id){
 
 
 
-Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'}});
+Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'},onDelete: 'cascade'});
 
 
 //Patient.sync({force: true});

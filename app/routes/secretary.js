@@ -6,7 +6,7 @@ const SecretaryController = require('../controller/SecretaryController');
 const controller = new SecretaryController();
 
 router.post('/save', admin, async (req, res) =>{
-    controller.registerMaster(req, res)
+    controller.registerSecretary(req, res)
 });
 
 router.get('/', admin, (req, res) =>{

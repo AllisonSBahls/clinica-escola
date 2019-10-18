@@ -11,7 +11,7 @@ const Secretary = bd.sequelize.define('secretaries', {
     },
 });
 
-Secretary.belongsTo(User, {as : 'userSecretary', foreingKey: {name: 'fk_user_secretaria'}});
+Secretary.belongsTo(User, {as : 'userSecretary', foreingKey: {name: 'fk_user_secretaria'},onDelete: 'cascade'});
 
 Secretary.searchProfileSecretary = async function(req) {
     return await this.findOne({
@@ -42,13 +42,26 @@ Secretary.searchAllSecretaries = function(){
 }
 
 Secretary.deleteSecretary = function(id){
-    return Secretary.destroy({
+    return User.destroy({
         where: { 'id': id }
     })
 }
 
-Secretary.searchOneSecretary = function(){
-    
+Secretary.searchOneSecretary = function(id){
+    return Secretary.findOne({
+        where: { 'id': id },
+        include: [{
+            model: User, as: 'userSecretary',
+        }]
+    })
+}
+
+Secretary.updateSecretary = function(name, phone, id){
+    return Secretary.update({
+        name: name,
+        phone: phone,
+    }, { where: { 'id': id } }
+    )
 }
 //Secretary.sync({force: true});
 

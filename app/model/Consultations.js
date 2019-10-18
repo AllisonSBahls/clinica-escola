@@ -79,21 +79,23 @@ Consultation.searchConsultsPatients = function (id) {
     })
 }
 
-Consultation.insertConsults = function (dateStart, idPatient, idTrainee, typeSchedule, color) {
+Consultation.insertConsults = function (dateStart, idPatient, idTrainee, typeSchedule, color, description) {
     return this.create({
         dateStart: dateStart,
         consultPatientId: idPatient,
         consultTraineeId: idTrainee,
         color: color,
+        description:description,
         typeSchedule: typeSchedule,
     });
 }
 
-Consultation.insertSchedules = async function (dateStart, idPatient, color) {
+Consultation.insertSchedules = async function (dateStart, idPatient, color, description) {
     return this.create({
         dateStart: dateStart,
         consultPatientId: idPatient,
         color: color,
+        description: description,
         typeSchedule: 2,
     });
 }
@@ -168,11 +170,11 @@ Consultation.searchConsultWeekTrainee  = async function (traineeId){
     
 }
 
-Consultation.belongsTo(Secretary, { as: 'consultSecretary', foreingKey: { name: 'fk_consult_secretary' } });
-Consultation.belongsTo(Patient, { as: 'consultPatient', foreingKey: { name: 'fk_consult_patient' } });
-Patient.hasMany(Consultation, { as: 'schedulesPatient', foreingKey: { name: 'fk_schedules_patient' } });
-Consultation.belongsTo(Trainee, { as: 'consultTrainee', foreingKey: { name: 'fk_consult_trainee' } });
-Consultation.belongsTo(Procedure, { as: 'typeProcedure', foreingKey: { name: 'fk_procedure' } });
+Consultation.belongsTo(Secretary, { as: 'consultSecretary', foreingKey: { name: 'fk_consult_secretary' }, onDelete: 'restrict' });
+Consultation.belongsTo(Patient, { as: 'consultPatient', foreingKey: { name: 'fk_consult_patient' }, onDelete: 'restrict' });
+Patient.hasMany(Consultation, { as: 'schedulesPatient', foreingKey: { name: 'fk_schedules_patient' , onDelete: 'restrict'} });
+Consultation.belongsTo(Trainee, { as: 'consultTrainee', foreingKey: { name: 'fk_consult_trainee' , onDelete: 'restrict'} });
+Consultation.belongsTo(Procedure, { as: 'typeProcedure', foreingKey: { name: 'fk_procedure' } , onDelete: 'restrict'});
 //Consultation.sync({force: true});       
 
 module.exports = Consultation;

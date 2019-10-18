@@ -1,8 +1,9 @@
 const Patient = require('../model/Patient');
 const User = require('../model/User');
-const bcrypt = require('bcryptjs');
 const Master = require('../model/Master');
 const Secretary = require('../model/Secretary');
+const hash = require('../common/generateHash');
+const validate = require('../common/validateFields');
 
 class SecretaryController {
 
@@ -28,8 +29,14 @@ class SecretaryController {
         if (erros) {
             res.render('forms/form_register_patient', { erros: erros, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile })
         } else {
-            //Registrar informações pessoais do paciente
-            Patient.insertPatient(email, secretPassword, name, phone, dateBirth, gender);
+            Patient.insertPatient(email, secretPassword, name, phone, dateBirth, gender).then((result) => {
+                req.flash("success_msg", "Paciente cadastrado com sucesso");
+                res.redirect('/paciente');
+            }).catch((err) => {
+                req.flash('error_msg', 'Houve um erro ao salvar o Paciente');
+                res.redirect('/paciente');
+
+            });;
         }
     }
 
@@ -50,8 +57,8 @@ class SecretaryController {
             req.flash("success_msg", "Paciente deletado com sucesso");
             res.redirect('/paciente');
         }).catch(function (erro) {
-            req.flash("error_msg", "Ocorreu um erro ao deletar o paciente");
-            res.send("erro" + erro);
+            req.flash('error_msg', 'O paciente está vinculado a uma consulta/agendamento');
+            res.redirect('/paciente');
         })
     }
 
@@ -83,7 +90,7 @@ class SecretaryController {
             const emailExist = await User.verifyEmail(email);
             if(emailExist.length >  0){
                 req.flash('error_msg', 'E-mail já existe');
-                res.redirect('/supervisor');
+                res.redirect('/paciente');
             }else{
                 await User.updateEmailUser(idUser, email);
                 Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id).then(function () {
@@ -91,13 +98,12 @@ class SecretaryController {
                     res.redirect('/paciente');
                 }).catch(function (erro) {
                     req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
-                    res.send("erro" + erro);
+                    res.redirect('/paciente');
+
                 })
             }
         }
     }
-     
 }
-
 
 module.exports = SecretaryController;

@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="/estagiario/update/<%= trainee[0].id %>" method="POST">
+                            <form action="/estagiario/update/<%= trainee.id %>" method="POST">
                                 <h6 class="heading-small text-muted mb-4">Informações da Recepcionista</h6>
                                 <div class="pl-lg-4">
                                     <div class="row">
@@ -38,7 +38,7 @@
                                                     Completo</label>
                                                 <input type="text" id="nomeRecepcionista" name="name"
                                                     class="form-control form-control-alternative"
-                                                    placeholder="Nome Completo" value="<%= trainee[0].name %>">
+                                                    placeholder="Nome Completo" value="<%= trainee.name %>">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -46,7 +46,7 @@
                                                 <label class="form-control-label">Contato</label>
                                                 <input type="text" id="telefoneRecepcionista" name="phone"
                                                     class="form-control form-control-alternative" placeholder="Telefone"
-                                                    value="<%= trainee[0].phone %>">
+                                                    value="<%= trainee.phone %>">
                                             </div>
 
                                         </div>
@@ -57,7 +57,7 @@
                                                 <label class="form-control-label" for="input-username">Curso</label>
                                                 <input type="text" id="curso" name="course"
                                                     class="form-control form-control-alternative" placeholder="Curso"
-                                                    value="<%= trainee[0].course %>">
+                                                    value="<%= trainee.course %>">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -65,7 +65,7 @@
                                                 <label class="form-control-label">Periodo</label>
                                                 <input type="text" id="periodo" name="period"
                                                     class="form-control form-control-alternative" placeholder="Periodo"
-                                                    value="<%= trainee[0].period %>">
+                                                    value="<%= trainee.period %>">
                                             </div>
 
                                         </div>
@@ -78,7 +78,7 @@
                                                     E-mail</label>
                                                 <input type="email" id="emailRecepcionista" name="email"
                                                     class="form-control form-control-alternative" placeholder="E-mail"
-                                                    value="<%= trainee[0].userTrainee.email %>">
+                                                    value="<%= trainee.userTrainee.email %>">
                                             </div>
                                         </div>
 
@@ -90,7 +90,7 @@
                                                     Registro</label>
                                                 <input type="text" id="dataRegistro" name="dataRegistro"
                                                     class="form-control form-control-alternative" placeholder="Registro"
-                                                    value="<%= moment(trainee[0].createdAt).format('DD/MM/YYYY')%>  ">
+                                                    value="<%= moment(trainee.createdAt).format('DD/MM/YYYY')%>  ">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -103,7 +103,8 @@
                                 <hr class="my-4" />
 
                                 <hr class="my-4" />
-                                <input type="hidden" value="<%= trainee[0].id  %>" id="idSupervisor" name="id">
+                                <input type="hidden" value="<%= trainee.userTrainee.id  %>" id="idUser" name="idUser">
+                                <input type="hidden" value="<%= trainee.id  %>" id="idSupervisor" name="id">
                                 <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
                             </form>
                         </div>
