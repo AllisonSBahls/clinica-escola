@@ -34,7 +34,12 @@ Patient.searchAllPatientsUsers = function(){
 }
 
 Patient.searchOnePatient = function(id){
-
+    return Patient.findAll({
+        where: { 'id': id },
+        include: [{
+            model: User, as: 'userPatient',
+        },]
+    })
 }
 
 Patient.insertPatientRegister = function(email, password, name, phone){
@@ -72,10 +77,22 @@ Patient.insertPatient = function(email, password, name, phone, dateBirth, gender
 }
 
 Patient.deletePatient = function(id){
-    Patient.destroy({
+    return Patient.destroy({
         where: { 'id': id }
     })
 }
+
+Patient.updateProfilePatient = function(name, phone, dateBirth, gender, id){
+    return Patient.update({
+            name: name,
+            phone: phone,
+            dateBirth: dateBirth,
+            gender: gender,
+        }, { where: { 'id': id }
+     }
+    )
+}
+
 
 
 Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'}});

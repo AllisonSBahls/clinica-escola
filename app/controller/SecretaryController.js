@@ -8,10 +8,8 @@ const bcrypt = require('bcryptjs');
 class SecretaryController {
 
     async form_admin_secretary(req, res) {
-        const masterProfile = await Master.findOne({
-            where: {userMasterId: req.user.id} });
-        const secretaryrProfile = await Secretary.findOne({
-            where: {userSecretaryId: req.user.id} });
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
 
         Permission.findAll()
             .then(function (permissoes) {
@@ -19,49 +17,32 @@ class SecretaryController {
             });
     }
 
-    async secretary_register(req, res) {
+    async registerSecretary(req, res) {
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
+
+        const { email, name, phone, password } = req.body;
 
         //Criptografa a Senha
-        var generateHash = function (password) {
-            return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-        };
-        var secretaryPassword = generateHash(req.body.password);
+        var secretPassword = hash.generateHash(password);
 
-        const { email, name, phone } = req.body;
         //Verificar Email Existente
-        const emailUser = await User.findAll({
-            where: { email: email }
-        })
+        const emailUser = await User.verifyEmail(email)
 
-        var erros = [];
-        if (emailUser.length > 0) {
-            erros.push({ texto: 'E-mail já esta sendo utilizado' })
-        }
-        if (!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
-            erros.push({ texto: 'Nome invalido' })
-        }
-        if (!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
-            erros.push({ texto: 'E-mail invalido' })
-        }
-        if (!req.body.password || typeof req.body.password == undefined || req.body.password == null) {
-            erros.push({ texto: 'Senha invalida' })
-        }
-        if (erros.length > 0) {
-            res.render('forms/form_register_master', { erros: erros })
+        const erros = validate.validateFields(emailUser, email, name, password);
+
+        if (erros) {
+            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
         } else {
             //Registrar o usuario do supervisor
             const user = await User.create({
                 email: email,
-                password: secretaryPassword,
+                password: secretPassword,
                 NivelPermissaoId: 2
             });
 
             //Registrar informações pessoais do supervisor
-            Secretary.create({
-                name,
-                phone,
-                userSecretaryId: user.id
-            }).then(function () {
+            Secretary.insertSecretary(email, password, name, phone).then(function () {
                 req.flash("success_msg", "Recepcionista cadastrada com sucesso");
                 res.redirect('/recepcionista');
             }).catch(function (erro) {
@@ -72,24 +53,16 @@ class SecretaryController {
     }
 
     async secretaries(req, res) {
-        const masterProfile = await Master.findOne({
-            where: {userMasterId: req.user.id} });
-        const secretaryrProfile = await Secretary.findOne({
-            where: {userSecretaryId: req.user.id} });
-        Secretary.findAll({
-            include: [{
-                model: User, as: 'userSecretary'
-            }]
-        })
-            .then(function (secretaries) {
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
+
+        Secretary.searchAllSecretaries().then(function (secretaries) {
                 res.render("pages/secretary", { secretaries: secretaries, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile})
             });
     }
 
     deleteSecretary(req, res) {
-        Secretary.destroy({
-            where: { 'id': req.params.id }
-        }).then(function () {
+        Secretary.deleteSecretary(req.params.id).then(function () {
             req.flash("success_msg", "Recepcionista deletada com sucesso");
             res.redirect('/recepcionista');
         }).catch(function (erro) {

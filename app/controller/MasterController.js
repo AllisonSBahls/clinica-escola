@@ -12,8 +12,9 @@ class MasterController {
 
         res.render("forms/form_register_master", { erros: {}, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
     }
-    async masterRegister(req, res) {
+    async registerMaster(req, res) {
         const masterProfile = await Master.searchProfileMaster(req);
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
 
         const { email, name, phone, password } = req.body;
         //Verificar Email Existente
@@ -24,7 +25,7 @@ class MasterController {
         const erros = validate.validateFields(emailUser, email, name, password);
 
         if (erros) {
-            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile })
+            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
         }
         else {
             //Registrar informações do supervisor
@@ -61,7 +62,7 @@ class MasterController {
         const masterProfile = Master.findOne({
             where: {userMasterId: req.user.id} });
 
-        Master.searchProfileMaster(req.params.id).then((master) => {
+        Master.searchOneMaster(req.params.id).then((master) => {
             res.render("forms/form_profile_master", { master: master, masterProfile: masterProfile });
         }).catch((erro) => {
             res.send("erro" + erro);

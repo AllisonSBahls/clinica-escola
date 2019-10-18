@@ -49,7 +49,7 @@ Master.deleteMaster = function(id){
     })
 }
 
-Master.searchProfileUserMaster = function(id){
+Master.searchOneMaster = function(id){
     return Master.findAll({
         where: { 'id': id },
         include: [{
