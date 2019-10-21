@@ -13,21 +13,47 @@ $(document).ready(function () {
 
 });
 
+
 $(document).ready(()=>{
+    $('#table-day').empty();
+    $.ajax({
+        url: '/consult/week',
+        type: 'GET',
+        dataType: 'json',
+        success: (data)=>{
+            for(var i=0; i < data.length; i++){
+                $('#table-day').append('<tr><td>' + data[i].consultPatient.name+'</td><td>'+ moment(data[i].dateStart).format('DD/MM/YYYY')+'</td><td>'+moment(data[i].dateStart).format('HH:mm')+'</td></tr>');
+            }
+        }
+        })
+
     $('#allConsultDays').click(() => {
+    $('#table-day').empty();
     $.ajax({
         url: '/consult/days',
         type: 'GET',
         dataType: 'json',
         success: (data)=>{
-            for(var i=0; i <= data.length; i++){
+            for(var i=0; i < data.length; i++){
                 console.log('ajax sucess', data);
-                $('#labelName').append('Paciente: ' + data[i].consultPatient.name);
-                $('#labelDate').append('Data: ' + data[i].dateStart);
+                $('#table-day').append('<tr><td>' + data[i].consultPatient.name+'</td><td>'+ moment(data[i].dateStart).format('DD/MM/YYYY')+'</td><td>'+moment(data[i].dateStart).format('HH:mm')+'</td></tr>');
             }
         }
         })
     })
+    $('#allConsultWeek').click(() => {
+        $('#table-day').empty();
+        $.ajax({
+            url: '/consult/week',
+            type: 'GET',
+            dataType: 'json',
+            success: (data)=>{
+                for(var i=0; i < data.length; i++){
+                    $('#table-day').append('<tr><td>' + data[i].consultPatient.name+'</td><td>'+ moment(data[i].dateStart).format('DD/MM/YYYY')+'</td><td>'+moment(data[i].dateStart).format('HH:mm')+'</td></tr>');
+                }
+            }
+            })
+        })
 })
 
 
@@ -52,5 +78,12 @@ function wait() {
     document.getElementById("waitPatient").submit();
 }
 
+function showWait() {
+    document.getElementById("patientSelect").style.display = 'none';
+    document.getElementById("patientWaitSelect").style.display = 'block'; 
+}
 
-    
+function showAllPatient(){
+    document.getElementById("patientWaitSelect").style.display = 'none';
+    document.getElementById("patientSelect").style.display = 'block'; 
+}

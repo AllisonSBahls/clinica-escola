@@ -56,6 +56,24 @@ class ConsultationController {
         }
     }
 
+    async onlySchedules(req, res) {
+        //Carrega informação do paciente, lista de espera e estagiários
+        const patients = await Patient.searchAllPatients();
+        const waitPatients = await Wait.searchWaitPatients();
+        const trainees = await Trainee.searchAllTrainees();
+
+        //Usuário Administrador
+            //Busca o nome do usuário ADMINISTRADOR
+            const masterProfile = await Master.searchProfileMaster(req);
+            //Retornar todas as consultas como agendamento ou consulta marcada
+            Consultation.searchOnlySchedules().then((consultation) => {
+                res.render('partials/calendar', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
+            //Usuário Secretaria
+    }
+
     async consult_save(req, res) {
         const { dateStart, patientId, traineeId, typeSchedule, patientWaitId } = req.body;
         //converter formato brasileiro para SQL

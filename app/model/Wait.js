@@ -30,6 +30,7 @@ Wait.searchWaitPatients = async function(){
     });
 }
 
+
 Wait.searchUpdateWait = async function(patientWaitId){
     return await Wait.findOne({
         where: {waitPatientId: patientWaitId},
@@ -44,6 +45,13 @@ Wait.searchUpdateWait = async function(patientWaitId){
     });
 }
 
+Wait.insertWait =  async function(patientIdHidden, id){
+    return Wait.create({
+        dateEntry: moment(),
+        waitPatientId: patientIdHidden,
+        waitMasterId: id,
+    })
+}
 
 //Consultation.sync({force: true});       
 

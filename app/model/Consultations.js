@@ -47,6 +47,20 @@ Consultation.searchAllConsults = function () {
     })
 }
 
+Consultation.searchOnlySchedules = function(){
+    return this.findAll({
+        where: {
+            typeSchedule: 2
+        },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    })
+}
 Consultation.searchConsultsTrainees = function (id) {
     return this.findAll({
         where: {
@@ -119,9 +133,11 @@ Consultation.cancelConsultation = function (cancelId) {
 
 Consultation.searchConsultsWeek = async function (){
     return await Consultation.findAll({
+        limit: 6,
         where: {
+            typeSchedule: 1,
             dateStart: {
-                [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+                [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
             },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -131,59 +147,14 @@ Consultation.searchConsultsWeek = async function (){
             model: Secretary, as: 'consultSecretary',
         }]
     });
-}
-Consultation.searchConsultDay = async function (startDay, endDay){
-    return await Consultation.findAll({
-        where: {
-            dateStart: {
-                [Op.between]: [startDay, endDay]},
-            },
-        include: [{
-            model: Patient, as: 'consultPatient',
-        }, {
-            model: Trainee, as: 'consultTrainee',
-        }, {
-            model: Secretary, as: 'consultSecretary',
-        }]
-    });
-    // } else if (req.user.NivelPermissaoId == 3){
-    //     return await Consultation.findAll({
-    //         where: {
-    //             consultTraineeId: req.user.id,
-    //             dateStart: {
-    //                 [Op.between]: [startDay, endDay]},
-    //             },
-    //         include: [{
-    //             model: Patient, as: 'consultPatient',
-    //         }, {
-    //             model: Trainee, as: 'consultTrainee',
-    //         }, {
-    //             model: Secretary, as: 'consultSecretary',
-    //         }]
-    //     });
-    // } else if (req.user.NivelPermissaoId == 4){
-    //     return await Consultation.findAll({
-    //         where: {
-    //             consultPatientId: req.user.id,
-    //             dateStart: {
-    //                 [Op.between]: [startDay, endDay]},
-    //             },
-    //         include: [{
-    //             model: Patient, as: 'consultPatient',
-    //         }, {
-    //             model: Trainee, as: 'consultTrainee',
-    //         }, {
-    //             model: Secretary, as: 'consultSecretary',
-    //         }]
-    //     });
-    // }
 }
 Consultation.searchConsultWeekPatient  = async function (patientId){
     return await Consultation.findAll({
         where: {
+            typeSchedule: 1,
             consultPatientId: patientId, 
             dateStart: {
-                [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+                [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
             },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -202,7 +173,7 @@ Consultation.searchConsultWeekTrainee  = async function (traineeId){
         },
         where: {
             dateStart: {
-                [Op.between]: [moment().day(0).minute(0), moment().day(7).minute(59)]},
+                [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
             },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -214,6 +185,60 @@ Consultation.searchConsultWeekTrainee  = async function (traineeId){
     });
     
 }
+
+Consultation.searchConsultDay = async function (startDay, endDay){
+    return await Consultation.findAll({
+        limit: 6,
+        where: {
+            dateStart: {
+                [Op.between]: [startDay, endDay]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+}
+
+Consultation.searchConsultDayTrainee = async function (startDay, endDay, traineeId){    
+    return await Consultation.findAll({
+        limit: 6,
+        where: {
+            consultTraineeId: traineeId,
+            dateStart: {
+                [Op.between]: [startDay, endDay]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+} 
+Consultation.searchConsultDayPatient = async function (startDay, endDay, patientId){    
+    return await Consultation.findAll({
+        limit: 6,
+        where: {
+            consultPatientId: patientId,
+            dateStart: {
+                [Op.between]: [startDay, endDay]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+}
+
+
 
 Consultation.belongsTo(Secretary, { as: 'consultSecretary', foreingKey: { name: 'fk_consult_secretary' }, onDelete: 'restrict' });
 Consultation.belongsTo(Patient, { as: 'consultPatient', foreingKey: { name: 'fk_consult_patient' }, onDelete: 'restrict' });

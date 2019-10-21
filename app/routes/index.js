@@ -34,9 +34,13 @@ function isLoggedIn(req, res, next) {
     res.redirect('/signin');
 }
 
-router.get('/consult/days', (req, res) =>{
+router.get('/consult/days',  users,(req, res) =>{
     controller.findConsultDay(req, res);
 })
+router.get('/consult/week', users, (req, res) =>{
+    controller.findConsultWeek(req, res);
+})
+
 
 router.get('/logout', (req, res) => {
     req.logout();
@@ -60,5 +64,9 @@ router.post('/save', async (req, res)=>{
 router.get('/calendar', users, (req, res)=>{    
    consult.consultations(req, res)
 })
+
+router.get('/schedules', users, (req, res)=>{    
+    controller.onlySchedules(req, res)
+ })
 
 module.exports = router;

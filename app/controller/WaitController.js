@@ -9,19 +9,13 @@ const Consultation = require('../model/Consultations');
 class WaitController {
     async waitSave(req, res) {
         if (req.user.NivelPermissaoId == 1) {
-            const master = await Master.findOne({
-                where: { userMasterId: req.user.id }
-            });
 
-            await Consultation.destroy({
-                where: { id: req.body.consultationId }
-            });
-
-            Wait.create({
-                dateEntry: moment(),
-                waitPatientId: parseInt(req.body.patientIdHidden),
-                waitMasterId: master.id,
-            }).then(function () {
+            const {consultationId, patientIdHidden} =  req.body
+            const master = await Master.searchProfileMaster(req);
+    
+            await Consultation.deleteSchedules(consultationId);
+        
+            Wait.insertWait(patientIdHidden, master.id).then(function () {
                 req.flash("success_msg", "Paciente colocado na lista de Espera");
                 res.redirect('/dashboard');
             }).catch(function (err) {
@@ -29,9 +23,8 @@ class WaitController {
             })
 
         } else if (req.user.NivelPermissaoId == 2) {
-            const secretary = await Secretary.findOne({
-                where: { userSecretaryId: req.user.id }
-            });
+            const secretary = await Secretary.searchProfileSecretary(req);
+
 
             Wait.create({
                 dateEntry: moment(),
@@ -50,11 +43,10 @@ class WaitController {
     }
 
     async waitFindAll(req, res) {
+        const secretary = await Secretary.searchProfileSecretary(req);
+        const master = await Master.searchProfileMaster(req);
 
         if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
-            const masterProfile = await Master.findOne({
-                where: { userMasterId: req.user.id }
-            });
             Wait.findAll({
                 include: [{
                     model: Patient, as: 'waitPatient',
@@ -64,12 +56,9 @@ class WaitController {
                     model: Master, as: 'waitMaster',
                 }],
             }).then((waits) => {
-                res.render('pages/waits', { waits: waits, masterProfile: masterProfile });
+                res.render('pages/waits', { waits: waits, masterProfile: master });
             })
         } else if (req.user.NivelPermissaoId == 2) {
-            const secretaryProfile = await Secretary.findOne({
-                where: { userSecretaryId: req.user.id }
-            });
             Wait.findAll({
                 include: [{
                     model: Patient, as: 'waitPatient',
@@ -79,7 +68,7 @@ class WaitController {
                     model: Master, as: 'waitMaster',
                 }],
             }).then((waits) => {
-                res.render('pages/waits', { waits: waits, secretaryProfile: secretaryProfile });
+                res.render('pages/waits', { waits: waits, secretaryProfile: secretary });
             })
         }
     }

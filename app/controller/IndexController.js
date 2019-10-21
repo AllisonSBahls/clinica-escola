@@ -20,67 +20,113 @@ class IndexController {
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
-        const consult = await Consultation.searchConsultsWeek();
-        
-    if (req.user.NivelPermissaoId == 1) {
-        const masterProfile = await Master.searchProfileMaster(req);
-            
-        Consultation.searchAllConsults().then((consultation) => {
-            res.render('index/dashboard', {waitPatients: waitPatients, masterProfile: masterProfile,  consult: consult, consultation: consultation, patients: patients, trainees: trainees });
-        }).catch((err) => {
-            res.send('erro' + err)
-        })
 
-     } else if (req.user.NivelPermissaoId == 2) {
-            const secretaryProfile = await Secretary.searchProfileSecretary(req);
-            
+        if (req.user.NivelPermissaoId == 1) {
+            const masterProfile = await Master.searchProfileMaster(req);
+
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('index/dashboard', {waitPatients: waitPatients, secretaryProfile: secretaryProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
-
+                res.render('index/dashboard', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err)
             })
 
-    } else if(req.user.NivelPermissaoId == 4){
-        const patientProfile = await Patient.searchProfilePatient(req);
-        const consult = await Consultation.searchConsultWeekPatient(patientProfile.id);
+        } else if (req.user.NivelPermissaoId == 2) {
+            const secretaryProfile = await Secretary.searchProfileSecretary(req);
 
-        Consultation.searchConsultsPatients( patientProfile.id, ).then((consultation) => {
-            res.render('index/dashboard', {patientProfile: patientProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
-        }).catch((err) => {
-            res.send('erro' + err)
-        })
+            Consultation.searchAllConsults().then((consultation) => {
+                res.render('index/dashboard', { waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
 
-    }else if(req.user.NivelPermissaoId == 3){
-        const traineeProfile = await Trainee.searchProfileTrainee(req);
-        const consult = await Consultation.searchConsultWeekTrainee(traineeProfile.id);
-        
-        await Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
-            res.render('index/dashboard', {traineeProfile:traineeProfile, consult: consult, consultation: consultation, patients: patients, trainees: trainees });
-        }).catch((err) => {
-            res.send('erro' + err)
-        })
-    }    
-}
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+        } else if (req.user.NivelPermissaoId == 3) {
+            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            await Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
+                res.render('index/dashboard', { traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
 
-    findConsultDay(req, res){
-        var startDay = moment.utc().subtract(1, 'days');
-        startDay.set({hour:0,minute:0,second:0,millisecond:0})
+        } else if (req.user.NivelPermissaoId == 4) {
+            const patientProfile = await Patient.searchProfilePatient(req);
 
-
-        var endDay = moment.utc().subtract(1, 'days');
-        endDay.set({hour:23,minute:59,second:59,millisecond:59})
+            Consultation.searchConsultsPatients(patientProfile.id).then((consultation) => {
+                res.render('index/dashboard', { patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
 
 
-        Consultation.searchConsultDay(startDay, endDay).then((consult)=>{
-            res.send(consult)
-        }).catch((err) => {
-            res.send('erro' + err)
-        })
+        }
     }
 
+    async onlySchedules(req, res) {
+        const patients = await Patient.searchAllPatients();
+        const waitPatients = await Wait.searchWaitPatients();
+        const trainees = await Trainee.searchAllTrainees();
+            const masterProfile = await Master.searchProfileMaster(req);
+            Consultation.searchOnlySchedules().then((consultation) => {
+                res.render('index/dashboard', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
+    }
+    async findConsultWeek(req, res) {
+        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+            await Consultation.searchConsultsWeek().then((consult) => {
+                res.send(consult)
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+        } else if (req.user.NivelPermissaoId == 3) {
+            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            await Consultation.searchConsultWeekTrainee(traineeProfile.id).then((consult) => {
+                res.send(consult)
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+
+        } else if (req.user.NivelPermissaoId == 4) {
+            const patientProfile = await Patient.searchProfilePatient(req);
+            await Consultation.searchConsultWeekPatient(patientProfile.id).then((consult) => {
+                res.send(consult)
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+        }
+    }
+
+    async findConsultDay(req, res) {
+        var startDay = moment.utc();
+        startDay.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        var endDay = moment.utc();
+        endDay.set({ hour: 23, minute: 59, second: 59, millisecond: 59 })
+
+        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+            Consultation.searchConsultDay(startDay, endDay).then((consult) => {
+                res.send(consult)
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+        } else if (req.user.NivelPermissaoId == 3) {
+            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            Consultation.searchConsultDayTrainee(startDay, endDay, traineeProfile.id).then((consult) => {
+                res.send(consult)
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+
+        } else if (req.user.NivelPermissaoId == 4) {
+            const patientProfile = await Patient.searchProfilePatient(req);
+            Consultation.searchConsultDayPatient(startDay, endDay, patientProfile.id).then((consult) => {
+                res.send(consult)
+            }).catch((err) => {
+                res.send('erro' + err)
+            })
+        }
+    }
     signup(req, res) {
-        res.render('index/register', {erros: {}})
+        res.render('index/register', { erros: {} })
     }
 
     notfound(req, res) {
@@ -88,14 +134,14 @@ class IndexController {
     }
 
     async signup_save(req, res) {
-        const { email, name, phone, password} = req.body;
+        const { email, name, phone, password } = req.body;
         //Criptografa a Senha
         var secretPassword = hash.generateHash(password);
         //Verificar Email Existente
         const emailUser = await User.verifyEmail(email)
         //Validar os campos
         const erros = validate.validateFields(emailUser, email, name, password);
-        if (erros){
+        if (erros) {
             res.render('index/register', { erros: erros })
         } else {
             //Paciente se cadastrando pelo site

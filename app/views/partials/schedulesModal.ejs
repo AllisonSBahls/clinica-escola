@@ -149,7 +149,7 @@
 
                 <form method="POST" id="waitPatient" action="waits/save">
                     <input type="hidden" id="id" name="consultationId">
-                    <input type="text" id="patientIdHidden" name="patientIdHidden">
+                    <input type="hidden" id="patientIdHidden" name="patientIdHidden">
                 </form>
 
                 <form id="deleteSchedules" method="POST" action="consultation/delete">
@@ -193,11 +193,14 @@
                             <div class="col-lg-6">
                                 
                                 <!-- TENTAR ATIVAR OU DESATIVAR ESSE CAMPO -->
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-username">Paciente</label>
+
+                                <div id="patientSelect" class="form-group">
+                                    <label class="form-control-label" for="input-username">Paciente:</label>
+                                    <input id="buttonHiddenPatient" type="button" style="width: 10%; float:right; "class="btn btn-outline-primary btn-sm" onclick="showWait()" value=""></input>
+
                                     <select id="patientModal" name="patientId"
                                         class="form-control form-control-alternative">
-                                        <option value='0'>Pacientes</option>
+                                        <option value='0'>Selecione</option>
                                         <% if (patients.length > 0) { %>
                                         <% for (var i = 0; i < patients.length; i++) { %>
                                         <option value='<%= patients[i].id %>'><%= patients[i].name %></option>
@@ -207,11 +210,13 @@
                                     </select>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-username">Lisa de Espera</label>
+                                <div style="display: none;"id="patientWaitSelect" class="form-group">
+                                    <label class="form-control-label" for="input-username">Lista de Espera</label>
+                                    <input id="buttonHiddenPatient" type="button" style="width: 10%; float:right; "class="btn btn-outline-primary btn-sm" onclick="showAllPatient()" value=""></input>
+
                                     <select id="patientWaitModal" name="patientWaitId"
                                         class="form-control form-control-alternative" onchange="getHTML();">
-                                        <option value=''>Pacientes da Lista de Esperra</option>
+                                        <option value=''>Selecione</option>
                                         <% if (waitPatients.length > 0) { %>
                                         <% for (var i = 0; i < waitPatients.length; i++) { %>
                                         <option value='<%= waitPatients[i].waitPatient.id %>'><%= waitPatients[i].waitPatient.name %></option>
