@@ -77,6 +77,9 @@
             </div>
             <div class="card-body" >              
               <div class="chart">
+                  <label id="labelName" class="form-control-label"></label>
+                  <label id="labelDate" class="form-control-label"></label>
+                  
                   <% if (consult.length > 0) {%>
                   <% for (var i = 0; i < consult.length; i++) {%>
                       <label class="form-control-label">Paciente: <%= consult[i].consultPatient.name %></label>

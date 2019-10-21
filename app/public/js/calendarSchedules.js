@@ -20,7 +20,11 @@ $(document).ready(()=>{
         type: 'GET',
         dataType: 'json',
         success: (data)=>{
-                        
+            for(var i=0; i <= data.length; i++){
+                console.log('ajax sucess', data);
+                $('#labelName').append('Paciente: ' + data[i].consultPatient.name);
+                $('#labelDate').append('Data: ' + data[i].dateStart);
+            }
         }
         })
     })
