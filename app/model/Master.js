@@ -1,6 +1,8 @@
 
 const bd = require('./dbConnection');
 const User = require("./User");
+const { Op } = require('sequelize')
+
 
 const Master = bd.sequelize.define('supervisors', {
     name: {
@@ -58,6 +60,18 @@ Master.searchOneMaster = function(id){
     })
 }
 
+Master.searchLikeMaster = function(name){
+    return Master.findAll({
+        where:{
+            name:{
+                [Op.like]: name,
+            }  
+        },
+        include: [{
+            model: User, as: 'userMaster'
+        }]
+    })
+}
 Master.updateProfileMaster = function(name, phone, idMaster){
     return Master.update({
         name: name,

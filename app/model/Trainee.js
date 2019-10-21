@@ -35,13 +35,13 @@ Trainee.searchProfileTrainee = async function(req){
     });
 }
 
-Trainee.insertTrainee = function(email, phone, course, period, password){
+Trainee.insertTrainee = function(name, email, phone, course, period, password){
     return User.create({
         email: email,
         password: password,
         NivelPermissaoId: 3
     }).then((user)=>{
-        this.create({
+        Trainee.create({
             name: name,
             phone: phone,
             course: course,
@@ -51,8 +51,10 @@ Trainee.insertTrainee = function(email, phone, course, period, password){
     })
 }
 
+
+
 Trainee.searchOneTrainee = function(id){
-    return Trainee.findAll({
+    return Trainee.findOne({
         where: { 'id': id },
         include: [{
             model: User, as: 'userTrainee',

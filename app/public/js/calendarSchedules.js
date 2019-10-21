@@ -13,6 +13,20 @@ $(document).ready(function () {
 
 });
 
+$(document).ready(()=>{
+    $('#allConsultDays').click(() => {
+    $.ajax({
+        url: '/consult/days',
+        type: 'GET',
+        dataType: 'json',
+        success: (data)=>{
+                        
+        }
+        })
+    })
+})
+
+
 function getHTML() {
     var vai=$('#patientWaitModal option:selected').html();
     

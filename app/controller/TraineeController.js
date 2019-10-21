@@ -31,9 +31,10 @@ class TraineeController {
             res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
         } else {
             //Registrar informações pessoais do supervisor
-            Trainee.insertTrainee(email, phone, course, period, secretPassword).then(function () {
-                req.flash("success_msg", "Estagiario cadastrada com sucesso");
+            Trainee.insertTrainee(name, email, phone, course, period, secretPassword).then(() => {
                 res.redirect('/estagiario');
+
+                req.flash("success_msg", "Estagiario cadastrada com sucesso");
             }).catch(function (erro) {
                 req.flash("error_msg", "Ocorreu um erro ao salvar o estagiario");
                 res.send("erro" + erro);
@@ -43,13 +44,13 @@ class TraineeController {
     async trainees(req, res) {
         const secretaryrProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
-
-        Trainee.searchAllTraineesUsers().then(function (trainees) {
+        await Trainee.searchAllTraineesUsers().then(function (trainees) {
             res.render("pages/trainee", { trainees: trainees, secretaryrProfile:secretaryrProfile, masterProfile:masterProfile })
         });
     }
 
     deleteTrainee(req, res) {
+         
         Trainee.deleteTrainee(req.params.id).then(() => {
             req.flash("success_msg", "Estagiario deletado com sucesso");
                 res.redirect('/estagiario');
@@ -59,9 +60,11 @@ class TraineeController {
     })
 }
 
-    profileTrainee(req, res) {
+    async profileTrainee(req, res) {
+        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
         Trainee.searchOneTrainee(req.params.id).then((trainee) => {
-            res.render("forms/form_profile_trainee", { trainee: trainee });
+            res.render("forms/form_profile_trainee", { trainee: trainee, secretaryrProfile:secretaryrProfile, masterProfile:masterProfile });
 
         }).catch((erro) => {
             res.send("erro" + erro);
@@ -70,7 +73,7 @@ class TraineeController {
 
 
     async updateTrainee(req, res) {
-        const { email, name, phone, period, course } = req.body;
+        const { email, name, phone, period, course, idUser } = req.body;
         
         const emailUser = await User.searchEmailUser(idUser)
         if (emailUser.email == email) {
@@ -87,7 +90,7 @@ class TraineeController {
             const emailExist = await User.verifyEmail(email);
             if(emailExist.length >  0){
                 req.flash('error_msg', 'E-mail já existe');
-                res.redirect('/supervisor');
+                res.redirect('/estagiario');
             }else{
                 await User.updateEmailUser(idUser, email);
                 

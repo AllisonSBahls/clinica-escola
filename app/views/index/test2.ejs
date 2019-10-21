@@ -11,29 +11,36 @@
 
 </head>
 
-<script>
-   $(document).ready(()=>{
-     $('#allUsersButton').click(() => {
-     $.ajax({
-       url: '/test/all',
-       type: 'GET',
-       dataType: 'json',
-       success: (data)=>{
-         console.log('ajax sucess', data);
-         $('#status').html('All users: ' + data[1].name);
-        }
-      })
-     })
-
+<!-- <script>
+  $(document).ready(function(){
+    $('#campo').keyup(function(){
+      $('form').submit(function(){
+        var dados= $(this).serialize();
+        $.ajax({
+          url:'/test',
+          type: 'POST',
+          dataType: 'html',
+          data: dados,
+          success: function(data){
+            $('#resultado').empty.html(data);
+          }
+        });
+        return false;
+      });
+      $('form').trigger('submit');
     })
+
+
+  })
   
-</script>
+</script> -->
 <body>
    <h1> Busca sem refresh</h1>
    
-  
-    <button id = "allUsersButton">Obter pelo nome</button> 
-  
+   
+    Buscar por: <input type="text" name="campo" id="campo">
+
+   </form>
 
    <div id="resultado">
     <table class="table align-items-center table-flush">
@@ -48,25 +55,32 @@
               <!-- <th scope="col">Bounce rate</th> -->
           </tr>
       </thead>
-      <div id ="status"></div>
       <tbody>
-          <%// if(masters.length > 0 ) {%>
-          <% //for (var i = 0; i < masters.length; i++) { %>
+          <% if(masters.length > 0 ) {%>
+          <% for (var i = 0; i < masters.length; i++) { %>
           <tr>
               <th scope="row">
-                  <%=// masters[i].name %>
+                  <%= masters[i].name %>
               </th>
               <td>
-                  <%= //masters[i].userMaster.email %>
+                  <%= masters[i].userMaster.email %>
               </td>
               <td>
-                  <%=// masters[i].phone %>
+                  <%= masters[i].phone %>
               </td>
-         
+              <td>
+                  <a class="btn btn-danger delete"
+                      onclick="return confirm('Você confirma a exclusão?')"
+                     >Excluir</a>
+              </td>
+              <td>
+                  <a class="btn btn-primary primary"
+                     >Alterar</a>
+              </td>
 
 
-              <% //} %>
-              <% //} %>
+              <% } %>
+              <% } %>
               <!-- <td>
         <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
       </td> -->

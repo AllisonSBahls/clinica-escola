@@ -79,7 +79,7 @@ class ConsultationController {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
-                    req.send("error_msg", "Erro ao marcar a consulta", err);
+                    res.send("error_msg", "Erro ao marcar a consulta", err);
                     res.redirect('/dashboard');
                 })
             }
@@ -113,7 +113,7 @@ class ConsultationController {
                 req.flash("success_msg", "Agendamento marcado com sucesso");
                 res.redirect('/dashboard');
             }).catch(function (err) {
-                req.send("Erro ao marcar o agendamento",err);
+                res.send("Erro ao marcar o agendamento",err);
                 res.redirect('/dashboard');
             })
         }

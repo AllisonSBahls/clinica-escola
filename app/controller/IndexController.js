@@ -7,6 +7,7 @@ const Trainee = require('../model/Trainee');
 const Consultation = require('../model/Consultations');
 const Wait = require('../model/Wait');
 const validate = require('../common/validateFields');
+const moment = require('moment');
 
 
 class IndexController {
@@ -20,7 +21,7 @@ class IndexController {
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
         const consult = await Consultation.searchConsultsWeek();
-
+        
     if (req.user.NivelPermissaoId == 1) {
         const masterProfile = await Master.searchProfileMaster(req);
             
@@ -60,7 +61,23 @@ class IndexController {
             res.send('erro' + err)
         })
     }    
-} 
+}
+
+    findConsultDay(req, res){
+        var startDay = moment.utc().subtract(1, 'days');
+        startDay.set({hour:0,minute:0,second:0,millisecond:0})
+
+
+        var endDay = moment.utc().subtract(1, 'days');
+        endDay.set({hour:23,minute:59,second:59,millisecond:59})
+
+
+        Consultation.searchConsultDay(startDay, endDay).then((consult)=>{
+            res.send(consult)
+        }).catch((err) => {
+            res.send('erro' + err)
+        })
+    }
 
     signup(req, res) {
         res.render('index/register', {erros: {}})

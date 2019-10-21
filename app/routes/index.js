@@ -34,6 +34,10 @@ function isLoggedIn(req, res, next) {
     res.redirect('/signin');
 }
 
+router.get('/consult/days', (req, res) =>{
+    controller.findConsultDay(req, res);
+})
+
 router.get('/logout', (req, res) => {
     req.logout();
     req.flash('sucess_msg', 'Deslogado com sucesso')

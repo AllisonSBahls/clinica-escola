@@ -25,8 +25,8 @@ Patient.searchProfilePatient = async function (req){
         where: { userPatientId: req.user.id }
    })
 }
-Patient.searchAllPatientsUsers = function(){
-    return this.findAll({
+Patient.searchAllPatientsUsers = async function(){
+    return await this.findAll({
         include: [{
             model: User, as: 'userPatient'
         }]
@@ -48,7 +48,7 @@ Patient.insertPatientRegister = function(email, password, name, phone){
             password:password,
             NivelPermissaoId: 4,
         }).then((user) => {
-            this.create({
+            Patient.create({
                 name:name,
                 phone:phone,
                 userPatientId: user.id

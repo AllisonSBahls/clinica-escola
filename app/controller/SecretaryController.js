@@ -64,9 +64,11 @@ class SecretaryController {
         })
     }
 
-    profileSecretary(req, res) {
+    async profileSecretary(req, res) {
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+        const masterProfile = await Master.searchProfileMaster(req);
         Secretary.searchOneSecretary(req.params.id).then((secretary) => {
-            res.render("forms/form_profile_secretary", { secretary: secretary, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile });
+            res.render("forms/form_profile_secretary", { secretary: secretary, masterProfile:masterProfile, secretaryProfile:secretaryProfile });
         }).catch((erro) => {
             res.send("erro" + erro);
         })
@@ -74,7 +76,7 @@ class SecretaryController {
 
 
     async updateSecretary(req, res) {
-        const { email, name, phone } = req.body;
+        const { email, name, phone, idUser } = req.body;
         const emailUser = await User.searchEmailUser(idUser)
 
         if (emailUser.email == email) {
@@ -89,7 +91,7 @@ class SecretaryController {
             const emailExist = await User.verifyEmail(email);
             if(emailExist.length >  0){
                 req.flash('error_msg', 'E-mail já existe');
-                res.redirect('/supervisor');
+                res.redirect('/recepcionista');
             }else{
                 await User.updateEmailUser(idUser, email);
                 Secretary.updateSecretary(name, phone, req.params.id).then(function () {

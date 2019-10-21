@@ -132,7 +132,52 @@ Consultation.searchConsultsWeek = async function (){
         }]
     });
 }
-
+Consultation.searchConsultDay = async function (startDay, endDay){
+    return await Consultation.findAll({
+        where: {
+            dateStart: {
+                [Op.between]: [startDay, endDay]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+    // } else if (req.user.NivelPermissaoId == 3){
+    //     return await Consultation.findAll({
+    //         where: {
+    //             consultTraineeId: req.user.id,
+    //             dateStart: {
+    //                 [Op.between]: [startDay, endDay]},
+    //             },
+    //         include: [{
+    //             model: Patient, as: 'consultPatient',
+    //         }, {
+    //             model: Trainee, as: 'consultTrainee',
+    //         }, {
+    //             model: Secretary, as: 'consultSecretary',
+    //         }]
+    //     });
+    // } else if (req.user.NivelPermissaoId == 4){
+    //     return await Consultation.findAll({
+    //         where: {
+    //             consultPatientId: req.user.id,
+    //             dateStart: {
+    //                 [Op.between]: [startDay, endDay]},
+    //             },
+    //         include: [{
+    //             model: Patient, as: 'consultPatient',
+    //         }, {
+    //             model: Trainee, as: 'consultTrainee',
+    //         }, {
+    //             model: Secretary, as: 'consultSecretary',
+    //         }]
+    //     });
+    // }
+}
 Consultation.searchConsultWeekPatient  = async function (patientId){
     return await Consultation.findAll({
         where: {

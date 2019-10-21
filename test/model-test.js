@@ -19,57 +19,57 @@ var generateHash = function (password) {
 
 describe('Criando as Tabelas', function () {
 
-    it('Criar Permissao', async function (done) {
-        await Permission.sync({ force: true }).then(() => {
+    it('Criar Permissao', function (done) {
+        Permission.sync({ force: true }).then(() => {
             done();
         }).catch(done)
 
     })
-    it('Criar Procedimentos', async function (done) {
-        return await Procedure.sync({ force: true }).then(() => {
+    it('Criar Procedimentos', function (done) {
+        Procedure.sync({ force: true }).then(() => {
             done();
           });
         });
 
-    it('Criar Usuario', async function (done) {
-        return await User.sync({ force: true }).then(() => {
+    it('Criar Usuario', function (done) {
+        User.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
-    it('Criar Master', async function (done) {
-        return await Master.sync({ force: true }).then(() => {
+    it('Criar Master', function (done) {
+        Master.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
-    it('Criar Recepcionista', async function (done) {
-        return await Secretary.sync({ force: true }).then(() => {
+    it('Criar Recepcionista', function (done) {
+        Secretary.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
 
-    it('Criar Estagiario', async function (done) {
-        return await Trainee.sync({ force: true }).then(() => {
+    it('Criar Estagiario', function (done) {
+        Trainee.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
   
-    it('Criar Paciente', async function (done) {
-        return await Patient.sync({ force: true }).then(() => {
+    it('Criar Paciente', function (done) {
+        Patient.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
-    it('Criar Consulta', async function (done) {
-        return await Consultation.sync({ force: true }).then(() => {
+    it('Criar Consulta', function (done) {
+        Consultation.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
-    it('Criar Reports', async function (done) {
-        return await Reports.sync({ force: true }).then(() => {
+    it('Criar Reports', function (done) {
+        Reports.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
-    it('Criar Espera', async function (done) {
-        return await Wait.sync({ force: true }).then(() => {
+    it('Criar Espera', function (done) {
+        Wait.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
