@@ -6,7 +6,6 @@ const PatienteController = require('../controller/PatientController');
 const patient = new PatienteController();
 const IndexController = require('../controller/IndexController');
 const controller = new IndexController();
-
 const ConsultController = require('../controller/ConsultationController');
 const consult = new ConsultController();
 
@@ -69,4 +68,11 @@ router.get('/schedules', users, (req, res)=>{
     controller.onlySchedules(req, res)
  })
 
+ router.get('/auth/google',  passport.authenticate('google',{
+     scope:['email', 'profile']
+ }))
+
+ router.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
+    res.send('Funcionando', req.user.id);
+ })
 module.exports = router;

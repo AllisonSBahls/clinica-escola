@@ -14,12 +14,19 @@ const wait = require('./app/routes/wait');
 const test = require('./app/routes/test');
 const session = require('express-session');
 const flash = require('connect-flash');
+// const cookieSession =  require('cookie-session');
 const passport = require('passport');
+// const keys  = require ('./config/keys')
+// const googleStrategy = require('./config/auth-google')
 require('./config/auth')(passport);
 
 const app = express();
 
-//Sessões
+// Sessões
+// app.use(cookieSession({
+// 	maxAge: 24*60*60*1000,
+// 	keys: [keys.session.cookieKey]
+// }))
 app.use(session({
 	secret: '****clinicasecretschool***',
 	resave: true,
@@ -30,6 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
+
 app.use((req, res, next) => {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');

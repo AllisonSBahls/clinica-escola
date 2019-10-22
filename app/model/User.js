@@ -8,6 +8,9 @@ const User = bd.sequelize.define('users', {
     password: {
         type: bd.Sequelize.STRING
     },
+    googleID: {
+        type: bd.Sequelize.STRING
+    },
 
 });
 
@@ -19,7 +22,11 @@ User.verifyEmail = async function(email) {
         where: { email: email }
     })
 }
-
+User.findUser = function(id){
+    return User.findOne({
+        where: { googleID: id }
+    })
+}
 User.searchEmailUser = async function(idUser){
     return await this.findOne({
         where: { id: idUser}

@@ -58,6 +58,27 @@ Patient.insertPatientRegister = function(email, password, name, phone){
         });
 }
 
+Patient.findPatientAuth = async function(googleID){
+    return await User.findAll({
+        where: {googleID: googleID}
+    })
+}
+
+Patient.insertPatientAuth = function(googleID, email, name){
+    return User.create({
+            email:email,
+            googleID: googleID,
+            NivelPermissaoId: 4,
+        }).then((user) => {
+            Patient.create({
+                name:name,
+                userPatientId: user.id
+            })
+        }).catch((err) => {
+            console.log(err)
+        });
+}
+
 Patient.insertPatient = function(email, password, name, phone, dateBirth, gender){
     return User.create({
         email:email,

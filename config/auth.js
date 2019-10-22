@@ -1,9 +1,37 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../app/model/User');
 const bcrypt = require('bcryptjs');
+const GoogleStrategy = require('passport-google-oauth20');
+const keys = require('./keys');
+const Patient = require('../app/model/Patient');
 
 module.exports = function (passport) {
 
+
+
+    passport.use(
+        new GoogleStrategy({
+            callbackURL: "/auth/google/redirect",
+            clientID: keys.google.clientID,
+            clientSecret: keys.google.clientSecret,
+        }, async (accessToken, refreshToken, profile, done) => {
+            await User.findUser(profile.id).then((currentUser) => {
+                if (currentUser.length > 0) {
+                    done(null, currentUser);
+                } else {
+                    Patient.insertPatientAuth(
+                        profile.id,
+                        profile.emails[0].value,
+                        profile.displayName,
+                    ).then((newUser) => {
+                        done(null, newUser);
+                    }).catch((err) => {
+                        console.log(err)
+                    });
+                }
+            });
+        })
+    )
     passport.use('local-signin',
         new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, function (req, email, password, done) {
 
