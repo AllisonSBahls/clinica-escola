@@ -7,24 +7,27 @@ const User = require('../app/model/User');
 
 
 passport.use(
-    new  GoogleStrategy({
+    new GoogleStrategy({
         callbackURL: "/auth/google/redirect",
         clientID: keys.google.clientID,
-        clientSecret:keys.google.clientSecret, 
-    }, async (accessToken, refreshToken, profile, done) =>{
-        await User.findUser(profile.id).then((currentUser)=>{
-            if(currentUser.length > 0){
-                done(null, currentUser);
-            }else{
+        clientSecret: keys.google.clientSecret,
+    }, async (accessToken, refreshToken, profile, done) => {
+        await User.findUser(profile.id).then((currentUser) => {
+            if (!currentUser) {
+                console.log('nao cadastrado')
                 Patient.insertPatientAuth(
                     profile.id,
                     profile.emails[0].value,
                     profile.displayName,
                 ).then((newUser) => {
-                    done(null, newUser);
+                 return   done(null, newUser);
                 }).catch((err) => {
                     console.log(err)
                 });
+                
+            } else {
+                console.log('cadastrado')
+                return done(null, currentUser);
             }
         });
     })

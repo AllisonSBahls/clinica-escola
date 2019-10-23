@@ -73,6 +73,6 @@ router.get('/schedules', users, (req, res)=>{
  }))
 
  router.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.send('Funcionando', req.user.id);
+    res.redirect('../../dashboard');
  })
 module.exports = router;
