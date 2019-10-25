@@ -10,6 +10,7 @@ class ConsultationController {
 
     async consultations(req, res) {
         //Carrega informação do paciente, lista de espera e estagiários
+
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
@@ -74,17 +75,20 @@ class ConsultationController {
             //Usuário Secretaria
     }
 
-    async consult_save(req, res) {
-        const { dateStart, patientId, traineeId, typeSchedule, patientWaitId } = req.body;
+    async saveConsult(req, res) {
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+
+        const { dateStart, description, patientId, traineeId, typeSchedule, patientWaitId } = req.body;
         //converter formato brasileiro para SQL
         const datetime = dateFormat(dateStart);
+
         //Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
         if (typeSchedule == 1 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             //Caso seja consulta a cor é Azul
             const color = '#2B56E2';
             //Verificar se o usuário esta pegando um paciente para lista de pacientes ou da lista de espera
             if (patientId != 0) {
-                Consultation.insertConsults(datetime, patientId, traineeId, typeSchedule, color).then(function () {
+                Consultation.insertConsults(datetime, null, patientId, traineeId, typeSchedule, color, description).then(function () {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -93,7 +97,7 @@ class ConsultationController {
                 })
             } else {
                 Wait.searchUpdateWait(patientWaitId)
-                Consultation.insertConsults(datetime, patientWaitId, traineeId, typeSchedule, color).then(function () {
+                Consultation.insertConsults(datetime, null, patientWaitId, traineeId, typeSchedule, color, description).then(function () {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -154,6 +158,19 @@ class ConsultationController {
             res.send("Não é possivel cancelar o agendamento" + err)
         })
     }
+
+    confirmSchedules(req, res){
+        const {dateStart, consultationId, traineeId, description} = req.body;
+        const datetime = dateFormat(dateStart);
+        Consultation.confirmSchedule(datetime, consultationId, traineeId, description).then((result) => {
+            res.redirect('/dashboard')
+        }).catch((err) => {
+            res.send(err)
+            
+        });
+    }
+
+    
 }
 
 module.exports = ConsultationController;

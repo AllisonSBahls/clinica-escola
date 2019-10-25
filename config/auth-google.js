@@ -14,7 +14,9 @@ passport.use(
     }, async (accessToken, refreshToken, profile, done) => {
         await User.findUser(profile.id).then((currentUser) => {
             if (!currentUser) {
-                console.log('nao cadastrado')
+                console.log('cadastrado')
+                return done(null, currentUser);
+            } else {
                 Patient.insertPatientAuth(
                     profile.id,
                     profile.emails[0].value,
@@ -24,10 +26,6 @@ passport.use(
                 }).catch((err) => {
                     console.log(err)
                 });
-                
-            } else {
-                console.log('cadastrado')
-                return done(null, currentUser);
             }
         });
     })

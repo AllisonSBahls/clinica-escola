@@ -17,13 +17,17 @@ class IndexController {
     }
 
     async dashboard(req, res) {
+        console.log('--------------------------------------------------')
         const patients = await Patient.searchAllPatients();
+        console.log('--------------------------------------------------')
         const waitPatients = await Wait.searchWaitPatients();
+        console.log('--------------------------------------------------')
         const trainees = await Trainee.searchAllTrainees();
 
         if (req.user.NivelPermissaoId == 1) {
+            console.log('--------------------------------------------------')
             const masterProfile = await Master.searchProfileMaster(req);
-
+            console.log('--------------------------------------------------')
             Consultation.searchAllConsults().then((consultation) => {
                 res.render('index/dashboard', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
@@ -72,6 +76,7 @@ class IndexController {
             });
     }
     async findConsultWeek(req, res) {
+        console.log('--------------------------------------------------')
         if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             await Consultation.searchConsultsWeek().then((consult) => {
                 res.send(consult)

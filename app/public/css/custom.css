@@ -11,3 +11,14 @@
     font-weight: 400;
     background-clip: padding-box;
 }
+.row-hidden{
+    display: flex;
+    margin-right: -15px;
+    margin-left: -15px; 
+    flex-wrap: wrap;
+    display: none;
+}
+
+.buttons-schedules{
+    display: flex;
+}

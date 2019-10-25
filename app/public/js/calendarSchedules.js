@@ -13,6 +13,12 @@ $(document).ready(function () {
 
 });
 
+// $(document).ready(()=>{
+//     $('defaultInline3').click(()=>{
+//         document.getElementById("traineeHidden").style.display = 'none';
+
+//     })
+// })
 
 $(document).ready(()=>{
     $('#table-day').empty();
@@ -63,8 +69,8 @@ function getHTML() {
     $('#valueIdUpdate').attr('value', vai); 
 }
 
-function update() {
-    document.getElementById("updateSchedules").submit();
+function confirmar() {
+    document.getElementById("confirmSchedules").submit();
 }
 
 function deletar() {
@@ -86,4 +92,37 @@ function showWait() {
 function showAllPatient(){
     document.getElementById("patientWaitSelect").style.display = 'none';
     document.getElementById("patientSelect").style.display = 'block'; 
+}
+
+function confirmar(){
+    document.getElementById("typeHidden").style.display = 'block';
+    document.getElementById("traineeHidden").style.display = 'block';
+    document.getElementById("saveHidden").style.display = 'block';
+    document.getElementById("confHidden").style.display = 'none';
+    document.getElementById("deletarHidden").style.display = 'none';
+    document.getElementById("esperaHidden").style.display = 'none';
+    document.getElementById("voltarHidden").style.display = 'block';
+
+}
+
+function voltar(){
+    document.getElementById("typeHidden").style.display = 'none';
+    document.getElementById("traineeHidden").style.display = 'none';
+    document.getElementById("saveHidden").style.display = 'none';
+    document.getElementById("confHidden").style.display = 'block';
+    document.getElementById("deletarHidden").style.display = 'block';
+    document.getElementById("esperaHidden").style.display = 'block';
+    document.getElementById("voltarHidden").style.display = 'none';
+
+
+}
+
+function fieldsSchedulesHidden() {
+    document.getElementById("traineeSchedulesHidden").style.display = 'none';
+    document.getElementById("typeConsultHidden").style.display = 'none';
+}
+
+function fieldsSchedulesShow(){
+    document.getElementById("traineeSchedulesHidden").style.display = 'block';
+    document.getElementById("typeConsultHidden").style.display = 'block';
 }

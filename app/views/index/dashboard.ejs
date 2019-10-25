@@ -23,10 +23,7 @@
           <div class="card bg-gradient-default shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
-                <!-- <div class="col">
-                    <h6 class="text-uppercase text-light ls-1 mb-1">Consultas</h6>
-                    <h2 class="text-white mb-0">Agenda</h2>
-                  </div> -->
+
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                       <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
@@ -99,7 +96,7 @@
         </div>
       </div>
       <div class="row mt-5">
-        <div class="col-xl-8 mb-5 mb-xl-0">
+        <div class="col-xl-12 mb-5 mb-xl-0">
           <div class="card shadow">
             <div class="card-header border-0">
               <div class="row align-items-center">
@@ -116,28 +113,60 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Nome</th>
+                    <th scope="col">Telefone</th>
                     <th scope="col">Horario</th>
                     <th scope="col">Estagiário</th>
+                    <th scope="col">Secretaria</th>
+
                   </tr>
                 </thead>
                 <tbody id="table-day"> 
-                  <tr>
-                    <th scope="row">
-                      /argon/
-                    </th>
-                    <td>
-                      4,569
-                    </td>
-                    <td>
-                      340
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                  
-                </tbody>
+                  <% if (consultation.length > 0){ %>
+                    <% for (var i = 0; i < 6; i++) {%>
+                      <tr>
+                        <% if(consultation[i].typeSchedule == 1) { %>
+                          <th scope="row">
+                            Consulta
+                          </th>
+                        <%} else if(consultation[i].typeSchedule == 1) { %>
+                          <th scope="row">
+                            Agendamento
+                          </th>
+                        <% } %>
+                        <td>
+                          <%= consultation[i].consultPatient.name %>
+                        </td>
+                        <td>
+                          <%= consultation[i].consultPatient.phone %>
+                        </td>
+                        <td>
+                            <%= moment(consultation[i].dateStart).format('DD/MM/YYYY HH:mm') %>
+                        </td>
+                        <% if(consultation[i].consultTraineeId == null) { %>
+                          <td>
+                            
+                          </td>
+                        <%} else { %>
+                          <td>
+                            <%= consultation[i].consultTrainee.name %>
+                          </td>
+                        <% } %>
+                        <% if(consultation[i].consultSecretaryId == null) { %>
+                          <td>
+                            
+                          </td>
+                        <%} else { %>
+                          <td>
+                            <%= consultation[i].consultSecretary.name %>
+                          </td>
+                        <% } %>
+
+                      </tr>
+                    <% } %>
+                  <% } %>    
+                  </tbody>
               </table>
             </div>
           </div>

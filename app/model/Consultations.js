@@ -93,11 +93,12 @@ Consultation.searchConsultsPatients = function (id) {
     })
 }
 
-Consultation.insertConsults = function (dateStart, idPatient, idTrainee, typeSchedule, color, description) {
+Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTrainee, typeSchedule, color, description) {
     return this.create({
         dateStart: dateStart,
         consultPatientId: idPatient,
         consultTraineeId: idTrainee,
+        consultSecretaryId: idSecretary,
         color: color,
         description:description,
         typeSchedule: typeSchedule,
@@ -131,8 +132,24 @@ Consultation.cancelConsultation = function (cancelId) {
     })
 }
 
+Consultation.confirmSchedule = function(dateStart, consultID, traineeId, description) {
+    return Consultation.update({
+        dateStart: dateStart,
+        consultTraineeId:traineeId,
+        description:description,
+        typeSchedule: 1,
+        color: '#2B56E2'
+    }, {
+        where: {
+            id: consultID
+        },
+    })
+}
+
 Consultation.searchConsultsWeek = async function (){
+    console.log('------------------semana----------------------------')
     return await Consultation.findAll({
+        order:['dateStart'],
         limit: 6,
         where: {
             typeSchedule: 1,
@@ -148,6 +165,7 @@ Consultation.searchConsultsWeek = async function (){
         }]
     });
 }
+
 Consultation.searchConsultWeekPatient  = async function (patientId){
     return await Consultation.findAll({
         where: {

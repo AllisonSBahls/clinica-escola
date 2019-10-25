@@ -7,15 +7,19 @@ const ConsultController = require('../controller/ConsultationController');
 const controller = new ConsultController();
 
 router.post('/save', users, (req, res) =>{
-    controller.consult_save(req, res)
+    controller.saveConsult(req, res)
 })
 
-router.post('/delete', users, (req, res) =>{
+router.post('/delete', admin, (req, res) =>{
     controller.deleteSchedules(req, res)
 });
 
-router.post('/cancelamento', users, (req, res) =>{
+router.post('/cancelamento', admin, (req, res) =>{
     controller.cancelamentoSchedule(req, res)
 });
+
+router.post('/confirmar', admin, (req, res) =>{
+    controller.confirmSchedules(req, res);
+})
 
 module.exports = router;
