@@ -167,15 +167,15 @@
                     <hr class="my-4" />      
                     <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2){  %>            
                         <div class="buttons-schedules">
-                            <input id="confHidden" type="button" onclick="confirmar()" class="btn btn-success" value="Conf"></input>
+                            <a id="confHidden"  onclick="showConfirmar()" class="btn btn-success"><i class="ni ni-lg ni-check-bold text-white"></i></a>
 
-                            <input id="deletarHidden" type="button" onclick="deletar()" class="btn btn-danger" value="Exc"></input>
+                            <a id="saveHidden" style="display: none;" onclick="confirmar()" class="btn btn-success"><i class="ni ni-lg ni-calendar-grid-58 text-white"></i></a>
 
-                            <input id="saveHidden" style="display: none;" type="submit" onclick="confirmar()" class="btn btn-success" value="Save"></input>
+                            <a id="esperaHidden" onclick="wait()" class="btn btn-primary"><i class="ni ni-lg ni-bullet-list-67 text-white"></i></a>
+                            
+                            <a id="deletarHidden" onclick="deletar()" class="btn btn-danger"><i class="ni ni-lg ni-basket text-white"></i></a>
 
-                            <input id="esperaHidden" type="button" onclick="wait()" class="btn btn-primary" value="Esp"></input>
-                        
-                            <input id="voltarHidden" style="display: none;" type="button" onclick="voltar()" class="btn btn-primary" value="Voltar"></input>
+                            <a id="voltarHidden" style="display: none;" onclick="voltar()" class="btn btn-primary"><i class="ni ni-curved-next text-white"></i></a>
 
                         </div>
                     <%} else if (user.NivelPermissaoId == 3 || user.NivelPermissaoId == 4){%>
@@ -233,7 +233,7 @@
                                 
                                 <div id="patientSelect" class="form-group">
                                     <label class="form-control-label" for="input-username">Paciente:</label>
-                                    <input id="buttonHiddenPatient" type="button" style="width: 10%; float:right; "class="btn btn-outline-primary btn-sm" onclick="showWait()" value=""></input>
+                                    <a id="buttonHiddenPatient" style="width: 10%; float:right; "class="btn btn-primary btn-sm" onclick="showWait()" value=""><i class="ni ni-lg ni-badge text-white"></i></a>
 
                                     <select id="patientModal" name="patientId"
                                         class="form-control form-control-alternative">
@@ -249,7 +249,7 @@
                                 
                                 <div style="display: none;"id="patientWaitSelect" class="form-group">
                                     <label class="form-control-label" for="input-username">Lista de Espera</label>
-                                    <input id="buttonHiddenPatient" type="button" style="width: 10%; float:right; "class="btn btn-outline-primary btn-sm" onclick="showAllPatient()" value=""></input>
+                                    <a id="buttonHiddenPatient" style="width: 10%; float:right; "class="btn btn-primary btn-sm" onclick="showAllPatient()" value=""><i class="ni ni-lg ni-paper-diploma text-white"></i></a>
 
                                     <select id="patientWaitModal" name="patientWaitId"
                                         class="form-control form-control-alternative" onchange="getHTML();">
@@ -291,7 +291,6 @@
                                     <select class="form-control" name="" id="" data-placeholder="Selecione">
                                         <option value=''>Retorno</option>
                                         <option value=''>Triagem</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -307,9 +306,8 @@
                             </div>
                         </div>
                     </div>
-
                     <hr class="my-4" />
-                    <input type="submit" class="btn btn-info" value="Marcar Consulta"></input>
+                    <input type="submit" class="btn btn-success" value="Marcar Consulta"></input>
                 </form>
 
             </div>
@@ -349,7 +347,7 @@
                         </div>
                     </div>
                     <hr class="my-4" />
-                    <input type="submit" class="btn btn-info" value="Marcar Consulta"></input>
+                    <input type="submit" class="btn btn-success" value="Marcar Agendamento"></input>
                 </form>
             </div>
         </div>

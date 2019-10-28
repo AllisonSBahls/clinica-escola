@@ -21,6 +21,14 @@ Trainee.searchAllTrainees = async function (){
     return await this.findAll();
 }
 
+Trainee.searchTraineeName = function(name){
+    return Trainee.findAll({
+        where: {
+            name:name
+        }
+    })
+}
+
 Trainee.searchAllTraineesUsers  = async function (){
     return Trainee.findAll({
         include: [{

@@ -2,7 +2,7 @@ $("register").modal('show');
 
 
 $(document).ready(function () {
-    $.fn.modal.Constructor.prototype._enforceFocus = function() {
+    $.fn.modal.Constructor.prototype._enforceFocus = function () {
         $('#patientModal').select2({
             dropdownParent: $('#register')
         });
@@ -20,54 +20,78 @@ $(document).ready(function () {
 //     })
 // })
 
-$(document).ready(()=>{
+$(document).ready(() => {
     $('#table-day').empty();
     $.ajax({
         url: '/consult/week',
         type: 'GET',
         dataType: 'json',
-        success: (data)=>{
-            for(var i=0; i < data.length; i++){
-                $('#table-day').append('<tr><td>' + data[i].consultPatient.name+'</td><td>'+ moment(data[i].dateStart).format('DD/MM/YYYY')+'</td><td>'+moment(data[i].dateStart).format('HH:mm')+'</td></tr>');
+        success: (data) => {
+            for (var i = 0; i < data.length; i++) {
+                $('#table-day').append('<tr><td>' + data[i].consultPatient.name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
             }
         }
-        })
+    })
 
     $('#allConsultDays').click(() => {
-    $('#table-day').empty();
-    $.ajax({
-        url: '/consult/days',
-        type: 'GET',
-        dataType: 'json',
-        success: (data)=>{
-            for(var i=0; i < data.length; i++){
-                console.log('ajax sucess', data);
-                $('#table-day').append('<tr><td>' + data[i].consultPatient.name+'</td><td>'+ moment(data[i].dateStart).format('DD/MM/YYYY')+'</td><td>'+moment(data[i].dateStart).format('HH:mm')+'</td></tr>');
+        $('#table-day').empty();
+        $.ajax({
+            url: '/consult/days',
+            type: 'GET',
+            dataType: 'json',
+            success: (data) => {
+                for (var i = 0; i < data.length; i++) {
+                    console.log('ajax sucess', data);
+                    $('#table-day').append('<tr><td>' + data[i].consultPatient.name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
+                }
             }
-        }
         })
     })
     $('#allConsultWeek').click(() => {
         $('#table-complete').empty();
+        event.preventDefault();
         $.ajax({
             url: '/consult/week',
             type: 'GET',
             dataType: 'json',
-            success: (data)=>{
-                for(var i=0; i < data.length; i++){
-                    console.log(data)
-                    $('#table-complete').append('<tr><td>' +'teste' +'</td><td>'+ data[i].consultPatient.name +'</td><td>'+ data[i].consultPatient.phone +'</td><td>'+moment(data[i].dateStart).format('DD/MM/YYYY HH:mm')+'</td><td>'+'teste'+'</td><td>'+'teste'+'</td></tr>');
+            success: (data) => {
+                for (var i = 0; i < data.length; i++) {
+                    let schedule;
+                    let user;
+                    if (data[i].typeSchedule == 1) {
+                        schedule = 'Consulta'
+                    } else if (data[i].typeSchedule == 2) {
+                        schedule = 'Agendamento'
+                    }
+
+                    if (data[i].consultSecretaryId == null && data[i].consultMasterId == null) {
+                        user = 'Portal'
+
+                    } else if (data[i].consultMasterId == null) {
+                        user = data[i].consultSecretary.name
+
+                    } else if (data[i].consultSecretaryId == null)  {
+                        user = data[i].consultMaster.name
+                    }
+                    console.log(user)
+                    if (data[i].consultTraineeId == null) {
+                        trainee = 'Não Informado'
+                    } else {
+                        trainee = data[i].consultTrainee.name
+                    }
+
+                    $('#table-complete').append('<tr><td>' + schedule + '</td><td>' + data[i].consultPatient.name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
                 }
             }
-            })
         })
+    })
 })
 
 
 function getHTML() {
-    var vai=$('#patientWaitModal option:selected').html();
-    
-    $('#valueIdUpdate').attr('value', vai); 
+    var vai = $('#patientWaitModal option:selected').html();
+
+    $('#valueIdUpdate').attr('value', vai);
 }
 
 function confirmar() {
@@ -87,15 +111,15 @@ function wait() {
 
 function showWait() {
     document.getElementById("patientSelect").style.display = 'none';
-    document.getElementById("patientWaitSelect").style.display = 'block'; 
+    document.getElementById("patientWaitSelect").style.display = 'block';
 }
 
-function showAllPatient(){
+function showAllPatient() {
     document.getElementById("patientWaitSelect").style.display = 'none';
-    document.getElementById("patientSelect").style.display = 'block'; 
+    document.getElementById("patientSelect").style.display = 'block';
 }
 
-function confirmar(){
+function showConfirmar() {
     document.getElementById("typeHidden").style.display = 'block';
     document.getElementById("traineeHidden").style.display = 'block';
     document.getElementById("saveHidden").style.display = 'block';
@@ -106,7 +130,7 @@ function confirmar(){
 
 }
 
-function voltar(){
+function voltar() {
     document.getElementById("typeHidden").style.display = 'none';
     document.getElementById("traineeHidden").style.display = 'none';
     document.getElementById("saveHidden").style.display = 'none';
@@ -123,16 +147,23 @@ function fieldsSchedulesHidden() {
     document.getElementById("typeConsultHidden").style.display = 'none';
 }
 
-function fieldsSchedulesShow(){
+function fieldsSchedulesShow() {
     document.getElementById("traineeSchedulesHidden").style.display = 'block';
     document.getElementById("typeConsultHidden").style.display = 'block';
 }
 
-function dropdownSidebar(){
-    if( document.getElementById("dropdown-container-sidebar").style.display == 'none'){
-       document.getElementById("dropdown-container-sidebar").style.display = 'block';
-    }else{
+function dropdownSidebar() {
+    if (document.getElementById("dropdown-container-sidebar").style.display == 'none') {
+        document.getElementById("dropdown-container-sidebar").style.display = 'block';
+    } else {
         document.getElementById("dropdown-container-sidebar").style.display = 'none';
+    }
+}
 
+function showFilter(){
+    if (document.getElementById("search-filter-field").style.display == 'none') {
+        document.getElementById("search-filter-field").style.display = 'block';
+    } else {
+        document.getElementById("search-filter-field").style.display = 'none';
     }
 }

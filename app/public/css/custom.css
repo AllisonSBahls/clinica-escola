@@ -22,3 +22,14 @@
 .buttons-schedules{
     display: flex;
 }
+
+#deletarHidden{
+    float: right;
+}
+
+#esperaHidden{
+    float: right;
+}
+#allConsultWeek{
+    color: white;
+}

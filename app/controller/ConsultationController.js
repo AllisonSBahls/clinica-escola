@@ -5,7 +5,7 @@ const Master = require('../model/Master');
 const Patient = require('../model/Patient');
 const Wait = require('../model/Wait');
 const dateFormat = require('../common/dateFormat')
-
+const moment = require('moment');
 class ConsultationController {
 
     async consultations(req, res) {
@@ -125,19 +125,31 @@ class ConsultationController {
     }
 
     async saveConsult(req, res) {
-        const secretaryProfile = await Secretary.searchProfileSecretary(req);
-
         const { dateStart, description, patientId, traineeId, typeSchedule, patientWaitId } = req.body;
         //converter formato brasileiro para SQL
         const datetime = dateFormat(dateStart);
+        let idMaster;
+        let idSecretary;
+
+       
 
         //Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
         if (typeSchedule == 1 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+            if (req.user.NivelPermissaoId == 1){
+                const masterProfile = await Master.searchProfileMaster(req);
+                idMaster = masterProfile.id
+                idSecretary = null;
+            }else{
+                const secretaryProfile = await Secretary.searchProfileSecretary(req);
+                idSecretary = secretaryProfile.id
+                idMaster = null;
+            }
             //Caso seja consulta a cor é Azul
             const color = '#2B56E2';
+            
             //Verificar se o usuário esta pegando um paciente para lista de pacientes ou da lista de espera
             if (patientId != 0) {
-                Consultation.insertConsults(datetime, null, patientId, traineeId, typeSchedule, color, description).then(function () {
+                Consultation.insertConsults(datetime, idSecretary, patientId, traineeId, idMaster, typeSchedule, color, description).then(function () {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -146,7 +158,7 @@ class ConsultationController {
                 })
             } else {
                 Wait.searchUpdateWait(patientWaitId)
-                Consultation.insertConsults(datetime, null, patientWaitId, traineeId, typeSchedule, color, description).then(function () {
+                Consultation.insertConsults(datetime, idSecretary, patientWaitId, traineeId, idMaster, typeSchedule, color, description).then(function () {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -178,15 +190,20 @@ class ConsultationController {
             }
             //O paciente podera solicitar uma consulta
         } else {
-            const color = '#1FA576';
-            const patientProfile = await Patient.searchProfilePatient(req);
-            Consultation.insertSchedules(datetime, patientProfile.id, color).then(function () {
-                req.flash("success_msg", "Agendamento marcado com sucesso");
+            if(datetime <= moment.utc().add(2, 'days').format('YYYY-MM-DD HH:MM:SS')){
+                req.flash("error_msg", "A data de Agendamento deve ser no minimo de 2 dias de diferença");
                 res.redirect('/dashboard');
-            }).catch(function (err) {
-                res.send("Erro ao marcar o agendamento",err);
-                res.redirect('/dashboard');
-            })
+            } else {
+                const color = '#1FA576';
+                const patientProfile = await Patient.searchProfilePatient(req);
+                Consultation.insertSchedules(datetime, patientProfile.id, color).then(function () {
+                    req.flash("success_msg", "Agendamento marcado com sucesso");
+                    res.redirect('/dashboard');
+                }).catch(function (err) {
+                    res.send("Erro ao marcar o agendamento",err);
+                    res.redirect('/dashboard');
+                })
+            }
         }
     }
 

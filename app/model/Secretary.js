@@ -41,6 +41,14 @@ Secretary.searchAllSecretaries = function(){
     })
 }
 
+Secretary.searchSecretaryName = function(name){
+    return Secretary.findAll({
+        where: {
+            name:name
+        }
+    })
+}
+
 Secretary.deleteSecretary = function(id){
     return User.destroy({
         where: { 'id': id }

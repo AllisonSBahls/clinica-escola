@@ -45,6 +45,14 @@ Master.searchMasters = function () {
     })
 }
 
+Mater.searchMasterName = function(name){
+    return Master.findAll({
+        where: {
+            name:name
+        }
+    })
+}
+
 Master.deleteMaster = function(id){
     return User.destroy({
         where: { 'id': id }

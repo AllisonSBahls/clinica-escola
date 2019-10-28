@@ -1,6 +1,6 @@
-
 const bd = require('./dbConnection');
 const Secretary = require("./Secretary");
+const Master = require("./Master");
 const Trainee = require("./Trainee");
 const Patient = require("./Patient");
 const Procedure = require("./Procedure");
@@ -29,9 +29,18 @@ const Consultation = bd.sequelize.define('consultations', {
     },
 
 });
+Consultation.belongsTo(Secretary, { as: 'consultSecretary', foreingKey: { name: 'fk_consult_secretary' }, onDelete: 'restrict' });
+Consultation.belongsTo(Patient, { as: 'consultPatient', foreingKey: { name: 'fk_consult_patient' }, onDelete: 'restrict' });
+Consultation.belongsTo(Master, { as: 'consultMaster', foreingKey: { name: 'fk_consult_master' }, onDelete: 'restrict' });
+Patient.hasMany(Consultation, { as: 'schedulesPatient', foreingKey: { name: 'fk_schedules_patient' , onDelete: 'restrict'} });
+Consultation.belongsTo(Trainee, { as: 'consultTrainee', foreingKey: { name: 'fk_consult_trainee' , onDelete: 'restrict'} });
+Consultation.belongsTo(Procedure, { as: 'typeProcedure', foreingKey: { name: 'fk_procedure' } , onDelete: 'restrict'});
+
+//Consultation.sync({force: true});       
 
 Consultation.searchAllConsults = function () {
     return this.findAll({
+        order:['dateStart'],
         where: {
             typeSchedule: {
                 [Op.ne]: 3
@@ -41,6 +50,8 @@ Consultation.searchAllConsults = function () {
             model: Patient, as: 'consultPatient',
         }, {
             model: Trainee, as: 'consultTrainee',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Secretary, as: 'consultSecretary',
         }]
@@ -49,6 +60,7 @@ Consultation.searchAllConsults = function () {
 
 Consultation.searchOnlySchedules = function(){
     return this.findAll({
+        order:['dateStart'],
         where: {
             typeSchedule: 2
         },
@@ -56,6 +68,8 @@ Consultation.searchOnlySchedules = function(){
             model: Patient, as: 'consultPatient',
         }, {
             model: Trainee, as: 'consultTrainee',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Secretary, as: 'consultSecretary',
         }]
@@ -63,6 +77,7 @@ Consultation.searchOnlySchedules = function(){
 }
 Consultation.searchConsultsTrainees = function (id) {
     return this.findAll({
+        order:['dateStart'],
         where: {
             consultTraineeId: id,
             typeSchedule: { [Op.ne]: 3 },
@@ -71,7 +86,9 @@ Consultation.searchConsultsTrainees = function (id) {
             model: Patient, as: 'consultPatient',
         }, {
             model: Trainee, as: 'consultTrainee',
-        }, {
+        },{
+            model: Master, as: 'consultMaster',
+        },{
             model: Secretary, as: 'consultSecretary',
         }],
     })
@@ -79,12 +96,15 @@ Consultation.searchConsultsTrainees = function (id) {
 
 Consultation.searchConsultsPatients = function (id) {
     return this.findAll({
+        order:['dateStart'],
         where: {
             consultPatientId: id,
             typeSchedule: { [Op.ne]: 3 },
         },
         include: [{
             model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Trainee, as: 'consultTrainee',
         }, {
@@ -93,12 +113,13 @@ Consultation.searchConsultsPatients = function (id) {
     })
 }
 
-Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTrainee, typeSchedule, color, description) {
+Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTrainee, idMaster, typeSchedule, color, description) {
     return this.create({
         dateStart: dateStart,
         consultPatientId: idPatient,
         consultTraineeId: idTrainee,
         consultSecretaryId: idSecretary,
+        consultMasterId: idMaster,
         color: color,
         description:description,
         typeSchedule: typeSchedule,
@@ -147,17 +168,17 @@ Consultation.confirmSchedule = function(dateStart, consultID, traineeId, descrip
 }
 
 Consultation.searchConsultsWeek = async function (){
-    console.log('------------------semana----------------------------')
     return await Consultation.findAll({
         order:['dateStart'],
         limit: 6,
         where: {
-            typeSchedule: 1,
             dateStart: {
                 [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
             },
         include: [{
             model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Trainee, as: 'consultTrainee',
         }, {
@@ -168,6 +189,7 @@ Consultation.searchConsultsWeek = async function (){
 
 Consultation.searchConsultWeekPatient  = async function (patientId){
     return await Consultation.findAll({
+        order:['dateStart'],
         where: {
             typeSchedule: 1,
             consultPatientId: patientId, 
@@ -176,6 +198,8 @@ Consultation.searchConsultWeekPatient  = async function (patientId){
             },
         include: [{
             model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Trainee, as: 'consultTrainee',
         }, {
@@ -186,6 +210,7 @@ Consultation.searchConsultWeekPatient  = async function (patientId){
 
 Consultation.searchConsultWeekTrainee  = async function (traineeId){
     return await Consultation.findAll({
+        order:['dateStart'],
         where: {
             consultTraineeId: traineeId
         },
@@ -195,6 +220,8 @@ Consultation.searchConsultWeekTrainee  = async function (traineeId){
             },
         include: [{
             model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Trainee, as: 'consultTrainee',
         }, {
@@ -206,6 +233,7 @@ Consultation.searchConsultWeekTrainee  = async function (traineeId){
 
 Consultation.searchConsultDay = async function (startDay, endDay){
     return await Consultation.findAll({
+        order:['dateStart'],
         limit: 6,
         where: {
             dateStart: {
@@ -213,7 +241,9 @@ Consultation.searchConsultDay = async function (startDay, endDay){
             },
         include: [{
             model: Patient, as: 'consultPatient',
-        }, {
+        },{
+            model: Master, as: 'consultMaster',
+        },{
             model: Trainee, as: 'consultTrainee',
         }, {
             model: Secretary, as: 'consultSecretary',
@@ -223,6 +253,7 @@ Consultation.searchConsultDay = async function (startDay, endDay){
 
 Consultation.searchConsultDayTrainee = async function (startDay, endDay, traineeId){    
     return await Consultation.findAll({
+        order:['dateStart'],
         limit: 6,
         where: {
             consultTraineeId: traineeId,
@@ -231,6 +262,8 @@ Consultation.searchConsultDayTrainee = async function (startDay, endDay, trainee
             },
         include: [{
             model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Trainee, as: 'consultTrainee',
         }, {
@@ -240,6 +273,7 @@ Consultation.searchConsultDayTrainee = async function (startDay, endDay, trainee
 } 
 Consultation.searchConsultDayPatient = async function (startDay, endDay, patientId){    
     return await Consultation.findAll({
+        order:['dateStart'],
         limit: 6,
         where: {
             consultPatientId: patientId,
@@ -248,6 +282,8 @@ Consultation.searchConsultDayPatient = async function (startDay, endDay, patient
             },
         include: [{
             model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
         }, {
             model: Trainee, as: 'consultTrainee',
         }, {
@@ -258,11 +294,5 @@ Consultation.searchConsultDayPatient = async function (startDay, endDay, patient
 
 
 
-Consultation.belongsTo(Secretary, { as: 'consultSecretary', foreingKey: { name: 'fk_consult_secretary' }, onDelete: 'restrict' });
-Consultation.belongsTo(Patient, { as: 'consultPatient', foreingKey: { name: 'fk_consult_patient' }, onDelete: 'restrict' });
-Patient.hasMany(Consultation, { as: 'schedulesPatient', foreingKey: { name: 'fk_schedules_patient' , onDelete: 'restrict'} });
-Consultation.belongsTo(Trainee, { as: 'consultTrainee', foreingKey: { name: 'fk_consult_trainee' , onDelete: 'restrict'} });
-Consultation.belongsTo(Procedure, { as: 'typeProcedure', foreingKey: { name: 'fk_procedure' } , onDelete: 'restrict'});
-//Consultation.sync({force: true});       
 
 module.exports = Consultation;

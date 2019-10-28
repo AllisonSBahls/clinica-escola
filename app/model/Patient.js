@@ -58,6 +58,14 @@ Patient.insertPatientRegister = function(email, password, name, phone){
         });
 }
 
+Patient.searchPatientName = function(name){
+    return Patient.findAll({
+        where: {
+            name:name
+        }
+    })
+}
+
 
 Patient.findPatientAuth = async function(googleID){
     return await User.findAll({

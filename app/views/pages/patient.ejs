@@ -16,26 +16,25 @@
         <div style="justify-content: center !important" class="row mt-4">
             <div class="col-xl-11 mb-5 mb-xl-0">
                 <div class="card shadow">
-                        <% include ../partials/message %>
+                    <% include ../partials/message %>
 
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
                                 <h3 class="mb-0">Pacientes</h3>
                             </div>
-                            <a href="/paciente/register"  class="btn btn-outline-success">Cadastrar</a>
-                            <a href=""  class="btn btn-outline-primary">Filtrar</a>
+                            <a href="/paciente/register" class="btn btn-outline-success">Cadastrar</a>
+                            <a class="btn btn-outline-primary" onclick="showFilter();">Filtrar</a>
                         </div>
                     </div>
-                  
-                    <div style = "display: none;"class="col-lg-12">
-                            <div class="form-group">
-                                <input type="text" id="nomeMaster" name="name" required
-                                    class="form-control form-control-alternative"
-                                    placeholder="Digite o nome">
-                            </div>
+
+                    <div style="display: none;" class="col-lg-12" id="search-filter-field">
+                        <div class="form-group">
+                            <input type="text" name="name" required class="form-control form-control-alternative"
+                                placeholder="Digite o nome">
                         </div>
-                    
+                    </div>
+                    <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
@@ -87,7 +86,6 @@
         <!-- Footer -->
         <% include ../partials/footer %>
 
-    </div>
     </div>
     <!-- Argon Scripts -->
     <!-- Core -->

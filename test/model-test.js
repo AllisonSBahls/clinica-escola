@@ -5,9 +5,6 @@ const Secretary = require('../app/model/Secretary');
 const Master = require('../app/model/Master');
 const Reports = require('../app/model/Reports');
 const Wait = require('../app/model/Wait');
-
-
-// const Schedule = require('../app/model/Schedules');
 const Consultation = require('../app/model/Consultations');
 const User = require('../app/model/User');
 const Procedure = require('../app/model/Procedure')
@@ -25,6 +22,7 @@ describe('Criando as Tabelas', function () {
         }).catch(done)
 
     })
+
     it('Criar Procedimentos', function (done) {
         Procedure.sync({ force: true }).then(() => {
             done();
@@ -36,11 +34,13 @@ describe('Criando as Tabelas', function () {
             done();
         }).catch(done)
     })
+
     it('Criar Master', function (done) {
         Master.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
+
     it('Criar Recepcionista', function (done) {
         Secretary.sync({ force: true }).then(() => {
             done();
@@ -58,16 +58,19 @@ describe('Criando as Tabelas', function () {
             done();
         }).catch(done)
     })
+
     it('Criar Consulta', function (done) {
         Consultation.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
+
     it('Criar Reports', function (done) {
         Reports.sync({ force: true }).then(() => {
             done();
         }).catch(done)
     })
+
     it('Criar Espera', function (done) {
         Wait.sync({ force: true }).then(() => {
             done();
@@ -77,8 +80,7 @@ describe('Criando as Tabelas', function () {
 })
 describe('Verificando os cadastro no Model', function () {
     it('should list ALL Permissao GET', function (done) {
-        Permission.findAll()
-            .then(() => {
+        Permission.findAll().then(() => {
                 done();
             })
     })
@@ -86,8 +88,7 @@ describe('Verificando os cadastro no Model', function () {
     it('Registrar a permissão de SUPERVISOR', function (done) {
         Permission.create({
             permissao: 'Supervisor',
-        })
-            .then((permission) => {
+        }).then((permission) => {
                 done();
             })
     })
@@ -95,8 +96,7 @@ describe('Verificando os cadastro no Model', function () {
     it('Registrar a permissão de RECECEPCIONISTA', function (done) {
         Permission.create({
             permissao: 'Recepcionista',
-        })
-            .then((permission) => {
+        }).then((permission) => {
                 done();
             })
     })
@@ -104,8 +104,7 @@ describe('Verificando os cadastro no Model', function () {
     it('Registrar a permissão de ESTAGIÁRIO', function (done) {
         Permission.create({
             permissao: 'Estagiario',
-        })
-            .then((permission) => {
+        }).then((permission) => {
                 done();
             })
     })
@@ -119,6 +118,21 @@ describe('Verificando os cadastro no Model', function () {
             })
     })
 
+    it('Registrar o procedimento', function (done) {
+        Procedure.create({
+            typeProcedure: 'Retorno',
+        }).then((procedure) => {
+                done();
+            })
+    })
+
+    it('Registrar o procedimento', function (done) {
+        Procedure.create({
+            typeProcedure: 'Triagem',
+        }).then((procedure) => {
+                done();
+            })
+    })
 
     it('Registar um PACIENTE e seu Usuário', function (done) {
         var secretaryPassword = generateHash('12345');
