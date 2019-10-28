@@ -48,14 +48,15 @@ $(document).ready(()=>{
         })
     })
     $('#allConsultWeek').click(() => {
-        $('#table-day').empty();
+        $('#table-complete').empty();
         $.ajax({
             url: '/consult/week',
             type: 'GET',
             dataType: 'json',
             success: (data)=>{
                 for(var i=0; i < data.length; i++){
-                    $('#table-day').append('<tr><td>' + data[i].consultPatient.name+'</td><td>'+ moment(data[i].dateStart).format('DD/MM/YYYY')+'</td><td>'+moment(data[i].dateStart).format('HH:mm')+'</td></tr>');
+                    console.log(data)
+                    $('#table-complete').append('<tr><td>' +'teste' +'</td><td>'+ data[i].consultPatient.name +'</td><td>'+ data[i].consultPatient.phone +'</td><td>'+moment(data[i].dateStart).format('DD/MM/YYYY HH:mm')+'</td><td>'+'teste'+'</td><td>'+'teste'+'</td></tr>');
                 }
             }
             })
@@ -125,4 +126,13 @@ function fieldsSchedulesHidden() {
 function fieldsSchedulesShow(){
     document.getElementById("traineeSchedulesHidden").style.display = 'block';
     document.getElementById("typeConsultHidden").style.display = 'block';
+}
+
+function dropdownSidebar(){
+    if( document.getElementById("dropdown-container-sidebar").style.display == 'none'){
+       document.getElementById("dropdown-container-sidebar").style.display = 'block';
+    }else{
+        document.getElementById("dropdown-container-sidebar").style.display = 'none';
+
+    }
 }

@@ -66,31 +66,67 @@
         <% if (user.NivelPermissaoId == 1  || user.NivelPermissaoId == 2) { %>
         <li class="nav-item">
           <a class="nav-link" href="/dashboard">
-            <i class="ni ni-tv-2 text-primary"></i> Inicio
+            <i class="ni ni-tv-2 text-success"></i> Dashboard
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/calendar">
-            <i class="ni ni-single-02 text-yellow"></i> Consultas
-          </a>
+          <button id = "dropdown-btn" class="nav-link" 
+          style="background: none;
+          border: none;
+          text-decoration: none;
+          padding-left: 0.9rem;
+          cursor: pointer;
+          outline: none;" 
+          onclick="dropdownSidebar();" >
+            <i class="ni ni-calendar-grid-58 text-blue" style="margin-right: 0.7rem;"></i> Consultas
+            <i class="ni ni-bold-down text-blacks"></i>
+          </button>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/icons">
-            <i class="ni ni-planet text-blue"></i> Agendamentos
-          </a>
-        </li>
+
+        <style>
+          .dropdown-container{
+            display: none;
+            padding-left: 5% ;
+          }
+        </style>
+
+        <div id = "dropdown-container-sidebar" class="dropdown-container">
+          <li class="nav-item">
+            <a class="nav-link" href="/calendar">
+              <i class="ni ni-calendar-grid-58 text-success"></i> Calendario
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/consultation">
+              <i class="ni ni-calendar-grid-58 text-blue"></i> Consultas 
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/waits">
+              <i class="ni ni-calendar-grid-58 text-yellow"></i> Lista de Espera
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/calendar">
+              <i class="ni ni-calendar-grid-58 text-danger"></i> Cancelamentos
+            </a>
+          </li>
+        </div>
+
+
+
         <li class="nav-item">
           <a class="nav-link" href="/paciente">
-            <i class="ni ni-pin-3 text-orange"></i> Pacientes
+            <i class="ni ni-paper-diploma text-orange"></i> Pacientes
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/estagiario">
-            <i class="ni ni-bullet-list-67 text-red"></i> Estagiarios
+            <i class="ni ni-hat-3 text-red"></i> Estagiarios
           </a>
         <li class="nav-item">
           <a class="nav-link" href="/recepcionista">
-            <i class="ni ni-key-25 text-info"></i> Recepcionistas
+            <i class="ni ni-single-02 text-info"></i> Recepcionistas
           </a>
         </li>
         <li class="nav-item">

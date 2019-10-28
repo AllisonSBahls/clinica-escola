@@ -22,4 +22,8 @@ router.post('/confirmar', admin, (req, res) =>{
     controller.confirmSchedules(req, res);
 })
 
+router.get('/', users, (req, res) =>{
+    controller.listConsults(req, res);
+})
+
 module.exports = router;

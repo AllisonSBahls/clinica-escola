@@ -57,6 +57,55 @@ class ConsultationController {
         }
     }
 
+    async listConsults(req, res) {
+        //Carrega informação do paciente, lista de espera e estagiários
+
+        const patients = await Patient.searchAllPatients();
+        const waitPatients = await Wait.searchWaitPatients();
+        const trainees = await Trainee.searchAllTrainees();
+
+        //Usuário Administrador
+        if (req.user.NivelPermissaoId == 1) {
+            //Busca o nome do usuário ADMINISTRADOR
+            const masterProfile = await Master.searchProfileMaster(req);
+            //Retornar todas as consultas como agendamento ou consulta marcada
+            Consultation.searchAllConsults().then((consultation) => {
+                res.render('pages/consult', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
+            //Usuário Secretaria
+        } else if (req.user.NivelPermissaoId == 2) {
+            //Busca o nome do usuário SECRETARIA
+            const secretaryProfile = await Secretary.searchProfileSecretary(req);
+            //Retornar todas as consultas como agendamento ou consulta marcada
+            Consultation.searchAllConsults().then((consultation) => {
+                res.render('pages/consult', { waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
+        } else if (req.user.NivelPermissaoId == 3) {
+            //Busca o nome do usuário Estagiário
+            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            // Retornar apenas as consultas do estagiário
+            Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
+                res.render('pages/consult', { traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
+        } else if (req.user.NivelPermissaoId == 4) {
+            //Busca o nome do usuário Pacientes
+            const patientProfile = await Patient.searchProfilePatient(req);
+
+            // RETORNAR AS CONSULTAS DO PACIENTE
+            Consultation.searchConsultsPatients(patientProfile.id).then((consultation) => {
+                res.render('pages/consult', { patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
+            }).catch((err) => {
+                res.send('erro' + err);
+            });
+        }
+    }
+
     async onlySchedules(req, res) {
         //Carrega informação do paciente, lista de espera e estagiários
         const patients = await Patient.searchAllPatients();

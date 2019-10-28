@@ -65,9 +65,7 @@
                           
                   </div>  
                   <button class="btn btn-primary primary"
-                    id="allConsultWeek">Semana</button>
-                  <button class="btn btn-primary primary"
-                  id="allConsultDays">Dia</button>
+                  id="allConsultDays">Hoje</button>
                   <a class="btn btn-primary primary"
                     href="">Data</a>
                 </div>
@@ -103,8 +101,11 @@
                 <div class="col">
                   <h3 class="mb-0">Consultas Marcadas</h3>
                 </div>
+                
                 <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">Ver Mais</a>
+                    <a class="btn btn-sm btn-primary" id="allConsultWeek">Na Semana</a>
+                    <a href="#!" class="btn btn-sm btn-primary">Hoje</a>
+                  <a href="/consultation" class="btn btn-sm btn-primary">Ver Mais</a>
                 </div>
               </div>
             </div>
@@ -122,15 +123,16 @@
 
                   </tr>
                 </thead>
-                <tbody id="table-day"> 
+                <tbody id="table-complete"> 
                   <% if (consultation.length > 0){ %>
-                    <% for (var i = 0; i < 6; i++) {%>
+                    <% for (var i = 0; i < consultation.length; i++) {%>
+                      <%  if (i < 6) {%>
                       <tr>
                         <% if(consultation[i].typeSchedule == 1) { %>
                           <th scope="row">
                             Consulta
                           </th>
-                        <%} else if(consultation[i].typeSchedule == 1) { %>
+                        <%} else if(consultation[i].typeSchedule == 2) { %>
                           <th scope="row">
                             Agendamento
                           </th>
@@ -161,9 +163,10 @@
                           <td>
                             <%= consultation[i].consultSecretary.name %>
                           </td>
-                        <% } %>
+                        <% }  %>
 
                       </tr>
+                      <% } %>
                     <% } %>
                   <% } %>    
                   </tbody>

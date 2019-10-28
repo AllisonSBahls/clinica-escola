@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const {users} = require('../helpers/auth')
-const PatienteController = require('../controller/PatientController');
-const patient = new PatienteController();
+
 const IndexController = require('../controller/IndexController');
 const controller = new IndexController();
 const ConsultController = require('../controller/ConsultationController');
