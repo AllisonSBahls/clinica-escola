@@ -5,19 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 
 </head>
 
-<!-- <script>
+<script>
   $(document).ready(function(){
     $('#campo').keyup(function(){
       $('form').submit(function(){
         var dados= $(this).serialize();
         $.ajax({
-          url:'/test',
+          url:'/test/master',
           type: 'POST',
           dataType: 'html',
           data: dados,
@@ -36,7 +34,7 @@
 </script> -->
 <body>
    <h1> Busca sem refresh</h1>
-   
+   <form>
    
     Buscar por: <input type="text" name="campo" id="campo">
 
@@ -51,40 +49,10 @@
               <th scope="col">E-mail</th>
               <th scope="col"></th>
               <th scope="col"></th>
-
-              <!-- <th scope="col">Bounce rate</th> -->
           </tr>
       </thead>
       <tbody>
-          <% if(masters.length > 0 ) {%>
-          <% for (var i = 0; i < masters.length; i++) { %>
-          <tr>
-              <th scope="row">
-                  <%= masters[i].name %>
-              </th>
-              <td>
-                  <%= masters[i].userMaster.email %>
-              </td>
-              <td>
-                  <%= masters[i].phone %>
-              </td>
-              <td>
-                  <a class="btn btn-danger delete"
-                      onclick="return confirm('Você confirma a exclusão?')"
-                     >Excluir</a>
-              </td>
-              <td>
-                  <a class="btn btn-primary primary"
-                     >Alterar</a>
-              </td>
-
-
-              <% } %>
-              <% } %>
-              <!-- <td>
-        <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-      </td> -->
-          </tr>
+          
       </tbody>
   </table>
    </div>

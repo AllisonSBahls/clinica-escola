@@ -13,13 +13,6 @@ $(document).ready(function () {
 
 });
 
-// $(document).ready(()=>{
-//     $('defaultInline3').click(()=>{
-//         document.getElementById("traineeHidden").style.display = 'none';
-
-//     })
-// })
-
 $(document).ready(() => {
     $('#table-day').empty();
     $.ajax({
@@ -32,6 +25,26 @@ $(document).ready(() => {
             }
         }
     })
+    
+    // $(document).ready(function(){
+    //     $('#search-name-patient').keyup(function(){
+    //       $('form').submit(function(){
+    //         var dados= $(this).serialize();
+    //         $.ajax({
+    //           url:'/paciente/search',
+    //           type: 'POST',
+    //           dataType: 'html',
+    //           data: dados,
+    //           success: function(data){
+    //             console.log(data)
+    //         }
+    //         });
+    //         return false;
+    //       });
+    //       $('form').trigger('submit');
+    //     })
+    //   })
+      
 
     $('#allConsultDays').click(() => {
         $('#table-day').empty();
@@ -47,6 +60,7 @@ $(document).ready(() => {
             }
         })
     })
+
     $('#allConsultWeek').click(() => {
         $('#table-complete').empty();
         event.preventDefault();

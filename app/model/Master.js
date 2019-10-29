@@ -45,7 +45,7 @@ Master.searchMasters = function () {
     })
 }
 
-Mater.searchMasterName = function(name){
+Master.searchMasterName = function(name){
     return Master.findAll({
         where: {
             name:name
@@ -68,7 +68,7 @@ Master.searchOneMaster = function(id){
     })
 }
 
-Master.searchLikeMaster = function(name){
+Master.searchNameMaster = function(name){
     return Master.findAll({
         where:{
             name:{

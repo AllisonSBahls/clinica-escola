@@ -52,6 +52,16 @@ class SecretaryController {
         })
     }
 
+    searchNamePatient(req, res){
+        const { namePatient } = req.body
+        var campo = '%' + namePatient + '%';
+        Patient.searchPatientName(campo).then((namePatient)=>{
+            res.send(namePatient)
+        }).catch((err) =>{
+            res.send(err);
+        })
+    }
+
     deletePatient(req, res) {
         Patient.deletePatient(req.params.id).then(function () {
             req.flash("success_msg", "Paciente deletado com sucesso");

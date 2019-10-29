@@ -1,5 +1,6 @@
 const bd = require('./dbConnection');
 const User = require("./User");
+const { Op } = require('sequelize')
 
 const Patient = bd.sequelize.define('patients', {
     name: {
@@ -58,11 +59,16 @@ Patient.insertPatientRegister = function(email, password, name, phone){
         });
 }
 
-Patient.searchPatientName = function(name){
-    return Patient.findAll({
-        where: {
-            name:name
-        }
+Patient.searchPatientName = async function(name){
+    return await Patient.findAll({
+        where: { 
+            name:{
+                [Op.like]: name,
+            }  
+        },
+        include: [{
+            model: User, as: 'userPatient'
+        }]
     })
 }
 

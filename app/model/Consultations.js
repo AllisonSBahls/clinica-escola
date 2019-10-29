@@ -113,6 +113,18 @@ Consultation.searchConsultsPatients = function (id) {
     })
 }
 
+Consultation.countSchedule = async function(){
+    return await this.findAll({
+        attributes:[[bd.Sequelize.fn('count', bd.Sequelize.col ('typeSchedule')),  'typeSchedule']],
+        where:{
+            typeSchedule: 2,
+            dateStart:{
+                [Op.gte]: moment.utc()
+            }
+        }
+    })
+}
+
 Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTrainee, idMaster, typeSchedule, color, description) {
     return this.create({
         dateStart: dateStart,

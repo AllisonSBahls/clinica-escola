@@ -22,6 +22,7 @@ Wait.belongsTo(Master, {as : 'waitMaster', foreingKey: {name: 'fk_wait_Master'}}
 
 Wait.searchWaitPatients = async function(){
     return await this.findAll({
+        order:['dateEntry'],
         where:{dateExit: null},
         include: [{
             model: Patient, as: 'waitPatient',
@@ -45,11 +46,12 @@ Wait.searchUpdateWait = async function(patientWaitId){
     });
 }
 
-Wait.insertWait =  async function(patientIdHidden, id){
+Wait.insertWait =  async function(patientIdHidden, idMaster, idSecretary){
     return Wait.create({
         dateEntry: moment(),
         waitPatientId: patientIdHidden,
-        waitMasterId: id,
+        waitMasterId: idMaster,
+        waitSecretaryId: idSecretary
     })
 }
 

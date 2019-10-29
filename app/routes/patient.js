@@ -30,4 +30,8 @@ router.get('/register', admin, (req, res) =>{
     controller.form_admin_patient(req, res)
 });
 
+router.post('/search'), (req, res) =>{
+    controller.searchNamePatient(req, res);
+}
+
 module.exports = router;

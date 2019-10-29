@@ -21,4 +21,5 @@ router.post('/passup/', admin, async (req, res) =>{
     controller.passwordUpdate(req, res)
 });
 
+
 module.exports = router;

@@ -22,19 +22,20 @@ class IndexController {
         const trainees = await Trainee.searchAllTrainees();
 
         if (req.user.NivelPermissaoId == 1) {
+            const countSchedules = await Consultation.countSchedule();
             const masterProfile = await Master.searchProfileMaster(req);
+
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('index/dashboard', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('index/dashboard', { countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err)
             })
 
         } else if (req.user.NivelPermissaoId == 2) {
             const secretaryProfile = await Secretary.searchProfileSecretary(req);
-
+            const countSchedules = await Consultation.countSchedule();
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('index/dashboard', { waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
-
+                res.render('index/dashboard', { countSchedules: countSchedules, waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err)
             })
@@ -63,12 +64,13 @@ class IndexController {
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
-            const masterProfile = await Master.searchProfileMaster(req);
-            Consultation.searchOnlySchedules().then((consultation) => {
-                res.render('index/dashboard', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
-            }).catch((err) => {
-                res.send('erro' + err);
-            });
+        const countSchedules = await Consultation.countSchedule();
+        const masterProfile = await Master.searchProfileMaster(req);
+        Consultation.searchOnlySchedules().then((consultation) => {
+            res.render('index/dashboard', { countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+        }).catch((err) => {
+            res.send('erro' + err);
+        });
     }
     async findConsultWeek(req, res) {
         if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {

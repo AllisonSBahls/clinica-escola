@@ -29,13 +29,16 @@
                     </div>
 
                     <div style="display: none;" class="col-lg-12" id="search-filter-field">
-                        <div class="form-group">
-                            <input type="text" name="name" required class="form-control form-control-alternative"
-                                placeholder="Digite o nome">
-                        </div>
+                        <form action="/paciente/search"  method="POST" >
+                            <div class="form-group">
+                                <input type="text" name="namePatient" id="search-name-patient" required class="form-control form-control-alternative"
+                                    placeholder="Digite o nome">
+                            </div>
+                            <button>busca</button>
+                        </form>
                     </div>
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table id="table-patient" class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Nome Completo</th>

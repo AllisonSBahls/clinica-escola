@@ -15,7 +15,7 @@ class WaitController {
     
             await Consultation.deleteSchedules(consultationId);
         
-            Wait.insertWait(patientIdHidden, master.id).then(function () {
+            Wait.insertWait(patientIdHidden, master.id, null).then(function () {
                 req.flash("success_msg", "Paciente colocado na lista de Espera");
                 res.redirect('/dashboard');
             }).catch(function (err) {
@@ -24,16 +24,7 @@ class WaitController {
 
         } else if (req.user.NivelPermissaoId == 2) {
             const secretary = await Secretary.searchProfileSecretary(req);
-
-
-            Wait.create({
-                dateEntry: moment(),
-                waitPatientId: parseInt(req.body.patientIdHidden),
-                waitSecretaryId: secretary.id,
-            }).then(function () {
-                Consultation.destroy({
-                    where: { id: req.body.consultationId }
-                });
+            Wait.insertWait(patientIdHidden,null, secretary.id).then(function () {
                 req.flash("success_msg", "Paciente colocado na lista de Espera");
                 res.redirect('/dashboard');
             }).catch(function (err) {
@@ -86,11 +77,8 @@ class WaitController {
     }
 
     waitUpdate(req, res){
-        Wait.update({
-            dateExit: moment(),
-        },{
-            where: {id : req.body.id}
-        }).then(()=>{
+        const {patientWaitId} =  req.body
+        Wait.searchUpdateWait(patientWaitId).then(()=>{
             req.flash("success_msg", "Paciente retirado na lista de Espera com suceso");
             res.redirect('/waits');
         }).catch(()=>{
