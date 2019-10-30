@@ -7,6 +7,8 @@ const Reports = require('../app/model/Reports');
 const Wait = require('../app/model/Wait');
 const Consultation = require('../app/model/Consultations');
 const User = require('../app/model/User');
+const Presence = require('../app/model/Presence');
+
 const Procedure = require('../app/model/Procedure')
 const bcrypt = require('bcryptjs');
 
@@ -77,6 +79,12 @@ describe('Criando as Tabelas', function () {
         }).catch(done)
     })
 
+    it('Criar Frequencias', function (done) {
+        Presence.sync({ force: true }).then(() => {
+            done();
+        }).catch(done)
+
+    })
 })
 describe('Verificando os cadastro no Model', function () {
     it('should list ALL Permissao GET', function (done) {

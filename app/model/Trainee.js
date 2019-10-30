@@ -1,5 +1,6 @@
 const bd = require('./dbConnection');
 const User = require('./User');
+const { Op } = require('sequelize')
 
 const Trainee = bd.sequelize.define('trainees', {
     name: {
@@ -21,14 +22,6 @@ Trainee.searchAllTrainees = async function (){
     return await this.findAll();
 }
 
-Trainee.searchTraineeName = function(name){
-    return Trainee.findAll({
-        where: {
-            name:name
-        }
-    })
-}
-
 Trainee.searchAllTraineesUsers  = async function (){
     return Trainee.findAll({
         include: [{
@@ -42,6 +35,20 @@ Trainee.searchProfileTrainee = async function(req){
         where: { userTraineeId: req.user.id }
     });
 }
+
+Trainee.searchTraineeName = function(name){
+    return Trainee.findAll({
+        where: { 
+            name:{
+                [Op.like]: name,
+            }  
+        },
+        include: [{
+            model: User, as: 'userTrainee'
+        }]
+    })
+}
+
 
 Trainee.insertTrainee = function(name, email, phone, course, period, password){
     return User.create({

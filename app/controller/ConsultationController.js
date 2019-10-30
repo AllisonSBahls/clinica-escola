@@ -14,6 +14,7 @@ class ConsultationController {
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
+        const procedure = await Procedure.searchAllProcedures();
 
         //Usuário Administrador
         if (req.user.NivelPermissaoId == 1) {
@@ -21,7 +22,7 @@ class ConsultationController {
             const masterProfile = await Master.searchProfileMaster(req);
             //Retornar todas as consultas como agendamento ou consulta marcada
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('partials/calendar', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('partials/calendar', {procedure:procedure, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -31,7 +32,7 @@ class ConsultationController {
             const secretaryProfile = await Secretary.searchProfileSecretary(req);
             //Retornar todas as consultas como agendamento ou consulta marcada
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('partials/calendar', { waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('partials/calendar', {procedure:procedure, waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -40,7 +41,7 @@ class ConsultationController {
             const traineeProfile = await Trainee.searchProfileTrainee(req);
             // Retornar apenas as consultas do estagiário
             Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
-                res.render('partials/calendar', { traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('partials/calendar', {procedure:procedure, traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -50,7 +51,7 @@ class ConsultationController {
 
             // RETORNAR AS CONSULTAS DO PACIENTE
             Consultation.searchConsultsPatients(patientProfile.id).then((consultation) => {
-                res.render('partials/calendar', { patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('partials/calendar', {procedure:procedure, patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -63,6 +64,7 @@ class ConsultationController {
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
+        const procedure = await Procedure.searchAllProcedures();
 
         //Usuário Administrador
         if (req.user.NivelPermissaoId == 1) {
@@ -70,7 +72,7 @@ class ConsultationController {
             const masterProfile = await Master.searchProfileMaster(req);
             //Retornar todas as consultas como agendamento ou consulta marcada
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('pages/consult', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('pages/consult', {procedure:procedure, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -80,7 +82,7 @@ class ConsultationController {
             const secretaryProfile = await Secretary.searchProfileSecretary(req);
             //Retornar todas as consultas como agendamento ou consulta marcada
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('pages/consult', { waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('pages/consult', {procedure:procedure, waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -89,7 +91,7 @@ class ConsultationController {
             const traineeProfile = await Trainee.searchProfileTrainee(req);
             // Retornar apenas as consultas do estagiário
             Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
-                res.render('pages/consult', { traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('pages/consult', {procedure:procedure, traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -99,7 +101,7 @@ class ConsultationController {
 
             // RETORNAR AS CONSULTAS DO PACIENTE
             Consultation.searchConsultsPatients(patientProfile.id).then((consultation) => {
-                res.render('pages/consult', { patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('pages/consult', {procedure:procedure,  patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
@@ -125,7 +127,7 @@ class ConsultationController {
     }
 
     async saveConsult(req, res) {
-        const { dateStart, description, patientId, traineeId, typeSchedule, patientWaitId } = req.body;
+        const { dateStart, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
         //converter formato brasileiro para SQL
         const datetime = dateFormat(dateStart);
         let idMaster;
@@ -149,7 +151,7 @@ class ConsultationController {
             
             //Verificar se o usuário esta pegando um paciente para lista de pacientes ou da lista de espera
             if (patientId != 0) {
-                Consultation.insertConsults(datetime, idSecretary, patientId, traineeId, idMaster, typeSchedule, color, description).then(function () {
+                Consultation.insertConsults(datetime, idSecretary, patientId, traineeId, idMaster, typeSchedule, color, description, typeProcedure).then(function () {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -158,7 +160,7 @@ class ConsultationController {
                 })
             } else {
                 Wait.searchUpdateWait(patientWaitId)
-                Consultation.insertConsults(datetime, idSecretary, patientWaitId, traineeId, idMaster, typeSchedule, color, description).then(function () {
+                Consultation.insertConsults(datetime, idSecretary, patientWaitId, traineeId, idMaster, typeSchedule, color, description, typeProcedure).then(function () {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {

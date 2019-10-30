@@ -28,17 +28,15 @@
                         </div>
                     </div>
 
-                    <div style="display: none;" class="col-lg-12" id="search-filter-field">
-                        <form action="/paciente/search"  method="POST" >
-                            <div class="form-group">
-                                <input type="text" name="namePatient" id="search-name-patient" required class="form-control form-control-alternative"
-                                    placeholder="Digite o nome">
-                            </div>
-                            <button>busca</button>
+                    <div class="col-lg-10" id="search-filter-field">
+                        <form class="form-search-name">
+                            <input type="text" name="namePatient" class="form-control form-control-alternative"
+                                placeholder="Digite o nome">
+                            <button class="btn btn-primary" id="search-name-patient">Buscar</button>
                         </form>
                     </div>
                     <div class="table-responsive">
-                        <table id="table-patient" class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Nome Completo</th>
@@ -50,7 +48,7 @@
                                     <!-- <th scope="col">Bounce rate</th> -->
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-patient">
                                 <% if(patients.length > 0 ) {%>
                                 <% for (var i = 0; i < patients.length; i++) { %>
                                 <tr>

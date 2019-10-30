@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-<% include ../layout %>
+<% include ../../layout %>
 
 <body>
     <!-- Sidenav -->
-    <% include ../partials/sidebar %>
+    <% include ../../partials/sidebar %>
     <!-- Main content -->
     <div class="main-content">
         <!-- Top navbar -->
-        <% include ../partials/navbar %>
+        <% include ../../partials/navbar %>
         <!-- Header -->
-        <% include ../partials/profile/header %>
+        <% include ../../partials/profile/header %>
         <!-- Page content -->
 
         <div class="container-fluid mt--7">
             <div class="row">
+
                 <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                 </div>
                 <div class="col-xl-10 order-xl-w">
@@ -22,32 +23,33 @@
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Estagiários</h3>
+                                    <h3 class="mb-0">Frequencia</h3>
                                 </div>
 
                             </div>
                         </div>
+
+
                         <div class="card-body">
 
-                            <form action="/estagiario/save" method="POST">
-                                <h6 class="heading-small text-muted mb-4">Informações do Estagiario</h6>
+                            <form action="/paciente/save" method="POST">
+                                <h6 class="heading-small text-muted mb-4">Informações</h6>
                                 <div class="pl-lg-4">
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="input-username">Nome
-                                                    Completo</label>
-                                                <input type="text" id="nomeMaster" name="name"
+                                                <label class="form-control-label" for="input-username">Consulta do Dia</label>
+                                                <input type="text" id="nomeMaster" name="name" required
                                                     class="form-control form-control-alternative"
-                                                    require placeholder="Nome Completo">
+                                                    placeholder="Nome Completo">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-control-label">Contato</label>
-                                                <input type="text" id="telefone" name="phone"
+                                                <label class="form-control-label">Data de Inicio</label>
+                                                <input type="text" id="telefone" name="phone" required
                                                     class="form-control form-control-alternative"
-                                                    require placeholder="Telefone">
+                                                    placeholder="Telefone">
                                             </div>
 
                                         </div>
@@ -55,18 +57,23 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-control-label" for="input-username">Curso</label>
-                                                <input type="text" id="curso" name="course"
-                                                    class="form-control form-control-alternative" placeholder="Curso">
+                                                <label class="form-control-label" for="input-username">Data de Termino</label>
+                                                <input type="date" id="dateBirth" name="dateBirth" required
+                                                    class="form-control form-control-alternative" placeholder="Data de Nascimento">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="form-control-label">Periodo</label>
-                                                <input type="text" id="periodo" name="period"
-                                                    class="form-control form-control-alternative" placeholder="Periodo">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Genero</label>
+                                                    <select class="form-control" name="sexo" id="gender"
+                                                        data-placeholder="Selecione">
+                                                        <option value="1">Feminino</option>
+                                                        <option value="2">Masculino</option>
+                                                    </select>
+                                                    </select>
+                                                </div>
                                             </div>
-
                                         </div>
                                     </div>
                                     <hr class="my-4" />
@@ -75,23 +82,23 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-email">Endereço de
                                                     E-mail</label>
-                                                <input type="email" id="emailMaster" name="email"
-                                                require class="form-control form-control-alternative" placeholder="E-mail">
+                                                <input type="email" id="emailMaster" name="email" required
+                                                    class="form-control form-control-alternative" placeholder="E-mail">
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Senha</label>
                                                 <input type="password" id="senha" name="password"
-                                                require class="form-control form-control-alternative" placeholder="Senha"
-                                                    value="">
+                                                    class="form-control form-control-alternative" placeholder="Senha"
+                                                    required value="">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <hr class="my-4" />
                                 <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
                             </form>
@@ -100,12 +107,13 @@
                 </div>
             </div>
             <!-- Footer -->
-            <% include ../partials/footer %>
+            <% include ../../partials/footer %>
 
         </div>
     </div>
     <!-- Argon Scripts -->
     <!-- Core -->
+    <% include ../../partials/scripts %>
 
 </body>
 

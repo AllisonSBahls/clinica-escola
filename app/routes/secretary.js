@@ -30,4 +30,8 @@ router.get('/register', admin, (req, res) =>{
     controller.form_admin_secretary(req, res)
 });
 
+router.post('/search', admin, (req, res) =>{
+    controller.searchNameSecretary(req, res)
+})
+
 module.exports = router;

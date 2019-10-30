@@ -11,8 +11,14 @@ const Procedures = bd.sequelize.define('procedures', {
         type: bd.Sequelize.STRING,
         allowNull: false,
     },
+    description:{
+        type: bd.Sequelize.STRING,
+    }
 })
 
+Procedures.searchAllProcedures = async function (){
+    return await Procedures.findAll();
+}
 
 //Permissoes.sync({force: true})
 module.exports = Procedures;

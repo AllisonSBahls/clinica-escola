@@ -43,17 +43,25 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Estagiário</label>
-                                    <input type="text" id="trainee" name="traineeId"
-                                        class="form-control form-control-alternative">
+                                    <select id="traineeId" class="form-control form-control-alternative"
+                                        name="traineeId" data-placeholder="Selecione">
+                                        <% if (trainees.length > 0) { %>
+                                        <% for (var i = 0; i < trainees.length; i++) { %>
+                                            <option value='<%= trainees[i].id %>'><%= trainees[i].name %></option>
+                                        <% } %>
+                                        <% } %>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Tipo Consulta</label>
-                                    <select class="form-control" name="" id="" data-placeholder="Selecione">
-                                        <option value=''>Retorno</option>
-                                        <option value=''>Triagem</option>
-
+                                    <select class="form-control" name="typeProcedure" id="typeProcedure" data-placeholder="Selecione">
+                                            <% if (procedure.length > 0) { %>
+                                                <% for (var i = 0; i < procedure.length; i++) { %>
+                                                    <option value='<%= procedure[i].id %>'><%= procedure[i].typeProcedure %></option>
+                                                <% } %>
+                                            <% } %>
                                     </select>
                                 </div>
                             </div>
@@ -278,9 +286,9 @@
                                     <select id="traineeId" class="form-control form-control-alternative"
                                         name="traineeId" data-placeholder="Selecione">
                                         <% if (trainees.length > 0) { %>
-                                        <% for (var i = 0; i < trainees.length; i++) { %>
-                                        <option value='<%= trainees[i].id %>'><%= trainees[i].name %></option>
-                                        <% } %>
+                                             <% for (var i = 0; i < trainees.length; i++) { %>
+                                              <option value='<%= trainees[i].id %>'><%= trainees[i].name %></option>
+                                             <% } %>
                                         <% } %>
                                     </select>
                                 </div>
@@ -288,10 +296,13 @@
                             <div id = "typeConsultHidden"class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Tipo Consulta</label>
-                                    <select class="form-control" name="" id="" data-placeholder="Selecione">
-                                        <option value=''>Retorno</option>
-                                        <option value=''>Triagem</option>
-                                    </select>
+                                    <select class="form-control" name="typeProcedure" id="typeProcedure" data-placeholder="Selecione">
+                                        <% if (procedure.length > 0) { %>
+                                            <% for (var i = 0; i < procedure.length; i++) { %>
+                                                <option value='<%= procedure[i].id %>'><%= procedure[i].typeProcedure %></option>
+                                            <% } %>
+                                        <% } %>
+                                </select>
                                 </div>
                             </div>
                         </div>

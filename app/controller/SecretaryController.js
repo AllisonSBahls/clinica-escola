@@ -54,6 +54,16 @@ class SecretaryController {
             });
     }
 
+
+    searchNameSecretary(req, res){
+        var campo = '%' + req.body.nameSecretary + '%';
+        Secretary.searchNameSecretary(campo).then((secretary)=>{
+            res.send(secretary)
+        }).catch((err) =>{
+            res.send(err);
+        })
+    }
+
     deleteSecretary(req, res) {
         Secretary.deleteSecretary(req.params.id).then(function () {
             req.flash("success_msg", "Recepcionista deletada com sucesso");

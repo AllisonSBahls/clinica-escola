@@ -33,3 +33,14 @@
 #allConsultWeek{
     color: white;
 }
+
+.form-search-name{
+    display: flex; 
+    margin-bottom: 1.5em;
+}
+.form-search-name > button{
+    margin-left: 2em;
+}
+#search-filter-field{
+    display: none;  
+}

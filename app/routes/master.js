@@ -29,4 +29,8 @@ router.get('/register', admin,  (req, res) =>{
     controller.form_admin_master(req, res)
 });
 
+router.post('/search', admin, (req, res) =>{
+    controller.searchNameMasters(req,res)
+})
+
 module.exports = router;

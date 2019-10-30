@@ -125,7 +125,7 @@ Consultation.countSchedule = async function(){
     })
 }
 
-Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTrainee, idMaster, typeSchedule, color, description) {
+Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTrainee, idMaster, typeSchedule, color, description, idProcedure) {
     return this.create({
         dateStart: dateStart,
         consultPatientId: idPatient,
@@ -135,6 +135,7 @@ Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTra
         color: color,
         description:description,
         typeSchedule: typeSchedule,
+        typeProcedureId: idProcedure
     });
 }
 

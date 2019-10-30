@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<% include ../layout %>
+
+<body>
+    <!-- Sidenav -->
+    <% include ../partials/sidebar %>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <% include ../partials/navbar %>
+        <!-- Header -->
+        <% include ../partials/header %>
+        <!-- Page content -->
+
+        <div style="justify-content: center !important" class="row mt-4">
+            <div class="col-xl-11 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <% include ../partials/message %>
+
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Lista de Frequencias</h3>
+                            </div>
+                            <a class="btn btn-outline-success">Inserir Presença</a>
+                            <a class="btn btn-outline-primary" onclick="showFilter();">Filtrar</a>
+                        </div>
+                    </div>
+
+                    <!-- Inserindo Presença -->
+                    <form action="">
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Consulta do Dia:</label>
+                                        <input type="text" id="consultDay" name="consultDay"
+                                            class="form-control form-control-alternative">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Nº</label>
+                                        <input type="text" id="idConsult" name="idConsult"
+                                            class="form-control form-control-alternative" require placeholder="">
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Data da Consulta</label>
+                                        <input type="date" id="dataConsult" name="dataConsult"
+                                            class="form-control form-control-alternative" require placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Inicio</label>
+                                        <input type="time" id="dataConsult" name="dataConsult"
+                                            class="form-control form-control-alternative" require placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Termino</label>
+                                        <input type="time" id="dataConsult" name="dataConsult"
+                                            class="form-control form-control-alternative" require placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-11">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Procedimento</label>
+                                        <input type="text" id="consultDay" name="procedureDescription"
+                                            class="form-control form-control-alternative">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="col-lg-10" id="search-filter-field">
+                        <form class="form-search-name">
+                            <input type="text" name="namePatient" class="form-control form-control-alternative"
+                                placeholder="Digite o nome">
+                            <button class="btn btn-primary" id="search-name-patient">Buscar</button>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Nº Consulta</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Inicio</th>
+                                    <th scope="col">Termino</th>
+                                    <th scope="col">Procedimento</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+
+
+                                    <!-- <th scope="col">Bounce rate</th> -->
+                                </tr>
+                            </thead>
+                            <tbody id="table-patient">
+
+                                <tr>
+                                    <th scope="row">
+                                        1
+                                    </th>
+                                    <td>
+                                        30/10/2019
+                                    </td>
+                                    <td>
+                                        11:00
+                                    </td>
+                                    <td>
+                                        12:00
+                                    </td>
+                                    <td>
+                                        Triagem - Consulta Períodica
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-danger delete"
+                                            onclick="return confirm('Você confirma a exclusão?')"
+                                            href="paciente/delete/<%= %>">Excluir</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary primary" href="paciente/profile/<%= %>">Alterar</a>
+                                    </td>
+
+
+
+                                    <!-- <td>
+                              <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                            </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <% include ../partials/footer %>
+
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <% include ../partials/scripts %>
+
+</body>
+
+</html>

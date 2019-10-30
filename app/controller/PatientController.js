@@ -53,10 +53,9 @@ class SecretaryController {
     }
 
     searchNamePatient(req, res){
-        const { namePatient } = req.body
-        var campo = '%' + namePatient + '%';
-        Patient.searchPatientName(campo).then((namePatient)=>{
-            res.send(namePatient)
+        var campo = '%' + req.body.namePatient + '%';
+        Patient.searchTraineeName(campo).then((paciente)=>{
+           res.send(paciente)
         }).catch((err) =>{
             res.send(err);
         })

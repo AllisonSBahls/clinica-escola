@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {admin} = require('../helpers/auth')
-
+const Patient = require('../model/Patient')
 const PatientController = require('../controller/PatientController');
 const controller = new PatientController();
 
@@ -30,8 +30,8 @@ router.get('/register', admin, (req, res) =>{
     controller.form_admin_patient(req, res)
 });
 
-router.post('/search'), (req, res) =>{
-    controller.searchNamePatient(req, res);
-}
+router.post('/search', admin, (req, res) =>{
+    controller.searchNamePatient(req,res)
+})
 
 module.exports = router;

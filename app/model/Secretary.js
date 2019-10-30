@@ -1,5 +1,6 @@
 const bd = require('./dbConnection');
 const User = require('./User');
+const { Op } = require('sequelize')
 
 const Secretary = bd.sequelize.define('secretaries', {
     name: {
@@ -41,11 +42,16 @@ Secretary.searchAllSecretaries = function(){
     })
 }
 
-Secretary.searchSecretaryName = function(name){
+Secretary.searchNameSecretary= function(name){
     return Secretary.findAll({
-        where: {
-            name:name
-        }
+        where:{
+            name:{
+                [Op.like]: name,
+            }  
+        },
+        include: [{
+            model: User, as: 'userSecretary'
+        }]
     })
 }
 

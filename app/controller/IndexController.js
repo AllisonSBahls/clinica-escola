@@ -8,7 +8,7 @@ const Consultation = require('../model/Consultations');
 const Wait = require('../model/Wait');
 const validate = require('../common/validateFields');
 const moment = require('moment');
-
+const Procedure = require('../model/Procedure');
 
 class IndexController {
 
@@ -20,13 +20,13 @@ class IndexController {
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
-
+        const procedure = await Procedure.searchAllProcedures();
         if (req.user.NivelPermissaoId == 1) {
             const countSchedules = await Consultation.countSchedule();
             const masterProfile = await Master.searchProfileMaster(req);
 
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('index/dashboard', { countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('index/dashboard', {procedure:procedure, countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err)
             })
@@ -35,14 +35,14 @@ class IndexController {
             const secretaryProfile = await Secretary.searchProfileSecretary(req);
             const countSchedules = await Consultation.countSchedule();
             Consultation.searchAllConsults().then((consultation) => {
-                res.render('index/dashboard', { countSchedules: countSchedules, waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('index/dashboard', {procedure:procedure, countSchedules: countSchedules, waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err)
             })
         } else if (req.user.NivelPermissaoId == 3) {
             const traineeProfile = await Trainee.searchProfileTrainee(req);
             await Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
-                res.render('index/dashboard', { traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('index/dashboard', {procedure:procedure, traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err)
             })
@@ -51,7 +51,7 @@ class IndexController {
             const patientProfile = await Patient.searchProfilePatient(req);
 
             Consultation.searchConsultsPatients(patientProfile.id).then((consultation) => {
-                res.render('index/dashboard', { patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('index/dashboard', {procedure:procedure, patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err)
             })

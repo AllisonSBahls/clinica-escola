@@ -23,8 +23,16 @@
                                 <h3 class="mb-0">Estagiarios</h3>
                             </div>
                             <a href="/estagiario/register"  class="btn btn-outline-success">Cadastrar</a>
-                            <a href=""  class="btn btn-outline-primary">Filtrar</a>
+                            <a class="btn btn-outline-primary" onclick="showFilter();">Filtrar</a>
                         </div>
+                    </div>
+
+                    <div class="col-lg-10" id="search-filter-field">
+                        <form class="form-search-name">
+                            <input type="text" name="nameTrainee" class="form-control form-control-alternative"
+                                placeholder="Digite o nome">
+                            <button class="btn btn-primary" id="search-name-trainee">Buscar</button>
+                        </form>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
@@ -39,7 +47,7 @@
                                     <!-- <th scope="col">Bounce rate</th> -->
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-trainee">
                                 <% if(trainees.length > 0 ) {%>
                                 <% for (var i = 0; i < trainees.length; i++) { %>
                                 <tr>

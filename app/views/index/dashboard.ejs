@@ -214,11 +214,11 @@
                     end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
-                        trainee: '<%= consultation[i].consultTrainee.name %>',
+                        trainee: '<%= consultation[i].consultTraineeId %>',
                         description: '<%= consultation[i].description  %>',
                         typeSchedule: '<%= consultation[i].typeSchedule  %>',
                         patientId: '<%= consultation[i].consultPatientId %>',
-
+                        typeProcedure: '<%= consultation[i].typeProcedureId %>',
                     },
                     textColor: '#fff',
                 },
@@ -247,9 +247,11 @@
                     $('#viewConsult #id').val(info.event.id);
                     $('#viewConsult #patient').val(info.event.title);
                     $('#viewConsult #dateStart').val(info.event.start.toLocaleString());
-                    $('#viewConsult #trainee').val(info.event.extendedProps.trainee);
+                    $('#viewConsult #traineeId').val(info.event.extendedProps.trainee);
                     $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsult #description').val(info.event.extendedProps.description);
+                    $('#viewConsult #typeProcedure').val(info.event.extendedProps.typeProcedure);
+
                     $('#viewConsult').modal('show');
 
                 } else if (info.event.extendedProps.typeSchedule == 2) {

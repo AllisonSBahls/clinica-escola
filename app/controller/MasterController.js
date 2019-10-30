@@ -49,6 +49,16 @@ class MasterController {
             });
     }
 
+    searchNameMasters(req, res){
+        var campo = '%' + req.body.nameMaster + '%';
+        Master.searchNameMaster(campo).then((master)=>{
+           res.send(master)
+        }).catch((err) =>{
+            res.send(err);
+        })
+    }
+
+
     deleteMaster(req, res) {
         Master.deleteMaster(req.params.id).then(function () {
             req.flash("success_msg", "Supervisor deletado com sucesso");

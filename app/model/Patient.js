@@ -59,8 +59,8 @@ Patient.insertPatientRegister = function(email, password, name, phone){
         });
 }
 
-Patient.searchPatientName = async function(name){
-    return await Patient.findAll({
+Patient.searchPatientName = function(name){
+    return Patient.findAll({
         where: { 
             name:{
                 [Op.like]: name,

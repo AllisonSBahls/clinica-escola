@@ -7,6 +7,7 @@ const master = require('./app/routes/master');
 const trainee = require('./app/routes/trainee');
 const patient = require('./app/routes/patient');
 const users = require('./app/routes/user');
+const presence = require('./app/routes/presence');
 const reports = require('./app/routes/reports');
 const consultation = require('./app/routes/consultation');
 const index = require('./app/routes/index');
@@ -72,6 +73,8 @@ app.use('/paciente', patient);
 app.use('/user', users);
 app.use('/consultation', consultation);
 app.use('/test', test);
+app.use('/frequencias', presence);
+
 //Rotas não encontradas
 // app.use(function(req, res, next) {
 // 	var err = new Error('Página não encontrada');
