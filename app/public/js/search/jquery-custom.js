@@ -119,3 +119,28 @@
 
         });
     })
+   
+    $(document).ready(function () {
+        $('#selected-consult-frequence').change(function () {
+
+            $('#form-select').submit(function () {
+            var dados = ($(this).serialize());
+
+            $.ajax({
+                url: '/frequencias/register',
+                type: 'POST',
+                dataType: 'json',
+                data: dados,
+                success: function (data) {
+                    $('#consult-id').val(data.id)
+                    var dt = moment(data.dateStart);
+                    $('#date-consult').val(dt.format('YYYY-MM-DD'))
+                    $('#hours-consult').val(dt.format('HH:mm'))
+                }
+            })
+            return false;
+            
+        })
+        $('#form-select').trigger('submit');
+    })
+})

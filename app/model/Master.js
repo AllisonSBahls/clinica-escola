@@ -25,7 +25,8 @@ Master.insertUserMaster = function (email, password, name, phone) {
     return User.create({
         email: email,
         password: password,
-        NivelPermissaoId: 1
+        NivelPermissaoId: 1,
+        statusUser: true,
     }).then((user) => {
         Master.create({
             name: name,

@@ -27,6 +27,9 @@ const Consultation = bd.sequelize.define('consultations', {
         type: bd.Sequelize.INTEGER,
         allowNull: true,
     },
+    statusSchedules:{
+        type: bd.Sequelize.INTEGER,
+    }
 
 });
 Consultation.belongsTo(Secretary, { as: 'consultSecretary', foreingKey: { name: 'fk_consult_secretary' }, onDelete: 'restrict' });
@@ -38,12 +41,12 @@ Consultation.belongsTo(Procedure, { as: 'typeProcedure', foreingKey: { name: 'fk
 
 //Consultation.sync({force: true});       
 
-Consultation.searchAllConsults = function () {
-    return this.findAll({
+Consultation.searchAllConsults = async function () {
+    return await this.findAll({
         order:['dateStart'],
         where: {
             typeSchedule: {
-                [Op.ne]: 3
+                [Op.ne]: 3 
             }
         },
         include: [{
@@ -75,13 +78,56 @@ Consultation.searchOnlySchedules = function(){
         }]
     })
 }
-Consultation.searchConsultsTrainees = function (id) {
-    return this.findAll({
+
+Consultation.searchOneConsultation = function(id){
+    return this.findOne({
+        where:{
+            id: id
+        },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        },{
+            model: Master, as: 'consultMaster',
+        },{
+            model: Secretary, as: 'consultSecretary',
+        }],
+    })
+}
+
+Consultation.searchConsultsTrainees = async function (id) {
+    return await this.findAll({
         order:['dateStart'],
         where: {
             consultTraineeId: id,
-            typeSchedule: { [Op.ne]: 3 },
-        },
+            typeSchedule: { [Op.ne]: 3,  },
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        },{
+            model: Master, as: 'consultMaster',
+        },{
+            model: Secretary, as: 'consultSecretary',
+        }],
+    })
+}
+
+
+Consultation.searchConsultsTraineesDate = async function (id) {
+    return await this.findAll({
+        order:['dateStart'],
+        where: {
+            consultTraineeId: id,
+            typeSchedule: { 
+                [Op.ne]: 3,
+            },
+            statusSchedules: { 
+                [Op.ne]: 4,  
+            },
+            },
         include: [{
             model: Patient, as: 'consultPatient',
         }, {
@@ -99,7 +145,7 @@ Consultation.searchConsultsPatients = function (id) {
         order:['dateStart'],
         where: {
             consultPatientId: id,
-            typeSchedule: { [Op.ne]: 3 },
+            statusSchedules: { [Op.ne]: 5 },
         },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -135,7 +181,8 @@ Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTra
         color: color,
         description:description,
         typeSchedule: typeSchedule,
-        typeProcedureId: idProcedure
+        typeProcedureId: idProcedure,
+        statusSchedules: 2
     });
 }
 
@@ -146,6 +193,8 @@ Consultation.insertSchedules = async function (dateStart, idPatient, color, desc
         color: color,
         description: description,
         typeSchedule: 2,
+        statusSchedules: 1
+
     });
 }
 
@@ -157,6 +206,7 @@ Consultation.deleteSchedules = function (consultationId) {
 
 Consultation.cancelConsultation = function (cancelId) {
     return Consultation.update({
+        statusSchedules: 5,
         typeSchedule: 3,
         color: '#992F2F'
     }, {
@@ -172,7 +222,8 @@ Consultation.confirmSchedule = function(dateStart, consultID, traineeId, descrip
         consultTraineeId:traineeId,
         description:description,
         typeSchedule: 1,
-        color: '#2B56E2'
+        color: '#2B56E2',
+        statusSchedules: 2
     }, {
         where: {
             id: consultID
@@ -204,7 +255,6 @@ Consultation.searchConsultWeekPatient  = async function (patientId){
     return await Consultation.findAll({
         order:['dateStart'],
         where: {
-            typeSchedule: 1,
             consultPatientId: patientId, 
             dateStart: {
                 [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
@@ -224,10 +274,9 @@ Consultation.searchConsultWeekPatient  = async function (patientId){
 Consultation.searchConsultWeekTrainee  = async function (traineeId){
     return await Consultation.findAll({
         order:['dateStart'],
-        where: {
-            consultTraineeId: traineeId
-        },
-        where: {
+        where: {    
+            typeSchedule: 1,
+            consultTraineeId: traineeId,
             dateStart: {
                 [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
             },
@@ -270,6 +319,7 @@ Consultation.searchConsultDayTrainee = async function (startDay, endDay, trainee
         limit: 6,
         where: {
             consultTraineeId: traineeId,
+            typeSchedule: 1,
             dateStart: {
                 [Op.between]: [startDay, endDay]},
             },

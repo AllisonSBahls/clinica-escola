@@ -10,7 +10,7 @@ class MasterController {
         const secretaryrProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
-        res.render("forms/form_register_master", { erros: {}, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
+        res.render("forms/register/form-register-master", { erros: {}, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
     }
     async registerMaster(req, res) {
         const masterProfile = await Master.searchProfileMaster(req);
@@ -25,7 +25,7 @@ class MasterController {
         const erros = validate.validateFields(emailUser, email, name, password);
 
         if (erros) {
-            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
+            res.render('forms/register/form-register-master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
         }
         else {
             //Registrar informações do supervisor

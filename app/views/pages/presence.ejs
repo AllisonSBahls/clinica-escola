@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <% include ../layout %>
 
 <body>
@@ -23,48 +21,54 @@
                             <div class="col">
                                 <h3 class="mb-0">Lista de Frequencias</h3>
                             </div>
-                            <a class="btn btn-outline-success">Inserir Presença</a>
+                            <a class="btn btn-outline-success" onclick="showPresenceInsert();">Inserir Presença</a>
                             <a class="btn btn-outline-primary" onclick="showFilter();">Filtrar</a>
                         </div>
                     </div>
 
                     <!-- Inserindo Presença -->
-                    <form action="">
+                    <form method="POST" action="/frequencias/save" id="form-select">
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-username">Consulta do Dia:</label>
-                                        <input type="text" id="consultDay" name="consultDay"
-                                            class="form-control form-control-alternative">
+                                        <select id="selected-consult-frequence"
+                                            class="form-control form-control-alternative" name="consultId"
+                                            data-placeholder="Selecione">
+                                            <% for (var i = 0; i < consult.length; i++) { %>
+                                            <option value='<%= consult[i].id %>'>
+                                                <%= moment(consult[i].dateStart).format('DD/MM/YYYY HH:mm') %></option>€
+                                            <% } %>
+                                        </select>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-1">
                                     <div class="form-group">
                                         <label class="form-control-label">Nº</label>
-                                        <input type="text" id="idConsult" name="idConsult"
+                                        <input type="text" id="consult-id" name="idConsult"
                                             class="form-control form-control-alternative" require placeholder="">
                                     </div>
-
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="form-control-label">Data da Consulta</label>
-                                        <input type="date" id="dataConsult" name="dataConsult"
+                                        <input type="date" id="date-consult" name="startConsult"
                                             class="form-control form-control-alternative" require placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label class="form-control-label">Inicio</label>
-                                        <input type="time" id="dataConsult" name="dataConsult"
+                                        <input type="time" id="hours-consult" name="hoursConsult"
                                             class="form-control form-control-alternative" require placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label class="form-control-label">Termino</label>
-                                        <input type="time" id="dataConsult" name="dataConsult"
+                                        <input type="time" id="dataConsult" name="endConsult"
                                             class="form-control form-control-alternative" require placeholder="">
                                     </div>
                                 </div>
@@ -83,25 +87,28 @@
                             </div>
                         </div>
 
+                        <input onclick="registerPresence()" class="btn btn-info" value="Salvar Registro"></input>
+
                     </form>
 
-                    <div class="col-lg-10" id="search-filter-field">
+                    <!-- <div class="col-lg-10" id="search-filter-field">
                         <form class="form-search-name">
                             <input type="text" name="namePatient" class="form-control form-control-alternative"
                                 placeholder="Digite o nome">
                             <button class="btn btn-primary" id="search-name-patient">Buscar</button>
                         </form>
-                    </div>
+                    </div> -->
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Nº Consulta</th>
+                                    <th scope="col">Nº</th>
                                     <th scope="col">Data</th>
                                     <th scope="col">Inicio</th>
                                     <th scope="col">Termino</th>
                                     <th scope="col">Procedimento</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Aluno</th>
+                                    <th scope="col">Confirmação</th>
                                     <th scope="col"></th>
 
 
@@ -109,38 +116,39 @@
                                 </tr>
                             </thead>
                             <tbody id="table-patient">
-
+                                <% for (i=0; i <  result.length; i++){ %>
                                 <tr>
                                     <th scope="row">
-                                        1
+                                        <%= result[i].presenceConsultationId %>
                                     </th>
                                     <td>
-                                        30/10/2019
+                                        <%= moment(result[i].dateStart).format('DD/MM/YYYY') %>
                                     </td>
                                     <td>
-                                        11:00
+                                        <%= moment(result[i].dateStart).format('HH:mm') %>
                                     </td>
                                     <td>
-                                        12:00
+                                        <%= moment(result[i].dateEnd).format('HH:mm')  %>
                                     </td>
                                     <td>
-                                        Triagem - Consulta Períodica
+                                        <%= result[i].Procedure %>
                                     </td>
+                                    <td>
+                                        <%= result[i].presenceTrainee.name %>
+                                    </td>
+                                    <td>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="defaultInline1" name="1" value="1">
+                                            <label class="custom-control-label" for="defaultInline1"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary primary" href="paciente/profile/<%= %>">Del</a>
+                                    </td> 
+                        
 
-                                    <td>
-                                        <a class="btn btn-danger delete"
-                                            onclick="return confirm('Você confirma a exclusão?')"
-                                            href="paciente/delete/<%= %>">Excluir</a>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-primary primary" href="paciente/profile/<%= %>">Alterar</a>
-                                    </td>
+                                    <% } %>
 
-
-
-                                    <!-- <td>
-                              <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                            </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -152,10 +160,7 @@
         <% include ../partials/footer %>
 
     </div>
-    <!-- Argon Scripts -->
-    <!-- Core -->
     <% include ../partials/scripts %>
 
-</body>
 
-</html>
+</body>

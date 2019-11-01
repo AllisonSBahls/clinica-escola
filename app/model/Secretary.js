@@ -24,7 +24,8 @@ Secretary.insertSecretary = function(email, secretPassword, name, phone){
     return User.create({
         email: email,
         password: secretPassword,
-        NivelPermissaoId: 2
+        NivelPermissaoId: 2,
+        statusUser: true,
     }).then((user)=>{
         Secretary.create({
             name: name,

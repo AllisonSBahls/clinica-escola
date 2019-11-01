@@ -59,15 +59,7 @@ class TraineeController {
                 res.send("erro" + erro);
     })
 }
-    searchNameTrainee(req, res){
-        var campo = '%' + req.body.nameTrainee + '%';
-        Trainee.searchTraineeName(campo).then((trainee)=>{
-            res.send(trainee)
-        }).catch((err) =>{
-            res.send(err);
-        })
-    }
-
+  
 
     async profileTrainee(req, res) {
         const secretaryrProfile = await Secretary.searchProfileSecretary(req);

@@ -94,6 +94,11 @@ function confirmar() {
     document.getElementById("confirmSchedules").submit();
 }
 
+function registerPresence() {
+    document.getElementById("form-select").submit();
+}
+
+
 function deletar() {
     document.getElementById("deleteSchedules").submit();
 }
@@ -108,6 +113,14 @@ function wait() {
 function showWait() {
     document.getElementById("patientSelect").style.display = 'none';
     document.getElementById("patientWaitSelect").style.display = 'block';
+}
+
+function showPresenceInsert() {
+    if (document.getElementById("form-select").style.display == 'none') {
+        document.getElementById("form-select").style.display = 'block';
+    } else {
+        document.getElementById("form-select").style.display = 'none';
+    }
 }
 
 function showAllPatient() {

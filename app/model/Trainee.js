@@ -54,7 +54,8 @@ Trainee.insertTrainee = function(name, email, phone, course, period, password){
     return User.create({
         email: email,
         password: password,
-        NivelPermissaoId: 3
+        NivelPermissaoId: 3,
+        statusUser: true,
     }).then((user)=>{
         Trainee.create({
             name: name,

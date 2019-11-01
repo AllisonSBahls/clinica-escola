@@ -17,7 +17,7 @@ router.get('/perfil', users, async (req, res) => {
 router.get('/password', users, async (req, res) => {
     controller.passwordUser(req, res);
 })
-router.post('/passup/', admin, async (req, res) =>{
+router.post('/passup/', users, async (req, res) =>{
     controller.passwordUpdate(req, res)
 });
 

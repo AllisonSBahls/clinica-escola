@@ -11,6 +11,9 @@ const User = bd.sequelize.define('users', {
     googleID: {
         type: bd.Sequelize.STRING
     },
+    statusUser: {
+        type: bd.Sequelize.BOOLEAN
+        },
 
 });
 
@@ -44,6 +47,7 @@ User.insertUserAuth = function(googleID, email){
         email:email,
         googleID: googleID,
         NivelPermissaoId: 4,
+        statusUser: true,
     })
 }
 

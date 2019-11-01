@@ -3,6 +3,7 @@ const Secretary = require('../model/Secretary');
 const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
 const Patient = require('../model/Patient');
+const Procedure = require('../model/Procedure');
 const Wait = require('../model/Wait');
 const dateFormat = require('../common/dateFormat')
 const moment = require('moment');
@@ -133,8 +134,6 @@ class ConsultationController {
         let idMaster;
         let idSecretary;
 
-       
-
         //Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
         if (typeSchedule == 1 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             if (req.user.NivelPermissaoId == 1){
@@ -164,7 +163,7 @@ class ConsultationController {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
-                    res.send("error_msg", "Erro ao marcar a consulta", err);
+                    req.flash("error_msg", "Erro ao marcar a consulta");
                     res.redirect('/dashboard');
                 })
             }
@@ -202,7 +201,7 @@ class ConsultationController {
                     req.flash("success_msg", "Agendamento marcado com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
-                    res.send("Erro ao marcar o agendamento",err);
+                    req.flash("Erro ao marcar o agendamento");
                     res.redirect('/dashboard');
                 })
             }

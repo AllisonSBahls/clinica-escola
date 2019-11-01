@@ -11,7 +11,6 @@ class SecretaryController {
         const secretaryrProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
-        console.log(masterProfile);
         res.render("forms/form_register_patient",  {masterProfile:masterProfile, secretaryrProfile:secretaryrProfile})
     }
 
@@ -54,7 +53,7 @@ class SecretaryController {
 
     searchNamePatient(req, res){
         var campo = '%' + req.body.namePatient + '%';
-        Patient.searchTraineeName(campo).then((paciente)=>{
+        Patient.searchPatientName(campo).then((paciente)=>{
            res.send(paciente)
         }).catch((err) =>{
             res.send(err);

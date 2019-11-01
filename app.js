@@ -55,7 +55,7 @@ app.set('views', path.join(__dirname, './app/views'));
 app.locals.moment = require('moment');
 
 //Arquivos estáticos
-app.use(express.static('./app/public'));
+app.use(express.static('./app/public/'));
 
 //MIDDLEWARES
 app.use(bodyParser.urlencoded({extended: false}));
@@ -69,7 +69,7 @@ app.use('/recepcionista', secretary);
 app.use('/supervisor', master);
 app.use('/estagiario', trainee);
 app.use('/waits', wait);
-app.use('/paciente', patient);
+app.use('/paciente/', patient);
 app.use('/user', users);
 app.use('/consultation', consultation);
 app.use('/test', test);

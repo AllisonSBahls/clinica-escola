@@ -1,5 +1,6 @@
 const bd = require('./dbConnection');
 const Patient = require("./Patient");
+const Consultation = require("./Consultations");
 const Master = require("./Master");
 const Trainee = require("./Trainee");
 const Reports = bd.sequelize.define('reports', {
@@ -11,20 +12,13 @@ const Reports = bd.sequelize.define('reports', {
         type: bd.Sequelize.DATE,
         allowNull: false,
     },
-    namePatient: {
-        type: bd.Sequelize.DATE,
-        allowNull: true,
-    },
-    infoPatient: {
-        type: bd.Sequelize.DATE,
-        allowNull: true,
-    }
 });
 
 Reports.belongsTo(Trainee, {as : 'reportTrainee', foreingKey: {name: 'fk_report_Trainee'}});
 Trainee.hasMany(Reports, {as : 'reportsTrainee', foreingKey: {name: 'fk_reports_Trainee'}});
 Reports.belongsTo(Master, {as : 'reportMaster', foreingKey: {name: 'fk_report_Master'}});
 Master.hasMany(Reports, {as : 'reportsMaster', foreingKey: {name: 'fk_reports_Master'}});
+Reports.belongsTo(Consultation, { as: 'reportConsultation', foreingKey: { name: 'fk_presence_consultation' }});
 
 //Reports.sync({force: true})
 

@@ -62,8 +62,9 @@
                 <div class="col">
                   <div class="form-group">
                           <label class="form-control-label">Consultas no(a)</label>
+                          <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) {%>
                           <a style="color: black; float: right;"class="btn btn-sm btn-outline-primary" >Você tem <%= countSchedules[0].typeSchedule %> Agendamento(os)</a>
-
+                         <% }%>
                   </div>  
                   <button class="btn btn-primary primary"
                   id="allConsultDays">Hoje</button>
@@ -244,9 +245,11 @@
             eventClick: function (info) {
               info.jsEvent.preventDefault();
                 if (info.event.extendedProps.typeSchedule == 1) {
+                  var dt = moment(info.event.start);
+
                     $('#viewConsult #id').val(info.event.id);
                     $('#viewConsult #patient').val(info.event.title);
-                    $('#viewConsult #dateStart').val(info.event.start.toLocaleString());
+                    $('#viewConsult #dateStart').val(dt.format('YYYY-MM-DDTHH:mm'));
                     $('#viewConsult #traineeId').val(info.event.extendedProps.trainee);
                     $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsult #description').val(info.event.extendedProps.description);
@@ -255,10 +258,12 @@
                     $('#viewConsult').modal('show');
 
                 } else if (info.event.extendedProps.typeSchedule == 2) {
+                    var dt = moment(info.event.start);
+
                     $('#viewConsultPatient #id').val(info.event.id);
                     $('#viewConsultPatient #patientIdHidden').val(info.event.extendedProps.patientId);
                     $('#viewConsultPatient #patient').val(info.event.title);
-                    $('#viewConsultPatient #dateStart').val(info.event.start.toLocaleString());
+                    $('#viewConsultPatient #dateStart').val(dt.format('YYYY-MM-DDTHH:mm'));
                     $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsultPatient').modal('show');
 
@@ -267,8 +272,10 @@
 
             selectable: true,
             select: function (info) {
-                $('#register #dateStart').val(info.start.toLocaleString());
-                $('#viewConsultDashboard #dateConsult').val(info.start.toLocaleString());
+              var dt = moment(info.start);
+
+                $('#register #dateStart').val(dt.format('YYYY-MM-DDTHH:mm'));
+                $('#viewConsultDashboard #dateConsult').val(dt.format('YYYY-MM-DDTHH:mm'));
             },
         
         });

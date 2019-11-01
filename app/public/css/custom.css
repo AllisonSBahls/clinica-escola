@@ -44,3 +44,22 @@
 #search-filter-field{
     display: none;  
 }
+
+.dropdown-container{
+    display: none;
+    padding-left: 5% ;
+  }
+
+  
+#dropdown-btn{ 
+  background: none;
+  border: none;
+  text-decoration: none;
+  padding-left: 0.9rem;
+  cursor: pointer;
+  outline: none;
+}
+
+#form-select{
+    display: none;
+}

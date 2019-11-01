@@ -48,6 +48,7 @@ Patient.insertPatientRegister = function(email, password, name, phone){
             email:email,
             password:password,
             NivelPermissaoId: 4,
+            statusUser: true,
         }).then((user) => {
             Patient.create({
                 name:name,
