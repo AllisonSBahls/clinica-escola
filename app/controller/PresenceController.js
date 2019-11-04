@@ -26,7 +26,7 @@ class PresenceController {
             const traineeProfile = await Trainee.searchProfileTrainee(req);
             const consult = await Consultation.searchConsultsTraineesDate(traineeProfile.id)
             Presence.searchAllFrequence(traineeProfile.id).then((result) => {
-                res.render('pages/presence', {consult:consult, traineeProfile:traineeProfile, result:result})
+                res.render('pages/presence', {masterProfile:{}, consult:consult, traineeProfile:traineeProfile, result:result})
             }).catch((err) => {
                 res.send(err)
             });
@@ -88,7 +88,25 @@ class PresenceController {
         });
     }
 
-    
+    validateFrequence(req, res){
+        const{idPresence, validate } = req.body;
+        Presence.validateFrequence(idPresence, validate).then(()=>{
+            req.flash("success_msg", "Presença confirmada")
+            res.redirect('/frequencias')
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
+
+    async deletePresence(req, res){
+        await Presence.searchOneFrequence(req.params.id)
+        Presence.deleteFrequence(req.params.id).then(()=>{
+            req.flash("success_msg", "Presença confirmada")
+            res.redirect('/frequencias')
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
 }
 
 module.exports =  PresenceController;

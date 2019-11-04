@@ -22,4 +22,5 @@ Reports.belongsTo(Consultation, { as: 'reportConsultation', foreingKey: { name: 
 
 //Reports.sync({force: true})
 
+
 module.exports = Reports;

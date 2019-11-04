@@ -98,7 +98,9 @@ function registerPresence() {
     document.getElementById("form-select").submit();
 }
 
-
+function validatePresence() {
+    document.getElementById("val-presence").submit();
+}
 function deletar() {
     document.getElementById("deleteSchedules").submit();
 }

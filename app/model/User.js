@@ -68,4 +68,12 @@ User.updatePassword = function(password, req){
 
 }
 
+User.searchEmailUser = async function(idPatient){
+    return await User.findAll({
+        where:{
+            id: idPatient
+        }
+})
+}
+
 module.exports = User;

@@ -36,9 +36,10 @@
                                         <select id="selected-consult-frequence"
                                             class="form-control form-control-alternative" name="consultId"
                                             data-placeholder="Selecione">
+                                            <option value=''>Selecione a Consulta</option>
                                             <% for (var i = 0; i < consult.length; i++) { %>
                                             <option value='<%= consult[i].id %>'>
-                                                <%= moment(consult[i].dateStart).format('DD/MM/YYYY HH:mm') %></option>€
+                                                <%= moment(consult[i].dateStart).format('DD/MM/YYYY HH:mm') %></option>
                                             <% } %>
                                         </select>
 
@@ -136,22 +137,45 @@
                                     <td>
                                         <%= result[i].presenceTrainee.name %>
                                     </td>
+                                    <%if(user.NivelPermissaoId == 3 && result[i].presenceMasterId != null){ %>
+                                        <td>
+                                         <%= result[i].presenceMaster.name %>
+                                         </td>
+                                    <% } else {%>
+                                        <td> 
+                                            <% if(result[i].presenceMasterId == null){ %>   
+                                            <form  id="val-presence" action="/frequencias/validate" method="post">
+                                            <input value=" <%= result[i].id %>" type="hidden" name="idPresence" id="id">
+                                            <input value=" <%= masterProfile.id %>" type="hidden" class="form-check-input" id="defaultInline1" name="validate">
+                                            <% if (user.NivelPermissaoId == 1) { %>
+                                                <input type="submit" class="btn btn-success" value="Conf"></input>
+                                                <% } %>
+
+                                            <% } else{ %>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" checked id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1"></label>                                                        </label>
+                                                </div>
+                                        </form>
+                                        <%  } %>
+                                        </td>
+                                        <%  } %>
                                     <td>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" class="custom-control-input" id="defaultInline1" name="1" value="1">
-                                            <label class="custom-control-label" for="defaultInline1"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-primary primary" href="paciente/profile/<%= %>">Del</a>
+                                            <a class="btn btn-danger delete"
+                                            onclick="return confirm('Você confirma a exclusão?')"
+                                            href="../frequencias/delete/<%= result[i].id %>">Excluir</a>
                                     </td> 
-                        
-
-                                    <% } %>
-
+                                   
                                 </tr>
+                               
+
+                                <% } %>
+
+                              
+                             
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>

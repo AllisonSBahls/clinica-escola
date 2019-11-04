@@ -356,6 +356,22 @@ Consultation.searchConsultDayPatient = async function (startDay, endDay, patient
 }
 
 
-
+Consultation.searchConsultSendEmail = async function(StartDay, endDay){
+    return await Consultation.findAll({
+        where: {
+            dateStart: {
+                [Op.between]: [StartDay, endDay]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
+        },{
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+}
 
 module.exports = Consultation;

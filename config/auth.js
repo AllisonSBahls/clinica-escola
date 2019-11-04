@@ -19,8 +19,7 @@ module.exports = function (passport) {
                         Patient.insertPatientAuth(
                             profile.displayName,
                             user.id,
-                        ).then((newUser) => {
-                            console.log(newUser)
+                        ).then(() => {
                         }).catch((err) => {
                             console.log(err)
                         });

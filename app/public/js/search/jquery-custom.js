@@ -144,3 +144,27 @@
         $('#form-select').trigger('submit');
     })
 })
+
+$(document).ready(function () {
+    $('#selected-consult-reports').change(function () {
+
+        $('#form-select').submit(function () {
+        var dados = ($(this).serialize());
+
+        $.ajax({
+            url: '/reports/register',
+            type: 'POST',
+            dataType: 'json',
+            data: dados,
+            success: function (data) {
+                $('#consult-id').val(data.id)
+                var dt = moment(data.dateStart);
+                $('#datetime-consult').val(dt.format('YYYY-MM-DDTHH:MM'))
+                
+            }
+        })
+        return false;
+    })
+    $('#form-select').trigger('submit');
+})
+})

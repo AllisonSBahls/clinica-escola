@@ -1,6 +1,8 @@
 const Report = require('../model/Reports');
 const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
+const Consultation = require('../model/Consultations');
+
 const moment = require('moment');
 const crypto = require('crypto');
 const alg = 'aes-256-ctr';
@@ -21,16 +23,21 @@ const pwd = '$2fdp$vfs.)vk4DS$2fdp$vfs.)vk4DS'
 
 class ReportController {
    
-    async report_register(req, res) {
-        const traineeProfile = await Trainee.findOne({
-            where: { userTraineeId: req.user.id }
-        });
-        const masterProfile = await Master.findOne({
-            where: { userMasterId: req.user.id }
-        });
+    async report_register(req, res) { 
         const masters = await Master.findAll();
-        return res.render("forms/form_report", { masterProfile: masterProfile, traineeProfile: traineeProfile, masters: masters });
+
+        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
+            const masterProfile = await Master.searchProfileMaster(req);
+            const consult = await Consultation.searchAllConsults();
+            res.render("forms/form_report", {consult:consult,  masterProfile: masterProfile, traineeProfile: {}, masters: masters });
+      
+        }
+            else if (req.user.NivelPermissaoId == 3){
+                const traineeProfile = await Trainee.searchProfileTrainee(req);
+                const consult = await Consultation.searchConsultsTraineesDate(traineeProfile.id)
+                res.render("forms/form_report", {consult:consult,  masterProfile: {}, traineeProfile: traineeProfile, masters: masters });
     }
+}
 
     async report_save(req, res) {
         let reportCrypt = req.body.report;

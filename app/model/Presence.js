@@ -70,6 +70,40 @@ Presence.searchTraineeFrequence = function(id){
 }
 
 
+Presence.validateFrequence = function(id, idMaster){
+    return Presence.update({
+        presenceMasterId: idMaster
+    },{
+        where:{
+            id: id
+        },
+    })
+}
 
+Presence.searchOneFrequence = async function(id){
+    return await Presence.findOne({
+        where:{
+            id:id
+        },
+        include: [{
+            model: Consultation, as: 'presenceConsultation',
+        }]
+    }).then((result)=>{
+        Consultation.update({
+            statusSchedules: 2,
+        },{
+            where:{
+                id: result.presenceConsultationId,
+            }
+        })
+    })
+}
 
+Presence.deleteFrequence = function(id){
+    return Presence.destroy({
+        where:{
+            id: id
+        }
+    })
+}
 module.exports = Presence;

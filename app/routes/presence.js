@@ -21,4 +21,12 @@ router.post('/register',users, (req,res) =>{
 router.post('/save', users, (req, res) => {
     controller.insertFrequence(req, res)
 })
+
+router.post('/validate', admin, (req, res)=>{
+    controller.validateFrequence(req, res);
+})
+
+router.get('/delete/:id', admin, (req, res)=>{
+    controller.deletePresence(req, res);
+})
 module.exports = router;
