@@ -55,20 +55,19 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="input-username">Nome
-                                                        Completo do Paciente</label>
+                                                    <label class="form-control-label" for="input-username">Nome do Paciente</label>
                                                     <input type="text" id="nomeRecepcionista" name="name"
                                                         class="form-control form-control-alternative"
-                                                        require placeholder="Nome Completo">
+                                                        require value="<%= patientDecrypt %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label class="form-control-label">Idade</label>
+                                                    <label class="form-control-label">Data da Consulta</label>
                                                     <input type="text" id="telefoneRecepcionista"
                                                         name="phone"
                                                         class="form-control form-control-alternative"
-                                                        require placeholder="Telefone">
+                                                        require value="<%= moment(report.dateConsult).format('DD/MM/YYYY  HH:mm') >">
                                                 </div>
                                             </div>
                                         </div>
@@ -85,8 +84,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Enviado:"</label>
+                                            <input type="text" id="telefoneRecepcionista"
+                                                name="phone"
+                                                class="form-control form-control-alternative"
+                                                require value="<%= moment(report.dateSend).format('DD/MM/YYYY  HH:mm') >">
+                                        </div>
+                                    </div>
                                     <hr class="my-4" />
-                                    <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
+                                    <!-- <input type="submit" class="btn btn-info" value="Salvar Registro"></input> -->
                                 </form>
                         </div>
                     </div>

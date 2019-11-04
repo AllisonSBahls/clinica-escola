@@ -2,23 +2,10 @@ const Report = require('../model/Reports');
 const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
 const Consultation = require('../model/Consultations');
-
 const moment = require('moment');
-const crypto = require('crypto');
-const alg = 'aes-256-ctr';
-const pwd = '$2fdp$vfs.)vk4DS$2fdp$vfs.)vk4DS'
-
-// var RSA = require('hybrid-crypto-js').RSA;
-// var Crypt = require('hybrid-crypto-js').Crypt;
-
-// var crypt = new Crypt();
-// var rsa = new RSA();
+const crypt = require('../common/encrypt');
 
 
-// rsa.generateKeyPair(function (keyPair) {
-//         publicKey = keyPair.publicKey;
-//         privateKey = keyPair.privateKey;
-// })
 
 
 class ReportController {
@@ -34,64 +21,52 @@ class ReportController {
         }
             else if (req.user.NivelPermissaoId == 3){
                 const traineeProfile = await Trainee.searchProfileTrainee(req);
-                const consult = await Consultation.searchConsultsTraineesDate(traineeProfile.id)
+                const consult = await Consultation.searchConsultsTraineesReports(traineeProfile.id)
                 res.render("forms/form_report", {consult:consult,  masterProfile: {}, traineeProfile: traineeProfile, masters: masters });
     }
 }
 
-    async report_save(req, res) {
-        let reportCrypt = req.body.report;
-        let traineeProfile = await Trainee.findOne({
-            where: { userTraineeId: req.user.id }
-        });
-       
-    //        var privateKey = keyPair.privateKey;
 
-            // var encrypted = crypt.encrypt(publicKey, reportCrypt);
-  //          var decrypted = crypt.decrypt(privateKey, encrypted);
-//           console.log(decrypted)
-            const iv = crypto.randomBytes(16)
-            const cipher = crypto.createCipheriv(alg, pwd, iv)
-            const cryptedReport = cipher.update(reportCrypt, 'utf8', 'hex') + cipher.final('hex');
-            const crypted = iv.toString('hex') +':'+cryptedReport;
-            Report.create({
-                reports: crypted,
-                dateSend: moment(),
-                namePatient: req.body.namePatient,
-                infoPatient: req.body.infoPatient,
-                reportTraineeId: traineeProfile.id,
-                reportMasterId: req.body.masterId,
-            }).then(function () {
-                res.redirect('/relatorios');
-            }).catch(function (erro) {
-                res.send("erro" + erro);
-            })
-        //  });
+        async fillFieldReports(req, res){
+            const { consultId } = req.body
+            Consultation.searchOneConsultation(consultId).then((result) => {
+                res.send(result) 
+            }).catch((err) => {
+                res.send(err)
+            });
+        }
+
+
+    async report_save(req, res) {
+        crypt.generateKeys();
+        const {namePatient, dateConsult, report, idConsult, masterId} = req.body
+        // let reportCrypt = req.body.report;
+        const traineeProfile = await Trainee.searchProfileTrainee(req);
+        //Criptografando o relatorio
+        const reportCrypt = crypt.encryptReport(report);
+
+        //criptografando as variaveis
+        let nameCrypt = crypt.encryptStringWithRsaPublicKey(namePatient, "public.pem")
+        // let b = crypt.decryptStringWithRsaPrivateKey(a, "private.pem");
+
+        Report.sendReports(reportCrypt, nameCrypt, idConsult, dateConsult, traineeProfile.id, masterId).then(function () {
+            res.redirect('/relatorios');
+        }).catch(function (erro) {
+            res.send("erro" + erro);
+        })
     }
 
     async report_find(req, res) {
- 
-        let traineeProfile = await Trainee.findOne({
-            where: { userTraineeId: req.user.id }
-        });
-        let masterProfile = await Master.findOne({
-            where: { userMasterId: req.user.id }
-        });
 
-
-        Report.findOne({
-            where: { 'id': req.params.id },
-            include: [{
-                model: Master, as: 'reportMaster',
-            }, {
-                model: Trainee, as: 'reportTrainee',
-
-            }]
-        }).then((report) => {     
-            const parts = report.reports.split(':')
-            const decipher = crypto.createDecipheriv(alg, pwd, new Buffer.from(parts[0], 'hex')); 
-            const reportDecrypt =  decipher.update(parts[1], 'hex', 'utf8') + decipher.final('utf8')
-            res.render('forms/form_report_view', { reportDecrypt:reportDecrypt, report: report, traineeProfile: traineeProfile, masterProfile: masterProfile })
+        const traineeProfile = await Trainee.searchProfileTrainee(req);
+        const masterProfile = await Master.searchProfileMaster(req);
+        Report.searchOneReport(req.params.id).then((report) => {     
+            const reportDecrypt = crypt.decryptReport(report);
+            console.log(report.namePatient)
+            const patient  = report.namePatient;
+            let patientDecrypt = crypt.decryptStringWithRsaPrivateKey(patient, "private.pem")
+            console.log(patientDecrypt)
+            res.render('forms/form_report_view', {patientDecrypt:patientDecrypt, reportDecrypt:reportDecrypt, report: report, traineeProfile: traineeProfile, masterProfile: masterProfile })
         }).catch((err) => {
             res.send('erros' + err);
         })

@@ -94,6 +94,10 @@ function confirmar() {
     document.getElementById("confirmSchedules").submit();
 }
 
+
+function sendReport() {
+    document.getElementById("form-reports").submit();
+}
 function registerPresence() {
     document.getElementById("form-select").submit();
 }

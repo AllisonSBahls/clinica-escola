@@ -21,4 +21,8 @@ router.get('/report/:id', (req, res) => {
     controller.report_find(req, res);
 })
 
+router.post('/register', users, (req, res)=>{
+    controller.fillFieldReports(req, res);
+})
+
 module.exports = router;

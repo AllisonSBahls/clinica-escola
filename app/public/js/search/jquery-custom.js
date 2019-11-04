@@ -147,24 +147,25 @@
 
 $(document).ready(function () {
     $('#selected-consult-reports').change(function () {
-
-        $('#form-select').submit(function () {
+    
+        $('#form-reports').submit(function () {
         var dados = ($(this).serialize());
 
         $.ajax({
-            url: '/reports/register',
+            url: '/relatorios/register',
             type: 'POST',
             dataType: 'json',
             data: dados,
             success: function (data) {
                 $('#consult-id').val(data.id)
                 var dt = moment(data.dateStart);
-                $('#datetime-consult').val(dt.format('YYYY-MM-DDTHH:MM'))
-                
+                $('#datetime-consult').val(dt.format('YYYY-MM-DDTHH:mm'))
+                $('#patient-name').val(data.consultPatient.name)
+                // console.log(data.consultPatient.name)
             }
         })
         return false;
     })
-    $('#form-select').trigger('submit');
+    $('#form-reports').trigger('submit');
 })
 })

@@ -139,6 +139,26 @@ Consultation.searchConsultsTraineesDate = async function (id) {
         }],
     })
 }
+Consultation.searchConsultsTraineesReports = async function (id) {
+    return await this.findAll({
+        order:['dateStart'],
+        where: {
+            consultTraineeId: id,
+            typeSchedule: { 
+                [Op.ne]: 3,
+            },
+        },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        },{
+            model: Master, as: 'consultMaster',
+        },{
+            model: Secretary, as: 'consultSecretary',
+        }],
+    })
+}
 
 Consultation.searchConsultsPatients = function (id) {
     return this.findAll({
