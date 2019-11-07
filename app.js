@@ -92,3 +92,4 @@ const PORT  = process.env.PORT || 4000
 app.listen(PORT, function(){
 	console.log('Servidor ON');
 });
+module.exports = app;

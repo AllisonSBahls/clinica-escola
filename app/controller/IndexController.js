@@ -21,10 +21,10 @@ class IndexController {
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
         const procedure = await Procedure.searchAllProcedures();
+
         if (req.user.NivelPermissaoId == 1) {
             const countSchedules = await Consultation.countSchedule();
             const masterProfile = await Master.searchProfileMaster(req);
-
             Consultation.searchAllConsults().then((consultation) => {
                 res.render('index/dashboard', {procedure:procedure, countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
@@ -34,6 +34,7 @@ class IndexController {
         } else if (req.user.NivelPermissaoId == 2) {
             const secretaryProfile = await Secretary.searchProfileSecretary(req);
             const countSchedules = await Consultation.countSchedule();
+
             Consultation.searchAllConsults().then((consultation) => {
                 res.render('index/dashboard', {procedure:procedure, countSchedules: countSchedules, waitPatients: waitPatients, secretaryProfile: secretaryProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
@@ -61,27 +62,29 @@ class IndexController {
     }
 
     async onlySchedules(req, res) {
+        const procedure = await Procedure.searchAllProcedures();
+
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
         const countSchedules = await Consultation.countSchedule();
         const masterProfile = await Master.searchProfileMaster(req);
         Consultation.searchOnlySchedules().then((consultation) => {
-            res.render('index/dashboard', { countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+            res.render('index/dashboard', {procedure:procedure,  countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
         }).catch((err) => {
             res.send('erro' + err);
         });
     }
-    async findConsultWeek(req, res) {
+    async findConsultNext(req, res) {
         if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
-            await Consultation.searchConsultsWeek().then((consult) => {
+            await Consultation.searchNextConsultation().then((consult) => {
                 res.send(consult)
             }).catch((err) => {
                 res.send('erro' + err)
             })
         } else if (req.user.NivelPermissaoId == 3) {
             const traineeProfile = await Trainee.searchProfileTrainee(req);
-            await Consultation.searchConsultWeekTrainee(traineeProfile.id).then((consult) => {
+            await Consultation.searchConsultNextTrainee(traineeProfile.id).then((consult) => {
                 res.send(consult)
             }).catch((err) => {
                 res.send('erro' + err)
@@ -89,13 +92,15 @@ class IndexController {
 
         } else if (req.user.NivelPermissaoId == 4) {
             const patientProfile = await Patient.searchProfilePatient(req);
-            await Consultation.searchConsultWeekPatient(patientProfile.id).then((consult) => {
+            await Consultation.searchConsultNextPatient(patientProfile.id).then((consult) => {
                 res.send(consult)
             }).catch((err) => {
                 res.send('erro' + err)
             })
         }
     }
+
+
 
     async findConsultDay(req, res) {
         var startDay = moment.utc();

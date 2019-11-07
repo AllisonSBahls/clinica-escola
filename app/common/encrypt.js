@@ -16,8 +16,8 @@ function encryptReport(reportCrypt){
     return crypted;
 }
 
-function decryptReport(report){
-    const parts = report.reports.split(':')
+function decryptReport(field){
+    const parts = field.split(':')
     const decipher = crypto.createDecipheriv(alg, pwd, new Buffer.from(parts[0], 'hex')); 
     const reportDecrypt =  decipher.update(parts[1], 'hex', 'utf8') + decipher.final('utf8')
     return reportDecrypt;
@@ -54,7 +54,6 @@ function generateKeys() {
     const { publicKey, privateKey } = generateKeyPairSync('rsa', 
     {
             modulusLength: 4096,
-            namedCurve: 'secp256k1', 
             publicKeyEncoding: {
                 type: 'spki',
                 format: 'pem'     
@@ -63,7 +62,7 @@ function generateKeys() {
                 type: 'pkcs8',
                 format: 'pem',
                 cipher: 'aes-256-cbc',
-                passphrase: ''
+                passphrase: 'mysecret'
             } 
     });
 

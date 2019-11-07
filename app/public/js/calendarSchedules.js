@@ -1,6 +1,56 @@
 $("register").modal('show');
 
+function truncar(texto,limite){
+    if(texto.length>limite){ 
+        limite--;
+        last = texto.substr(limite-1,1);
+        while(last!=' ' && limite > 0){
+            limite--;
+            last = texto.substr(limite-1,1);
+        }
+        last = texto.substr(limite-2,1);
+        if(last == ',' || last == ';'  || last == ':'){
+             texto = texto.substr(0,limite-2) + '...';
+        } else if(last == '.' || last == '?' || last == '!'){
+             texto = texto.substr(0,limite-1);
+        } else {
+             texto = texto.substr(0,limite-1) + '...';
+        }
+    }
+    return texto;
+}
 
+function fillTableComplete(data){
+    for (var i = 0; i < data.length; i++) {
+        let schedule;
+        let user;
+        if (data[i].typeSchedule == 1) {
+            schedule = 'Consulta'
+        } else if (data[i].typeSchedule == 2) {
+            schedule = 'Agendamento'
+        }
+
+        if (data[i].consultSecretaryId == null && data[i].consultMasterId == null) {
+            user = 'Portal'
+
+        } else if (data[i].consultMasterId == null) {
+            user = data[i].consultSecretary.name
+
+        } else if (data[i].consultSecretaryId == null)  {
+            user = data[i].consultMaster.name
+        }
+        console.log(user)
+        if (data[i].consultTraineeId == null) {
+            trainee = 'Não Informado'
+        } else {
+            trainee = data[i].consultTrainee.name
+        }
+        const name = truncar(data[i].consultPatient.name, 20)
+
+        $('#table-complete').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
+    }
+
+}
 $(document).ready(function () {
     $.fn.modal.Constructor.prototype._enforceFocus = function () {
         $('#patientModal').select2({
@@ -11,22 +61,32 @@ $(document).ready(function () {
         });
     };
 
-});
+});    
 
 $(document).ready(() => {
+    $.ajax({
+        url: '/consult/next',
+        type: 'GET',
+        dataType: 'json',
+        success: (data) => {
+            fillTableComplete(data);
+        }  
+})
+
     $('#table-day').empty();
     $.ajax({
-        url: '/consult/week',
+        url: '/consult/next',
         type: 'GET',
         dataType: 'json',
         success: (data) => {
             for (var i = 0; i < data.length; i++) {
-                $('#table-day').append('<tr><td>' + data[i].consultPatient.name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
+                if(data[i].typeSchedule == 1){
+                    const name = truncar(data[i].consultPatient.name, 20)
+                    $('#table-day').append('<tr><td>' + name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
+                }
             }
         }
     })
-   
-      
 
     $('#allConsultDays').click(() => {
         $('#table-day').empty();
@@ -36,57 +96,44 @@ $(document).ready(() => {
             dataType: 'json',
             success: (data) => {
                 for (var i = 0; i < data.length; i++) {
-                    console.log('ajax sucess', data);
                     $('#table-day').append('<tr><td>' + data[i].consultPatient.name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
                 }
             }
         })
     })
 
-    $('#allConsultWeek').click(() => {
+    $('#completeConsultDays').click(() => {
         $('#table-complete').empty();
-        event.preventDefault();
         $.ajax({
-            url: '/consult/week',
+            url: '/consult/days',
             type: 'GET',
             dataType: 'json',
             success: (data) => {
-                for (var i = 0; i < data.length; i++) {
-                    let schedule;
-                    let user;
-                    if (data[i].typeSchedule == 1) {
-                        schedule = 'Consulta'
-                    } else if (data[i].typeSchedule == 2) {
-                        schedule = 'Agendamento'
-                    }
-
-                    if (data[i].consultSecretaryId == null && data[i].consultMasterId == null) {
-                        user = 'Portal'
-
-                    } else if (data[i].consultMasterId == null) {
-                        user = data[i].consultSecretary.name
-
-                    } else if (data[i].consultSecretaryId == null)  {
-                        user = data[i].consultMaster.name
-                    }
-                    console.log(user)
-                    if (data[i].consultTraineeId == null) {
-                        trainee = 'Não Informado'
-                    } else {
-                        trainee = data[i].consultTrainee.name
-                    }
-
-                    $('#table-complete').append('<tr><td>' + schedule + '</td><td>' + data[i].consultPatient.name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
-                }
+                fillTableComplete(data);
             }
         })
     })
-})
 
+    $('#allConsultNext').click(() => {
+        $('#table-complete').empty();
+        event.preventDefault();
+        $.ajax({
+            url: '/consult/next',
+            type: 'GET',
+            dataType: 'json',
+            success: (data) => {
+                fillTableComplete(data);
+
+            }
+        })
+    })
+
+       
+
+})
 
 function getHTML() {
     var vai = $('#patientWaitModal option:selected').html();
-
     $('#valueIdUpdate').attr('value', vai);
 }
 

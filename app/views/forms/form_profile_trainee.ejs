@@ -81,6 +81,17 @@
                                                     value="<%= trainee.userTrainee.email %>">
                                             </div>
                                         </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="input-email">Permissoes</label>
+                                                <input type="text" id="fkPermissoes" name="fkPermissoes"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="E-mail" value="Estagiário">
+                    
+                                            
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <div class="row">
@@ -93,19 +104,13 @@
                                                     value="<%= moment(trainee.createdAt).format('DD/MM/YYYY')%>  ">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-info" value="Alterar Senha"></input>
-                                            </div>
-                                        </div>
+                                    
                                     </div>
                                 </div>
                                 <hr class="my-4" />
-
-                                <hr class="my-4" />
                                 <input type="hidden" value="<%= trainee.userTrainee.id  %>" id="idUser" name="idUser">
                                 <input type="hidden" value="<%= trainee.id  %>" id="idSupervisor" name="id">
-                                <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
+                                <input type="submit" class="btn btn-success" value="Alterar Perfil"></input>
                             </form>
                         </div>
                     </div>

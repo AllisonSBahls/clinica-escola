@@ -7,7 +7,7 @@
     "node": "10.15.3"
   },
   "scripts": {
-    "test": "mocha --timeout 100000",
+    "test": "mocha",
     "start": "node app.js"
   },
   "author": "Allison Sousa Bahls",
@@ -30,7 +30,8 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.2",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }
