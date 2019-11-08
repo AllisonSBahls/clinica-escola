@@ -14,11 +14,35 @@
         <% include ../partials/navbar %>
         <!-- Header -->
         <% include ../partials/header %>
+        <div class="col-lg-12 mb-6 mb-xl-0">
+            <div class="card bg-gradient-default shadow">
+                <% include ../partials/message %>
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <ul class="nav nav-pills justify-content-end">
+                        <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                        <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
+                          <span class="d-none d-md-block">Nova Consulta</span>
+                        </a>
+                      </li>
+                      
 
-        <div style="width: 80%; margin: auto;" id='calendar-container' class="pt-4">
-            <div id='calendarSchedules'></div>
-        </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-body">
 
+                <div style="width: 80%; margin: auto;" id='calendar-container' class="pt-4">
+                    <div id='calendarSchedules'></div>
+                </div>
+            </div>
+    
+            </div>
+          </div>
+      
         <% include ./schedulesModal %>
     </div>
     </div>
@@ -93,7 +117,7 @@
                     $('#viewConsult #id').val(info.event.id);
                     $('#viewConsult #patient').val(info.event.title);
                     $('#viewConsult #dateStart').val(dt.format('YYYY-MM-DD'));
-                    $('#viewConsult #timeStart').val(dt.format('HH:mm'));                   
+                    $('#viewConsult #timeStart').val(dt.format('HH:mm'));
                     $('#viewConsult #traineeId').val(info.event.extendedProps.trainee);
                     $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsult #description').val(info.event.extendedProps.description);

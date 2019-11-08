@@ -21,6 +21,8 @@ const newSupervisor = {
     password: "teste"
 }
 
+cookie4 = {};
+
 cookie = {};
 beforeEach(function (done) {
     request.post('/login')
@@ -30,6 +32,16 @@ beforeEach(function (done) {
             done();
         });
 });
+
+beforeEach(function (done) {
+    request.post('/login')
+        .send(userPatient)
+        .end(function (err, res) {
+            cookie4 = res.headers['set-cookie'];
+            done();
+        });
+});
+
 
 describe('No controlador Supervisores', function () {
 
@@ -81,7 +93,7 @@ describe('No controlador Supervisores', function () {
 
     describe('Usuario Logado', function () {
 
-        it('deve retornar status 200 em GET /supervisor', function (done) {
+        it('Deve retornar status 200 em GET /supervisor', function (done) {
             var req = request.get('/supervisor');
             req.cookies = cookie;
             req.end(function (err, res) {
@@ -90,7 +102,7 @@ describe('No controlador Supervisores', function () {
             });
         });
 
-        it('deve retornar status 200 em GET /supervisor', function (done) {
+        it('Deve retornar status 200 em GET /supervisor', function (done) {
             var req = request.get('/supervisor');
             req.cookies = cookie;
             req.end(function (err, res) {
@@ -99,7 +111,15 @@ describe('No controlador Supervisores', function () {
             });
         });
 
-        it('deve ir para rota /supervisor em POST /supervisor/save', function (done) {
+        it('Deve ir para rota /supervisor depois de encontrar em GET /supervisor/profile/id', function (done) {
+            var req = request.get('/supervisor/profile/1');
+            req.cookies = cookie;
+            req.end(function (err, res) {
+                res.status.should.eql(200);
+                done();
+            })
+        });
+        it('Deve ir para rota /supervisor depois de salvar em POST /supervisor/save', function (done) {
             var req = request.post('/supervisor/save');
             req.cookies = cookie;
             req.send(newSupervisor).end(function (err, res) {
@@ -107,5 +127,45 @@ describe('No controlador Supervisores', function () {
                 done();
             });
         });
+        it('Deve ir para rota /supervisor depois de deletar em GET /supervisor/delete/id', function (done) {
+            var req = request.get('/supervisor/delete/8');
+            req.cookies = cookie;
+            req.end(function (err, res) {
+                res.headers.location.should.eql('/supervisor');
+                done();
+            });
+        })
+
     });
-})
+
+    describe('Permissão do usuario Logado não autorizado', function () {
+        it('Deve retornar status 302 em GET /supervisor', function (done) {
+            var req = request.get('/supervisor');
+            req.cookies = cookie4;
+            req.end(function (err, res) {
+                res.status.should.eql(302);
+                done();
+            });
+        });
+  
+        it('Deve retornar status 302 em Post /consultation/save', function (done) {
+            const  consulta = {
+                dateStart: '2019-11-08 00:00:00',
+                consultPatientId: 1,
+                consultTraineeId: 1,
+                consultSecretaryId: 1,
+                consultMasterId: null,
+                color: '#0000',
+                description:'description',
+                typeProcedureId: 1,
+            }
+            var req = request.get('/supervisor');
+            req.cookies = cookie4;
+            req.send(consulta).end(function (err, res) {
+                res.status.should.eql(302);
+                done();
+            });
+        });
+
+    });
+});
