@@ -23,7 +23,7 @@
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Supervisores</h3>
+                                    <h3 class="mb-0">Paciente</h3>
                                 </div>
 
                             </div>
@@ -32,9 +32,10 @@
 
                         <div class="card-body">
 
-                            <form action="/paciente/save" method="POST">
-                                <h6 class="heading-small text-muted mb-4">Informações do Supervisor</h6>
+                            <form action="/paciente/save" method="POST" id="register-patient">
+                                <h6 class="heading-small text-muted mb-4">Informações do Paciente</h6>
                                 <div class="pl-lg-4">
+                                    <h6 class="heading-small text-muted mb-4">Pessoais</h6>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -60,8 +61,9 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-username">Data de
                                                     Nascimento</label>
-                                                <input type="date" id="dateBirth" name="dateBirth" required
-                                                    class="form-control form-control-alternative" placeholder="Data de Nascimento">
+                                                <input type="date" id="dateBirth" name="dateBirth"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="Data de Nascimento">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -73,12 +75,105 @@
                                                         <option value="1">Feminino</option>
                                                         <option value="2">Masculino</option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="input-username">Escolaridade</label>
+                                                <select class="form-control" id="schooling" name="schooling"
+                                                    data-placeholder="Selecione">
+                                                    <option value="1">Ensino Fundamento</option>
+                                                    <option value="2">Ensino Médio</option>
+                                                    <option value="3">Ensino Superior</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Estado Civil</label>
+                                                    <select class="form-control" name="maritalstatus" id="maritalstatus"
+                                                        data-placeholder="Selecione">
+                                                        <option value="1">Solteiro(a)</option>
+                                                        <option value="2">Casado(a)</option>
+                                                        <option value="3">Divorciado(a)</option>
+                                                        <option value="4">Viúvo(a) </option>
+                                                        <option value="5">Separado(a)</option>
+
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Conjugue</label>
+                                                    <input type="text" name="spouse" id="spouse"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="Conjugue">
+                                                   
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <hr class="my-4" />
+                                    <h6 class="heading-small text-muted mb-4">Localização</h6>
+                                    <form method="get" action=".">
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">CEP</label>
+                                                <input type="email" id="cep" name="cep"  onblur="pesquisacep(this.value);"
+                                                    class="form-control form-control-alternative" placeholder="CEP">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Endereço</label>
+                                                <input type="email" id="rua" name="address" 
+                                                    class="form-control form-control-alternative" placeholder="Endereço">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Número</label>
+                                                <input type="email" id="number" name="number" 
+                                                    class="form-control form-control-alternative" placeholder="Número">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Bairro</label>
+                                                <input type="email" id="bairro" name="district"
+                                                    class="form-control form-control-alternative" placeholder="Bairro">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Cidade</label>
+                                                <input type="email" id="cidade" name="country"
+                                                    class="form-control form-control-alternative" placeholder="Cidade">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Estado</label>
+                                                <input type="email" id="uf" name="uf" 
+                                                    class="form-control form-control-alternative" placeholder="Estado">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                    <hr class="my-4" />
+                                    <h6 class="heading-small text-muted mb-4">Usuário</h6>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -102,7 +197,7 @@
                                 </div>
 
                                 <hr class="my-4" />
-                                <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
+                                <input onclick="registerPatient();" class="btn btn-info" value="Salvar Registro"></input>
                             </form>
                         </div>
                     </div>

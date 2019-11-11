@@ -15,7 +15,38 @@ const Patient = bd.sequelize.define('patients', {
     gender: {
         type: bd.Sequelize.INTEGER
     },
+    schooling:{
+        type: bd.Sequelize.INTEGER
+
+    },
+    address:{
+        type: bd.Sequelize.STRING
+
+    },
+    number: {
+        type: bd.Sequelize.INTEGER
+    },
+    district: {
+        type: bd.Sequelize.STRING
+    },
+    maritalstatus: {
+        type: bd.Sequelize.INTEGER
+    },
+    spouse: {
+        type: bd.Sequelize.STRING
+    },
+    cep: {
+        type: bd.Sequelize.STRING
+    },
+    country: {
+        type: bd.Sequelize.STRING
+    },
+    UF: {
+        type: bd.Sequelize.STRING
+    },
+
 });
+Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'},onDelete: 'cascade'});
 
 Patient.searchAllPatients = async function (){
     return await this.findAll();
@@ -88,7 +119,7 @@ Patient.insertPatientAuth = function(name, userId){
 }
 
 
-Patient.insertPatient = function(email, password, name, phone, dateBirth, gender){
+Patient.insertPatient = function(email, password, name, phone, dateBirth, gender, address, district, number, schooling, spouse, maritalstatus, country, uf, cep){
     return User.create({
         email:email,
         password:password,
@@ -97,8 +128,17 @@ Patient.insertPatient = function(email, password, name, phone, dateBirth, gender
         this.create({
             name:name,
             phone:phone,
-            dateBirth: dateBirth,
-            gender: gender,
+            dateBirth:dateBirth,
+            gender:gender,
+            address:address,
+            district:district,
+            number:number,
+            schooling:schooling,
+            spouse:spouse,
+            maritalstatus:maritalstatus,
+            country:country,
+            cep:cep,
+            uf:uf,
             userPatientId: user.id
         })
     }).catch((err) => {
@@ -112,12 +152,21 @@ Patient.deletePatient = function(id){
     })
 }
 
-Patient.updateProfilePatient = function(name, phone, dateBirth, gender, id){
+Patient.updateProfilePatient = function(name, phone, dateBirth, gender, id, address, district, number, schooling, spouse, maritalstatus, country, uf, cep){
     return Patient.update({
             name: name,
             phone: phone,
             dateBirth: dateBirth,
             gender: gender,
+            address:address,
+            district:district,
+            number:number,
+            schooling:schooling,
+            spouse:spouse,
+            maritalstatus:maritalstatus,
+            country:country,
+            cep:cep,
+            uf:uf,
         }, { where: { 'id': id }
      }
     )
@@ -125,7 +174,6 @@ Patient.updateProfilePatient = function(name, phone, dateBirth, gender, id){
 
 
 
-Patient.belongsTo(User, {as : 'userPatient', foreingKey: {name: 'fk_user_patient'},onDelete: 'cascade'});
 
 
 //Patient.sync({force: true});

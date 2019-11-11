@@ -80,11 +80,140 @@
                                                         <% } %>
                                                     </select>
                                                 </div>
-                                                
                                                 <% } %>
-
                                         </div>
                                     </div>
+                                    <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                        for="input-username">Escolaridade</label>
+                                                    <select class="form-control" id="schooling" name="schooling"
+                                                        data-placeholder="Selecione">
+                                                        <% if (patient.schooling == 1) {  %>
+                                                            <option value="<%= patient.schooling %>">Ensino Fundamento</option>
+                                                            <option value="2">Ensino Médio</option>
+                                                            <option value="3">Ensino Superior</option>
+                                                        <% }else if (patient.schooling == 2) {  %>
+                                                            <option value="<%= patient.schooling %>">Ensino Médio</option>
+                                                            <option value="1">Ensino Fundamento</option>
+                                                            <option value="3">Ensino Superior</option>
+                                                        <%  }else{ %>
+                                                            <option value="<%= patient.schooling %>">Ensino Superior</option>
+                                                            <option value="1">Ensino Fundamento</option>
+                                                            <option value="2">Ensino Médio</option>
+                                                        <% } %>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Estado Civil</label>
+                                                        <select class="form-control" name="maritalstatus" id="maritalstatus"
+                                                            data-placeholder="Selecione">
+                                                            <% if (patient.maritalstatus == 1) {  %>
+                                                                <option value="<%= patient.maritalstatus %>">Solteiro(a)</option>
+                                                                <option value="2">Casado(a)</option>
+                                                                <option value="3">Divorciado(a)</option>
+                                                                <option value="4">Viúvo(a) </option>
+                                                                <option value="5">Separado(a)</option>
+                                                            <% }else if (patient.maritalstatus == 2) {  %>
+                                                                <option value="<%= patient.maritalstatus %>">Casado(a)</option>
+                                                                <option value="1">Solteiro(a)</option>
+                                                                <option value="3">Divorciado(a)</option>
+                                                                <option value="4">Viúvo(a) </option>
+                                                                <option value="5">Separado(a)</option>
+                                                            <% }else if (patient.maritalstatus == 3) {  %>
+                                                                <option value="<%= patient.maritalstatus %>">Divorciado(a)</option>
+                                                                <option value="1">Solteiro(a)</option>
+                                                                <option value="2">Casado(a)</option>
+                                                                <option value="4">Viúvo(a) </option>
+                                                                <option value="5">Separado(a)</option>
+                                                            <% }else if (patient.maritalstatus == 4) {  %>
+                                                                <option value="<%= patient.maritalstatus %>">Viúvo(a) </option>
+
+                                                                <option value="1">Solteiro(a)</option>
+                                                                <option value="2">Casado(a)</option>
+                                                                <option value="3">Divorciado(a)</option>
+                                                                <option value="5">Separado(a)</option>
+                                                            <%  }else{ %>
+                                                                <option value="<%= patient.maritalstatus %>">Separado(a)</option>
+                                                                <option value="1">Solteiro(a)</option>
+                                                                <option value="2">Casado(a)</option>
+                                                                <option value="3">Divorciado(a)</option>
+                                                                <option value="4">Viúvo(a) </option>
+                                                            <% } %>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Conjugue</label>
+                                                        <input type="text" name="spouse" id="spouse"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Conjugue" value="<%= patient.spouse %>">
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="my-4" />
+                                        <h6 class="heading-small text-muted mb-4">Localização</h6>
+                                        <form method="get" action=".">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">CEP</label>
+                                                    <input type="email" id="cep" name="cep"  onblur="pesquisacep(this.value);"
+                                                        class="form-control form-control-alternative" placeholder="CEP" value="<%= patient.cep %>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Endereço</label>
+                                                    <input type="email" id="rua" name="address" 
+                                                        class="form-control form-control-alternative" placeholder="Endereço"  value="<%= patient.address %>">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Número</label>
+                                                    <input type="email" id="number" name="number" 
+                                                        class="form-control form-control-alternative" placeholder="Número" value="<%= patient.number %>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Bairro</label>
+                                                    <input type="email" id="bairro" name="district"
+                                                        class="form-control form-control-alternative" placeholder="Bairro" value="<%= patient.district %>">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Cidade</label>
+                                                    <input type="email" id="cidade" name="country" value="<%= patient.country %>"
+                                                        class="form-control form-control-alternative">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Estado</label>
+                                                    <input type="email" id="uf" name="uf" 
+                                                        class="form-control form-control-alternative" placeholder="Estado" value="<%= patient.UF %>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <hr class="my-4" />
                                         <div class="row">
                                             <div class="col-lg-6">

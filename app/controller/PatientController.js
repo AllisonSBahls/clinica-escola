@@ -18,7 +18,7 @@ class SecretaryController {
         const secretaryrProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
-        const { email, name, phone, dateBirth, gender, password } = req.body;
+        const { email, name, phone, dateBirth, gender, password, district, number, address, spouse, maritalstatus, schooling, country, uf, cep} = req.body;
         //Verificar Email Existente
         var secretPassword = hash.generateHash(password);
         //Verificar Email Existente
@@ -28,13 +28,12 @@ class SecretaryController {
         if (erros) {
             res.render('forms/form_register_patient', { erros: erros, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile })
         } else {
-            Patient.insertPatient(email, secretPassword, name, phone, dateBirth, gender).then((result) => {
-                req.flash("success_msg", "Paciente cadastrado com sucesso");
+            Patient.insertPatient(email, secretPassword, name, phone, dateBirth, gender, address, district, number, schooling, spouse, maritalstatus, country, uf, cep).then((result) => {
                 res.redirect('/paciente');
+                req.flash("success_msg", "Paciente cadastrado com sucesso");
             }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro ao salvar o Paciente');
                 res.redirect('/paciente');
-
             });;
         }
     }
@@ -46,7 +45,7 @@ class SecretaryController {
         Patient.searchAllPatientsUsers().then(function (patients) {
             res.render("pages/patient", { patients: patients, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile})
         }).catch(function (err){
-            console.log('erro')
+            console.log(err)
             res.redirect('partials/404');
         })
     }
@@ -83,11 +82,11 @@ class SecretaryController {
 
 
     async updatePatient(req, res) {
-        const { email, name, phone, dateBirth, gender, idUser } = req.body;
+        const { email, name, phone, dateBirth, gender, idUser,  district, number, address, spouse, maritalstatus, schooling, country, uf, cep } = req.body;
         const emailUser = await User.searchEmailUser(idUser)
 
         if (emailUser.email == email) {
-            Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id).then(function () {
+            Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cep).then(function () {
                 req.flash("success_msg", "Paciente alterado com sucesso");
                 res.redirect('/paciente');
             }).catch(function (erro) {
@@ -101,7 +100,7 @@ class SecretaryController {
                 res.redirect('/paciente');
             }else{
                 await User.updateEmailUser(idUser, email);
-                Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id).then(function () {
+                Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cep).then(function () {
                     req.flash("success_msg", "Paciente alterado com sucesso");
                     res.redirect('/paciente');
                 }).catch(function (erro) {

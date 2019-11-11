@@ -10,16 +10,15 @@ const moment = require('moment');
 class ConsultationController {
 
     async consultations(req, res) {
-        //Carrega informação do paciente, lista de espera e estagiários
 
+        //Carrega informações do paciente, lista de espera e estagiários e procedimentos.
         const patients = await Patient.searchAllPatients();
         const waitPatients = await Wait.searchWaitPatients();
         const trainees = await Trainee.searchAllTrainees();
         const procedure = await Procedure.searchAllProcedures();
 
-        //Usuário Administrador
+        //Acesso a condição, caso o usuário seja administrador.
         if (req.user.NivelPermissaoId == 1) {
-            //Busca o nome do usuário ADMINISTRADOR
             const masterProfile = await Master.searchProfileMaster(req);
             //Retornar todas as consultas como agendamento ou consulta marcada
             Consultation.searchAllConsults().then((consultation) => {
@@ -27,7 +26,8 @@ class ConsultationController {
             }).catch((err) => {
                 res.send('erro' + err);
             });
-            //Usuário Secretaria
+            
+        //Acesso a condição, caso o usuário seja administrador.
         } else if (req.user.NivelPermissaoId == 2) {
             //Busca o nome do usuário SECRETARIA
             const secretaryProfile = await Secretary.searchProfileSecretary(req);
