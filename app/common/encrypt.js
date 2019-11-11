@@ -1,5 +1,10 @@
+//Importa a biblioteca crypto
 const crypto = require('crypto');
+
+//Define qual a chave utilizada pela criptografia
 const alg = 'aes-256-ctr';
+
+//Define a senha de criptografia em 23bits.
 const pwd = '$2fdp$vfs.)vk4DS$2fdp$vfs.)vk4DS';
 
 var path = require("path");
@@ -8,6 +13,7 @@ var fs = require("fs");
 const { writeFileSync } = require('fs')
 const { generateKeyPairSync } = require('crypto')
 
+//Função para encriptar os dado do usuário
 function encryptReport(reportCrypt){
     const iv = crypto.randomBytes(16)
     const cipher = crypto.createCipheriv(alg, pwd, iv)
@@ -16,6 +22,7 @@ function encryptReport(reportCrypt){
     return crypted;
 }
 
+//Função para decriptar os dadaos do usuário
 function decryptReport(field){
     const parts = field.split(':')
     const decipher = crypto.createDecipheriv(alg, pwd, new Buffer.from(parts[0], 'hex')); 
