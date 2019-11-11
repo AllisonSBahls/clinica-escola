@@ -25,15 +25,23 @@
                                 <input type="hidden" id="typeScheduleConsult" name="typeScheduleConsult">
 
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-username">Paciente</label>
+                                    <label class="form-control-label" for="input-username">Paciente</label>  <label for="">Telefone</label>
                                     <input type="text" id="patient" name="patientId"
-                                        class="form-control form-control-alternative">
+                                       disabled class="form-control form-control-alternative">
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Data da Consulta</label>
-                                    <input type="datetime-local" id="dateStart" name="dateStart"
+                                    <input type="date" id="dateStart" name="dateStart"
+                                        class="form-control form-control-alternative">
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label">Horario</label>
+                                    <input type="time" id="timeStart" name="timeStart"
                                         class="form-control form-control-alternative">
                                 </div>
                                 
@@ -77,9 +85,11 @@
                         </div>
 
                         <hr class="my-4" />
-                        <input type="button" onclick="cancelar(), confirm('Você confirma o cancelamento?')" class="btn btn-danger" value="Cancelar"></input>
-                        <input type="button" onclick="update()" class="btn btn-primary" value="Alterar"></input>
-             
+                        <div style="float: right;">
+                        <a onclick="update()" class="btn btn-primary" value="Alterar"><img src="img/icons/common/edit.svg"></a>
+
+                        <a onclick="cancelar(), confirm('Você confirma o cancelamento?')" class="btn btn-danger" value="Cancelar"><i class="ni ni-lg ni-basket text-white"></i></a>
+                    </div>
                     </div>
 
                 </form>
@@ -118,7 +128,7 @@
 
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label class="form-control-label">Paciente</label>
+                                    <label class="form-control-label">Paciente</label> 
                                     <input type="text" id="patient" name="patientId"
                                         class="form-control form-control-alternative">
 
@@ -126,10 +136,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label">Data/Hora da Consulta</label>
-                                    <input type="datetime-local" id="dateStart" name="dateStart"
+                                    <label class="form-control-label">Data Desejada</label>
+                                    <input type="date" id="dateStart" name="dateStart"
+                                        class="form-control form-control-alternative">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Horario</label>
+                                    <input type="time" id="timeStart" name="timeStart"
                                         class="form-control form-control-alternative">
 
                                 </div>
@@ -270,12 +288,20 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Data da Consulta</label>
-                                    <input type="datetime-local" id="dateStart" name="dateStart"
+                                    <label class="form-control-label">Data</label>
+                                    <input type="date" id="dateStart" name="dateStart"
                                         class="form-control form-control-alternative">
                                 </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label">Horario</label>
+                                    <input type="time" id="timeStart" name="dateStart"
+                                        class="form-control form-control-alternative">
+                            </div>
+                                
 
                             </div>
                         </div>
@@ -317,8 +343,8 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="my-4" />
-                    <input type="submit" class="btn btn-success" value="Marcar Consulta"></input>
+                    <hr class="my-3" />
+                    <input style="float: right;"type="submit" class="btn btn-success" value="Marcar Consulta"></input>
                 </form>
 
             </div>
@@ -339,8 +365,16 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label class="form-control-label">Data/Hora da Consulta</label>
-                                    <input type="datetime-local" id="dateStart" name="dateStart"
+                                    <label class="form-control-label">Data Desejada</label>
+                                    <input type="date" id="dateStart" name="dateStart"
+                                        class="form-control form-control-alternative">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-control-label">Horario Desejado</label>
+                                    <input type="time" id="timeStart" name="timeStart"
                                         class="form-control form-control-alternative">
 
                                 </div>

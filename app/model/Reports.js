@@ -18,7 +18,7 @@ const Reports = bd.sequelize.define('reports', {
         type: bd.Sequelize.STRING,
     },
     IdConsult: {
-        type: bd.Sequelize.INTEGER,
+        type: bd.Sequelize.STRING,
     },
     dateConsult: {
         type: bd.Sequelize.DATE,

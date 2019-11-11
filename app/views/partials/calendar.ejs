@@ -14,11 +14,35 @@
         <% include ../partials/navbar %>
         <!-- Header -->
         <% include ../partials/header %>
+        <div class="col-lg-12 mb-6 mb-xl-0">
+            <div class="card bg-gradient-default shadow">
+                <% include ../partials/message %>
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <ul class="nav nav-pills justify-content-end">
+                        <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                        <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
+                          <span class="d-none d-md-block">Nova Consulta</span>
+                        </a>
+                      </li>
+                      
 
-        <div style="width: 80%; margin: auto;" id='calendar-container' class="pt-4">
-            <div id='calendarSchedules'></div>
-        </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-body">
 
+                <div style="width: 80%; margin: auto;" id='calendar-container' class="pt-4">
+                    <div id='calendarSchedules'></div>
+                </div>
+            </div>
+    
+            </div>
+          </div>
+      
         <% include ./schedulesModal %>
     </div>
     </div>
@@ -61,6 +85,8 @@
                         trainee: '<%= consultation[i].consultTrainee.name %>',
                         description: '<%= consultation[i].description  %>',
                         typeSchedule: '<%= consultation[i].typeSchedule  %>',
+                        patientId: '<%= consultation[i].consultPatientId %>',
+                        typeProcedure: '<%= consultation[i].typeProcedureId %>',
                     },
                     textColor: '#fff',
                 },
@@ -74,6 +100,7 @@
                     extendedProps: {
                         description: '<%= consultation[i].description  %>',
                         typeSchedule: '<%= consultation[i].typeSchedule  %>',
+                        patientId: '<%= consultation[i].consultPatientId %>',
                     },
                     textColor: '#fff',
                 },
@@ -85,18 +112,27 @@
             eventClick: function (info) {
                 info.jsEvent.preventDefault();
                 if (info.event.extendedProps.typeSchedule == 1) {
+                    var dt = moment(info.event.start);
+
                     $('#viewConsult #id').val(info.event.id);
                     $('#viewConsult #patient').val(info.event.title);
-                    $('#viewConsult #dateStart').val(info.event.start.toLocaleString());
-                    $('#viewConsult #trainee').val(info.event.extendedProps.trainee);
+                    $('#viewConsult #dateStart').val(dt.format('YYYY-MM-DD'));
+                    $('#viewConsult #timeStart').val(dt.format('HH:mm'));
+                    $('#viewConsult #traineeId').val(info.event.extendedProps.trainee);
                     $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsult #description').val(info.event.extendedProps.description);
+                    $('#viewConsult #typeProcedure').val(info.event.extendedProps.typeProcedure);
+
                     $('#viewConsult').modal('show');
 
                 } else if (info.event.extendedProps.typeSchedule == 2) {
+                    var dt = moment(info.event.start);
+
                     $('#viewConsultPatient #id').val(info.event.id);
+                    $('#viewConsultPatient #patientIdHidden').val(info.event.extendedProps.patientId);
                     $('#viewConsultPatient #patient').val(info.event.title);
-                    $('#viewConsultPatient #dateStart').val(info.event.start.toLocaleString());
+                    $('#viewConsultPatient #dateStart').val(dt.format('YYYY-MM-DD'));
+                    $('#viewConsultPatient #timeStart').val(dt.format('HH:mm'));
                     $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsultPatient').modal('show');
                 }
@@ -105,7 +141,9 @@
             selectable: true,
             select: function (info) {
                 // alert('selected ' + info.start.toLocaleString());
-                $('#register #dateStart').val(info.start.toLocaleString());
+                var dt = moment(info.start);
+                $('#register #dateStart').val(dt.format('YYYY-MM-DD'));
+                $('#register #timeStart').val(dt.format('HH:mm'));
                 $('#viewConsultDashboard #dateConsult').val(info.start.toLocaleString());
                 $('#register').modal('show');
 

@@ -28,7 +28,8 @@ function validateFieldsPassword(password, newPassowrd, passwordConfirm){
     }
 }
 
+
 module.exports ={
     validateFields,
-    validateFieldsPassword
-} 
+    validateFieldsPassword,
+  } 

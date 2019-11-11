@@ -46,7 +46,7 @@ class ReportController {
         const reportCrypt = crypt.encryptReport(report);
 
         //criptografando as variaveis
-        let nameCrypt = crypt.encryptStringWithRsaPublicKey(namePatient, "public.pem")
+        let nameCrypt = crypt.encryptReport(namePatient)
         // let b = crypt.decryptStringWithRsaPrivateKey(a, "private.pem");
 
         Report.sendReports(reportCrypt, nameCrypt, idConsult, dateConsult, traineeProfile.id, masterId).then(function () {
@@ -61,10 +61,9 @@ class ReportController {
         const traineeProfile = await Trainee.searchProfileTrainee(req);
         const masterProfile = await Master.searchProfileMaster(req);
         Report.searchOneReport(req.params.id).then((report) => {     
-            const reportDecrypt = crypt.decryptReport(report);
-            console.log(report.namePatient)
+            const reportDecrypt = crypt.decryptReport(report.reports);
             const patient  = report.namePatient;
-            let patientDecrypt = crypt.decryptStringWithRsaPrivateKey(patient, "private.pem")
+            let patientDecrypt = crypt.decryptReport(report.namePatient);
             console.log(patientDecrypt)
             res.render('forms/form_report_view', {patientDecrypt:patientDecrypt, reportDecrypt:reportDecrypt, report: report, traineeProfile: traineeProfile, masterProfile: masterProfile })
         }).catch((err) => {

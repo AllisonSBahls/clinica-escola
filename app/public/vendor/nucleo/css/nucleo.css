@@ -568,5 +568,9 @@ License - nucleoapp.com/license/
     content: "\ea65";
 }
 
+.ni-edit-test::before {
+    content: "\ea66";
+}
+
 
 /* all icon font classes list here */

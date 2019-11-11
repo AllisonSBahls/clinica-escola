@@ -63,3 +63,11 @@
 #form-select{
     display: none;
 }
+
+.col-pad{
+    padding-right: 0rem !important;
+}
+
+#completeConsultDays, #allConsultNext{
+    color: #fff
+}

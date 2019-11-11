@@ -251,13 +251,14 @@ Consultation.confirmSchedule = function(dateStart, consultID, traineeId, descrip
     })
 }
 
-Consultation.searchConsultsWeek = async function (){
+Consultation.searchNextConsultation = async function (){
     return await Consultation.findAll({
         order:['dateStart'],
         limit: 6,
         where: {
             dateStart: {
-                [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
+                    [Op.gte]:moment.utc()
+                },
             },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -271,14 +272,36 @@ Consultation.searchConsultsWeek = async function (){
     });
 }
 
-Consultation.searchConsultWeekPatient  = async function (patientId){
+Consultation.searchNextConsultation = async function (){
+    return await Consultation.findAll({
+        order:['dateStart'],
+        limit: 6,
+        where: {
+            dateStart: {
+                [Op.gte]:moment.utc()
+            },
+        },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+}
+
+Consultation.searchConsultNextPatient  = async function (patientId){
     return await Consultation.findAll({
         order:['dateStart'],
         where: {
             consultPatientId: patientId, 
             dateStart: {
-                [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
+                [Op.gte]:moment.utc()
             },
+        },
         include: [{
             model: Patient, as: 'consultPatient',
         },{
@@ -291,15 +314,16 @@ Consultation.searchConsultWeekPatient  = async function (patientId){
     });
 }
 
-Consultation.searchConsultWeekTrainee  = async function (traineeId){
+Consultation.searchConsultNextTrainee  = async function (traineeId){
     return await Consultation.findAll({
         order:['dateStart'],
         where: {    
             typeSchedule: 1,
             consultTraineeId: traineeId,
             dateStart: {
-                [Op.between]: [moment.utc().day(0).minute(0), moment.utc().day(7).minute(59)]},
+                [Op.gte]:moment.utc()
             },
+        },
         include: [{
             model: Patient, as: 'consultPatient',
         },{

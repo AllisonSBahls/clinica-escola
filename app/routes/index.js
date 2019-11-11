@@ -35,8 +35,8 @@ function isLoggedIn(req, res, next) {
 router.get('/consult/days',  users,(req, res) =>{
     controller.findConsultDay(req, res);
 })
-router.get('/consult/week', users, (req, res) =>{
-    controller.findConsultWeek(req, res);
+router.get('/consult/next', users, (req, res) =>{
+    controller.findConsultNext(req, res);
 })
 
 

@@ -36,14 +36,14 @@
                         </form>
                     </div>
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table table-hover align-items-center table-md">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Nome Completo</th>
                                     <th scope="col">E-mail</th>
-                                    <th scope="col">Telefone</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
+                                    <th  class="col-5" >Telefone</th>
+                                    <th></th>
+                                    <th  ></th>
 
                                     <!-- <th scope="col">Bounce rate</th> -->
                                 </tr>
@@ -52,24 +52,25 @@
                                 <% if(patients.length > 0 ) {%>
                                 <% for (var i = 0; i < patients.length; i++) { %>
                                 <tr>
-                                    <th scope="row">
+                                    <th >
                                         <%= patients[i].name %>
                                     </th>
                                     <td>
                                         <%= patients[i].userPatient.email %>
                                     </td>
-                                    <td>
+                                    <td >
                                         <%= patients[i].phone %>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger delete"
-                                            onclick="return confirm('Você confirma a exclusão?')"
-                                            href="paciente/delete/<%= patients[i].userPatient.id %>">Excluir</a>
+                                        <a class="btn btn-primary primary btn-sm"
+                                            href="paciente/profile/<%= patients[i].id %>"><img src="img/icons/common/eye.svg"></a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary primary"
-                                            href="paciente/profile/<%= patients[i].id %>">Alterar</a>
+                                        <a class="btn btn-danger delete btn-sm"
+                                            onclick="return confirm('Você confirma a exclusão?')"
+                                            href="paciente/delete/<%= patients[i].userPatient.id %>"><i class="ni ni-lg ni-basket text-white"></a>
                                     </td>
+                                   
 
 
                                     <% } %>

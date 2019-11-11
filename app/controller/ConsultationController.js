@@ -128,9 +128,10 @@ class ConsultationController {
     }
 
     async saveConsult(req, res) {
-        const { dateStart, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
+        const { dateStart, timeStart, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
         //converter formato brasileiro para SQL
-        const datetime = dateFormat(dateStart);
+        const date = dateStart +' '+ timeStart
+        const datetime = dateFormat(date);
         let idMaster;
         let idSecretary;
 
@@ -201,7 +202,7 @@ class ConsultationController {
                     req.flash("success_msg", "Agendamento marcado com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
-                    req.flash("Erro ao marcar o agendamento");
+                    req.flash("error_msg","Erro ao marcar o agendamento");
                     res.redirect('/dashboard');
                 })
             }
@@ -209,32 +210,51 @@ class ConsultationController {
     }
 
     deleteSchedules(req, res) {
-        Consultation.deleteSchedules(req.body.consultationId).then(() => {
-            req.flash("success_msg", "Agendamento Cancelado com Sucesso")
+        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
+            Consultation.deleteSchedules(req.body.consultationId).then(() => {
+                req.flash("success_msg", "Agendamento Cancelado com Sucesso")
+                res.redirect('/dashboard')
+            }).catch((err) => {
+                req.flash("error_msg","Erro ao deletar o agendamento");
+                res.redirect('/dashboard');
+            })
+        }else{
+            req.flash("error_msg", "Você não tem autorização para excluir")
             res.redirect('/dashboard')
-        }).catch((err) => {
-            res.send("Não é possivel cancelar o agendamento" + err)
-        })
+        }
     }
 
     async cancelamentoSchedule(req, res) {
-        Consultation.cancelConsultation(req.body.cancelId).then(() => {
-            req.flash("success_msg", "Consulta Cancelado com Sucesso")
-            res.redirect('/calendar')
-        }).catch((err) => {
-            res.send("Não é possivel cancelar o agendamento" + err)
-        })
+        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
+            Consultation.cancelConsultation(req.body.cancelId).then(() => {
+                req.flash("success_msg", "Consulta cancelado com scesso")
+                res.redirect('/dashboard')
+            }).catch((err) => {
+                req.flash("error_msg","Erro ao cancelar a consulta");
+                res.redirect('/dashboard')
+            })
+        }else{
+            req.flash("error_msg", "Você não tem autorização")
+            res.redirect('/dashboard')
+        }
     }
 
     confirmSchedules(req, res){
-        const {dateStart, consultationId, traineeId, description} = req.body;
-        const datetime = dateFormat(dateStart);
-        Consultation.confirmSchedule(datetime, consultationId, traineeId, description).then((result) => {
+        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
+            const {dateStart, consultationId, traineeId, description} = req.body;
+            const datetime = dateFormat(dateStart);
+            Consultation.confirmSchedule(datetime, consultationId, traineeId, description).then((result) => {
+                req.flash("success_msg", "Consulta confirmada com ssucesso")
+                res.redirect('/dashboard')
+            }).catch((err) => {
+                req.flash("error_msg", "Você ao confirmar a consulta")
+                res.redirect('/dashboard')
+                
+            });
+        }else{
+            req.flash("error_msg", "Você não tem autorização")
             res.redirect('/dashboard')
-        }).catch((err) => {
-            res.send(err)
-            
-        });
+        }
     }
 
     
