@@ -1,26 +1,26 @@
 $("register").modal('show');
 
-function truncar(texto,limite){
-    if(texto.length>limite){ 
+function truncar(texto, limite) {
+    if (texto.length > limite) {
         limite--;
-        last = texto.substr(limite-1,1);
-        while(last!=' ' && limite > 0){
+        last = texto.substr(limite - 1, 1);
+        while (last != ' ' && limite > 0) {
             limite--;
-            last = texto.substr(limite-1,1);
+            last = texto.substr(limite - 1, 1);
         }
-        last = texto.substr(limite-2,1);
-        if(last == ',' || last == ';'  || last == ':'){
-             texto = texto.substr(0,limite-2) + '...';
-        } else if(last == '.' || last == '?' || last == '!'){
-             texto = texto.substr(0,limite-1);
+        last = texto.substr(limite - 2, 1);
+        if (last == ',' || last == ';' || last == ':') {
+            texto = texto.substr(0, limite - 2) + '...';
+        } else if (last == '.' || last == '?' || last == '!') {
+            texto = texto.substr(0, limite - 1);
         } else {
-             texto = texto.substr(0,limite-1) + '...';
+            texto = texto.substr(0, limite - 1) + '...';
         }
     }
     return texto;
 }
 
-function fillTableComplete(data){
+function fillTableComplete(data) {
     for (var i = 0; i < data.length; i++) {
         let schedule;
         let user;
@@ -36,10 +36,9 @@ function fillTableComplete(data){
         } else if (data[i].consultMasterId == null) {
             user = data[i].consultSecretary.name
 
-        } else if (data[i].consultSecretaryId == null)  {
+        } else if (data[i].consultSecretaryId == null) {
             user = data[i].consultMaster.name
         }
-        console.log(user)
         if (data[i].consultTraineeId == null) {
             trainee = 'Não Informado'
         } else {
@@ -49,8 +48,39 @@ function fillTableComplete(data){
 
         $('#table-complete').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
     }
-
 }
+
+function fillTableConsultComplete(data) {
+    for (var i = 0; i < data.length; i++) {
+        let schedule;
+        let user;
+        if (data[i].typeSchedule == 1) {
+            schedule = 'Consulta'
+        } else if (data[i].typeSchedule == 2) {
+            schedule = 'Agendamento'
+        }
+
+        if (data[i].consultSecretaryId == null && data[i].consultMasterId == null) {
+            user = 'Portal'
+
+        } else if (data[i].consultMasterId == null) {
+            user = data[i].consultSecretary.name
+
+        } else if (data[i].consultSecretaryId == null) {
+            user = data[i].consultMaster.name
+        }
+        if (data[i].consultTraineeId == null) {
+            trainee = 'Não Informado'
+        } else {
+            trainee = data[i].consultTrainee.name
+        }
+        const name = truncar(data[i].consultPatient.name, 20)
+
+        $('#table-complete-all').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
+    }
+}
+
+
 $(document).ready(function () {
     $.fn.modal.Constructor.prototype._enforceFocus = function () {
         $('#patientModal').select2({
@@ -61,7 +91,7 @@ $(document).ready(function () {
         });
     };
 
-});    
+});
 
 $(document).ready(() => {
     $.ajax({
@@ -70,8 +100,8 @@ $(document).ready(() => {
         dataType: 'json',
         success: (data) => {
             fillTableComplete(data);
-        }  
-})
+        }
+    })
 
     $('#table-day').empty();
     $.ajax({
@@ -80,7 +110,7 @@ $(document).ready(() => {
         dataType: 'json',
         success: (data) => {
             for (var i = 0; i < data.length; i++) {
-                if(data[i].typeSchedule == 1){
+                if (data[i].typeSchedule == 1) {
                     const name = truncar(data[i].consultPatient.name, 20)
                     $('#table-day').append('<tr><td>' + name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
                 }
@@ -127,10 +157,79 @@ $(document).ready(() => {
             }
         })
     })
+})
 
-       
+$(document).ready(function () {
+    $('#btn-consult-name').click(() => {
+        $('#search-form-name').submit(function () {
+            var dados = $(this).serialize();
+            $.ajax({
+                url: '/consultation/name',
+                type: 'POST',
+                dataType: 'json',
+                data: dados,
+                success: (data) => {
+                    $('#table-complete-all').empty();
+                    fillTableConsultComplete(data);
+
+                }
+            })
+            return false;
+        })
+
+        $('#search-form-name').trigger('submit');
+
+    });
 
 })
+$(document).ready(function () {
+
+    $('#btn-consult-date').click(() => {
+        $('.search-form-date').submit(function () {
+            var dados = $(this).serialize();
+            $.ajax({
+                url: '/consultation/date',
+                type: 'POST',
+                dataType: 'json',
+                data: dados,
+                success: (data) => {
+                    $('#table-complete-all').empty();
+                    fillTableConsultComplete(data);
+
+                }
+            })
+            return false;
+        })
+
+        $('.search-form-date').trigger('submit');
+
+    });
+})
+
+$(document).ready(function () {
+
+    $('#btn-consult-name-date').click(() => {
+        $('.search-consult-name-date').submit(function () {
+            var dados = $(this).serialize();
+            $.ajax({
+                url: '/consultation/both',
+                type: 'POST',
+                dataType: 'json',
+                data: dados,
+                success: (data) => {
+                    $('#table-complete-all').empty();
+                    fillTableConsultComplete(data);
+
+                }
+            })
+            return false;
+        })
+
+        $('.search-consult-name-date').trigger('submit');
+
+    });
+})
+
 
 function getHTML() {
     var vai = $('#patientWaitModal option:selected').html();
@@ -181,28 +280,9 @@ function showAllPatient() {
     document.getElementById("patientSelect").style.display = 'block';
 }
 
-function showConfirmar() {
-    document.getElementById("typeHidden").style.display = 'block';
-    document.getElementById("traineeHidden").style.display = 'block';
-    document.getElementById("saveHidden").style.display = 'block';
-    document.getElementById("confHidden").style.display = 'none';
-    document.getElementById("deletarHidden").style.display = 'none';
-    document.getElementById("esperaHidden").style.display = 'none';
-    document.getElementById("voltarHidden").style.display = 'block';
-
-}
-
-function voltar() {
-    document.getElementById("typeHidden").style.display = 'none';
-    document.getElementById("traineeHidden").style.display = 'none';
-    document.getElementById("saveHidden").style.display = 'none';
-    document.getElementById("confHidden").style.display = 'block';
-    document.getElementById("deletarHidden").style.display = 'block';
-    document.getElementById("esperaHidden").style.display = 'block';
-    document.getElementById("voltarHidden").style.display = 'none';
 
 
-}
+
 
 function fieldsSchedulesHidden() {
     document.getElementById("traineeSchedulesHidden").style.display = 'none';
@@ -214,18 +294,69 @@ function fieldsSchedulesShow() {
     document.getElementById("typeConsultHidden").style.display = 'block';
 }
 
-function dropdownSidebar() {
-    if (document.getElementById("dropdown-container-sidebar").style.display == 'none') {
-        document.getElementById("dropdown-container-sidebar").style.display = 'block';
-    } else {
-        document.getElementById("dropdown-container-sidebar").style.display = 'none';
-    }
-}
+$(document).ready(function () {
+    $("#dropdown-container-sidebar").hide();
+    $("#dropdown-btn").click(function () {
+        $("#dropdown-container-sidebar").toggleClass("active").slideToggle("slow");
+        return false;
+    })
 
-function showFilter(){
-    if (document.getElementById("search-filter-field").style.display == 'none') {
-        document.getElementById("search-filter-field").style.display = 'block';
-    } else {
-        document.getElementById("search-filter-field").style.display = 'none';
-    }
-}
+    $("#search-filter-buttons").hide();
+    $("#button-filter").click(function () {
+        $(this).toggleClass("active").next().slideToggle("slow");
+        return false;
+    })
+
+    $(".search-filter-name").hide();
+    $("#btn-filter-name").click(function () {
+        $(".search-filter-name").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
+    $(".search-filter-date").hide();
+    $("#btn-filter-date").click(function () {
+        $(".search-filter-date").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
+    $(".search-filter-name-date").hide();
+    $("#btn-filter-name-date").click(function () {
+        $(".search-filter-name-date").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
+    $("#campo-buscar").hide();
+    $("#btn-search").click(function () {
+        $("#campo-buscar").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
+    $("#campo-buscar").hide();
+    $("#btn-search").click(function () {
+        $("#campo-buscar").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
+    $(".confirm-hidden").hide();
+    $("#saveHidden").hide();
+    $("#voltarHidden").hide();
+    $("#confHidden").click(function () {
+        $(".confirm-hidden").toggleClass("active").slideToggle("slow");
+        $("#deletarHidden").hide();
+        $("#saveHidden").show();
+        $("#esperaHidden").hide();
+        $("#voltarHidden").show();
+        $("#confHidden").hide();
+        return false;
+    })
+
+    $("#voltarHidden").click(function () {
+        $(".confirm-hidden").toggleClass("deactive").slideToggle("slow");
+        $("#deletarHidden").show();
+        $("#saveHidden").hide();
+        $("#esperaHidden").show();
+        $("#voltarHidden").hide();
+        $("#confHidden").show();
+        return false;
+    })
+})

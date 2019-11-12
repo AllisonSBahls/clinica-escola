@@ -24,29 +24,29 @@
     //   })
 
     //Ao clicar em buscar
-    $(document).ready(function () {
-        $('#search-name-patient').click(() => {
-            $('form').submit(function () {
-                var dados = $(this).serialize();
-                $.ajax({
-                    url: '/paciente/search',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: dados,
-                    success: function (data) {
-                        $('#table-patient').empty();
-                        for (var i = 0; i < data.length; i++) {
-                            $('#table-patient').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userPatient.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="paciente/delete/' + data[i].userPatient.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="paciente/profile/' + data[i].id + '">Alterar </a> </td></tr>');
-                        }
-                    }
-                })
-                return false;
+    // $(document).ready(function () {
+    //     $('#search-name-patient').click(() => {
+    //         $('form').submit(function () {
+    //             var dados = $(this).serialize();
+    //             $.ajax({
+    //                 url: '/paciente/search',
+    //                 type: 'POST',
+    //                 dataType: 'json',
+    //                 data: dados,
+    //                 success: function (data) {
+    //                     $('#table-patient').empty();
+    //                     for (var i = 0; i < data.length; i++) {
+    //                         $('#table-patient').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userPatient.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="paciente/delete/' + data[i].userPatient.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="paciente/profile/' + data[i].id + '">Alterar </a> </td></tr>');
+    //                     }
+    //                 }
+    //             })
+    //             return false;
 
-            })
-            $('form').trigger('submit');
+    //         })
+    //         $('form').trigger('submit');
 
-        });
-    })
+    //     });
+    // })
 
     $(document).ready(function () {
         $('#search-name-master').click(() => {

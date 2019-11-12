@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    <script src="../../js/jquery.min.js"></script>
+
 <% include ../layout %>
 
 <body>
@@ -21,20 +23,94 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Pacientes</h3>
+                                <h3 class="mb-0">Todas Consultas</h3>
                             </div>
                             <a href="/paciente/register"  class="btn btn-outline-success">Consultas</a>
-                            <a onclick="showFilter();" class="btn btn-outline-primary">Filtrar</a>
+                            <a id="button-filter" class="btn btn-outline-primary">Filtrar</a>
+                            <div class="col-lg-10" id="search-filter-buttons">
+                                <div class="form-search-name">
+                                    <a id="btn-filter-name" class="btn btn-primary">Filtrar por Nome</a>
+                                    <a id="btn-filter-date" class="btn btn-primary">Filtrar por Data</a>
+                                    <a id="btn-filter-name-date" class="btn btn-primary">Filtrar por Nome e Data</a>
+                                </div>
+                            </div>
+    
                         </div>
                     </div>
-                    <div class="col-lg-10" id="search-filter-field">
-                      <form class="form-search-name">
-                          <input type="text" name="nameMaster" class="form-control form-control-alternative"
-                              placeholder="Digite o nome">
-                          <button class="btn btn-primary" id="search-name-master">Buscar</button>
+                        <div class="search-filter-name" id="search-filter-name">
+                              <div class="row">
+                                  <form class="col-lg-8" id="search-form-name">
+                                      <label class="form-control-label" for="input-username">Nome do Paciente</label>
+                                        <div id="search-filter">
+                                            <input type="text" name="namePatient" class="form-control form-control-alternative"
+                                                placeholder="Digite o nome">
+                                        </div>
+                                    <button class="btn btn-primary" id="btn-consult-name">Buscar</button>
+
+                                  </form>
+                            </div>
+                        </div>
+
+                        <div class="search-filter-date" id="search-filter-date">
+                          <form class="search-form-date">
+                            <div id="search" class="row">
+                              <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label class="form-control-label" for="input-username">Data Inicial</label>
+                                      <input type="date" id="date-first" name="dateFirst"
+                                          class="form-control form-control-alternative"
+                                          require placeholder="Data inicial">
+                                  </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Data Final</label>
+                                    <input type="date" id="date-end" name="dateEnd"
+                                        class="form-control form-control-alternative"
+                                        require placeholder="Data inicial">
+                                </div>
+                            </div>
+                          </div>
+                          <button class="btn btn-primary" id="btn-consult-date">Buscar</button>
+                        </form>
+                      </div>
+                           
+
+                      <div class="search-filter-name-date" id="search-filter-name-date">
+                        <form class="search-consult-name-date">
+                          <div  id="search" class="row">
+                              <div class="col-lg-5">
+                                  <div class="form-group">
+                                      <label class="form-control-label" for="input-username">Nome</label>
+                                      <input type="text" id="name-patient" name="namePatient"
+                                          class="form-control form-control-alternative"
+                                          require placeholder="Nome Completo">
+                                  </div>
+                              </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Data Inicial</label>
+                                    <input type="date" id="date-first" name="dateFirst"
+                                        class="form-control form-control-alternative"
+                                        require placeholder="Data inicial">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                              <div class="form-group">
+                                  <label class="form-control-label" for="input-username">Data Final</label>
+                                  <input type="date" id="date-end" name="dateEnd"
+                                      class="form-control form-control-alternative"
+                                      require placeholder="Data inicial">
+                              </div>
+                          </div>
+                          
+                        </div>
+                        <button class="btn btn-primary" id="btn-consult-name-date">Buscar</button>
                       </form>
-                  </div>
-                    
+                    </div>
+
+                    <div class="table-responsive">
+
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
@@ -47,7 +123,7 @@
               
                                 </tr>
                               </thead>
-                              <tbody id="table-complete"> 
+                              <tbody id="table-complete-all"> 
                                 <% if (consultation.length > 0){ %>
                                   <% for (var i = 0; i < consultation.length; i++) {%>
                                     <tr>

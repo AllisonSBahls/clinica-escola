@@ -257,6 +257,51 @@ class ConsultationController {
         }
     }
 
+    async searchConsultPatient(req, res){
+        var campo = '%' + req.body.namePatient + '%';
+        console.log(campo)
+        Consultation.searchConsultNamePatient(campo).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            req.flash("error_msg", "Não Encontrado")
+        });
+
+    }
+    async searchConsultDate(req, res){
+        const {dateFirst, dateEnd} = req.body;
+        var startDay = moment.utc(dateFirst);
+        startDay.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        var endDay = moment.utc(dateEnd);
+        endDay.set({ hour: 23, minute: 59, second: 59, millisecond: 59 })
+        const datetimeFirst = dateFormat(startDay);
+        const datetimeEnd = dateFormat(endDay);
+
+        await Consultation.searchConsultDate(datetimeFirst, datetimeEnd).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            req.flash("error_msg", "Não Encontrado")
+        });
+
+    }
+    async searchConsultNameDate(req, res){
+        const {dateFirst, dateEnd} = req.body;
+        var startDay = moment.utc(dateFirst);
+        startDay.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        var endDay = moment.utc(dateEnd);
+        endDay.set({ hour: 23, minute: 59, second: 59, millisecond: 59 })
+        const datetimeFirst = dateFormat(startDay);
+        const datetimeEnd = dateFormat(endDay);
+
+        var campo = '%' + req.body.namePatient + '%';
+        Consultation.searchConsultNameDate(campo, datetimeFirst, datetimeEnd).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            req.flash("error_msg", "Não Encontrado")
+        });
+
+}
+
+
     
 }
 

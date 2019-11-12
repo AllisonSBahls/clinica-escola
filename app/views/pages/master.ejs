@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+
 <% include ../layout %>
 
 <body>
@@ -22,16 +21,18 @@
                                 <h3 class="mb-0">Supervisores</h3>
                             </div>
                             <a href="/supervisor/register"  class="btn btn-outline-success">Cadastrar</a>
-                            <a onclick="showFilter();" class="btn btn-outline-primary">Filtrar</a>
+                            <a  id="btn-search" class="btn btn-outline-primary">Filtrar</a>
                         </div>
                     </div>
-                    <div class="col-lg-10" id="search-filter-field">
+                    <div id="campo-buscar">
+                            <div class="col-lg-10" >
                             <form class="form-search-name">
                                 <input type="text" name="nameMaster" class="form-control form-control-alternative"
                                     placeholder="Digite o nome">
                                 <button class="btn btn-primary" id="search-name-master">Buscar</button>
                             </form>
-                    </div>
+                            </div>
+                        </div>
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">

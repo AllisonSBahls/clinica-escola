@@ -16,7 +16,6 @@
     margin-right: -15px;
     margin-left: -15px; 
     flex-wrap: wrap;
-    display: none;
 }
 
 .buttons-schedules{
@@ -38,11 +37,26 @@
     display: flex; 
     margin-bottom: 1.5em;
 }
+
+#search-filter{
+    display: flex; 
+    margin-bottom: 1.5em;
+}
+
+#search-form-name, #search-form-date, #btn-consult-date, #btn-consult-name-date{
+    margin-left: 2.0em;
+}
+
+#search{
+    margin-left: 1.3em;
+
+}
+#btn-consult-name, #btn-consult-date, #btn-consult-name-date{
+    margin-bottom: 2em;
+}
+
 .form-search-name > button{
     margin-left: 2em;
-}
-#search-filter-field{
-    display: none;  
 }
 
 .dropdown-container{
