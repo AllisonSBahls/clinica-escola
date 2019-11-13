@@ -82,6 +82,6 @@
     padding-right: 0rem !important;
 }
 
-#completeConsultDays, #allConsultNext{
+#completeConsultDays, #allConsultNext, #button-filter, #btn-filter-name, #btn-filter-date, #btn-filter-name-date{
     color: #fff
 }

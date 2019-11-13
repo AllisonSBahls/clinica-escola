@@ -331,12 +331,6 @@ $(document).ready(function () {
         return false;
     })
 
-    $("#campo-buscar").hide();
-    $("#btn-search").click(function () {
-        $("#campo-buscar").toggleClass("active").slideToggle("slow");
-        return false;
-    })
-
     $(".confirm-hidden").hide();
     $("#saveHidden").hide();
     $("#voltarHidden").hide();
