@@ -153,6 +153,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="confirm-hidden">
                         <div id="traineeHidden" class="row-hidden">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -173,12 +174,18 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Tipo da Consulta</label>
-                                    <input type="text" id="typeProcedure" name="typeProcedure"
-                                        class="form-control form-control-alternative">
+                                    <select class="form-control" name="typeProcedure" id="typeProcedure" data-placeholder="Selecione">
+                                            <% if (procedure.length > 0) { %>
+                                                <% for (var i = 0; i < procedure.length; i++) { %>
+                                                    <option value='<%= procedure[i].id %>'><%= procedure[i].typeProcedure %></option>
+                                                <% } %>
+                                            <% } %>
+                                    </select>
 
                                 </div>
                             </div>
                         </div>
+                    </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div>
@@ -193,21 +200,21 @@
                     <hr class="my-4" />      
                     <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2){  %>            
                         <div class="buttons-schedules">
-                            <a id="confHidden"  onclick="showConfirmar()" class="btn btn-success"><i class="ni ni-lg ni-check-bold text-white"></i></a>
+                            <a id="confHidden" class="btn btn-success"><i class="ni ni-lg ni-check-bold text-white"></i></a>
 
-                            <a id="saveHidden" style="display: none;" onclick="confirmar()" class="btn btn-success"><i class="ni ni-lg ni-calendar-grid-58 text-white"></i></a>
+                            <a id="saveHidden"onclick="confirmar()" class="btn btn-success"><i class="ni ni-lg ni-calendar-grid-58 text-white"></i></a>
 
                             <a id="esperaHidden" onclick="wait()" class="btn btn-primary"><i class="ni ni-lg ni-bullet-list-67 text-white"></i></a>
                             
                             <a id="deletarHidden" onclick="deletar()" class="btn btn-danger"><i class="ni ni-lg ni-basket text-white"></i></a>
 
-                            <a id="voltarHidden" style="display: none;" onclick="voltar()" class="btn btn-primary"><i class="ni ni-curved-next text-white"></i></a>
+                            <a id="voltarHidden" class="btn btn-primary"><i class="ni ni-curved-next text-white"></i></a>
 
                         </div>
-                    <%} else if (user.NivelPermissaoId == 3 || user.NivelPermissaoId == 4){%>
-                        <input type="button" onclick="" class="btn btn-primary" value="Solicitar alterar horario"></input>
+                    <%//} else if (user.NivelPermissaoId == 3 || user.NivelPermissaoId == 4){%>
+                        <!-- <input type="button" onclick="" class="btn btn-primary" value="Solicitar alterar horario"></input>
 
-                        <input type="button" onclick="" class="btn btn-primary" value="Solicitar cancelamento"></input>
+                        <input type="button" onclick="" class="btn btn-primary" value="Solicitar cancelamento"></input> -->
 
                         <%}%>
                 </form>

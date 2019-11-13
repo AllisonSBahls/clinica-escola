@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('dbclinica', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
-    logging: false,
+    logging:false
 });
 
 module.exports = {

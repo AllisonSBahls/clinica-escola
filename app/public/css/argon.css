@@ -17552,6 +17552,7 @@ a.btn-icon-only
 .main-content
 {
     position: relative;
+    overflow:hidden;
 }
 .main-content .navbar-top
 {

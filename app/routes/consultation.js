@@ -22,6 +22,19 @@ router.post('/confirmar', admin, (req, res) =>{
     controller.confirmSchedules(req, res);
 })
 
+router.post('/name', admin, (req, res) =>{
+    controller.searchConsultPatient(req, res);
+})
+
+router.post('/date', admin, (req, res) =>{
+    controller.searchConsultDate(req, res);
+})
+
+router.post('/both', admin, (req, res) =>{
+    controller.searchConsultNameDate(req, res);
+})
+
+
 router.get('/', users, (req, res) =>{
     controller.listConsults(req, res);
 })

@@ -399,6 +399,69 @@ Consultation.searchConsultDayPatient = async function (startDay, endDay, patient
     });
 }
 
+Consultation.searchConsultNamePatient = async function (name){
+    return await Consultation.findAll({
+        order:['dateStart'],
+      
+        include: [{
+            model: Patient, as: 'consultPatient',
+            where: {
+                name: {
+                    [Op.like]: name,
+                },
+            },
+        },{
+            model: Master, as: 'consultMaster',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+} 
+
+Consultation.searchConsultDate = async function (dateFirst, dateEnd){    
+    return await Consultation.findAll({
+        order:['dateStart'],
+        where: {
+            dateStart: {
+                [Op.between]: [dateFirst, dateEnd]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+} 
+
+Consultation.searchConsultNameDate = async function (name, dateFirst, dateEnd){    
+    return await Consultation.findAll({
+        order:['dateStart'],
+        where: {
+            dateStart: {
+                [Op.between]: [dateFirst, dateEnd]},
+            },
+        include: [{
+            model: Patient, as: 'consultPatient',
+            where: {
+                name: {
+                    [Op.like]: name,
+                },
+            },
+        },{
+            model: Master, as: 'consultMaster',
+        }, {
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    });
+} 
 
 Consultation.searchConsultSendEmail = async function(StartDay, endDay){
     return await Consultation.findAll({

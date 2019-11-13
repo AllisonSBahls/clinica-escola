@@ -24,17 +24,20 @@
                                 <h3 class="mb-0">Pacientes</h3>
                             </div>
                             <a href="/paciente/register" class="btn btn-outline-success">Cadastrar</a>
-                            <a class="btn btn-outline-primary" onclick="showFilter();">Filtrar</a>
+                            <a class="btn btn-outline-primary" id="btn-search" >Filtrar</a>
                         </div>
                     </div>
 
-                    <div class="col-lg-10" id="search-filter-field">
+                    <div id="campo-buscar">
+                        <div class="col-lg-10" >
                         <form class="form-search-name">
                             <input type="text" name="namePatient" class="form-control form-control-alternative"
                                 placeholder="Digite o nome">
                             <button class="btn btn-primary" id="search-name-patient">Buscar</button>
                         </form>
                     </div>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table table-hover align-items-center table-md">
                             <thead class="thead-light">
