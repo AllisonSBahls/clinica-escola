@@ -34,14 +34,14 @@
                             </div>
                         </div>
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table table-hover align-items-center table-md">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Nome Completo</th>
                                     <th scope="col">Telefone</th>
-                                    <th scope="col">E-mail</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
+                                    <th class="col-5">E-mail</th>
+                                    <th ></th>
+                                    <th ></th>
 
                                     <!-- <th scope="col">Bounce rate</th> -->
                                 </tr>
@@ -60,14 +60,15 @@
                                         <%= masters[i].phone %>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger delete"
-                                            onclick="return confirm('Você confirma a exclusão?')"
-                                            href="supervisor/delete/<%= masters[i].userMaster.id %>">Excluir</a>
-                                    </td>
+                                            <a class="btn btn-primary primary btn-sm"
+                                                href="supervisor/profile/<%= masters[i].id %>"><img src="img/icons/common/eye.svg"></a>
+                                        </td>
                                     <td>
-                                        <a class="btn btn-primary primary"
-                                            href="supervisor/profile/<%= masters[i].id %>">Alterar</a>
+                                        <a class="btn btn-danger delete btn-sm"
+                                            onclick="return confirm('Você confirma a exclusão?')"
+                                            href="supervisor/delete/<%= masters[i].userMaster.id %>"><i class="ni ni-lg ni-basket text-white"></a>
                                     </td>
+                               
 
 
                                     <% } %>

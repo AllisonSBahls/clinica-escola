@@ -24,33 +24,33 @@
     //   })
 
     //Ao clicar em buscar
-    // $(document).ready(function () {
-    //     $('#search-name-patient').click(() => {
-    //         $('form').submit(function () {
-    //             var dados = $(this).serialize();
-    //             $.ajax({
-    //                 url: '/paciente/search',
-    //                 type: 'POST',
-    //                 dataType: 'json',
-    //                 data: dados,
-    //                 success: function (data) {
-    //                     $('#table-patient').empty();
-    //                     for (var i = 0; i < data.length; i++) {
-    //                         $('#table-patient').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userPatient.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="paciente/delete/' + data[i].userPatient.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="paciente/profile/' + data[i].id + '">Alterar </a> </td></tr>');
-    //                     }
-    //                 }
-    //             })
-    //             return false;
+    $(document).ready(function () {
+        $('#search-name-patient').click(() => {
+            $('.form-search-name').submit(function () {
+                var dados = $(this).serialize();
+                $.ajax({
+                    url: '/paciente/search',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: dados,
+                    success: function (data) {
+                        $('#table-patient').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $('#table-patient').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userPatient.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="paciente/delete/' + data[i].userPatient.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="paciente/profile/' + data[i].id + '">Alterar </a> </td></tr>');
+                        }
+                    }
+                })
+                return false;
 
-    //         })
-    //         $('form').trigger('submit');
+            })
+            $('.form-search-name').trigger('submit');
 
-    //     });
-    // })
+        });
+    })
 
     $(document).ready(function () {
         $('#search-name-master').click(() => {
-            $('form').submit(function () {
+            $('.form-search-name').submit(function () {
                 var dados = $(this).serialize();
                 $.ajax({
                     url: '/supervisor/search',
@@ -67,14 +67,14 @@
                 return false;
 
             })
-            $('form').trigger('submit');
+            $('.form-search-name').trigger('submit');
 
         });
     })
 
     $(document).ready(function () {
         $('#search-name-trainee').click(() => {
-            $('form').submit(function () {
+            $('.form-search-name').submit(function () {
                 var dados = $(this).serialize();
                 $.ajax({
                     url: '/estagiario/search',
@@ -84,21 +84,21 @@
                     success: function (data) {
                         $('#table-trainee').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-trainee').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userTrainee.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="estagiario/delete/' + data[i].userTrainee.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="estagiario/profile/' + data[i].id + '">Alterar </a> </td></tr>');
+                            $('#table-trainee').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userTrainee.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="estagiario/delete/' + data[i].userTrainee.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="estagiario/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> </td></tr>');
                         }
                     }
                 })
                 return false;
 
             })
-            $('form').trigger('submit');
+            $('.form-search-name').trigger('submit');
 
         });
     })
 
     $(document).ready(function () {
         $('#search-name-secretary').click(() => {
-            $('form').submit(function () {
+            $('.form-search-name').submit(function () {
                 var dados = $(this).serialize();
                 $.ajax({
                     url: '/recepcionista/search',
@@ -108,14 +108,14 @@
                     success: function (data) {
                         $('#table-secretary').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-secretary').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userSecretary.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="recepcionista/delete/' + data[i].userSecretary.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="recepcionista/profile/' + data[i].id + '">Alterar </a> </td></tr>');
+                            $('#table-secretary').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userSecretary.email + '</td><td>' + data[i].phone + '</td><td>' + ' <a class="btn btn-primary primary btn-sm" href="recepcionista/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> '+ '<a class="btn btn-danger delete " onclick="return confirm(`Você confirma a exclusão?`)"href="recepcionista/delete/' + data[i].userSecretary.id + '"><i class="ni ni-lg ni-basket text-white"></a></td><td>' + '</td></tr>');
                         }
                     }
                 })
                 return false;
 
             })
-            $('form').trigger('submit');
+            $('.form-search-name').trigger('submit');
 
         });
     })
