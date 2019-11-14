@@ -12,26 +12,27 @@ module.exports = function (passport) {
             clientID: keys.google.clientID,
             clientSecret: keys.google.clientSecret,
         }, async (accessToken, refreshToken, profile, done) => {
-            const currentUser = await User.findUser(profile.id)
-                if (!currentUser) {
-                    User.insertUserAuth(profile.id, profile.emails[0].value,).then((user) => {
-                        done(null, user);
-                        Patient.insertPatientAuth(
-                            profile.displayName,
-                            user.id,
-                        ).then(() => {
-                        }).catch((err) => {
-                            console.log(err)
-                        });
+            const currentUser = await User.findUser(profile.id);
+            if (!currentUser) {
+                await User.insertUserAuth(profile.id, profile.emails[0].value).then(async (user) => {
+                    done(null, user);
+                    await Patient.insertPatientAuth(
+                        profile.displayName,
+                        user.id,
+                    ).then((newUser) => {
+                        return done(null, user);
                     }).catch((err) => {
                         console.log(err)
                     });
-                 } else {
-                    return done(null, currentUser);
-                }
+                }).catch((err) => {
+                    console.log(err)
+                });
+            } else {
+                return done(null, currentUser);
+            }
         })
     )
-    
+
     passport.use('local-signin',
         new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true }, function (req, email, password, done) {
 

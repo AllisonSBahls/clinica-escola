@@ -6,7 +6,7 @@ const TraineeController = require('../controller/TraineeController');
 const controller = new TraineeController();
 
 router.post('/save', admin, async (req, res) =>{
-    controller.registerTrainee(req, res)
+    await controller.registerTrainee(req, res)
 });
 
 router.get('/', admin, (req, res) =>{

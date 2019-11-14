@@ -65,7 +65,7 @@
   }
 
   
-#dropdown-btn{ 
+#dropdown-btn, #btn-dropdown-settings{ 
   background: none;
   border: none;
   text-decoration: none;
@@ -73,6 +73,25 @@
   cursor: pointer;
   outline: none;
 }
+
+.dot-consult, .dot-schedule {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot-consult {
+ 
+    background-color: #2B56E2;
+
+  }
+
+  .dot-schedule {
+ 
+    background-color: #1FA576;
+
+  }
 
 #form-select{
     display: none;

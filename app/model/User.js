@@ -42,8 +42,8 @@ User.searchPasswordUser = async function(req){
     })
 }
 
-User.insertUserAuth = function(googleID, email){
-    return User.create({
+User.insertUserAuth = async function(googleID, email){
+    return await User.create({
         email:email,
         googleID: googleID,
         NivelPermissaoId: 4,

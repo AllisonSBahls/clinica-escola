@@ -301,6 +301,12 @@ $(document).ready(function () {
         return false;
     })
 
+    $("#dropdown-container-settings").hide();
+    $("#btn-dropdown-settings").click(function () {
+        $("#dropdown-container-settings").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
     $("#search-filter-buttons").hide();
     $("#button-filter").click(function () {
         $(this).toggleClass("active").next().slideToggle("slow");

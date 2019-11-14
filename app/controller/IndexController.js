@@ -49,8 +49,8 @@ class IndexController {
             })
 
         } else if (req.user.NivelPermissaoId == 4) {
-            const patientProfile = await Patient.searchProfilePatient(req);
-
+            const id = req.user.id
+            const patientProfile = await Patient.searchProfilePatientAuth(id);
             Consultation.searchConsultsPatients(patientProfile.id).then((consultation) => {
                 res.render('index/dashboard', {procedure:procedure, patientProfile: patientProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
@@ -91,7 +91,9 @@ class IndexController {
             })
 
         } else if (req.user.NivelPermissaoId == 4) {
-            const patientProfile = await Patient.searchProfilePatient(req);
+            const id = req.user.id
+
+            const patientProfile = await Patient.searchProfilePatientAuth(id);
             await Consultation.searchConsultNextPatient(patientProfile.id).then((consult) => {
                 res.send(consult)
             }).catch((err) => {
@@ -123,6 +125,7 @@ class IndexController {
             })
 
         } else if (req.user.NivelPermissaoId == 4) {
+            
             const patientProfile = await Patient.searchProfilePatient(req);
             Consultation.searchConsultDayPatient(startDay, endDay, patientProfile.id).then((consult) => {
                 res.send(consult)

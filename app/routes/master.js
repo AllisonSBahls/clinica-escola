@@ -8,8 +8,8 @@ router.post('/save', admin, async (req, res) =>{
     await controller.registerMaster(req, res)
 })
 
-router.get('/', admin, (req, res) =>{
-    controller.masters(req, res)
+router.get('/', admin, async (req, res) =>{
+    await controller.masters(req, res)
 });
 
 router.get('/profile/:id', admin, (req, res) =>{

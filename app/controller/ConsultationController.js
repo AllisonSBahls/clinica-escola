@@ -197,7 +197,9 @@ class ConsultationController {
                 res.redirect('/dashboard');
             } else {
                 const color = '#1FA576';
-                const patientProfile = await Patient.searchProfilePatient(req);
+                const id = req.user.id
+                console.log(id)
+                const patientProfile = await Patient.searchProfilePatientAuth(id);
                 Consultation.insertSchedules(datetime, patientProfile.id, color).then(function () {
                     req.flash("success_msg", "Agendamento marcado com sucesso");
                     res.redirect('/dashboard');

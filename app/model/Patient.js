@@ -52,6 +52,13 @@ Patient.searchAllPatients = async function (){
     return await this.findAll();
 }       
 
+Patient.searchProfilePatientAuth = async function (id){
+    return await this.findOne({
+        where: { userPatientId: id }
+   })
+}
+
+
 Patient.searchProfilePatient = async function (req){
     return await this.findOne({
         where: { userPatientId: req.user.id }
