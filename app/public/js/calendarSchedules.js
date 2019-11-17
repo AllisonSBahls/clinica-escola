@@ -261,6 +261,14 @@ function cancelar() {
 function wait() {
     document.getElementById("waitPatient").submit();
 }
+function registerPatient(){
+    document.getElementById("form-register-patient").submit();
+}
+
+function updatePatient(){
+    document.getElementById("form-update-patient").submit();
+}
+
 
 function showWait() {
     document.getElementById("patientSelect").style.display = 'none';
@@ -334,6 +342,17 @@ $(document).ready(function () {
     $("#campo-buscar").hide();
     $("#btn-search").click(function () {
         $("#campo-buscar").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
+    $("#update-form").hide();
+    $("#enable-update").click(function () {
+        $("#update-form").show();
+        $("#enable-update").hide();
+        $("#nome").prop( "disabled", false );
+        $("#email").prop( "disabled", false );
+        $("#telefone").prop( "disabled", false );
+
         return false;
     })
 

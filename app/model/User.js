@@ -30,7 +30,7 @@ User.findUser = function(id){
         where: { googleID: id }
     })
 }
-User.searchEmailUser = async function(idUser){
+User.searchEmailUserUpdate = async function(idUser){
     return await this.findOne({
         where: { id: idUser}
     })

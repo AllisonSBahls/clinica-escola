@@ -101,6 +101,7 @@
     padding-right: 0rem !important;
 }
 
-#completeConsultDays, #allConsultNext, #button-filter, #btn-filter-name, #btn-filter-date, #btn-filter-name-date{
+#completeConsultDays,#search-name-master,
+#search-name-secretary, #allConsultNext, #button-filter, #btn-filter-name, #btn-filter-date, #btn-filter-name-date, #btn-search{
     color: #fff
 }

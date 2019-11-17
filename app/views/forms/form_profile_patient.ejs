@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="/paciente/update/<%= patient.id %>" method="POST">
+                            <form action="/paciente/update/<%= patient.id %>" id="form-update-patient" method="POST">
                                     <h6 class="heading-small text-muted mb-4">Informações da Recepcionista</h6>
                                     <div class="pl-lg-4">
                                         <div class="row">
@@ -261,7 +261,7 @@
                                     id="id" name="idUser">                            
                                     <input type="hidden" value="<%= patient.id  %>"
                                         id="id" name="id">
-                                    <input type="submit" class="btn btn-success" value="Alterar Perfil"></input>
+                                    <input onclick="updatePatient();"class="btn btn-success" value="Alterar Perfil"></input>
                                 </form>
                         </div>
                     </div>

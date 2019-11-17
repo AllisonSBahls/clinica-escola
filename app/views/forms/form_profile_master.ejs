@@ -20,7 +20,6 @@
                 <div class="col-xl-10 order-xl-w">
                     <div class="card bg-secondary shadow">
                             <% include ../partials/message %>
-
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
@@ -31,38 +30,39 @@
                         </div>
                         <div class="card-body">
                             <form action="/supervisor/update/<%= master.id %>" method="POST">
-                                    <h6 class="heading-small text-muted mb-4">Informações da Recepcionista</h6>
+                                    <h6 class="heading-small text-muted mb-4">Informações do Supervisor</h6>
                                     <div class="pl-lg-4">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-username">Nome
                                                         Completo</label>
-                                                    <input type="text" id="nomeRecepcionista" name="name"
+                                                    <input type="text" id="nome" name="name"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Nome Completo"
+                                                        placeholder="Nome Completo" disabled
                                                         value="<%= master.name %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label">Contato</label>
-                                                    <input type="text" id="telefoneRecepcionista"
+                                                    <input type="text" id="telefone"
                                                         name="phone"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Telefone"
+                                                        placeholder="Telefone" disabled
                                                         value="<%= master.phone %>">
                                                 </div>
 
                                             </div>
                                         </div>
+                                        <hr class="my-4" />
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-email">Endereço de
                                                         E-mail</label>
                                                     <input type="email" id="email"
-                                                        name="email"
+                                                        name="email" disabled
                                                         class="form-control form-control-alternative"
                                                         placeholder="E-mail"
                                                         value="<%= master.userMaster.email %>">
@@ -72,20 +72,9 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label"
                                                         for="input-email">Permissão</label>
-                                                    <input type="text" id="fkPermissoes" name="fkPermissoes"
+                                                    <input type="text" id="fkPermissoes" name="fkPermissoes" disabled
                                                         class="form-control form-control-alternative"
                                                         placeholder="E-mail" value="Supervisor">
-                        
-                                                    <!-- <select class="form-control" name="permissionID" id="permissionID"
-														data-placeholder="Selecione">
-														<% //for (var i = 0; i < permissoes.length; i++) {  %>
-														<option value="<%= //permissoes[i].id %>"
-															selected="select"> <%=//permissoes[i].permissao  %>
-														</option>
-														<% //} %>
-													</select>
-
-                                                    <% //} %> -->
                                                 </div>
                                             </div>
 
@@ -98,7 +87,7 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-last-name">Data de
                                                         Registro</label>
-                                                    <input type="text" id="dataRegistro" name="dataRegistro"
+                                                    <input type="text" id="dataRegistro" name="dataRegistro" disabled
                                                         class="form-control form-control-alternative"
                                                         placeholder="Registro" value="<%= moment(master.createdAt).format('DD/MM/YYYY')  %>">
                                                 </div>
@@ -106,13 +95,13 @@
                                         </div>
                                     </div>
                                     <hr class="my-4" />
-
-                                    <hr class="my-4" />    
                                     <input type="hidden" value="<%= master.userMaster.id  %>"
                                     id="id" name="idUser">                            
                                     <input type="hidden" value="<%= master.id  %>"
                                         id="id" name="id">
-                                    <input type="submit" class="btn btn-info" value="Salvar Registro"></input>
+                                    <input id="enable-update" class="btn btn-info" value="Editar"></input>
+                                    <input type="submit" id = "update-form" class="btn btn-success" value="Salvar Alterações"></input>
+
                                 </form>
                         </div>
                     </div>

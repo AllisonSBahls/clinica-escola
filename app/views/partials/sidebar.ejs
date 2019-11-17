@@ -126,7 +126,7 @@
         <% } else if (user.NivelPermissaoId == 3) {  %>
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">
-              <i class="ni ni-tv-2 text-primary"></i> Painel
+              <i class="ni ni-tv-2 text-success"></i> Painel
             </a>
           </li>
         
@@ -157,12 +157,12 @@
             </div>
           <li class="nav-item">
             <a class="nav-link" href="/relatorios">
-              <i class="ni ni-key-25 text-info"></i> Relatóro Diário
+              <i class="ni ni-collection text-info"></i> Relatóro Diário
             </a>
           </li>
           <li class="nav-item">
               <a class="nav-link" href="/frequencias">
-                <i class="ni ni-key-25 text-info"></i> Frequencia
+                <i class="ni ni-badge text-info"></i> Frequencia
               </a>
             </li>
           <li class="nav-item">
@@ -173,33 +173,31 @@
           <% } else if (user.NivelPermissaoId == 4) {  %>
             <li class="nav-item">
               <a class="nav-link" href="/dashboard">
-                <i class="ni ni-tv-2 text-primary"></i> Inicio
+                <i class="ni ni-tv-2 text-success"></i> Inicio
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/calendar">
-                <i class="ni ni-single-02 text-yellow"></i> Minhas Consultas
+                <i class="ni ni-calendar-grid-58 text-blue"></i> Calendário
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/calendar">
-                <i class="ni ni-planet text-blue"></i> Meus Agendamentos
-              </a>
-            </li>
+           
             <li class="nav-item">
               <a class="nav-link" href="/user/perfil">
-                <i class="ni ni-key-25 text-info"></i> Meu Perfil
+                <i class="ni ni-circle-08 text-info"></i> Meu Perfil
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <i class="ni ni-circle-08 text-pink"></i> Informações da Clínica
+                <i class="ni ni-istanbul text-pink"></i> Informações da Clínica
               </a>
             </li>
             <% } %>
               
       </ul>
       <!-- Divider -->
+      <% if (user.NivelPermissaoId == 1) {  %>
+
       <hr class="my-3">
       <!-- Heading -->
       <h6 class="navbar-heading text-muted">Sistema</h6>
@@ -212,6 +210,7 @@
         </li>
       
       -->
+
       <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
           <button id = "btn-dropdown-settings"  class="nav-link" href="">
@@ -237,6 +236,8 @@
           </li>
         </div>
       </ul>
+      <% }  %>
+
     </div>
   </div>
  

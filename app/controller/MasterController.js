@@ -68,10 +68,8 @@ class MasterController {
         })
     }
 
-    profileMaster(req, res) {
-        const masterProfile = Master.findOne({
-            where: {userMasterId: req.user.id} });
-
+    async profileMaster(req, res) {
+        const masterProfile = await Master.searchProfileMaster(req);
         Master.searchOneMaster(req.params.id).then((master) => {
             res.render("forms/form_profile_master", { master: master, masterProfile: masterProfile });
         }).catch((erro) => {
@@ -82,8 +80,7 @@ class MasterController {
     async updateMaster(req, res) {
         let {email, name, phone, idUser} = req.body;
         
-        const emailUser = await User.searchEmailUser(idUser)
-
+        const emailUser = await User.searchEmailUserUpdate(idUser)
         //Verifica se o usuário manteve o e-mail;
         if (emailUser.email == email) {
             Master.updateProfileMaster(name, phone, req.params.id).then(function () {

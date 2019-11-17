@@ -60,7 +60,7 @@
                     success: function (data) {
                         $('#table-master').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-master').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userMaster.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="supervisor/delete/' + data[i].userMaster.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="supervisor/profile/' + data[i].id + '">Alterar </a> </td></tr>');
+                            $('#table-master').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userMaster.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-primary primary btn-sm" href="supervisor/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a>  '+ '</td><td>' + '<a class="btn btn-danger delete btn-sm" onclick="return confirm(`Você confirma a exclusão?`)"href="supervisor/delete/' + data[i].userMaster.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
                         }
                     }
                 })
@@ -84,7 +84,7 @@
                     success: function (data) {
                         $('#table-trainee').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-trainee').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userTrainee.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="estagiario/delete/' + data[i].userTrainee.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="estagiario/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> </td></tr>');
+                            $('#table-trainee').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userTrainee.email + '</td><td>' + data[i].phone + '</td><td>' + ' <a class="btn btn-primary btn-sm" href="estagiario/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> '+ '</td><td>' + '<a class="btn btn-danger delete btn-sm" onclick="return confirm(`Você confirma a exclusão?`)"href="estagiario/delete/' + data[i].userTrainee.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
                         }
                     }
                 })
@@ -108,7 +108,7 @@
                     success: function (data) {
                         $('#table-secretary').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-secretary').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userSecretary.email + '</td><td>' + data[i].phone + '</td><td>' + ' <a class="btn btn-primary primary btn-sm" href="recepcionista/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> '+ '<a class="btn btn-danger delete " onclick="return confirm(`Você confirma a exclusão?`)"href="recepcionista/delete/' + data[i].userSecretary.id + '"><i class="ni ni-lg ni-basket text-white"></a></td><td>' + '</td></tr>');
+                            $('#table-secretary').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userSecretary.email + '</td><td>' + data[i].phone + '</td><td>' + ' <a class="btn btn-primary primary btn-sm" href="recepcionista/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> '+ '</td><td>' +  '<a class="btn btn-danger delete btn-sm " onclick="return confirm(`Você confirma a exclusão?`)"href="recepcionista/delete/' + data[i].userSecretary.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
                         }
                     }
                 })
