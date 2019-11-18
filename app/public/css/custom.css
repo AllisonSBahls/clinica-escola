@@ -43,7 +43,7 @@
     margin-bottom: 1.5em;
 }
 
-#search-form-name, #search-form-date, #btn-consult-date, #btn-consult-name-date{
+#search-form-name, #search-form-date, #search-form-reports, #btn-consult-date, #btn-consult-name-date, #btn-consult-reports{
     margin-left: 2.0em;
 }
 
@@ -51,7 +51,7 @@
     margin-left: 1.3em;
 
 }
-#btn-consult-name, #btn-consult-date, #btn-consult-name-date{
+#btn-consult-name, #btn-consult-date, #btn-consult-name-date, #btn-consult-reports{
     margin-bottom: 2em;
 }
 
@@ -102,6 +102,8 @@
 }
 
 #completeConsultDays,#search-name-master,
-#search-name-secretary, #allConsultNext, #button-filter, #btn-filter-name, #btn-filter-date, #btn-filter-name-date, #btn-search{
+#search-name-secretary, #allConsultNext, #button-filter,
+#btn-filter-name, #btn-filter-date, #btn-filter-name-date, #btn-search,
+#enable-update, #search-name-trainee, #btn-filter-reports{
     color: #fff
 }

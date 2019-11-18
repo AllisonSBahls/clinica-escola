@@ -41,6 +41,16 @@ class TraineeController {
         })
     }
 }
+
+searchNameTrainee(req, res){
+    var campo = '%' + req.body.nameTrainee + '%';
+    Trainee.searchTraineeName(campo).then((trainee)=>{
+        res.send(trainee)
+    }).catch((err) =>{
+        res.send(err);
+    })
+}
+
     async trainees(req, res) {
         const secretaryrProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
@@ -76,7 +86,7 @@ class TraineeController {
     async updateTrainee(req, res) {
         const { email, name, phone, period, course, idUser } = req.body;
         
-        const emailUser = await User.searchEmailUser(idUser)
+        const emailUser = await User.searchEmailUserUpdate(idUser)
         if (emailUser.email == email) {
                     
         Trainee.updateTrainee(name, phone, period, course, req.params.id).then(function () {

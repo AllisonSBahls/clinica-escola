@@ -87,7 +87,7 @@ class SecretaryController {
 
     async updateSecretary(req, res) {
         const { email, name, phone, idUser } = req.body;
-        const emailUser = await User.searchEmailUser(idUser)
+        const emailUser = await User.searchEmailUserUpdate(idUser)
 
         if (emailUser.email == email) {
             Secretary.updateSecretary(name, phone, req.params.id).then(function () {

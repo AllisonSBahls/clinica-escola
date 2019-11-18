@@ -84,7 +84,7 @@
                     success: function (data) {
                         $('#table-trainee').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-trainee').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userTrainee.email + '</td><td>' + data[i].phone + '</td><td>' + ' <a class="btn btn-primary btn-sm" href="estagiario/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> '+ '</td><td>' + '<a class="btn btn-danger delete btn-sm" onclick="return confirm(`Você confirma a exclusão?`)"href="estagiario/delete/' + data[i].userTrainee.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
+                            $('#table-trainee').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userTrainee.email + '</td><td>' + data[i].phone + '</td><td class="col-pad">' + ' <a class="btn btn-primary btn-sm" href="estagiario/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a> '+ '</td><td class="col-pad">' + ' <a class="btn btn-primary btn-sm" href="frequencias/' + data[i].id + '"><img src="img/icons/common/list.svg"> </a> ' + '</td><td>' + ' <a class="btn btn-primary btn-sm" href="reports/' + data[i].id + '"><i class="ni ni-lg ni-collection text-white"></i> </a>'  + '</td><td  class="col-pad">' +'<a class="btn btn-danger delete btn-sm" onclick="return confirm(`Você confirma a exclusão?`)"href="estagiario/delete/' + data[i].userTrainee.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
                         }
                     }
                 })

@@ -333,6 +333,12 @@ $(document).ready(function () {
         return false;
     })
 
+    $(".search-filter-reports").hide();
+    $("#btn-filter-reports").click(function () {
+        $(".search-filter-reports").toggleClass("active").slideToggle("slow")
+        return false;
+    })
+
     $(".search-filter-name-date").hide();
     $("#btn-filter-name-date").click(function () {
         $(".search-filter-name-date").toggleClass("active").slideToggle("slow");
@@ -352,7 +358,8 @@ $(document).ready(function () {
         $("#nome").prop( "disabled", false );
         $("#email").prop( "disabled", false );
         $("#telefone").prop( "disabled", false );
-
+        $("#curso").prop( "disabled", false );
+        $("#periodo").prop( "disabled", false );
         return false;
     })
 

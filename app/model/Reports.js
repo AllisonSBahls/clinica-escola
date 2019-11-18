@@ -55,4 +55,16 @@ Reports.searchOneReport = (id) =>{
         }]
     })
 }
+
+Reports.searchAllReportTrainee = (id) => {
+    return Reports.findOne({
+        where: { 'reportTraineeId': id },
+        include: [{
+            model: Master, as: 'reportMaster',
+        }, {
+            model: Trainee, as: 'reportTrainee',
+
+        }]
+    })
+}
 module.exports = Reports;

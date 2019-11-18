@@ -72,6 +72,18 @@ class ReportController {
 
     }
 
+    reportFindAll(req,res) {
+        Report.searchAllReportTrainee(req.params.id).then((report) => {     
+            const reportDecrypt = crypt.decryptReport(report.reports);
+            const patient  = report.namePatient;
+            let patientDecrypt = crypt.decryptReport(report.namePatient);
+            console.log(patientDecrypt)
+            res.render('forms/report_trainee', {patientDecrypt:patientDecrypt, reportDecrypt:reportDecrypt, report: report, traineeProfile: traineeProfile, masterProfile: masterProfile })
+        }).catch((err) => {
+            res.send('erros' + err);
+        })
+    }
+
     async reports(req, res) {
         if (req.user.NivelPermissaoId == 3) {
             let traineeProfile = await Trainee.findOne({

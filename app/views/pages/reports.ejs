@@ -23,11 +23,35 @@
                             <div class="col">
                                 <h3 class="mb-0">Relatórios</h3>
                             </div>
-                            <a href="/relatorios/report" class="btn btn-outline-success">Enviar Novo Relatório</a>
-                            <a href="" class="btn btn-outline-primary">Filtrar</a>
+                            <a href="/relatorios/report" class="btn btn-success"><i
+                                    class="ni ni-lg ni-send text-white"></i>Enviar Novo Relatório</a>
+                            <a id="btn-filter-reports" class="btn btn-primary"><img src="img/icons/common/filter.svg">
+                                Filtrar</a>
                         </div>
                     </div>
-
+                    <div class="search-filter-reports" id="search-filter-reports">
+                        <form class="search-form-reports">
+                            <div id="search" class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Data Inicial</label>
+                                        <input type="date" id="date-first" name="dateFirst"
+                                            class="form-control form-control-alternative" require
+                                            placeholder="Data inicial">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Data Final</label>
+                                        <input type="date" id="date-end" name="dateEnd"
+                                            class="form-control form-control-alternative" require
+                                            placeholder="Data inicial">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="btn-consult-reports">Buscar</button>
+                        </form>
+                    </div>
 
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
@@ -66,7 +90,8 @@
 
                                     <td>
                                         <a class="btn btn-primary primary"
-                                            href="relatorios/report/<%= reports[i].id %>">Visualizar</a>
+                                            href="relatorios/report/<%= reports[i].id %>"><img
+                                                src="img/icons/common/eye.svg">Visualizar</a>
                                     </td>
 
 

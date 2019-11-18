@@ -22,29 +22,29 @@
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Supervisores</h3>
+                                    <h3 class="mb-0">Estagiário</h3>
                                 </div>
 
                             </div>
                         </div>
                         <div class="card-body">
                             <form action="/estagiario/update/<%= trainee.id %>" method="POST">
-                                <h6 class="heading-small text-muted mb-4">Informações da Recepcionista</h6>
+                                <h6 class="heading-small text-muted mb-4">Informações do Estagiário</h6>
                                 <div class="pl-lg-4">
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-username">Nome
                                                     Completo</label>
-                                                <input type="text" id="nomeRecepcionista" name="name"
-                                                    class="form-control form-control-alternative"
+                                                <input type="text" id="nome" name="name"
+                                                    class="form-control form-control-alternative" disabled  
                                                     placeholder="Nome Completo" value="<%= trainee.name %>">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Contato</label>
-                                                <input type="text" id="telefoneRecepcionista" name="phone"
+                                                <input type="text" id="telefone" name="phone" disabled
                                                     class="form-control form-control-alternative" placeholder="Telefone"
                                                     value="<%= trainee.phone %>">
                                             </div>
@@ -55,7 +55,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-username">Curso</label>
-                                                <input type="text" id="curso" name="course"
+                                                <input type="text" id="curso" name="course" disabled
                                                     class="form-control form-control-alternative" placeholder="Curso"
                                                     value="<%= trainee.course %>">
                                             </div>
@@ -63,7 +63,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Periodo</label>
-                                                <input type="text" id="periodo" name="period"
+                                                <input type="text" id="periodo" name="period" disabled
                                                     class="form-control form-control-alternative" placeholder="Periodo"
                                                     value="<%= trainee.period %>">
                                             </div>
@@ -76,7 +76,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-email">Endereço de
                                                     E-mail</label>
-                                                <input type="email" id="emailRecepcionista" name="email"
+                                                <input type="email" id="email" name="email" disabled
                                                     class="form-control form-control-alternative" placeholder="E-mail"
                                                     value="<%= trainee.userTrainee.email %>">
                                             </div>
@@ -85,7 +85,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label"
                                                     for="input-email">Permissoes</label>
-                                                <input type="text" id="fkPermissoes" name="fkPermissoes"
+                                                <input type="text" id="fkPermissoes" name="fkPermissoes" disabled
                                                     class="form-control form-control-alternative"
                                                     placeholder="E-mail" value="Estagiário">
                     
@@ -99,7 +99,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-last-name">Data de
                                                     Registro</label>
-                                                <input type="text" id="dataRegistro" name="dataRegistro"
+                                                <input type="text" id="dataRegistro" name="dataRegistro" disabled
                                                     class="form-control form-control-alternative" placeholder="Registro"
                                                     value="<%= moment(trainee.createdAt).format('DD/MM/YYYY')%>  ">
                                             </div>
@@ -109,8 +109,9 @@
                                 </div>
                                 <hr class="my-4" />
                                 <input type="hidden" value="<%= trainee.userTrainee.id  %>" id="idUser" name="idUser">
-                                <input type="hidden" value="<%= trainee.id  %>" id="idSupervisor" name="id">
-                                <input type="submit" class="btn btn-success" value="Alterar Perfil"></input>
+                                <a id="enable-update" class="btn btn-info" value="Editar"><i class="ni ni-ruler-pencil text-white"></i>Editar</a>
+                                <input type="submit" id = "update-form" class="btn btn-success" value="Salvar Alterações"></input>
+    
                             </form>
                         </div>
                     </div>
