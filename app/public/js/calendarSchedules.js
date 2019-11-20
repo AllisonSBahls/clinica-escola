@@ -132,6 +132,9 @@ $(document).ready(() => {
         })
     })
 
+
+
+
     $('#completeConsultDays').click(() => {
         $('#table-complete').empty();
         $.ajax({
@@ -153,7 +156,6 @@ $(document).ready(() => {
             dataType: 'json',
             success: (data) => {
                 fillTableComplete(data);
-
             }
         })
     })
@@ -171,17 +173,52 @@ $(document).ready(function () {
                 success: (data) => {
                     $('#table-complete-all').empty();
                     fillTableConsultComplete(data);
-
                 }
             })
             return false;
         })
-
         $('#search-form-name').trigger('submit');
-
     });
 
 })
+
+function fillTableReports(data){
+    for (i=0; i<data.lenght; i++){
+    if(user.NivelPermissaoId == 1 ) {
+        
+           data[i].reportTrainee.name
+        
+        } else if(user.NivelPermissaoId == 3 ) {
+            reports[i].reportMaster.name  
+        } 
+
+    $('#table-day').append('<tr><td>' +  moment(data[i].dateSend).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dataConsult).format('DD/MM/YYYY hh:mm') + '</td><td>' + moment(data[i].dateStart).format('HH:emm') + '</td></tr>');
+    }
+}
+
+$(document).ready(function () {
+
+    $('#btn-consult-reports').click(() => {
+        $('.search-form-reports').submit(function () {
+            var dados = $(this).serialize();
+            $.ajax({
+                url: '/relatorios/date',
+                type: 'POST',
+                dataType: 'json',
+                data: dados,
+                success: function (data) {
+                    
+                }
+            })
+            return false;
+    
+        })
+        $('.search-form-reports').trigger('submit');
+    
+    });
+
+})
+
 $(document).ready(function () {
 
     $('#btn-consult-date').click(() => {
@@ -205,6 +242,30 @@ $(document).ready(function () {
 
     });
 })
+
+// $(document).ready(function () {
+
+//     $('#btn-reports-date').click(() => {
+//         $('.search-form-report').submit(function () {
+//             var dados = $(this).serialize();
+//             $.ajax({
+//                 url: '/relatorios/date',
+//                 type: 'POST',
+//                 dataType: 'json',
+//                 data: dados,
+//                 success: (data) => {
+//                     $('#table-complete-all').empty();
+//                     fillTableConsultComplete(data);
+
+//                 }
+//             })
+//             return false;
+//         })
+
+//         $('.search-form-date').trigger('submit');
+
+//     });
+// })
 
 $(document).ready(function () {
 

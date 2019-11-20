@@ -4,6 +4,7 @@ const Master = require('../model/Master');
 const Consultation = require('../model/Consultations');
 const moment = require('moment');
 const crypt = require('../common/encrypt');
+const dateFormat = require('../common/dateFormat')
 
 
 
@@ -72,8 +73,36 @@ class ReportController {
 
     }
 
-    reportFindAll(req,res) {
-        Report.searchAllReportTrainee(req.params.id).then((report) => {     
+    async reportFindDate(req, res) {
+        const {dateFirst, dateEnd} = req.body;
+        var startDay = moment.utc(dateFirst);
+        startDay.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        var endDay = moment.utc(dateEnd);
+        endDay.set({ hour: 23, minute: 59, second: 59, millisecond: 59 })
+        const datetimeFirst = dateFormat(startDay);
+        const datetimeEnd = dateFormat(endDay);
+
+        await Consultation.searchConsultDate(datetimeFirst, datetimeEnd).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            req.flash("error_msg", "Não Encontrado")
+        });
+    }
+
+    async reportFindAll(req,res) {
+        if(req.user.NivelPermissaoId == 1){
+            Report.searchAllReportTrainee(req.params.id).then((report) => {     
+            const reportDecrypt = crypt.decryptReport(report.reports);
+            const patient  = report.namePatient;
+            let patientDecrypt = crypt.decryptReport(report.namePatient);
+            console.log(patientDecrypt)
+            res.render('forms/report_trainee', {patientDecrypt:patientDecrypt, reportDecrypt:reportDecrypt, report: report, traineeProfile: traineeProfile, masterProfile: masterProfile })
+        }).catch((err) => {
+            res.send('erros' + err);
+        })
+    }else{
+        const traineeProfile = await Trainee.searchProfileTrainee(req);
+        Report.searchAllReportTrainee(traineeProfile.id).then((report) => {     
             const reportDecrypt = crypt.decryptReport(report.reports);
             const patient  = report.namePatient;
             let patientDecrypt = crypt.decryptReport(report.namePatient);
@@ -83,6 +112,10 @@ class ReportController {
             res.send('erros' + err);
         })
     }
+
+    }
+
+    
 
     async reports(req, res) {
         if (req.user.NivelPermissaoId == 3) {

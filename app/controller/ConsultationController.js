@@ -278,7 +278,7 @@ class ConsultationController {
         const datetimeFirst = dateFormat(startDay);
         const datetimeEnd = dateFormat(endDay);
 
-        await Consultation.searchConsultDate(datetimeFirst, datetimeEnd).then((result) => {
+        await Consultation.searchReportsDate(datetimeFirst, datetimeEnd).then((result) => {
             res.send(result);
         }).catch((err) => {
             req.flash("error_msg", "Não Encontrado")

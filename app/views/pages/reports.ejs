@@ -58,13 +58,12 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Data do Relatório</th>
-                                    <th scope="col">Nome do Paciente</th>
+                                    <th scope="col">Data da Consulta</th>
                                     <th scope="col">Supervisor</th>
-                                    <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-reports">
 
                                 <% if(reports.length > 0 ) {%>
                                 <% for (var i = 0; i < reports.length; i++) { %>
@@ -74,7 +73,7 @@
                                         <%= moment(reports[i].dateSend).format('DD/MM/YYYY hh:mm') %>
                                     </th>
                                     <td>
-                                        Teste 01
+                                        <%= moment(reports[i].dataConsult).format('DD/MM/YYYY hh:mm')
                                     </td>
 
                                     <% if(user.NivelPermissaoId == 1 ) {%>

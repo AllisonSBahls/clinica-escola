@@ -94,7 +94,9 @@
             $('.form-search-name').trigger('submit');
 
         });
-    })
+    });
+
+   
 
     $(document).ready(function () {
         $('#search-name-secretary').click(() => {

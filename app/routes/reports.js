@@ -25,6 +25,10 @@ router.get('/reports/:id', (req, res) => {
     controller.reportFindAll(req, res);
 })
 
+router.post('/date', (req, res)  => {
+    controller.reportFindDate(req, res);
+})
+
 router.post('/register', users, (req, res)=>{
     controller.fillFieldReports(req, res);
 })

@@ -25,14 +25,14 @@ const Reports = bd.sequelize.define('reports', {
     },
 });
 
-Reports.belongsTo(Trainee, {as : 'reportTrainee', foreingKey: {name: 'fk_report_Trainee'}});
-Trainee.hasMany(Reports, {as : 'reportsTrainee', foreingKey: {name: 'fk_reports_Trainee'}});
-Reports.belongsTo(Master, {as : 'reportMaster', foreingKey: {name: 'fk_report_Master'}});
-Master.hasMany(Reports, {as : 'reportsMaster', foreingKey: {name: 'fk_reports_Master'}});
+Reports.belongsTo(Trainee, { as: 'reportTrainee', foreingKey: { name: 'fk_report_Trainee' } });
+Trainee.hasMany(Reports, { as: 'reportsTrainee', foreingKey: { name: 'fk_reports_Trainee' } });
+Reports.belongsTo(Master, { as: 'reportMaster', foreingKey: { name: 'fk_report_Master' } });
+Master.hasMany(Reports, { as: 'reportsMaster', foreingKey: { name: 'fk_reports_Master' } });
 
 //Reports.sync({force: true})
 
-Reports.sendReports = function(reports, namePatient, IdConsult, dateConsult, idTrainee, idMaster) {
+Reports.sendReports = function (reports, namePatient, IdConsult, dateConsult, idTrainee, idMaster) {
     return Reports.create({
         reports: reports,
         namePatient: namePatient,
@@ -44,7 +44,7 @@ Reports.sendReports = function(reports, namePatient, IdConsult, dateConsult, idT
 
     })
 }
-Reports.searchOneReport = (id) =>{
+Reports.searchOneReport = (id) => {
     return Reports.findOne({
         where: { 'id': id },
         include: [{
@@ -57,7 +57,7 @@ Reports.searchOneReport = (id) =>{
 }
 
 Reports.searchAllReportTrainee = (id) => {
-    return Reports.findOne({
+    return Reports.findAll({
         where: { 'reportTraineeId': id },
         include: [{
             model: Master, as: 'reportMaster',
@@ -67,4 +67,21 @@ Reports.searchAllReportTrainee = (id) => {
         }]
     })
 }
+Reports.searchReportsDate = function (startDay, endDay, id) {
+    return Reports.findAll({
+        limit: 6,
+        where: {
+            reportTraineeId: id,
+            dateSend: {
+                [Op.between]: [startDay, endDay]
+            },
+        }, include: [{
+            model: Master, as: 'reportMaster',
+        }, {
+            model: Trainee, as: 'reportTrainee',
+
+        }]
+    })
+}
+
 module.exports = Reports;
