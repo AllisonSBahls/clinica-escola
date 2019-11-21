@@ -59,36 +59,36 @@
                                 <tr>
                                     <th scope="col">Data do Relatório</th>
                                     <th scope="col">Data da Consulta</th>
+
+                                    <th scope="col">Estagiário</th>
                                     <th scope="col">Supervisor</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody id="table-reports">
-
                                 <% if(reports.length > 0 ) {%>
                                 <% for (var i = 0; i < reports.length; i++) { %>
                                 <tr>
 
                                     <th scope="row">
-                                        <%= moment(reports[i].dateSend).format('DD/MM/YYYY hh:mm') %>
+                                        <%= moment(reports[i].dateSend).format('DD/MM/YYYY') %>
                                     </th>
                                     <td>
-                                        <%= moment(reports[i].dataConsult).format('DD/MM/YYYY hh:mm')
+                                        <%= moment(reports[i].dateConsult).format('DD/MM/YYYY HH:mm') %>
                                     </td>
 
-                                    <% if(user.NivelPermissaoId == 1 ) {%>
                                     <td>
                                         <%= reports[i].reportTrainee.name  %>
                                     </td>
 
-                                    <%} else if(user.NivelPermissaoId == 3 ) {%>
                                     <td>
-                                        <%= reports[i].reportMaster.name  %>
+                                        <%= reports[i].reportMasterId  %>
                                     </td>
-                                    <% } %>
 
                                     <td>
-                                        <a class="btn btn-primary primary"
+
+
+                                        <a class="btn btn-primary primary btn-sm"
                                             href="relatorios/report/<%= reports[i].id %>"><img
                                                 src="img/icons/common/eye.svg">Visualizar</a>
                                     </td>

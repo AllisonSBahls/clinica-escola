@@ -80,6 +80,12 @@ function fillTableConsultComplete(data) {
     }
 }
 
+function fillTableReports(data) {
+    for (i = 0; i < data.length; i++) {
+
+        $('#table-reports').append('<tr><th>' + moment(data[i].dateSend).format('DD/MM/YYYY') + '</th><td>' + moment(data[i].dataConsult).format('DD/MM/YYYY HH:mm') + '</td><td>' + data[i].reportTrainee.name + '</td><td>' +'</td><td>' + data[i].reportMasterId + '</td><td>'+ '<a class="btn btn-primary btn-sm" href="relatorios/report/' + data[i].id + '"><img src="img/icons/common/eye.svg">Visualizar </a>       ' +'</td></tr>');
+    }
+}
 
 $(document).ready(function () {
     $.fn.modal.Constructor.prototype._enforceFocus = function () {
@@ -182,19 +188,6 @@ $(document).ready(function () {
 
 })
 
-function fillTableReports(data){
-    for (i=0; i<data.lenght; i++){
-    if(user.NivelPermissaoId == 1 ) {
-        
-           data[i].reportTrainee.name
-        
-        } else if(user.NivelPermissaoId == 3 ) {
-            reports[i].reportMaster.name  
-        } 
-
-    $('#table-day').append('<tr><td>' +  moment(data[i].dateSend).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dataConsult).format('DD/MM/YYYY hh:mm') + '</td><td>' + moment(data[i].dateStart).format('HH:emm') + '</td></tr>');
-    }
-}
 
 $(document).ready(function () {
 
@@ -207,14 +200,15 @@ $(document).ready(function () {
                 dataType: 'json',
                 data: dados,
                 success: function (data) {
-                    
+                    $('#table-reports').empty();
+                    fillTableReports(data)
                 }
             })
             return false;
-    
+
         })
         $('.search-form-reports').trigger('submit');
-    
+
     });
 
 })
@@ -242,30 +236,6 @@ $(document).ready(function () {
 
     });
 })
-
-// $(document).ready(function () {
-
-//     $('#btn-reports-date').click(() => {
-//         $('.search-form-report').submit(function () {
-//             var dados = $(this).serialize();
-//             $.ajax({
-//                 url: '/relatorios/date',
-//                 type: 'POST',
-//                 dataType: 'json',
-//                 data: dados,
-//                 success: (data) => {
-//                     $('#table-complete-all').empty();
-//                     fillTableConsultComplete(data);
-
-//                 }
-//             })
-//             return false;
-//         })
-
-//         $('.search-form-date').trigger('submit');
-
-//     });
-// })
 
 $(document).ready(function () {
 
@@ -322,11 +292,11 @@ function cancelar() {
 function wait() {
     document.getElementById("waitPatient").submit();
 }
-function registerPatient(){
+function registerPatient() {
     document.getElementById("form-register-patient").submit();
 }
 
-function updatePatient(){
+function updatePatient() {
     document.getElementById("form-update-patient").submit();
 }
 
@@ -416,11 +386,11 @@ $(document).ready(function () {
     $("#enable-update").click(function () {
         $("#update-form").show();
         $("#enable-update").hide();
-        $("#nome").prop( "disabled", false );
-        $("#email").prop( "disabled", false );
-        $("#telefone").prop( "disabled", false );
-        $("#curso").prop( "disabled", false );
-        $("#periodo").prop( "disabled", false );
+        $("#nome").prop("disabled", false);
+        $("#email").prop("disabled", false);
+        $("#telefone").prop("disabled", false);
+        $("#curso").prop("disabled", false);
+        $("#periodo").prop("disabled", false);
         return false;
     })
 

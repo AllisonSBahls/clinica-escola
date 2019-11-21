@@ -22,7 +22,7 @@ router.get('/report/:id', (req, res) => {
 })
 
 router.get('/reports/:id', (req, res) => {
-    controller.reportFindAll(req, res);
+    controller.reportFindAllTraineeMaster(req, res);
 })
 
 router.post('/date', (req, res)  => {
@@ -32,5 +32,9 @@ router.post('/date', (req, res)  => {
 router.post('/register', users, (req, res)=>{
     controller.fillFieldReports(req, res);
 })
+
+
+
+
 
 module.exports = router;

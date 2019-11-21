@@ -4,6 +4,7 @@ const Consultation = require("./Consultations");
 const Master = require("./Master");
 const Trainee = require("./Trainee");
 const moment = require('moment');
+const { Op } = require('sequelize')
 
 const Reports = bd.sequelize.define('reports', {
     reports: {
@@ -58,6 +59,8 @@ Reports.searchOneReport = (id) => {
 
 Reports.searchAllReportTrainee = (id) => {
     return Reports.findAll({
+        order:['dateSend'],
+        limit: 20,
         where: { 'reportTraineeId': id },
         include: [{
             model: Master, as: 'reportMaster',
@@ -67,9 +70,10 @@ Reports.searchAllReportTrainee = (id) => {
         }]
     })
 }
-Reports.searchReportsDate = function (startDay, endDay, id) {
+
+Reports.searchReportsDateTrainee = function (startDay, endDay, id) {
     return Reports.findAll({
-        limit: 6,
+        order:['dateSend'],
         where: {
             reportTraineeId: id,
             dateSend: {
@@ -83,5 +87,72 @@ Reports.searchReportsDate = function (startDay, endDay, id) {
         }]
     })
 }
+
+Reports.searchAllReportMaster = (id) => {
+    return Reports.findAll({
+        order:['dateSend'],
+        limit: 20,
+        where: { 'reportMasterId': id },
+        include: [{
+            model: Master, as: 'reportMaster',
+        }, {
+            model: Trainee, as: 'reportTrainee',
+
+        }]
+    })
+}
+
+
+Reports.searchReportsDateMaster = function (startDay, endDay, id) {
+    return Reports.findAll({
+        order:['dateSend'],
+        where: {
+            reportMasterId: id,
+            dateSend: {
+                [Op.between]: [startDay, endDay]
+            },
+        }, include: [{
+            model: Master, as: 'reportMaster',
+        }, {
+            model: Trainee, as: 'reportTrainee',
+
+        }]
+    })
+}
+
+Reports.searchAllReportTraineeMaster = (idTrainee, idMaster) => {
+    return Reports.findAll({
+        order:['dateSend'],
+        limit: 20,
+        where: { 'reportMasterId': idTrainee,
+        reportMasterId: idMaster,
+        },
+        include: [{
+            model: Master, as: 'reportMaster',
+        }, {
+            model: Trainee, as: 'reportTrainee',
+
+        }]
+    })
+}
+Reports.searchReportsDateTraineeMaster = function (startDay, endDay, idTrainee, idMaster) {
+    return Reports.findAll({
+        order:['dateSend'],
+        where: {
+            reportMasterId: idMaster,
+            reportMasterId: idTrainee,
+            dateSend: {
+                [Op.between]: [startDay, endDay]
+            },
+        }, include: [{
+            model: Master, as: 'reportMaster',
+        }, {
+            model: Trainee, as: 'reportTrainee',
+
+        }]
+    })
+}
+
+
 
 module.exports = Reports;
