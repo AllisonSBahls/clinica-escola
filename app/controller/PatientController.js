@@ -18,7 +18,7 @@ class SecretaryController {
         const secretaryrProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
-        const { email, name, phone, dateBirth, gender, password, district, number, address, spouse, maritalstatus, schooling, country, uf, cep} = req.body;
+        const { email, name, phone, dateBirth, gender, password, district, number, address, spouse, maritalstatus, schooling, country, uf, cepCidade} = req.body;
         //Verificar Email Existente
         var secretPassword = hash.generateHash(password);
         //Verificar Email Existente
@@ -28,7 +28,7 @@ class SecretaryController {
         if (erros) {
             res.render('forms/form_register_patient', { erros: erros, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile })
         } else {
-            Patient.insertPatient(email, secretPassword, name, phone, dateBirth, gender, address, district, number, schooling, spouse, maritalstatus, country, uf, cep).then((result) => {
+            Patient.insertPatient(email, secretPassword, name, phone, dateBirth, gender, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then((result) => {
                 res.redirect('/paciente');
                 req.flash("success_msg", "Paciente cadastrado com sucesso");
             }).catch((err) => {
@@ -82,11 +82,10 @@ class SecretaryController {
 
 
     async updatePatient(req, res) {
-        const { email, name, phone, dateBirth, gender, idUser,  district, number, address, spouse, maritalstatus, schooling, country, uf, cep } = req.body;
-        const emailUser = await User.searchEmailUser(idUser)
-
+        const { email, name, phone, dateBirth, gender, idUser, district, number, address, spouse, maritalstatus, schooling, country, uf, cepCidade } = req.body;
+        const emailUser = await User.searchEmailUserUpdate(idUser)
         if (emailUser.email == email) {
-            Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cep).then(function () {
+            Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
                 req.flash("success_msg", "Paciente alterado com sucesso");
                 res.redirect('/paciente');
             }).catch(function (erro) {
@@ -100,7 +99,7 @@ class SecretaryController {
                 res.redirect('/paciente');
             }else{
                 await User.updateEmailUser(idUser, email);
-                Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cep).then(function () {
+                Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
                     req.flash("success_msg", "Paciente alterado com sucesso");
                     res.redirect('/paciente');
                 }).catch(function (erro) {

@@ -42,7 +42,7 @@ Presence.insertFrequence = function(dateStart, dateEnd, Procedure, idTrainee, id
     });
 }
 
-Presence.searchAllFrequence = function(){
+Presence.searchAllFrequence = function(id){
     return Presence.findAll({
         include: [{
             model: Consultation, as: 'presenceConsultation',

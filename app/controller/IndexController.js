@@ -41,7 +41,7 @@ class IndexController {
                 res.send('erro' + err)
             })
         } else if (req.user.NivelPermissaoId == 3) {
-            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             await Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
                 res.render('index/dashboard', {procedure:procedure, traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
@@ -83,7 +83,7 @@ class IndexController {
                 res.send('erro' + err)
             })
         } else if (req.user.NivelPermissaoId == 3) {
-            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             await Consultation.searchConsultNextTrainee(traineeProfile.id).then((consult) => {
                 res.send(consult)
             }).catch((err) => {
@@ -117,7 +117,7 @@ class IndexController {
                 res.send('erro' + err)
             })
         } else if (req.user.NivelPermissaoId == 3) {
-            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             Consultation.searchConsultDayTrainee(startDay, endDay, traineeProfile.id).then((consult) => {
                 res.send(consult)
             }).catch((err) => {

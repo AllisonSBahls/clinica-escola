@@ -23,9 +23,9 @@ class PresenceController {
   
     }
         else if (req.user.NivelPermissaoId == 3){
-            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             const consult = await Consultation.searchConsultsTraineesDate(traineeProfile.id)
-            Presence.searchAllFrequence(traineeProfile.id).then((result) => {
+            Presence.searchTraineeFrequence(traineeProfile.id).then((result) => {
                 res.render('pages/presence', {masterProfile:{}, consult:consult, traineeProfile:traineeProfile, result:result})
             }).catch((err) => {
                 res.send(err)
@@ -46,7 +46,7 @@ class PresenceController {
         const {idConsult, startConsult, hoursConsult, endConsult, procedureDescription } = req.body
         const dateTimeStart = startConsult + ' '+ hoursConsult
         const dateTimeEnd = startConsult +' '+ endConsult
-        const traineeProfile = await Trainee.searchProfileTrainee(req);
+        const traineeProfile = await Trainee.searchProfileTraineeUser(req);
         Presence.insertFrequence(dateTimeStart, dateTimeEnd, procedureDescription, traineeProfile.id, idConsult).then(() => {
             req.flash("success_msg", "Presenca Marcada");
             res.redirect('/frequencias');
@@ -68,8 +68,8 @@ class PresenceController {
         });
     }
         else if (req.user.NivelPermissaoId == 3){
-            const traineeProfile = await Trainee.searchProfileTrainee(req);
-            Presence.searchAllFrequence(traineeProfile.id).then((result) => {
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
+            Presence.searchTraineeFrequence(traineeProfile.id).then((result) => {
                 res.render('pages/presence', {traineeProfile:traineeProfile, result:result})
             }).catch((err) => {
                 res.send(err)
@@ -92,7 +92,7 @@ class PresenceController {
         const{idPresence, validate } = req.body;
         Presence.validateFrequence(idPresence, validate).then(()=>{
             req.flash("success_msg", "Presença confirmada")
-            res.redirect('/frequencias')
+            res.redirect('/estagiarios')
         }).catch((err)=>{
             console.log(err);
         })

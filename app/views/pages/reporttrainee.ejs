@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<% include ../layout %>
+
+<body>
+    <!-- Sidenav -->
+    <% include ../partials/sidebar %>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <% include ../partials/navbar %>
+        <!-- Header -->
+        <% include ../partials/header %>
+        <!-- Page content -->
+
+        <div style="justify-content: center !important" class="row mt-4">
+            <div class="col-xl-11 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <% include ../partials/message %>
+
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Relatórios</h3>
+                            </div>
+                            <a href="/relatorios/report" class="btn btn-success"><i
+                                    class="ni ni-lg ni-send text-white"></i>Enviar Novo Relatório</a>
+                            <a id="btn-filter-reports" class="btn btn-primary"><img src="/img/icons/common/filter.svg">
+                                Filtrar</a>
+                        </div>
+                    </div>
+                    <div class="search-filter-reports" id="search-filter-reports">
+                        <form class="search-form-reports">
+                            <div id="search" class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Data Inicial</label>
+                                        <input type="date" id="date-first" name="dateFirst"
+                                            class="form-control form-control-alternative" require
+                                            placeholder="Data inicial">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Data Final</label>
+                                        <input type="date" id="date-end" name="dateEnd"
+                                            class="form-control form-control-alternative" require
+                                            placeholder="Data inicial">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="btn-consult-reports">Buscar</button>
+                        </form>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Data do Relatório</th>
+                                    <th scope="col">Data da Consulta</th>
+
+                                    <th scope="col">Estagiário</th>
+                                    <th scope="col">Supervisor</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-reports-trainee">
+                                <% if(reports.length > 0 ) {%>
+                                <% for (var i = 0; i < reports.length; i++) { %>
+                                <tr>
+
+                                    <th scope="row">
+                                        <%= moment(reports[i].dateSend).format('DD/MM/YYYY') %>
+                                    </th>
+                                    <td>
+                                        <%= moment(reports[i].dateConsult).format('DD/MM/YYYY HH:mm') %>
+                                    </td>
+
+                                    <td>
+                                        <%= reports[i].reportTrainee.name  %>
+                                    </td>
+
+                                    <td>
+                                        <%= reports[i].reportMasterId  %>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-primary primary btn-sm"
+                                            href="../../relatorios/report/<%= reports[i].id %>"><img
+                                                src="/img/icons/common/eye.svg">Visualizar</a>
+                                    </td>
+
+
+
+
+
+                                    <!-- <td>
+                              <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                            </td> -->
+                                </tr>
+                                <% } %>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <% include ../partials/footer %>
+
+    </div>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <% include ../partials/scripts %>
+
+</body>
+
+</html>

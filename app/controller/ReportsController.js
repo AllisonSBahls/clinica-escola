@@ -24,7 +24,7 @@ class ReportController {
 
         }
         else if (req.user.NivelPermissaoId == 3) {
-            const traineeProfile = await Trainee.searchProfileTrainee(idTraineeProfile);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             const consult = await Consultation.searchConsultsTraineesReports(traineeProfile.id)
             res.render("forms/form_report", { consult: consult, masterProfile: {}, traineeProfile: traineeProfile, masters: masters });
         }
@@ -42,12 +42,10 @@ class ReportController {
 
 
     async report_save(req, res) {
-        const idTraineeProfile = req.user.id
-
         crypt.generateKeys();
         const { namePatient, dateConsult, report, idConsult, masterId } = req.body
         // let reportCrypt = req.body.report;
-        const traineeProfile = await Trainee.searchProfileTrainee(idTraineeProfile);
+        const traineeProfile = await Trainee.searchProfileTraineeUser(req);
         //Criptografando o relatorio
         const reportCrypt = crypt.encryptReport(report);
 
@@ -64,9 +62,7 @@ class ReportController {
 
     async report_find(req, res) {
         let traineeProfile;
-        const idTraineeProfile = req.user.id
-
-        traineeProfile = await Trainee.searchProfileTrainee(idTraineeProfile);
+        traineeProfile = await Trainee.searchProfileTraineeUser(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
         Report.searchOneReport(req.params.id).then(async (report) => {
@@ -90,24 +86,27 @@ class ReportController {
         endDay.set({ hour: 23, minute: 59, second: 59, millisecond: 59 })
         const datetimeFirst = dateFormat(startDay);
         const datetimeEnd = dateFormat(endDay);
-
-        const masterProfile = await Master.searchProfileMaster(req);
-
-        await Report.searchReportsDateMaster(datetimeFirst, datetimeEnd, masterProfile.id).then((result) => {
+        if (req.user.NivelPermissaoId == 1) {
+            const masterProfile = await Master.searchProfileMaster(req);
+            await Report.searchReportsDateMaster(datetimeFirst, datetimeEnd, masterProfile.id).then((result) => {
+                res.send(result);
+            }).catch((err) => {
+                req.flash("error_msg", "Não Encontrado")
+            });
+        } else { 
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
+            await Report.searchReportsDateTrainee(datetimeFirst, datetimeEnd, traineeProfile.id).then((result) => {
             res.send(result);
         }).catch((err) => {
             req.flash("error_msg", "Não Encontrado")
         });
+        }
     }
-
 
     async reportFindAllTraineeMaster(req, res) {
         const masterProfile = await Master.searchProfileMaster(req);
-
         Report.searchAllReportTraineeMaster(req.params.id, masterProfile.id).then((report) => {
-            const reportDecrypt = crypt.decryptReport(report.reports);
-            let patientDecrypt = crypt.decryptReport(report.namePatient);
-            res.render('forms/report_trainee', { patientDecrypt: patientDecrypt, reportDecrypt: reportDecrypt, report: report, traineeProfile: traineeProfile, masterProfile: masterProfile })
+            res.render('pages/reporttrainee', {reports: report, traineeProfile: {}, masterProfile: masterProfile })
         }).catch((err) => {
             res.send('erros' + err);
         })
@@ -118,7 +117,7 @@ class ReportController {
 
     async reports(req, res) {
         if (req.user.NivelPermissaoId == 3) {
-            let traineeProfile = await Trainee.searchProfileTrainee(idTraineeProfile);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             Report.searchAllReportTrainee(traineeProfile.id).then((reports) => {
                 res.render('pages/reports', { reports: reports, traineeProfile: traineeProfile })
             }).catch((err) => {

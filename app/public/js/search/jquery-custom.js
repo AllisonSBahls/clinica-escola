@@ -36,7 +36,7 @@
                     success: function (data) {
                         $('#table-patient').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-patient').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userPatient.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-danger delete" onclick="return confirm(`Você confirma a exclusão?`)"href="paciente/delete/' + data[i].userPatient.id + '">Excluir</a> '+ '</td><td>' + '<a class="btn btn-primary primary" href="paciente/profile/' + data[i].id + '">Alterar </a> </td></tr>');
+                            $('#table-patient').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userPatient.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-primary primary btn-sm" href="paciente/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"></a> '+ '</td><td>' + '<a class="btn btn-danger delete btn-sm" onclick="return confirm(`Você confirma a exclusão?`)" href="paciente/delete/' + data[i].userPatient.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
                         }
                     }
                 })
@@ -60,7 +60,8 @@
                     success: function (data) {
                         $('#table-master').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#table-master').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userMaster.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-primary primary btn-sm" href="supervisor/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a>  '+ '</td><td>' + '<a class="btn btn-danger delete btn-sm" onclick="return confirm(`Você confirma a exclusão?`)"href="supervisor/delete/' + data[i].userMaster.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
+
+                            $('#table-master').append('<tr><th>' + data[i].name + '</th><td>' + data[i].userMaster.email + '</td><td>' + data[i].phone + '</td><td>' + '<a class="btn btn-primary primary btn-sm" href="supervisor/profile/' + data[i].id + '"><img src="img/icons/common/eye.svg"> </a>  '+ '</td><td>' + '<a class="btn btn-danger delete btn-sm" onclick="return confirm(`Você confirma a exclusão?`)" href="supervisor/delete/' + data[i].userMaster.id + '"><i class="ni ni-lg ni-basket text-white"></a> </td></tr>');
                         }
                     }
                 })

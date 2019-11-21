@@ -391,6 +391,19 @@ $(document).ready(function () {
         $("#telefone").prop("disabled", false);
         $("#curso").prop("disabled", false);
         $("#periodo").prop("disabled", false);
+        $("#dataNasc").prop("disabled", false);
+        $("#gender").prop("disabled", false);
+        $("#schooling").prop("disabled", false);
+        $("#maritalstatus").prop("disabled", false);
+        $("#spouse").prop("disabled", false);
+        $("#cep").prop("disabled", false);
+        $("#number").prop("disabled", false);
+        $("#rua").prop("disabled", false);
+        $("#bairro").prop("disabled", false);
+        $("#cidade").prop("disabled", false);
+        $("#uf").prop("disabled", false);
+        $("#cidade").prop("disabled", false);
+
         return false;
     })
 
@@ -404,6 +417,9 @@ $(document).ready(function () {
         $("#esperaHidden").hide();
         $("#voltarHidden").show();
         $("#confHidden").hide();
+        $("#time-end").hide();
+
+        
         return false;
     })
 
@@ -414,6 +430,8 @@ $(document).ready(function () {
         $("#esperaHidden").show();
         $("#voltarHidden").hide();
         $("#confHidden").show();
+        $("#time-end").show();
+
         return false;
     })
 })

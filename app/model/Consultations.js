@@ -206,9 +206,10 @@ Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTra
     });
 }
 
-Consultation.insertSchedules = async function (dateStart, idPatient, color, description) {
+Consultation.insertSchedules = async function (dateStart,  dateEnd, idPatient, color, description) {
     return this.create({
         dateStart: dateStart,
+        dateEnd: dateEnd,
         consultPatientId: idPatient,
         color: color,
         description: description,

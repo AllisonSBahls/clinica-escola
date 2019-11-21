@@ -39,7 +39,7 @@ class ConsultationController {
             });
         } else if (req.user.NivelPermissaoId == 3) {
             //Busca o nome do usuário Estagiário
-            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             // Retornar apenas as consultas do estagiário
             Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
                 res.render('partials/calendar', {procedure:procedure, traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
@@ -89,7 +89,7 @@ class ConsultationController {
             });
         } else if (req.user.NivelPermissaoId == 3) {
             //Busca o nome do usuário Estagiário
-            const traineeProfile = await Trainee.searchProfileTrainee(req);
+            const traineeProfile = await Trainee.searchProfileTraineeUser(req);
             // Retornar apenas as consultas do estagiário
             Consultation.searchConsultsTrainees(traineeProfile.id).then((consultation) => {
                 res.render('pages/consult', {procedure:procedure, traineeProfile: traineeProfile, consultation: consultation, patients: patients, trainees: trainees });
@@ -128,10 +128,13 @@ class ConsultationController {
     }
 
     async saveConsult(req, res) {
-        const { dateStart, timeStart, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
+        const { dateStart, timeStart, timeEnd, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
         //converter formato brasileiro para SQL
         const date = dateStart +' '+ timeStart
         const datetime = dateFormat(date);
+        const dateEnd = dateStart +' '+ timeEnd
+        const datetimeEnd = dateFormat(dateEnd);
+
         let idMaster;
         let idSecretary;
 
@@ -198,9 +201,8 @@ class ConsultationController {
             } else {
                 const color = '#1FA576';
                 const id = req.user.id
-                console.log(id)
                 const patientProfile = await Patient.searchProfilePatientAuth(id);
-                Consultation.insertSchedules(datetime, patientProfile.id, color).then(function () {
+                Consultation.insertSchedules(datetime, datetimeEnd, patientProfile.id, color).then(function () {
                     req.flash("success_msg", "Agendamento marcado com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {

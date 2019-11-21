@@ -136,7 +136,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Data Desejada</label>
                                     <input type="date" id="dateStart" name="dateStart"
@@ -146,12 +147,20 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label">Horario</label>
+                                    <label class="form-control-label">Horario Inicial</label>
                                     <input type="time" id="timeStart" name="timeStart"
                                         class="form-control form-control-alternative">
 
                                 </div>
                             </div>
+                            <div id = "time-end" class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Horario Final</label>
+                                        <input type="time" id="timeEnd" name="timeEnd"
+                                            class="form-control form-control-alternative">
+    
+                                    </div>
+                                </div>
                         </div>
                         <div class="confirm-hidden">
                         <div id="traineeHidden" class="row-hidden">
@@ -378,10 +387,18 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Horario Desejado</label>
                                     <input type="time" id="timeStart" name="timeStart"
+                                        class="form-control form-control-alternative">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Horario Final</label>
+                                    <input type="time" id="timeEnd" name="timeEnd"
                                         class="form-control form-control-alternative">
 
                                 </div>

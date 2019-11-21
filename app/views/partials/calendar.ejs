@@ -79,7 +79,7 @@
                     id: '<%= consultation[i].id  %>',
                     title: '<%= consultation[i].consultPatient.name %>',
                     start: '<%= moment(consultation[i].dateStart).format()  %>',
-                    end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
+                    end: '<%= moment(consultation[i].dateEnd).format()   %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         trainee: '<%= consultation[i].consultTrainee.name %>',
@@ -95,7 +95,7 @@
                     id: '<%= consultation[i].id  %>',
                     title: '<%= consultation[i].consultPatient.name %>',
                     start: '<%= moment(consultation[i].dateStart).format()  %>',
-                    end: '<%= moment(consultation[i].dateEnd).add(4, "hours").format()  %>',
+                    end: '<%= moment(consultation[i].dateEnd).format()   %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         description: '<%= consultation[i].description  %>',
@@ -113,11 +113,13 @@
                 info.jsEvent.preventDefault();
                 if (info.event.extendedProps.typeSchedule == 1) {
                     var dt = moment(info.event.start);
+                    var dtEnd = moment(info.event.end);
 
                     $('#viewConsult #id').val(info.event.id);
                     $('#viewConsult #patient').val(info.event.title);
                     $('#viewConsult #dateStart').val(dt.format('YYYY-MM-DD'));
                     $('#viewConsult #timeStart').val(dt.format('HH:mm'));
+                    $('#viewConsult #timeEnd').val(dtEnd.format('HH:mm'));
                     $('#viewConsult #traineeId').val(info.event.extendedProps.trainee);
                     $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsult #description').val(info.event.extendedProps.description);
@@ -127,12 +129,15 @@
 
                 } else if (info.event.extendedProps.typeSchedule == 2) {
                     var dt = moment(info.event.start);
+                    var dtEnd = moment(info.event.end);
 
                     $('#viewConsultPatient #id').val(info.event.id);
                     $('#viewConsultPatient #patientIdHidden').val(info.event.extendedProps.patientId);
                     $('#viewConsultPatient #patient').val(info.event.title);
                     $('#viewConsultPatient #dateStart').val(dt.format('YYYY-MM-DD'));
                     $('#viewConsultPatient #timeStart').val(dt.format('HH:mm'));
+                    $('#viewConsultPatient #timeEnd').val(dtEnd.format('HH:mm'));
+
                     $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsultPatient').modal('show');
                 }

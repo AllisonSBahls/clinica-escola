@@ -124,8 +124,8 @@ Reports.searchAllReportTraineeMaster = (idTrainee, idMaster) => {
     return Reports.findAll({
         order:['dateSend'],
         limit: 20,
-        where: { 'reportMasterId': idTrainee,
-        reportMasterId: idMaster,
+        where: { reportTraineeId: idTrainee,
+                 reportMasterId: idMaster,
         },
         include: [{
             model: Master, as: 'reportMaster',

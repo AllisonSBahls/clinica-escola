@@ -174,7 +174,8 @@ Patient.updateProfilePatient = function(name, phone, dateBirth, gender, id, addr
             country:country,
             cep:cep,
             uf:uf,
-        }, { where: { 'id': id }
+        }, 
+        { where: { id: id }
      }
     )
 }

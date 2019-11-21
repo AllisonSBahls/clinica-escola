@@ -30,9 +30,9 @@ Trainee.searchAllTraineesUsers  = async function (){
     })
 }
 
-Trainee.searchProfileTrainee = async function(id){
+Trainee.searchProfileTraineeUser = async function(req){
     return await this.findOne({
-        where: { userTraineeId: id }
+        where: { userTraineeId: req.user.id }
     });
 }
 
