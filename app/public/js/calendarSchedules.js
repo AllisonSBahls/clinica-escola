@@ -357,6 +357,13 @@ $(document).ready(function () {
         $(".search-filter-name").toggleClass("active").slideToggle("slow");
         return false;
     })
+    $("#form-select").hide();
+    $("#btn-register-presence").click(function () {
+        $("#form-select").toggleClass("active").slideToggle("slow");
+        return false;
+    })
+
+   
 
     $(".search-filter-date").hide();
     $("#btn-filter-date").click(function () {

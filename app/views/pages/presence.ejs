@@ -21,8 +21,7 @@
                             <div class="col">
                                 <h3 class="mb-0">Lista de Frequencias</h3>
                             </div>
-                            <a class="btn btn-outline-success" onclick="showPresenceInsert();">Inserir Presença</a>
-                            <a class="btn btn-outline-primary" onclick="showFilter();">Filtrar</a>
+                            <a id="btn-register-presence" class="btn btn-success">Registrar Presença</a>
                         </div>
                     </div>
 
@@ -88,7 +87,7 @@
                             </div>
                         </div>
 
-                        <input onclick="registerPresence()" class="btn btn-info" value="Salvar Registro"></input>
+                        <input onclick="registerPresence()" class="ml-4 mb-3 btn btn-success" id="#btn-frequence-save" value="Salvar Registro"></input>
 
                     </form>
 
@@ -161,10 +160,14 @@
                                         </td>
                                         <%  } %>
                                     <td>
-                                            <a class="btn btn-danger delete"
+                                            <% if (user.NivelPermissaoId == 1) { %>
+
+                                            <a class="btn btn-danger delete btn-sm"
                                             onclick="return confirm('Você confirma a exclusão?')"
-                                            href="../frequencias/delete/<%= result[i].id %>">Excluir</a>
-                                    </td> 
+                                            href="../frequencias/delete/<%= result[i].id %>"><i class="ni ni-lg ni-basket text-white"></i>Excluir</a>
+                                            <% } %>
+
+                                        </td> 
                                    
                                 </tr>
                                
