@@ -26,6 +26,7 @@ class SecretaryController {
         //Validar os campos
         const erros = validate.validateFields(emailUser, email, name, password);
         if (erros) {
+            req.flash('error_msg', 'E-mail já existe');
             res.render('forms/form_register_patient', { erros: erros, masterProfile:masterProfile, secretaryrProfile:secretaryrProfile })
         } else {
             Patient.insertPatient(email, secretPassword, name, phone, dateBirth, gender, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then((result) => {

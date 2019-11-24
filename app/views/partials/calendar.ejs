@@ -17,32 +17,40 @@
         <div class="col-lg-12 mb-6 mb-xl-0">
             <div class="card bg-gradient-default shadow">
                 <% include ../partials/message %>
-              <div class="card-header bg-transparent">
-                <div class="row align-items-center">
-                  <div class="col">
-                    <ul class="nav nav-pills justify-content-end">
-                        <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                        <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
-                          <span class="d-none d-md-block">Nova Consulta</span>
-                        </a>
-                      </li>
-                      
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <ul class="nav nav-pills justify-content-end">
 
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="card-body">
+                                <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                                    <a class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#faq-calendar-complete"><img src="img/icons/common/help.svg"></a>
+                                    </a>
+                                </li>
+                                <% include ../partials/help/faqcalendar %>
 
-                <div style="width: 80%; margin: auto;" id='calendar-container' class="pt-4">
-                    <div id='calendarSchedules'></div>
+                                <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                                    <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
+                                        <span class="d-none d-md-block">Nova Consulta</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="card-body">
+
+                    <div style="width: 80%; margin: auto;" id='calendar-container' class="pt-4">
+                        <div id='calendarSchedules'></div>
+                    </div>
+                </div>
+
             </div>
-    
-            </div>
-          </div>
-      
+        </div>
+
         <% include ./schedulesModal %>
     </div>
     </div>

@@ -2,30 +2,24 @@
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewConsultModel">Consulta</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
                 <form method="POST" action="consultation/update">
                     <h6 class="heading-small text-muted mb-4">Consulta</h6>
                     <div class="pl-lg-3">
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="defaultInline1" name="" value="1"
-                                checked="checked">
-                            <label class="custom-control-label" for="defaultInline1">Consulta</label>
-                        </div>
-
                         <hr class="my-4" />
                         <div class="row">
                             <div class="col-lg-6">
                                 <input type="hidden" id="id" name="consultationId">
                                 <input type="hidden" id="typeScheduleConsult" name="typeScheduleConsult">
-
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-username">Paciente</label>  <label for="">Telefone</label>
+                                    <label class="form-control-label" for="input-username">Paciente</label>
+                                    <a style="float: right;" class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion"
+                                    href="#consult-view" aria-expanded="true" aria-controls="collapse0">
+                                    <i class="ni ni-mobile-button"></i>
+                                  </a>
+                                    <div  id="consult-view" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
+                                            <input type="text" id="phone" name="phone" style="border: none;">
+                                  </div>
                                     <input type="text" id="patient" name="patientId"
                                        disabled class="form-control form-control-alternative">
                                 </div>
@@ -33,7 +27,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Data da Consulta</label>
-                                    <input type="date" id="dateStart" name="dateStart"
+                                    <input type="date" id="dateStart" name="dateStart" disabled
                                         class="form-control form-control-alternative">
                                 </div>
                                 
@@ -41,7 +35,7 @@
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <label class="form-control-label">Horario</label>
-                                    <input type="time" id="timeStart" name="timeStart"
+                                    <input type="time" id="timeStart" name="timeStart" disabled
                                         class="form-control form-control-alternative">
                                 </div>
                                 
@@ -51,7 +45,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Estagiário</label>
-                                    <select id="traineeId" class="form-control form-control-alternative"
+                                    <select id="traineeId" disabled class="form-control form-control-alternative"
                                         name="traineeId" data-placeholder="Selecione">
                                         <% if (trainees.length > 0) { %>
                                         <% for (var i = 0; i < trainees.length; i++) { %>
@@ -64,7 +58,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Tipo Consulta</label>
-                                    <select class="form-control" name="typeProcedure" id="typeProcedure" data-placeholder="Selecione">
+                                    <select class="form-control" disabled name="typeProcedure" id="typeProcedure" data-placeholder="Selecione">
                                             <% if (procedure.length > 0) { %>
                                                 <% for (var i = 0; i < procedure.length; i++) { %>
                                                     <option value='<%= procedure[i].id %>'><%= procedure[i].typeProcedure %></option>
@@ -78,7 +72,7 @@
                             <div class="col-lg-12">
                                 <div>
                                     <label class="form-control-label">Observação</label>
-                                    <textarea id="description" name="description"
+                                    <textarea id="description" name="description" disabled
                                         class="form-control form-control-alternative"></textarea>
                                 </div>
                             </div>
@@ -110,11 +104,6 @@
     aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
                 <form id="confirmSchedules" method="POST" action="consultation/confirmar">
 
@@ -145,6 +134,7 @@
 
                                 </div>
                             </div>
+                            
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Horario Inicial</label>

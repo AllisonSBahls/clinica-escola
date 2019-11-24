@@ -65,7 +65,7 @@
   }
 
   
-#dropdown-btn, #btn-dropdown-settings{ 
+#dropdown-btn, #btn-dropdown-settings, #btn-documentation-settings{ 
   background: none;
   border: none;
   text-decoration: none;
@@ -74,7 +74,7 @@
   outline: none;
 }
 
-.dot-consult, .dot-schedule {
+.dot-consult, .dot-schedule, .dot-completed, .dot-cancel {
     height: 15px;
     width: 15px;
     border-radius: 50%;
@@ -93,6 +93,16 @@
 
   }
 
+  .dot-completed {
+ 
+    background-color: #2B56E2;
+
+  }
+  .dot-cancel {
+ 
+    background-color: red;
+
+  }
 #form-select{
     display: none;
 }
@@ -107,3 +117,42 @@
 #enable-update, #search-name-trainee, #btn-filter-reports,#search-name-patient, #btn-register-presence{
     color: #fff
 }
+
+
+.titulo {
+    font-family: Arial, Verdana;
+    font-weight: 800;
+    font-size: 1.0rem;
+    color: #091f2f;
+    text-transform: uppercase;
+  }
+
+  .accordion-section .panel-default>.panel-heading {
+    border: 0;
+    background: #f4f4f4;
+    padding: 0;
+  }
+
+  .accordion-section .panel-default .panel-title a {
+    display: block;
+    font-style: italic;
+    font-size: 1.0rem;
+  }
+
+  .accordion-section .panel-default .panel-title a:after {
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-size: 1.0rem;
+    content: "\f106";
+    color: #1f7de2;
+    float: right;
+    margin-top: -12px;
+  }
+
+  .accordion-section .panel-default .panel-title a.collapsed:after {
+    content: "\f107";
+  }
+
+  .accordion-section .panel-default .panel-body {
+    font-size: 1.0rem;
+  }

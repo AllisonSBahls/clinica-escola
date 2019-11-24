@@ -425,6 +425,7 @@ $(document).ready(function () {
         $("#voltarHidden").show();
         $("#confHidden").hide();
         $("#time-end").hide();
+        $("#timeStart").prop("disabled", true);
 
         
         return false;
@@ -438,6 +439,7 @@ $(document).ready(function () {
         $("#voltarHidden").hide();
         $("#confHidden").show();
         $("#time-end").show();
+        $("#timeStart").prop("disabled", true);
 
         return false;
     })
