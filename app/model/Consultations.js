@@ -7,6 +7,7 @@ const Procedure = require("./Procedure");
 const moment = require('moment');
 const { Op } = require('sequelize')
 
+
 const Consultation = bd.sequelize.define('consultations', {
     dateStart: {
         type: bd.Sequelize.DATE
@@ -191,6 +192,9 @@ Consultation.countSchedule = async function(){
     })
 }
 
+/**
+ * Inserir as consultas
+ */
 Consultation.insertConsults = function (dateStart, idSecretary, idPatient, idTrainee, idMaster, typeSchedule, color, description, idProcedure) {
     return this.create({
         dateStart: dateStart,

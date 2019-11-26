@@ -1,4 +1,48 @@
-const Consultation = require('../model/Consultations');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>ConsultationController.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ConsultationController.html">ConsultationController</a><ul class='methods'><li data-type='method'><a href="ConsultationController.html#cancelamentoSchedule">cancelamentoSchedule</a></li><li data-type='method'><a href="ConsultationController.html#confirmSchedules">confirmSchedules</a></li><li data-type='method'><a href="ConsultationController.html#consultations">consultations</a></li><li data-type='method'><a href="ConsultationController.html#deleteSchedules">deleteSchedules</a></li><li data-type='method'><a href="ConsultationController.html#onlySchedules">onlySchedules</a></li><li data-type='method'><a href="ConsultationController.html#saveConsult">saveConsult</a></li><li data-type='method'><a href="ConsultationController.html#searchConsultPatient">searchConsultPatient</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#cancelConsultation">cancelConsultation</a></li><li><a href="global.html#deleteSchedules">deleteSchedules</a></li><li><a href="global.html#insertConsults">insertConsults</a></li><li><a href="global.html#searchAllConsults">searchAllConsults</a></li><li><a href="global.html#searchAllPatients">searchAllPatients</a></li><li><a href="global.html#searchAllProcedures">searchAllProcedures</a></li><li><a href="global.html#searchAllTrainees">searchAllTrainees</a></li><li><a href="global.html#searchConsultsPatients">searchConsultsPatients</a></li><li><a href="global.html#searchConsultsTrainees">searchConsultsTrainees</a></li><li><a href="global.html#searchProfileMaster">searchProfileMaster</a></li><li><a href="global.html#searchProfileSecretary">searchProfileSecretary</a></li><li><a href="global.html#searchUpdateWait">searchUpdateWait</a></li><li><a href="global.html#searchWaitPatients">searchWaitPatients</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ConsultationController.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Consultation = require('../model/Consultations');
 const Secretary = require('../model/Secretary');
 const Trainee = require('../model/Trainee');
 const Master = require('../model/Master');
@@ -224,7 +268,7 @@ class ConsultationController {
         let idSecretary;
 
         //Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
-        if (typeSchedule == 1 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+        if (typeSchedule == 1 &amp;&amp; req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             if (req.user.NivelPermissaoId == 1){
 
                 /**
@@ -302,7 +346,7 @@ class ConsultationController {
              * 1º caso é a clínica que marca o agendamento para o paciente
              * 2º caso é o paciente que solicita o agendamento através do site
             */
-        } else if (typeSchedule == 2 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
+        } else if (typeSchedule == 2 &amp;&amp; req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             
             const color = '#1FA576';
             /**
@@ -334,7 +378,7 @@ class ConsultationController {
              * A solicitação deve ser feita com no mínimo dois dias de antecedencia
              * Caso o contrário é exibido mensagem de erro
              */
-            if(datetime <= moment.utc().add(2, 'days').format('YYYY-MM-DD HH:MM:SS')){
+            if(datetime &lt;= moment.utc().add(2, 'days').format('YYYY-MM-DD HH:MM:SS')){
                 req.flash("error_msg", "A data de Agendamento deve ser no minimo de 2 dias de diferença");
                 res.redirect('/dashboard');
             } else {
@@ -504,3 +548,28 @@ class ConsultationController {
 
 module.exports = ConsultationController;
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 26 2019 14:36:25 GMT-0400 (GMT-04:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

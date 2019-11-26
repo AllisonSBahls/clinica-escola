@@ -10,6 +10,9 @@ const validate = require('../common/validateFields');
 const moment = require('moment');
 const Procedure = require('../model/Procedure');
 
+/**
+ * Index Controlador
+ */
 class IndexController {
 
     index(req, res) {
