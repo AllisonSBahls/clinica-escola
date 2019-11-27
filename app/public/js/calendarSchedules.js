@@ -50,6 +50,31 @@ function fillTableComplete(data) {
     }
 }
 
+function funcao_pdf_consultas() {
+    var table = document.getElementById('table-complete-all').innerHTML
+    var janela = window.open('', '', 'width=1000px; height=728px');
+    janela.document.write('<html><head>')
+    janela.document.write('<title>Relatório dos Atendimentos</title></head>')
+    janela.document.write('<h1 style="text-align:center">Relátorio dos Atendimentos</h1>')
+    janela.document.write('<p style="font-size:1em">Data: </p>')
+    janela.document.write('<p style="font-size:1em">Usuário: </p>')
+    janela.document.write('<body >')
+    janela.document.write('<table style="width: 100%;>')
+    janela.document.write('<thead ><tr>')
+    janela.document.write('<th scope="col">SITUAÇÃO</th>')
+    janela.document.write('<th scope="col">NOME</th>')
+    janela.document.write('<th scope="col">TELEFONE</th>')
+    janela.document.write('<th scope="col">HORÁRIO</th>')
+    janela.document.write('<th scope="col">ESTAGIÁRIO</th>')
+    janela.document.write('<th scope="col">USUÁRIO</th>')
+    janela.document.write('<tbody style="font-size: 1em; line-height: 150%">'+table+'</tbody>')
+    janela.document.write('<table>')
+    janela.document.write('</body></html>')
+    janela.document.close();
+    janela.print();
+
+  }
+
 function fillTableConsultComplete(data) {
     for (var i = 0; i < data.length; i++) {
         let schedule;
@@ -179,6 +204,7 @@ $(document).ready(function () {
                 success: (data) => {
                     $('#table-complete-all').empty();
                     fillTableConsultComplete(data);
+
                 }
             })
             return false;

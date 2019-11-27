@@ -1,4 +1,5 @@
 const chai = require('chai');
+const crypt = require('../app/common/encrypt');
 
 var app = require('../app')
 // var should = require('should')
@@ -147,16 +148,16 @@ describe('No controlador Supervisores', function () {
                 done();
             });
         });
-  
+
         it('Deve retornar status 302 em Post /consultation/save', function (done) {
-            const  consulta = {
+            const consulta = {
                 dateStart: '2019-11-08 00:00:00',
                 consultPatientId: 1,
                 consultTraineeId: 1,
                 consultSecretaryId: 1,
                 consultMasterId: null,
                 color: '#0000',
-                description:'description',
+                description: 'description',
                 typeProcedureId: 1,
             }
             var req = request.get('/supervisor');
@@ -168,4 +169,31 @@ describe('No controlador Supervisores', function () {
         });
 
     });
+});
+describe('Criptografando os dados', function (done) {
+    const newRelatorio = {
+        reports: "Texto que será criptografado na base de dados",
+        dateSend: "2019-11-27 17:00:00",
+        namePatient: "João Marcelo",
+        IdConsult: "1",
+        dateConsult: "2019-11-27 11:00:00"
+    }
+
+
+    it('Deve ir para /relatorios se os dados foram inserados criptografados', function (done) {
+             var req = request.post('/relatorios/save');
+             req.cookies = cookie;
+            req.send(newRelatorio).end(function (err, res) {
+                res.headers.location.should.eql('/relatorios');
+                done();
+            });
+
+    });
+    // it('Deve retornar os dados descriptografados', function (done) {
+    //     var encriptar = "texto para ser criptografado"
+    //     var encriptografado = crypt.encryptReport(encriptar)
+    //     var descriptografar = crypt.decryptReport(encriptografado)
+    //     descriptografar.should.eql('texto para ser criptografado');
+    //     done();
+    // });
 });

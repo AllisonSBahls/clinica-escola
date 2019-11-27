@@ -1,192 +1,195 @@
 <!DOCTYPE html>
 <html>
-    <script src="../../js/jquery.min.js"></script>
+<script src="../../js/jquery.min.js"></script>
 
 <% include ../layout %>
+<script>
+
+</script>
 
 <body>
-    <!-- Sidenav -->
-    <% include ../partials/sidebar %>
-    <!-- Main content -->
-    <div class="main-content">
-        <!-- Top navbar -->
-        <% include ../partials/navbar %>
-        <!-- Header -->
-        <% include ../partials/header %>
-        <!-- Page content -->
+  <!-- Sidenav -->
+  <% include ../partials/sidebar %>
+  <!-- Main content -->
+  <div class="main-content">
+    <!-- Top navbar -->
+    <% include ../partials/navbar %>
+    <!-- Header -->
+    <% include ../partials/header %>
+    <!-- Page content -->
 
-        <div style="justify-content: center !important" class="row mt-4">
-            <div class="col-xl-11 mb-5 mb-xl-0">
-                <div class="card shadow">
-                        <% include ../partials/message %>
+    <div style="justify-content: center !important" class="row mt-4">
+      <div class="col-xl-11 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <% include ../partials/message %>
 
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">Todas Consultas</h3>
-                              </div>
-                              <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#faq-consult-filter"><img src="img/icons/common/help.svg"></a>
-                              <% include ../partials/help/faqconsult %>
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Todas Consultas</h3>
+              </div>
+              <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#faq-consult-filter"><img
+                  src="img/icons/common/help.svg"></a>
+              <% include ../partials/help/faqconsult %>
 
-                            <a id="button-filter" class="btn btn-primary"><img src="img/icons/common/filter.svg">Filtrar</a>
-                            <div class="col-lg-10" id="search-filter-buttons">
-                                <div class="form-search-name">
-                                    <a id="btn-filter-name" class="btn btn-primary"><img src="img/icons/common/filter.svg"> Nome</a>
-                                    <a id="btn-filter-date" class="btn btn-primary"><img src="img/icons/common/filter.svg"> Data</a>
-                                    <a id="btn-filter-name-date" class="btn btn-primary"><img src="img/icons/common/filter.svg"> Nome e Data</a>
-                                </div>
-                            </div>
-    
-                        </div>
-                    </div>
-                        <div class="search-filter-name" id="search-filter-name">
-                              <div class="row">
-                                  <form class="col-lg-8" id="search-form-name">
-                                      <label class="form-control-label" for="input-username">Nome do Paciente</label>
-                                        <div id="search-filter">
-                                            <input type="text" name="namePatient" class="form-control form-control-alternative"
-                                                placeholder="Digite o nome">
-                                        </div>
-                                    <button class="btn btn-primary" id="btn-consult-name">Buscar</button>
+              <a class="btn btn-primary" onclick="funcao_pdf_consultas()"><img
+                  src="img/icons/common/filter.svg">Imprimir</a>
 
-                                  </form>
-                            </div>
-                        </div>
-
-                        <div class="search-filter-date" id="search-filter-date">
-                          <form class="search-form-date">
-                            <div id="search" class="row">
-                              <div class="col-lg-4">
-                                  <div class="form-group">
-                                      <label class="form-control-label" for="input-username">Data Inicial</label>
-                                      <input type="date" id="date-first" name="dateFirst"
-                                          class="form-control form-control-alternative"
-                                          require placeholder="Data inicial">
-                                  </div>
-                              </div>
-                              <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-username">Data Final</label>
-                                    <input type="date" id="date-end" name="dateEnd"
-                                        class="form-control form-control-alternative"
-                                        require placeholder="Data inicial">
-                                </div>
-                            </div>
-                          </div>
-                          <button class="btn btn-primary" id="btn-consult-date">Buscar</button>
-                        </form>
-                      </div>
-                           
-
-                      <div class="search-filter-name-date" id="search-filter-name-date">
-                        <form class="search-consult-name-date">
-                          <div  id="search" class="row">
-                              <div class="col-lg-5">
-                                  <div class="form-group">
-                                      <label class="form-control-label" for="input-username">Nome</label>
-                                      <input type="text" id="name-patient" name="namePatient"
-                                          class="form-control form-control-alternative"
-                                          require placeholder="Nome Completo">
-                                  </div>
-                              </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-username">Data Inicial</label>
-                                    <input type="date" id="date-first" name="dateFirst"
-                                        class="form-control form-control-alternative"
-                                        require placeholder="Data inicial">
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                              <div class="form-group">
-                                  <label class="form-control-label" for="input-username">Data Final</label>
-                                  <input type="date" id="date-end" name="dateEnd"
-                                      class="form-control form-control-alternative"
-                                      require placeholder="Data inicial">
-                              </div>
-                          </div>
-                          
-                        </div>
-                        <button class="btn btn-primary" id="btn-consult-name-date">Buscar</button>
-                      </form>
-                    </div>
-
-                    <div class="table-responsive">
-
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                                <tr>
-                                  <th scope="col">Tipo</th>
-                                  <th scope="col">Nome</th>
-                                  <th scope="col">Telefone</th>
-                                  <th scope="col">Horario</th>
-                                  <th scope="col">Estagiário</th>
-                                  <th scope="col">Usuario</th>
-              
-                                </tr>
-                              </thead>
-                              <tbody id="table-complete-all"> 
-                                <% if (consultation.length > 0){ %>
-                                  <% for (var i = 0; i < consultation.length; i++) {%>
-                                    <tr>
-                                      <% if(consultation[i].typeSchedule == 1) { %>
-                                        <th scope="row">
-                                          Consulta
-                                        </th>
-                                      <%} else if(consultation[i].typeSchedule == 2) { %>
-                                        <th scope="row">
-                                          Agendamento
-                                        </th>
-                                      <% } %>
-                                      <td>
-                                        <%= consultation[i].consultPatient.name %>
-                                      </td>
-                                      <td>
-                                        <%= consultation[i].consultPatient.phone %>
-                                      </td>
-                                      <td>
-                                          <%= moment(consultation[i].dateStart).format('DD/MM/YYYY HH:mm') %>
-                                      </td>
-                                      <% if(consultation[i].consultTraineeId == null) { %>
-                                        <td>
-                                          Nao Informado
-                                        </td>
-                                      <%} else { %>
-                                        <td>
-                                          <%= consultation[i].consultTrainee.name %>
-                                        </td>
-                                      <% } %>
-                                      <% if(consultation[i].consultSecretaryId == null && consultation[i].consultMasterId == null) { %>
-                                        <td>
-                                          Portal
-                                        </td>
-                                      <% } else if (consultation[i].consultMasterId == null) { %>
-                                        <td>
-                                          <%= consultation[i].consultSecretary.name %>
-                                        </td>
-                                      <% } else { %>
-                                        <td>
-                                          <%= consultation[i].consultMaster.name %>
-                                        </td>
-                                          <% }  %>
-              
-                                    </tr>
-                                  <% } %>
-                                <% } %>    
-                                </tbody>
-                        </table>
-                    </div>
+              <a id="button-filter" class="btn btn-primary"><img src="img/icons/common/filter.svg">Filtrar</a>
+              <div class="col-lg-10" id="search-filter-buttons">
+                <div class="form-search-name">
+                  <a id="btn-filter-name" class="btn btn-primary"><img src="img/icons/common/filter.svg"> Nome</a>
+                  <a id="btn-filter-date" class="btn btn-primary"><img src="img/icons/common/filter.svg"> Data</a>
+                  <a id="btn-filter-name-date" class="btn btn-primary"><img src="img/icons/common/filter.svg"> Nome e
+                    Data</a>
                 </div>
-            </div>
-        </div>
-        <!-- Footer -->
-        <% include ../partials/footer %>
+              </div>
 
+            </div>
+          </div>
+          <div class="search-filter-name" id="search-filter-name">
+            <div class="row">
+              <form class="col-lg-8" id="search-form-name">
+                <label class="form-control-label" for="input-username">Nome do Paciente</label>
+                <div id="search-filter">
+                  <input type="text" name="namePatient" class="form-control form-control-alternative"
+                    placeholder="Digite o nome">
+                </div>
+                <button class="btn btn-primary" id="btn-consult-name">Buscar</button>
+
+              </form>
+            </div>
+          </div>
+
+          <div class="search-filter-date" id="search-filter-date">
+            <form class="search-form-date">
+              <div id="search" class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Data Inicial</label>
+                    <input type="date" id="date-first" name="dateFirst" class="form-control form-control-alternative"
+                      require placeholder="Data inicial">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Data Final</label>
+                    <input type="date" id="date-end" name="dateEnd" class="form-control form-control-alternative"
+                      require placeholder="Data inicial">
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-primary" id="btn-consult-date">Buscar</button>
+            </form>
+          </div>
+
+
+          <div class="search-filter-name-date" id="search-filter-name-date">
+            <form class="search-consult-name-date">
+              <div id="search" class="row">
+                <div class="col-lg-5">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Nome</label>
+                    <input type="text" id="name-patient" name="namePatient"
+                      class="form-control form-control-alternative" require placeholder="Nome Completo">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Data Inicial</label>
+                    <input type="date" id="date-first" name="dateFirst" class="form-control form-control-alternative"
+                      require placeholder="Data inicial">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Data Final</label>
+                    <input type="date" id="date-end" name="dateEnd" class="form-control form-control-alternative"
+                      require placeholder="Data inicial">
+                  </div>
+                </div>
+
+              </div>
+              <button class="btn btn-primary" id="btn-consult-name-date">Buscar</button>
+            </form>
+          </div>
+
+          <div class="table-responsive">
+
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Telefone</th>
+                  <th scope="col">Horario</th>
+                  <th scope="col">Estagiário</th>
+                  <th scope="col">Usuario</th>
+
+                </tr>
+              </thead>
+              <tbody id="table-complete-all">
+                <% if (consultation.length > 0){ %>
+                <% for (var i = 0; i < consultation.length; i++) {%>
+                <tr>
+                  <% if(consultation[i].typeSchedule == 1) { %>
+                  <th id="tipo" scope="row">
+                    Consulta
+                  </th>
+                  <%} else if(consultation[i].typeSchedule == 2) { %>
+                  <th id="tipo" scope="row">
+                    Agendamento
+                  </th>
+                  <% } %>
+                  <td id="paciente">
+                    <%= consultation[i].consultPatient.name %>
+                  </td>
+                  <td id="telefone">
+                    <%= consultation[i].consultPatient.phone %>
+                  </td>
+                  <td id="data">
+                    <%= moment(consultation[i].dateStart).format('DD/MM/YYYY HH:mm') %>
+                  </td>
+                  <% if(consultation[i].consultTraineeId == null) { %>
+                  <td id="estagiario">
+                    Nao Informado
+                  </td>
+                  <%} else { %>
+                  <td id="estagiario">
+                    <%= consultation[i].consultTrainee.name %>
+                  </td>
+                  <% } %>
+                  <% if(consultation[i].consultSecretaryId == null && consultation[i].consultMasterId == null) { %>
+                  <td id="usuario">
+                    Portal
+                  </td>
+                  <% } else if (consultation[i].consultMasterId == null) { %>
+                  <td id="usuario">
+                    <%= consultation[i].consultSecretary.name %>
+                  </td>
+                  <% } else { %>
+                  <td id="usuario">
+                    <%= consultation[i].consultMaster.name %>
+                  </td>
+                  <% }  %>
+
+                </tr>
+                <% } %>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
-    <!-- Argon Scripts -->
-    <!-- Core -->
-    <% include ../partials/scripts %>
+    <!-- Footer -->
+    <% include ../partials/footer %>
+
+  </div>
+  </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <% include ../partials/scripts %>
 
 </body>
 

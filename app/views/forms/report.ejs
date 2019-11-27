@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <% include ../layout %>
-
 <script>
     function funcao_pdf() {
         var estagiario = document.getElementById('nameTrainee')
@@ -9,39 +8,30 @@
         var data = document.getElementById('dateConsult')
         var paciente = document.getElementById('namePatient')
         var relatório = document.getElementById('report')
-        var envio = document.getElementById('dateSend')
 
-        var janela = window.open('', '', 'width=1000px; height=728px');
+
+        var janela = window.open('', '', 'width=1366px heigh=728px');
         janela.document.write('<html><head>')
-        janela.document.write('<title>Relatório da Consulta</title></head>')
-        janela.document.write('<body style="margin-top:3em; width:794px; heigh:1122px ">')
-        janela.document.write('<h1 style="text-align:center">Relátorio da Consulta</title></h1>')
+        janela.document.write('<title>Relátorio da Consulta</title></head>')
+        janela.document.write('<body>')
+        janela.document.write('<h1>Relátorio da Consulta</title></h1>')
 
-        janela.document.write('<div style="font-size: 1em; margin-top:3em; margin-left:2em; margin-right:2em">'+
-            '<div style="display: flex; justify-content: space-between;"><div style="margin-right: 6em">')
-        janela.document.write('<b> Estagiário: </b> <p>' + estagiario.value + '</p>')
-        janela.document.write('<b> Supervisor: </b> <p>' + supervisor.value + '</p>')
-        janela.document.write('<b> Paciente: </b> <p> ' + paciente.value + '</p>') 
-        janela.document.write('</div>'+
-                                '<div>')
-        janela.document.write('<b> Data da Consulta: </b> <p>' + data.value + '</p>')
-        janela.document.write('<b> Data de Envio do Relatório: </b> <p> ' + dateSend.value + '</p>') 
-        janela.document.write('</div>'+
-                                '</div>'+
-                                '<div style="padding-top: 2em">')
-        janela.document.write('<b style="text-align:center"> RELATÓRIO DA CONSULTA</b>') 
-        janela.document.write('<p style="line-height: 150% ;font-family:times new roman, Times, serif; font-size: 1em; text-align:justify; width:100%; resize: none; border:none"> ' + relatório.value + '</p>') 
-        janela.document.write('</div>'+
-                                '<div style="padding-top:5em; display:flex; position:relative; justify-content: space-around; ">')
-        janela.document.write('<div>')
-        janela.document.write('<b style="border-top: 1px solid black; width:100px;">Assinatura do Responsável pelo Atendimento</b>')
-        janela.document.write('</div>')
-        janela.document.write('<div>')
-        janela.document.write('<b style="border-top: 1px solid black; width:100px;">Assinatura do Supervisor Responsável</b>')
+        janela.document.write('<div class="ml-6">'+
+            '<div>')
+        janela.document.write('<p class="form-control-label"> Estagiário: ' + estagiario.value + '</p>')
+        janela.document.write('</div><div>')
+        janela.document.write('<p class="form-control-label"> Supervisor: ' + supervisor.value + '</p>')
+        janela.document.write('</div><div>')
+        janela.document.write('<p class="form-control-label"> Data da Consulta: ' + data.value + '</p>')
+        janela.document.write('</div><div>')
+        janela.document.write('<p class="form-control-label"> Nome do Paciente: ' + paciente.value + '</p>') 
+        janela.document.write('</div><div>')
+        janela.document.write('<label class="form-control-label"> Relatório da Consulta</label>') 
+        janela.document.write('<textarea style="height:500px"> ' + relatório.value + '</textarea>') 
+
         janela.document.write('</div></div>')
-        janela.document.write('</div>')
         janela.document.write('</body></html>')
-        janela.document.close();
+        janela.document.cose();
         janela.print();
 
     }
@@ -49,16 +39,7 @@
 </script>
 
 <body>
-    <!-- Sidenav -->
-    <% include ../partials/sidebar %>
-    <!-- Main content -->
     <div class="main-content">
-        <!-- Top navbar -->
-        <% include ../partials/navbar %>
-        <!-- Header -->
-        <% include ../partials/profile/header %>
-        <!-- Page content -->
-
         <div class="container-fluid mt--7">
             <div class="row">
                 <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -76,7 +57,7 @@
                         <div class="card-body">
 
                             <form action="/relatorios/save" method="POST">
-                                <h6 class="heading-small text-muted mb-4">Relatório</h6>
+                                <h6 class="heading-small text-muted mb-4">Relatório Da Consulta</h6>
                                 <div class="pl-lg-4">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -85,7 +66,7 @@
                                                     for="input-username">Estagiario</label>
                                                 <input type="text" id="nameTrainee" name="name"
                                                     class="form-control form-control-alternative" require
-                                                    value="<%= traineeProfile.name %>">
+                                                    >
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -93,7 +74,7 @@
                                                 <label class="form-control-label">Supervisor</label>
                                                 <input type="text" id="nameMaster" name="name"
                                                     class="form-control form-control-alternative" require
-                                                    value="<%= report.reportMaster.name %>">
+                                                   >
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +87,7 @@
                                                     Paciente</label>
                                                 <input type="text" id="namePatient" name="name"
                                                     class="form-control form-control-alternative" require
-                                                    value="<%= patientDecrypt %>">
+                                                   >
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -114,7 +95,7 @@
                                                 <label class="form-control-label">Data da Consulta</label>
                                                 <input type="text" id="dateConsult" name="phone"
                                                     class="form-control form-control-alternative" require
-                                                    value="<%= moment(report.dateConsult).format('DD/MM/YYYY  HH:mm') %>">
+                                               >
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +106,7 @@
                                                 <label class="form-control-label" for="input-email">Relatório</label>
                                                 <textarea id="report" name="report" style="height:500px;"
                                                     class="form-control form-control-alternative"
-                                                    require><%= reportDecrypt %></textarea>
+                                                    require></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -133,9 +114,8 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="form-control-label">Data de Envio</label>
-                                        <input type="text" id="dateSend" name="phone"
+                                        <input type="text" id="telefoneRecepcionista" name="phone"
                                             class="form-control form-control-alternative" require
-                                            value="<%= moment(report.dateSend).format('DD/MM/YYYY  HH:mm') %>">
                                     </div>
                                 </div>
                                 <hr class="my-4" />
@@ -145,15 +125,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
-            <% include ../partials/footer %>
 
         </div>
     </div>
-    <!-- Argon Scripts -->
-    <!-- Core -->
-    <% include ../partials/scripts %>
-
 </body>
 
 </html>
