@@ -22,6 +22,20 @@ const newSupervisor = {
     password: "teste"
 }
 
+const userTrainee = {
+    email: 'joao_vinicius@hotmail.com.br',
+    password: '12345'
+}
+
+cookieTrainee = {};
+beforeEach(function (done) {
+    request.post('/login')
+        .send(userTrainee)
+        .end(function (err, res) {
+            cookieTrainee = res.headers['set-cookie'];
+            done();
+        });
+});
 cookie4 = {};
 
 cookie = {};
@@ -170,25 +184,33 @@ describe('No controlador Supervisores', function () {
 
     });
 });
-describe('Criptografando os dados', function (done) {
-    const newRelatorio = {
-        reports: "Texto que será criptografado na base de dados",
-        dateSend: "2019-11-27 17:00:00",
+
+
+
+describe('Criptografando os dados', async function (done) {
+    let newRelatorio = {
+        /**Descrição do Relatório */
+        report: "Texto que será criptografado na base de dados",
+        /**Nome do Paciente */
         namePatient: "João Marcelo",
-        IdConsult: "1",
-        dateConsult: "2019-11-27 11:00:00"
+        /**Número da consulta */
+        IdConsult: 1,
+        /**Data da Consulta */
+        dateConsult: "2019-11-27 11:00:00",
+        /**Supervisor destinado a receber a consulta */
+        reportMasterId: 1,
+
     }
 
-
-    it('Deve ir para /relatorios se os dados foram inserados criptografados', function (done) {
-             var req = request.post('/relatorios/save');
-             req.cookies = cookie;
+    it('Deve ir para /relatorios se os dados foram inseridos criptografados', function (done) {
+        let req = request.post('/relatorios/save');
+            req.cookies = cookieTrainee;
             req.send(newRelatorio).end(function (err, res) {
-                res.headers.location.should.eql('/relatorios');
+               res.headers.location.should.eql('/relatorios');
                 done();
             });
-
     });
+   
     // it('Deve retornar os dados descriptografados', function (done) {
     //     var encriptar = "texto para ser criptografado"
     //     var encriptografado = crypt.encryptReport(encriptar)

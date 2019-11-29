@@ -42,10 +42,10 @@ class ReportController {
 
 
     async report_save(req, res) {
-        crypt.generateKeys();
         const { namePatient, dateConsult, report, idConsult, masterId } = req.body
         // let reportCrypt = req.body.report;
         const traineeProfile = await Trainee.searchProfileTraineeUser(req);
+        const idTrainee = traineeProfile.id;
         //Criptografando o relatorio
         const reportCrypt = crypt.encryptReport(report);
 
@@ -53,7 +53,7 @@ class ReportController {
         let nameCrypt = crypt.encryptReport(namePatient)
         // let b = crypt.decryptStringWithRsaPrivateKey(a, "private.pem");
 
-        Report.sendReports(reportCrypt, nameCrypt, idConsult, dateConsult, traineeProfile.id, masterId).then(function () {
+        Report.sendReports(reportCrypt, nameCrypt, idConsult, dateConsult, idTrainee, masterId).then(function () {
             res.redirect('/relatorios');
         }).catch(function (erro) {
             res.send("erro" + erro);
