@@ -213,17 +213,25 @@ class ConsultationController {
      * @param {*} res Argumento de resposta HTTP para a função de middleware, chamado de "res" por convenção.
      */
     async saveConsult(req, res) {
-        const { dateStart, timeStart, timeEnd, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
+        const { dateStart, timeStart, timeEnd, timeStartInit, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
         //converter formato brasileiro para SQL
         const date = dateStart +' '+ timeStart
+        console.log(date)
         const datetime = dateFormat(date);
+        
+        const dateSchedule = dateStart +' '+ timeStartInit
+        const datetimeInit = dateFormat(dateSchedule);
+
         const dateEnd = dateStart +' '+ timeEnd
         const datetimeEnd = dateFormat(dateEnd);
+        console.log(datetime)
+        console.log(datetimeInit)
+        console.log(datetimeEnd)
 
         let idMaster;
         let idSecretary;
 
-        //Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
+        // Verifica se o tipo do agendamento é 1 - Consulta ou 2 - Agendamento e também verifica se o usuário é administrador ou secretaria
         if (typeSchedule == 1 && req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2) {
             if (req.user.NivelPermissaoId == 1){
 
@@ -262,7 +270,7 @@ class ConsultationController {
                  * @param {TEXT}description Observação na consulta
                  * @param {Integer}typeProcedure tipo do procedimento
                  */
-                Consultation.insertConsults(datetime, idSecretary, patientId, traineeId, idMaster, typeSchedule, color, description, typeProcedure).then(function () {
+                Consultation.insertConsults(date, idSecretary, patientId, traineeId, idMaster, typeSchedule, color, description, typeProcedure).then(function () {
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -295,6 +303,7 @@ class ConsultationController {
                 }).catch(function (err) {
                     req.flash("error_msg", "Erro ao marcar a consulta");
                     res.redirect('/dashboard');
+                    console.log(err)
                 })
             }
             /**
@@ -309,22 +318,25 @@ class ConsultationController {
              * Verificando se o funcionario está marcando um agendamento para um paciente da lista de espera ou não.
              */
             if (patientId != null) {
-                Consultation.insertSchedules(datetime, patientId, color).then(function () {
+                Consultation.insertSchedules(datetime, datetimeInit, patientId, color, description).then(function () {
                     req.flash("success_msg", "Agendamento marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
                     req.flash("error_msg", "Erro ao marcar a Agendamento");
                     res.redirect('/dashboard');
+                    console.log(err)
+
                 })
             } else {
-
-                Consultation.insertSchedules(datetime, patientWaitId, color).then(function () {
+                Consultation.insertSchedules(datetime, datetimeInit, patientWaitId, color, description).then(function () {
                     Wait.searchUpdateWait(patientWaitId)
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
                     req.flash("error_msg", "Erro ao marcar a consulta");
                     res.redirect('/dashboard');
+                    console.log(err)
+
                 })
             }
             //O paciente podera solicitar uma consulta
@@ -344,7 +356,7 @@ class ConsultationController {
                  /**
                  * Método para possibilitar o paciente solicitar o agendamento
                  */
-                Consultation.insertSchedules(datetime, datetimeEnd, patientProfile.id, color).then(function () {
+                Consultation.insertSchedules(datetime, datetimeEnd, patientProfile.id, color, description).then(function () {
                     req.flash("success_msg", "Agendamento marcado com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -417,8 +429,9 @@ class ConsultationController {
              *Utilizando o body parser para buscar as informações digitadas pelo usuário  
              */
 
-            const {dateStart, consultationId, traineeId, description} = req.body;
-            const datetime = dateFormat(dateStart);
+            const {dateInit, consultationId, traineeId, description, timeStart} = req.body;
+            const date = dateInit +' '+ timeStart
+            const datetime = dateFormat(date);
 
                /**
              * Método para confirmar o agendamento
@@ -434,6 +447,7 @@ class ConsultationController {
             }).catch((err) => {
                 req.flash("error_msg", "Você ao confirmar a consulta")
                 res.redirect('/dashboard')
+                console.log(err)
                 
             });
         }else{

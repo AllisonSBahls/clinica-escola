@@ -21,20 +21,18 @@ Master.searchProfileMaster = async function (req) {
     });
 }
 
-Master.insertUserMaster = function (email, password, name, phone) {
+Master.insertUserMaster = async function (email, password, name, phone) {
     return User.create({
         email: email,
         password: password,
         NivelPermissaoId: 1,
-        statusUser: true,
     }).then((user) => {
-        Master.create({
+        return Master.create({
             name: name,
             phone: phone,
             userMasterId: user.id
         })
     }).catch((err) => {
-        console.log(err)
     });
 }
 

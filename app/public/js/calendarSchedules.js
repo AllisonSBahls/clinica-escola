@@ -75,6 +75,10 @@ function funcao_pdf_consultas() {
 
   }
 
+  function docpage(url, namepage){
+    window.open(url, namepage,'resizable, height=800,width=600'); return false;
+  }
+
 function fillTableConsultComplete(data) {
     for (var i = 0; i < data.length; i++) {
         let schedule;
@@ -352,11 +356,17 @@ function showAllPatient() {
 function fieldsSchedulesHidden() {
     document.getElementById("traineeSchedulesHidden").style.display = 'none';
     document.getElementById("typeConsultHidden").style.display = 'none';
+    document.getElementById("registerHoursInit").style.display = 'none';
+    document.getElementById("registerHoursInitEnd").style.display = 'flex';
+
+
 }
 
 function fieldsSchedulesShow() {
     document.getElementById("traineeSchedulesHidden").style.display = 'block';
     document.getElementById("typeConsultHidden").style.display = 'block';
+    document.getElementById("registerHoursInit").style.display = 'block';
+    document.getElementById("registerHoursInitEnd").style.display = 'none';
 }
 
 $(document).ready(function () {
@@ -440,22 +450,26 @@ $(document).ready(function () {
         return false;
     })
 
+  
     $(".confirm-hidden").hide();
     $("#saveHidden").hide();
     $("#voltarHidden").hide();
-    $("#confHidden").click(function () {
-        $(".confirm-hidden").toggleClass("active").slideToggle("slow");
-        $("#deletarHidden").hide();
-        $("#saveHidden").show();
-        $("#esperaHidden").hide();
-        $("#voltarHidden").show();
-        $("#confHidden").hide();
-        $("#time-end").hide();
-        $("#timeStart").prop("disabled", true);
+    $("#time-begin").hide();
 
-        
-        return false;
-    })
+$("#confHidden").click(function () {
+    $(".confirm-hidden").toggleClass("active").slideToggle("slow");
+    $("#deletarHidden").hide();
+    $("#saveHidden").show();
+    $("#esperaHidden").hide();
+    $("#voltarHidden").show();
+    $("#confHidden").hide();
+    $("#time-hour-start").hide();
+    $("#time-hour-end").hide();
+    $("#time-begin").show();
+    $('#dateInit').attr('disabled', false);
+
+})
+
 
     $("#voltarHidden").click(function () {
         $(".confirm-hidden").toggleClass("deactive").slideToggle("slow");
@@ -465,7 +479,10 @@ $(document).ready(function () {
         $("#voltarHidden").hide();
         $("#confHidden").show();
         $("#time-end").show();
-        $("#timeStart").prop("disabled", true);
+        $("#time-hour-start").show();
+        $("#time-hour-end").show();
+        $("#time-begin").hide();
+        $('#dateInit').attr('disabled', true);
 
         return false;
     })

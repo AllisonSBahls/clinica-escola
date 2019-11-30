@@ -86,8 +86,8 @@
                 {
                     id: '<%= consultation[i].id  %>',
                     title: '<%= consultation[i].consultPatient.name %>',
-                    start: '<%= moment(consultation[i].dateStart).format()  %>',
-                    end: '<%= moment(consultation[i].dateEnd).format()   %>',
+                    start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
+                    end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         trainee: '<%= consultation[i].consultTrainee.name %>',
@@ -102,8 +102,8 @@
                 {
                     id: '<%= consultation[i].id  %>',
                     title: '<%= consultation[i].consultPatient.name %>',
-                    start: '<%= moment(consultation[i].dateStart).format()  %>',
-                    end: '<%= moment(consultation[i].dateEnd).format()   %>',
+                    start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
+                    end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         description: '<%= consultation[i].description  %>',
