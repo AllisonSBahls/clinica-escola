@@ -7,6 +7,8 @@ const sequelize = new Sequelize('heroku_04bfb01fc69c8d8', 'b4ea5601e08112', '887
     logging: false
 });
 
+
+
 module.exports = {
     sequelize: sequelize,
     Sequelize: Sequelize
