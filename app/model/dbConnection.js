@@ -1,8 +1,8 @@
 // Conectando com o banco de dados utilizando o 
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('dbclinica', 'root', 'PQZMAL@2121997', {
-    host: 'localhost',
+const sequelize = new Sequelize('heroku_04bfb01fc69c8d8', 'b4ea5601e08112', '887571de', {
+    host: 'us-cdbr-iron-east-05.cleardb.net',
     dialect: 'mysql',
     logging: false
 });
