@@ -37,7 +37,7 @@ class MasterController {
         }
         else {
             //Registrar informações do supervisor
-            Master.insertUserMaster(email, secretPassword, name, phone).then(() => {
+           await Master.insertUserMaster(email, secretPassword, name, phone).then(() => {
                 req.flash("success_msg", "Supervisor cadastrado com sucesso");
                 res.redirect('/supervisor');
             }).catch((err) => {

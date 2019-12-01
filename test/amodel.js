@@ -13,6 +13,9 @@
 // const report = require('../app/model/Reports')
 // const bcrypt = require('bcryptjs');
 
+// var generateHash = function (password) {
+//     return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+// };
 
 // describe('Criando as Tabelas', function () {
 

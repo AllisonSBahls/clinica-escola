@@ -3,11 +3,6 @@
 
 <% include ../layout %>
 
-<script>
-  
- </script>
-    <% include ../partials/help/faqpainel %>
-
 <body>
   <!-- Sidenav -->
   <% include ../partials/sidebar %>
@@ -37,15 +32,11 @@
                         </a>
                           Botão de Help -->
                           <div>
-                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#faq-calendar"><img src="img/icons/common/help.svg"></a>
+                            <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
                           </div>
                         <% //include ../partials/legendas %>
                       </li>
                     </ul> 
-                   
-
-                    <% include ../partials/help/faqmodal %>
-
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                     
@@ -98,10 +89,9 @@
                  
                 </div>
                 <div>
-                  <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#faq-list-day"><img src="img/icons/common/help.svg"></a>
+                  <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-consult-list', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
                 </div>
               </div>
-              <% include ../partials/help/faqlist %>
             </div>
             <div class="card-body" >              
               <div class="chart">
@@ -133,9 +123,8 @@
                   <h3 class="mb-0">Consultas Marcadas</h3>
                 </div>
                 <div>
-                  <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#faq-list-complete"><img src="img/icons/common/help.svg"></a>
+                  <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-table-complete', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
                 </div>
-                <% include ../partials/help/faqcomplete %>
 
                 <div class="col text-right">
                     <a class="btn btn-sm btn-primary" id="allConsultNext">Proximas Consultas</a>
@@ -195,8 +184,8 @@
                 {
                     id: '<%= consultation[i].id  %>',
                     title: '<%= consultation[i].consultPatient.name %>',
-                    start: '<%= moment(consultation[i].dateStart).format()  %>',
-                    end: '<%= moment(consultation[i].dateEnd).format()   %>',
+                    start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
+                    end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         trainee: '<%= consultation[i].consultTraineeId %>',
@@ -213,8 +202,8 @@
                 {
                     id: '<%= consultation[i].id  %>',
                     title: '<%= consultation[i].consultPatient.name %>',
-                    start: '<%= moment(consultation[i].dateStart).format()  %>',
-                    end: '<%= moment(consultation[i].dateEnd).format()   %>',
+                    start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
+                    end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         phone: '<%= consultation[i].consultPatient.phone %>',
@@ -258,7 +247,7 @@
                     $('#viewConsultPatient #phone').val(info.event.extendedProps.phone);
                     $('#viewConsultPatient #patientIdHidden').val(info.event.extendedProps.patientId);
                     $('#viewConsultPatient #patient').val(info.event.title);
-                    $('#viewConsultPatient #dateStart').val(dt.format('YYYY-MM-DD'));
+                    $('#viewConsultPatient #dateInit').val(dt.format('YYYY-MM-DD'));
                     $('#viewConsultPatient #timeStart').val(dt.format('HH:mm'));
                     $('#viewConsultPatient #timeEnd').val(dtEnd.format('HH:mm'));
 
