@@ -17,84 +17,84 @@
       <div class="row">
         <div class="col-lg-7 mb-5 mb-xl-0">
           <div class="card bg-gradient-default shadow">
-              <% include ../partials/message %>
+            <% include ../partials/message %>
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
-                  <ul class="navbar-nav align-items-center d-none d-md-flex">
-                      <li class="nav-item dropdown">
-                        <!-- <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                          aria-expanded="false">
-                          <div class="media align-items-center">                
-                            <div class="media-body ml-2 d-none d-lg-block">
-                              <span class="mb-0 text-sm font-weight-bold">Legenda</span>
-                            </div>
-                          </div>
-                        </a>
-                          Botão de Help -->
-                          <div>
-                            <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
-                          </div>
-                        <% //include ../partials/legendas %>
-                      </li>
-                    </ul> 
+                <ul class="navbar-nav align-items-center d-none d-md-flex">
+                  <li class="nav-item dropdown">
+                    <a data-intro='Hello step one!' date-step="2" class="btn btn-primary btn-sm" onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')"><img
+                        src="img/icons/common/help.svg"></a>
+                  </li>
+                </ul>
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
-                    
-                      <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                      <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
-                        <span class="d-none d-md-block">Nova Consulta</span>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+
+                      <a  id="btn-info-calendar" class="btn btn-primary btn-sm"  
+                      onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')" ><img
+                          src="img/icons/common/help.svg"></a>
+
+                      </a>
+                    </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                      <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal"  data-intro='Hello step one!' date-step="1">
+                        <span class="">Nova Consulta</span>
                       </a>
                     </li>
                     <% if (user.NivelPermissaoId == 1  || user.NivelPermissaoId == 2) { %>
-                      <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                        <a href="/dashboard" class="nav-link py-1 px-1 active">
-                            <span class="d-none d-md-block">Ver Consultas</span>
-                        </a>
-                      </li>
-                      <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                        <a href="/schedules" class="nav-link py-1 px-1 active">
-                            <span class="d-none d-md-block">Ver Agendamentos</span>
-                        </a>
-                      </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                      <a href="/dashboard" class="nav-link py-1 px-1 active">
+                        <span class="d-none d-md-block">Consultas</span>
+                      </a>
+                    </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
+                      <a href="/schedules" class="nav-link py-1 px-1 active">
+                        <span class="d-none d-md-block">Agendamentos</span>
+                      </a>
+                    </li>
                     <% } %>
                   </ul>
                 </div>
               </div>
             </div>
-            
-            <div class="card-body">
+
+            <% if (user.NivelPermissaoId == 4) { %>
+
+            <% include ../partials/help/guide-patient %>
+
+            <% } %>
+
+            <div   class="card-body">
               <div style="font-size: 14px" id='calendarDashboard'></div>
-
-
             </div>
-            
           </div>
-         
+
         </div>
         <div class="col-xl-5" id="viewConsultDashboard">
           <div class="card shadow">
             <div class="card-header bg-transparent">
-              <div class="row align-items-center">  
+              <div class="row align-items-center">
                 <div class="col">
                   <div class="form-group">
-                          <label class="form-control-label">Consultas</label>
-                          <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) {%>
-                          <a style="color: black; float: right;"class="btn btn-sm btn-outline-primary" >Você tem <%= countSchedules[0].typeSchedule %> Agendamento(os)</a>
-                         <% }%>
-                  </div>  
-                  <button class="btn btn-primary primary"
-                  id="allConsultDays">Hoje</button>
-                  <a class="btn btn-primary primary"
-                    href="">Proximas</a>
-                 
+                    <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) {%>
+                    <button style="float: right;" type="button" class="btn btn-success btn-sm">
+                      Agendamentos <span class="badge badge-light"><%= countSchedules[0].typeSchedule %></span>
+                    </button>
+                    <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-consult-list', 'Ajuda')"><img
+                        src="img/icons/common/help.svg"></a>
+
+                    <% }%>
+                  </div>
+                  <button class="btn btn-primary primary btn-sm" id="allConsultDays">Hoje</button>
+                  <a class="btn btn-primary primary  btn-sm" href="">Proximas</a>
+
                 </div>
                 <div>
-                  <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-consult-list', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
                 </div>
               </div>
             </div>
-            <div class="card-body" >              
-              <div class="chart">
+            <div class="card-body">
+              <div class="table-responsive chart">
                 <table class="table">
                   <thead>
                     <tr>
@@ -103,11 +103,11 @@
                       <th scope="col">Hora</th>
                     </tr>
                   </thead>
-                  <tbody id="table-day"> 
-                   <!-- Criando tabela pelo ajax -->
-                    </tbody>
+                  <tbody id="table-day">
+                    <!-- Criando tabela pelo ajax -->
+                  </tbody>
                 </table>
-                
+
                 <canvas id="chart-orders" class="chart-canvas"></canvas>
               </div>
             </div>
@@ -123,13 +123,14 @@
                   <h3 class="mb-0">Consultas Marcadas</h3>
                 </div>
                 <div>
-                  <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-table-complete', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
+                  <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-table-complete', 'Ajuda')"><img
+                      src="img/icons/common/help.svg"></a>
                 </div>
 
-                <div class="col text-right">
-                    <a class="btn btn-sm btn-primary" id="allConsultNext">Proximas Consultas</a>
-                    <a class="btn btn-sm btn-primary" id="completeConsultDays">Marcadas para Hoje</a>
-                  <a href="/consultation" class="btn btn-sm btn-primary">Ver Todas</a>
+                <div id="btn-table-complete" class="col text-right">
+                  <a class="btn btn-sm btn-primary" id="allConsultNext">Proximas Consultas</a>
+                  <a class="btn btn-sm btn-primary" id="completeConsultDays">Hoje</a>
+                  <a href="/consultation" class="btn btn-sm btn-primary">Todos</a>
                 </div>
               </div>
             </div>
@@ -147,15 +148,15 @@
 
                   </tr>
                 </thead>
-                <tbody id="table-complete"> 
-                     
-                  </tbody>
+                <tbody id="table-complete">
+
+                </tbody>
               </table>
             </div>
           </div>
         </div>
 
-    <% include ../partials/schedulesModal %>  
+        <% include ../partials/schedulesModal %>
       </div>
       <!-- Footer -->
       <% include ../partials/footer %>
@@ -168,108 +169,134 @@
 </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendarDashboard');
 
-        var calendarDashboard = new FullCalendar.Calendar(calendarEl, {
-            locale: 'pt-br',
-            plugins: ['interaction', 'dayGrid', 'moment'],
-            //defaultDate: '2019-04-12',
-            editable: true,
-            
-            eventLimit: true, // allow "more" link when too many events
-            events: [
-            '<% for (var i = 0; i < consultation.length; i++) {%>',
-                '<% if (consultation[i].consultTraineeId != null) { %>',
-                {
-                    id: '<%= consultation[i].id  %>',
-                    title: '<%= consultation[i].consultPatient.name %>',
-                    start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
-                    end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
-                    color: '<%= consultation[i].color  %>',
-                    extendedProps: {
-                        trainee: '<%= consultation[i].consultTraineeId %>',
-                        description: '<%= consultation[i].description  %>',
-                        typeSchedule: '<%= consultation[i].typeSchedule  %>',
-                        patientId: '<%= consultation[i].consultPatientId %>',
-                        typeProcedure: '<%= consultation[i].typeProcedureId %>',
-                        phone: '<%= consultation[i].consultPatient.phone %>',
+introJs(".card-body").start();
 
-                    },
-                    textColor: '#fff',
-                },
-                '<% } else { %>',
-                {
-                    id: '<%= consultation[i].id  %>',
-                    title: '<%= consultation[i].consultPatient.name %>',
-                    start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
-                    end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
-                    color: '<%= consultation[i].color  %>',
-                    extendedProps: {
-                        phone: '<%= consultation[i].consultPatient.phone %>',
-                        description: '<%= consultation[i].description  %>',
-                        typeSchedule: '<%= consultation[i].typeSchedule  %>',
-                        patientId: '<%= consultation[i].consultPatientId %>',
-                    },
-                    textColor: '#fff',
-                },
-                '<% } %>',
-                '<% } %>',
 
-            ],
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendarDashboard');
 
-            eventClick: function (info) {
-              info.jsEvent.preventDefault();
-                if (info.event.extendedProps.typeSchedule == 1) {
-                  var dt = moment(info.event.start);
-                  var dtEnd = moment(info.event.end);
+    var calendarDashboard = new FullCalendar.Calendar(calendarEl, {
+      locale: 'pt-br',
+      plugins: ['interaction', 'dayGrid', 'moment'],
+      //defaultDate: '2019-04-12',
+      editable: true,
 
-                    $('#viewConsult #id').val(info.event.id);
-                    $('#viewConsult #patient').val(info.event.title);
-                    $('#viewConsult #dateStart').val(dt.format('YYYY-MM-DD'));
-                    $('#viewConsult #timeStart').val(dt.format('HH:mm'));
-                    $('#viewConsult #timeEnd').val(dtEnd.format('HH:mm'));
-                    $('#viewConsult #phone').val(info.event.extendedProps.phone);
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+        '<% for (var i = 0; i < consultation.length; i++) {%>',
+        '<% if (consultation[i].consultTraineeId != null) { %>',
+        {
+          id: '<%= consultation[i].id  %>',
+          title: '<%= consultation[i].consultPatient.name %>',
+          start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
+          end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
+          color: '<%= consultation[i].color  %>',
+          extendedProps: {
+            trainee: '<%= consultation[i].consultTraineeId %>',
+            description: '<%= consultation[i].description  %>',
+            typeSchedule: '<%= consultation[i].typeSchedule  %>',
+            patientId: '<%= consultation[i].consultPatientId %>',
+            typeProcedure: '<%= consultation[i].typeProcedureId %>',
+            phone: '<%= consultation[i].consultPatient.phone %>',
 
-            
-                    $('#viewConsult #traineeId').val(info.event.extendedProps.trainee);
-                    $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
-                    $('#viewConsult #description').val(info.event.extendedProps.description);
-                    $('#viewConsult #typeProcedure').val(info.event.extendedProps.typeProcedure);
+          },
+          textColor: '#fff',
+        },
+        '<% } else { %>',
+        {
+          id: '<%= consultation[i].id  %>',
+          title: '<%= consultation[i].consultPatient.name %>',
+          start: '<%= moment(consultation[i].dateStart).format("YYYY-MM-DDTHH:mm")  %>',
+          end: '<%= moment(consultation[i].dateEnd).format("YYYY-MM-DDTHH:mm")   %>',
+          color: '<%= consultation[i].color  %>',
+          extendedProps: {
+            phone: '<%= consultation[i].consultPatient.phone %>',
+            description: '<%= consultation[i].description  %>',
+            typeSchedule: '<%= consultation[i].typeSchedule  %>',
+            patientId: '<%= consultation[i].consultPatientId %>',
+          },
+          textColor: '#fff',
+        },
+        '<% } %>',
+        '<% } %>',
 
-                    $('#viewConsult').modal('show');
+      ],
 
-                } else if (info.event.extendedProps.typeSchedule == 2) {
-                    var dt = moment(info.event.start);
-                    var dtEnd = moment(info.event.end);
+      eventClick: function (info) {
+        info.jsEvent.preventDefault();
+        if (info.event.extendedProps.typeSchedule == 1) {
+          var dt = moment(info.event.start);
+          var dtEnd = moment(info.event.end);
 
-                    $('#viewConsultPatient #id').val(info.event.id);
-                    $('#viewConsultPatient #phone').val(info.event.extendedProps.phone);
-                    $('#viewConsultPatient #patientIdHidden').val(info.event.extendedProps.patientId);
-                    $('#viewConsultPatient #patient').val(info.event.title);
-                    $('#viewConsultPatient #dateInit').val(dt.format('YYYY-MM-DD'));
-                    $('#viewConsultPatient #timeStart').val(dt.format('HH:mm'));
-                    $('#viewConsultPatient #timeEnd').val(dtEnd.format('HH:mm'));
+          $('#viewConsult #id').val(info.event.id);
+          $('#viewConsult #patient').val(info.event.title);
+          $('#viewConsult #dateStart').val(dt.format('YYYY-MM-DD'));
+          $('#viewConsult #timeStart').val(dt.format('HH:mm'));
+          $('#viewConsult #timeEnd').val(dtEnd.format('HH:mm'));
+          $('#viewConsult #phone').val(info.event.extendedProps.phone);
 
-                    $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
-                    $('#viewConsultPatient').modal('show');
 
-                }
-            },
+          $('#viewConsult #traineeId').val(info.event.extendedProps.trainee);
+          $('#viewConsult #scheduleTypeConsult').val(info.event.extendedProps.typeSchedule);
+          $('#viewConsult #description').val(info.event.extendedProps.description);
+          $('#viewConsult #typeProcedure').val(info.event.extendedProps.typeProcedure);
 
-            selectable: true,
-            select: function (info) {
-              var dt = moment(info.start);
-                $('#register #dateStart').val(dt.format('YYYY-MM-DD'));
-                $('#register #timeStart').val(dt.format('HH:mm'));
+          $('#viewConsult').modal('show');
 
-                $('#viewConsultDashboard #dateConsult').val(dt.format('YYYY-MM-DDTHH:mm'));
-            },
-        
-        });
+        } else if (info.event.extendedProps.typeSchedule == 2) {
+          var dt = moment(info.event.start);
+          var dtEnd = moment(info.event.end);
 
-        calendarDashboard.render();
+          $('#viewConsultPatient #id').val(info.event.id);
+          $('#viewConsultPatient #phone').val(info.event.extendedProps.phone);
+          $('#viewConsultPatient #patientIdHidden').val(info.event.extendedProps.patientId);
+          $('#viewConsultPatient #patient').val(info.event.title);
+          $('#viewConsultPatient #dateInit').val(dt.format('YYYY-MM-DD'));
+          $('#viewConsultPatient #timeStart').val(dt.format('HH:mm'));
+          $('#viewConsultPatient #timeEnd').val(dtEnd.format('HH:mm'));
+
+          $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
+          $('#viewConsultPatient').modal('show');
+
+        }
+      },
+
+      selectable: true,
+      select: function (info) {
+        var dt = moment(info.start);
+        $('#register #dateStart').val(dt.format('YYYY-MM-DD'));
+        $('#register #timeStart').val(dt.format('HH:mm'));
+
+        $('#viewConsultDashboard #dateConsult').val(dt.format('YYYY-MM-DDTHH:mm'));
+      },
+
     });
+
+    calendarDashboard.render();
+  });
+
+  // $('.close').click(function (event) {
+  //   $('#guide-patient').fadeOut();
+  //   event.preventDefault();
+  // });
+
+  // $(document).ready(function () {
+  //   var ls = localStorage.getItem("modal");
+  //   if (!ls) {
+  //     $('#guide-patient').modal('show');
+  //   }
+  // })
+
+  // $('#guide-patient').on('shown.bs.modal', function () {
+  //   localStorage.setItem("modal", false);
+  // });
+
+    
+
+    
+
+
 </script>
 
 </html>

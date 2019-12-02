@@ -23,13 +23,13 @@
                             <ul class="nav nav-pills justify-content-end">
 
                                 <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                                    <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-calendar-sidebar', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
+                                    <a class="btn btn-primary btn-sm" sonClick="docpage('/ajuda#doc-calendar-sidebar', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
                                     </a>
                                 </li>
 
                                 <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
                                     <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
-                                        <span class="d-none d-md-block">Nova Consulta</span>
+                                        <span>Nova Consulta</span>
                                     </a>
                                 </li>
 
@@ -67,7 +67,7 @@
         var calendarSchedules = new FullCalendar.Calendar(calendarEl, {
             locale: 'PT-BR',
             plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
-            height: 'parent',
+            height: 'auto',
             header: {
                 left: 'prev,next today',
                 center: 'title',
