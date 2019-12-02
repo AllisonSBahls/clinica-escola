@@ -224,10 +224,14 @@ class ConsultationController {
 
         const dateEnd = dateStart +' '+ timeEnd
         const datetimeEnd = dateFormat(dateEnd);
+<<<<<<< HEAD
         console.log(datetime)
         console.log(datetimeInit)
         console.log(datetimeEnd)
 
+=======
+  
+>>>>>>> 46d5df152bd4a637d231d31fb5bba4538c681a10
         let idMaster;
         let idSecretary;
 

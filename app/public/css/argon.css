@@ -9746,7 +9746,7 @@ button.bg-darker:focus
 .mt--7,
 .my--7
 {
-    margin-top: -6rem !important;
+    margin-top: -6rem;
 }
 
 .mr--7,

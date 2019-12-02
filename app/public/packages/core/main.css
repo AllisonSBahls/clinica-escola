@@ -703,7 +703,17 @@ Lots taken from Flatly (MIT): https://bootswatch.com/4/flatly/bootstrap.css
   align-items: center; }
 
 .fc-toolbar.fc-header-toolbar {
-  margin-bottom: 1.5em; }
+  margin-bottom: 1.5em; 
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+@media (max-width: 1197px)
+{
+.fc-left {
+  margin-bottom: 1em;
+}
+}
 
 .fc-toolbar.fc-footer-toolbar {
   margin-top: 1.5em; }

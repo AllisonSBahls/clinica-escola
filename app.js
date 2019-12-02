@@ -14,7 +14,6 @@ const docuser = require('./app/routes/docuser');
 const consultation = require('./app/routes/consultation');
 const index = require('./app/routes/index');
 const wait = require('./app/routes/wait');
-const test = require('./app/routes/test');
 const session = require('express-session');
 const flash = require('connect-flash');
 // const transporter = require('./config/emails')
@@ -76,7 +75,6 @@ app.use('/ajuda', docuser);
 app.use('/paciente/', patient);
 app.use('/user', users);
 app.use('/consultation', consultation);
-app.use('/test', test);
 app.use('/frequencias', presence);
 
 //Rotas não encontradas

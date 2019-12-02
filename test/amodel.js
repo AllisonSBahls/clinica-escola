@@ -88,60 +88,60 @@
 //     })
 // })
 // describe('Verificando os cadastro no Model', function () {
-//     it('should list ALL Permissao GET', function (done) {
-//         Permission.findAll().then(() => {
-//                 done();
-//             })
-//     })
+// //     it('should list ALL Permissao GET', function (done) {
+// //         Permission.findAll().then(() => {
+// //                 done();
+// //             })
+// //     })
 
-//     it('Registrar a permissão de SUPERVISOR', function (done) {
-//         Permission.create({
-//             permissao: 'Supervisor',
-//         }).then((permission) => {
-//                 done();
-//             })
-//     })
+// //     it('Registrar a permissão de SUPERVISOR', function (done) {
+// //         Permission.create({
+// //             permissao: 'Supervisor',
+// //         }).then((permission) => {
+// //                 done();
+// //             })
+// //     })
 
-//     it('Registrar a permissão de RECECEPCIONISTA', function (done) {
-//         Permission.create({
-//             permissao: 'Recepcionista',
-//         }).then((permission) => {
-//                 done();
-//             })
-//     })
+// //     it('Registrar a permissão de RECECEPCIONISTA', function (done) {
+// //         Permission.create({
+// //             permissao: 'Recepcionista',
+// //         }).then((permission) => {
+// //                 done();
+// //             })
+// //     })
 
-//     it('Registrar a permissão de ESTAGIÁRIO', function (done) {
-//         Permission.create({
-//             permissao: 'Estagiario',
-//         }).then((permission) => {
-//                 done();
-//             })
-//     })
+// //     it('Registrar a permissão de ESTAGIÁRIO', function (done) {
+// //         Permission.create({
+// //             permissao: 'Estagiario',
+// //         }).then((permission) => {
+// //                 done();
+// //             })
+// //     })
 
-//     it('Registrar a permissão de PACIENTE', function (done) {
-//         Permission.create({
-//             permissao: 'Paciente',
-//         })
-//             .then((permission) => {
-//                 done();
-//             })
-//     })
+// //     it('Registrar a permissão de PACIENTE', function (done) {
+// //         Permission.create({
+// //             permissao: 'Paciente',
+// //         })
+// //             .then((permission) => {
+// //                 done();
+// //             })
+// //     })
 
-//     it('Registrar o procedimento', function (done) {
-//         Procedure.create({
-//             typeProcedure: 'Retorno',
-//         }).then((procedure) => {
-//                 done();
-//             })
-//     })
+// //     it('Registrar o procedimento', function (done) {
+// //         Procedure.create({
+// //             typeProcedure: 'Retorno',
+// //         }).then((procedure) => {
+// //                 done();
+// //             })
+// //     })
 
-//     it('Registrar o procedimento', function (done) {
-//         Procedure.create({
-//             typeProcedure: 'Triagem',
-//         }).then((procedure) => {
-//                 done();
-//             })
-//     })
+// //     it('Registrar o procedimento', function (done) {
+// //         Procedure.create({
+// //             typeProcedure: 'Triagem',
+// //         }).then((procedure) => {
+// //                 done();
+// //             })
+// //     })
 
 //     it('Registar um PACIENTE e seu Usuário', function (done) {
 //         var secretaryPassword = generateHash('12345');

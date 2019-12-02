@@ -28,12 +28,11 @@
               <div class="col">
                 <h3 class="mb-0">Todas Consultas</h3>
               </div>
-              <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#faq-consult-filter"><img
+              <a class="btn btn-primary btn-sm"  onClick="docpage('/ajuda#doc-consult-sidebar', 'Ajuda')"><img
                   src="img/icons/common/help.svg"></a>
-              <% include ../partials/help/faqconsult %>
 
-              <a class="btn btn-primary" onclick="funcao_pdf_consultas()"><img
-                  src="img/icons/common/filter.svg">Imprimir</a>
+              <a id = "btn-printer" class="btn btn-primary" onclick="funcao_pdf_consultas()"><img
+                  src="img/icons/common/printer.svg"></a>
 
               <a id="button-filter" class="btn btn-primary"><img src="img/icons/common/filter.svg">Filtrar</a>
               <div class="col-lg-10" id="search-filter-buttons">

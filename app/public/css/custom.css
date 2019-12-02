@@ -1,3 +1,4 @@
+  
     .selected-form{
     font-size: .875rem;
     line-height: 1.5;
@@ -43,8 +44,8 @@
     margin-bottom: 1.5em;
 }
 
-#search-form-name, #search-form-date, #search-form-reports, #btn-consult-date, #btn-consult-name-date, #btn-frequence-save, #btn-consult-reports{
-    margin-left: 2.0em;
+#search-form-name, #search-name-secretary, #search-form-date, #search-form-reports, #btn-consult-date, #btn-consult-name-date, #btn-frequence-save, #btn-consult-reports{
+    margin-left: 1.0em;
 }
 
 #search{
@@ -155,4 +156,121 @@
 
   .accordion-section .panel-default .panel-body {
     font-size: 1.0rem;
+  }
+
+  .fc-toolbar{
+    text-transform: uppercase;
+  }
+
+  .fc-toolbar h2 {
+    font-size: 1.25em !important;
+}
+    
+  .fc-bg > table > tbody> tr> td{
+    height: 150px !important;
+  }
+
+
+  @media (max-width: 800px){
+    .fc-button-primary:disabled, .fc-today-button{
+    margin-left: 2em !important;
+    
+    }
+    .mt--7, .my--7{
+      margin-top: -4rem !important;
+    }
+    .fc-toolbar h2 {
+      text-align: center;
+    }
+
+  .nav-pills .nav-link {
+    margin-right: 0.5em
+  }
+  #btn-info-calendar{ 
+    margin-right: 1em;
+ }
+
+  .navbar-heading{
+    margin: auto;
+  }
+
+  #btn-table-complete{
+    display: flex;
+    margin-top: 1em
+  }
+  .fc-left{
+    margin-bottom: 1em;
+  }
+  }
+  @media only screen and (min-width: 700px) {
+    #btn-info-calendar{ display: none !important;
+     }
+    }
+
+  @media (min-width: 1300px) {
+    .table-responsive {
+      overflow:hidden !important
+    }
+  }
+
+  @media (max-width: 1197px)
+  {
+  .col-lg-7 {
+    min-width: 100% !important;
+    flex: 0 !important
+  }
+
+ 
+  }
+
+  @media (max-width: 420px)
+  {
+    .fc-button-primary:disabled, .fc-today-button{
+      margin-bottom: 10px !important;
+
+  }
+  .fc-toolbar, .fc-header-toolbar{
+    margin-left: -2.44em;
+  }
+
+  }
+
+  @media (max-width: 600px)
+  {
+    .fc-button-group{
+    
+      padding:.25rem .5rem;
+      font-size:.875rem;
+      line-height:1.5;
+      border-radius:.2rem
+    }
+    
+    .fc-toolbar .fc-header-toolbar {
+      margin-bottom: 1.5em;
+      display: flex !important;
+      flex-wrap: wrap !important;
+  }
+
+    .fc-bg > table > tbody> tr> td{
+      height: 80px !important;
+    }
+
+  }
+
+  @media (max-width: 600px)
+  {
+    #btn-search, #btn-printer,#search-name-trainee, #button-filter, 
+    #btn-filter-name, #btn-register, #btn-filter-name,
+    #btn-filter-date, #btn-filter-name-date, #enable-update, 
+    #btn-filter-reports,#search-name-patient, #btn-register-presence,
+    #btn-consult-name, #search-name-master,  #search-name-trainee,
+    #search-name-secretary, #btn-consult-reports, #btn-send-report{
+      padding:.25rem .5rem;
+      font-size:.875rem;
+      line-height:1.5;
+    }
+    
+    #search-filter-buttons,  #search-name-secretary, #search-name-master,  #search-name-trainee, #search-name-secretary{
+      margin-top: 1em;
+    }
   }

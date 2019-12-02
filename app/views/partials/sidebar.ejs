@@ -73,7 +73,7 @@
           </a>
         </li>
 
-        <li class="nav-item">
+        <li data-intro="Este menu redireciona você para página principal" data-step="2" class="nav-item">
           <button id = "dropdown-btn" class="nav-link" >
             <i class="ni ni-calendar-grid-58 text-blue" style="margin-right: 0.7rem;"></i> Consultas
             <i class="ni ni-bold-down text-blacks"></i>
@@ -202,20 +202,25 @@
               
       </ul>
       <!-- Divider -->
+      <% if (user.NivelPermissaoId == 4) {  %>
+        <hr class="my-3">
+        <h6 class="navbar-heading text-muted">Sistema</h6>
+        <ul class="navbar-nav mb-md-3">
+        <li class="nav-item">
+            <button id = "btn-documentation-settings" data-toggle="modal" data-target=".bd-example-modal-lg" class="nav-link">
+              <i class="ni ni-chat-round"></i> Guia do Usuário
+            </button>
+                     </li>
+        </ul>
+
+        <% }  %>
+
       <% if (user.NivelPermissaoId == 1) {  %>
 
       <hr class="my-3">
       <!-- Heading -->
       <h6 class="navbar-heading text-muted">Sistema</h6>
-      <!-- Navigation
-      <li class="nav-item">
-          <button id = "dropdown-btn" class="nav-link" >
-            <i class="ni ni-calendar-grid-58 text-blue" style="margin-right: 0.7rem;"></i> Consultas
-            <i class="ni ni-bold-down text-blacks"></i>
-          </button>
-        </li>
-      
-      -->
+      <!-- Navigation-->
 
       <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
