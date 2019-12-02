@@ -95,7 +95,11 @@ class UserController {
     async passwordUser(req, res){
         const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
-        res.render('forms/form_password', {masterProfile:masterProfile, secretaryProfile:secretaryProfile})
+        const patientProfile = await Patient.searchProfilePatient(req);
+
+        const traineeProfile = await Trainee.searchProfileTraineeUser(req);
+
+        res.render('forms/form_password', {traineeProfile:traineeProfile, patientProfile:patientProfile, masterProfile:masterProfile, secretaryProfile:secretaryProfile})
     }
 
 }

@@ -115,6 +115,40 @@ searchNameTrainee(req, res){
             }
         }
     }
+    async editProfile(req, res){
+        const traineeProfile = await Trainee.searchProfileTraineeUser(req);
+        const { email, name, phone, period, course, idUser } = req.body;
+        
+        const emailUser = await User.searchEmailUserUpdate(idUser)
+        if (emailUser.email == email) {
+                    
+        console.log(period)
+        Trainee.updateTrainee(name, phone, period, course, traineeProfile.id).then(function () {
+            req.flash("success_msg", "Estagiario alterado com sucesso");
+            res.redirect('/dashboard');
+        }).catch(function (erro) {
+            req.flash("error_msg", "Ocorreu um erro ao alterar o estagiario");
+            res.send("erro" + erro);
+        })
+
+        }else {
+            const emailExist = await User.verifyEmail(email);
+            if(emailExist.length >  0){
+                req.flash('error_msg', 'E-mail já existe');
+                res.redirect('/dashboard');
+            }else{
+                await User.updateEmailUser(idUser, email);
+                
+                Trainee.updateTrainee(name, phone, period, course, traineeProfile.id).then(function () {
+                    req.flash("success_msg", "Estagiario alterado com sucesso");
+                    res.redirect('/dashboard');
+                }).catch(function (erro) {
+                    req.flash("error_msg", "Ocorreu um erro ao alterar o estagiario");
+                    res.send("erro" + erro);
+                })
+            }
+        }
+    }
 }
 
 

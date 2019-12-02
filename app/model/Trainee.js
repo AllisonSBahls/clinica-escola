@@ -95,7 +95,7 @@ Trainee.updateTrainee = function(name, phone, period, course, id){
     return Trainee.update({
             name:name,
             phone:phone,
-            perioid:period,
+            period:period,
             course:course
         }, { where: { 'id': id }
         })

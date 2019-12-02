@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {admin} = require('../helpers/auth')
-const Patient = require('../model/Patient')
+const {users} = require('../helpers/auth')
 const PatientController = require('../controller/PatientController');
 const controller = new PatientController();
 
@@ -25,6 +25,9 @@ router.post('/update/:id', admin, (req, res) =>{
     controller.updatePatient(req, res)
 });
 
+router.post('/edit', users, (req, res) => {
+    controller.editProfile(req, res);
+})
 
 router.get('/register', admin, (req, res) =>{
     controller.form_admin_patient(req, res)

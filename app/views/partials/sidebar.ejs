@@ -1,4 +1,4 @@
-<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+<nav data-intro="O menu lateral, serve para direcionar o usuário á outras funcionalidades do sistema, através pode acessar calendário, perfil, entre outros." date-step="1"  class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
     <!-- Toggler -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
           </a>
         </li>
 
-        <li data-intro="Este menu redireciona você para página principal" data-step="2" class="nav-item">
+        <li class="nav-item">
           <button id = "dropdown-btn" class="nav-link" >
             <i class="ni ni-calendar-grid-58 text-blue" style="margin-right: 0.7rem;"></i> Consultas
             <i class="ni ni-bold-down text-blacks"></i>
@@ -177,7 +177,7 @@
             </a>
           </li>
           <% } else if (user.NivelPermissaoId == 4) {  %>
-            <li class="nav-item">
+            <li  class="nav-item">
               <a class="nav-link" href="/dashboard">
                 <i class="ni ni-tv-2 text-success"></i> Inicio
               </a>
@@ -214,7 +214,18 @@
         </ul>
 
         <% }  %>
-
+        <% if (user.NivelPermissaoId == 3) {  %>
+          <hr class="my-3">
+          <h6 class="navbar-heading text-muted">Sistema</h6>
+          <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+              <button id = "btn-documentation-settings" class="nav-link">
+                <i class="ni ni-chat-round"></i> Guia do Usuário
+              </button>
+                       </li>
+          </ul>
+  
+          <% }  %>
       <% if (user.NivelPermissaoId == 1) {  %>
 
       <hr class="my-3">

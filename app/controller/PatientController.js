@@ -81,6 +81,9 @@ class SecretaryController {
         })
     }
 
+    async alterarPaciente(id){
+      
+    }
 
     async updatePatient(req, res) {
         const { email, name, phone, dateBirth, gender, idUser, district, number, address, spouse, maritalstatus, schooling, country, uf, cepCidade } = req.body;
@@ -100,12 +103,44 @@ class SecretaryController {
                 res.redirect('/paciente');
             }else{
                 await User.updateEmailUser(idUser, email);
-                Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
+                Patient.updateProfilePatient(name, phone, dateBirth, gender,  req.params.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
                     req.flash("success_msg", "Paciente alterado com sucesso");
                     res.redirect('/paciente');
                 }).catch(function (erro) {
                     req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
                     res.redirect('/paciente');
+
+                })
+            }
+        }
+    }
+
+    async editProfile(req, res){
+        const patientProfile = await Patient.searchProfilePatient(req);
+
+        const { email, name, phone, dateBirth, gender, idUser, district, number, address, spouse, maritalstatus, schooling, country, uf, cepCidade } = req.body;
+        const emailUser = await User.searchEmailUserUpdate(idUser)
+        if (emailUser.email == email) {
+            Patient.updateProfilePatient(name, phone, dateBirth, gender, patientProfile.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
+                req.flash("success_msg", "Paciente alterado com sucesso");
+                res.redirect('/paciente');
+            }).catch(function (erro) {
+                req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
+                res.send("erro" + erro);
+            })
+        }else {
+            const emailExist = await User.verifyEmail(email);
+            if(emailExist.length >  0){
+                req.flash('error_msg', 'E-mail já existe');
+                res.redirect('/paciente');
+            }else{
+                await User.updateEmailUser(idUser, email);
+                Patient.updateProfilePatient(name, phone, dateBirth, gender, patientProfile.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
+                    req.flash("success_msg", "Paciente alterado com sucesso");
+                    res.redirect('/paciente');
+                }).catch(function (erro) {
+                    req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
+                    res.redirect('/dashboards');
 
                 })
             }

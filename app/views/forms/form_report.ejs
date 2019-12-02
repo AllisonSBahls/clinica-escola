@@ -120,7 +120,8 @@
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-email">Relatório</label>
-                                                    <textarea  id="report"
+                                                    <textarea  id="report" data-role="editor-toolbar"
+                                                    data-target="#editor"
                                                         name="report" style="height:500px;"
                                                         class="form-control form-control-alternative"
                                                         require></textarea>
@@ -146,4 +147,29 @@
 
 </body>
 
+<script>
+    var myInput = document.getElementById("report");
+    if(myInput.addEventListener ) {
+        myInput.addEventListener('keydown',this.keyHandler,false);
+    } else if(myInput.attachEvent ) {
+        myInput.attachEvent('onkeydown',this.keyHandler); /* damn IE hack */
+    }
+
+    function keyHandler(e) {
+        var TABKEY = 9;
+        if(e.keyCode == TABKEY) {
+            this.value += "\t";
+            if(e.preventDefault) {
+                e.preventDefault();
+            }
+            return false;
+        }
+    }
+
+
+</script>
+<style>
+ #editor {overflow:scroll; max-height:300px}
+
+</style>
 </html>
