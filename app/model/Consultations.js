@@ -244,6 +244,7 @@ Consultation.cancelConsultation = function (cancelId) {
 Consultation.confirmSchedule = function(dateStart, consultID, traineeId, description) {
     return Consultation.update({
         dateStart: dateStart,
+        dateEnd:  null,
         consultTraineeId:traineeId,
         description:description,
         typeSchedule: 1,

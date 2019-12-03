@@ -22,9 +22,9 @@ async function sendEmail() {
             const email = {
             from: 'allison_sousa_bahls@hotmail.com',
             to: users[k].email,
-            subject: 'SchoolClinc - Consulta Marcada',
+            subject: 'ClinSchool - Consulta Marcada',
             text: 'Olá, estamos entrando em contato para lembrar sobre a consulta marcada para o dia ' + moment(consultas[k].dateStart).format('DD/MM/YYYY') +' ás '+ moment(consultas[k].dateStart).format('HH:mm') +'. Escolha uma das opções abaixo para confirmar',
-            html: '<p>Olá, estamos entrando em contato para lembrar sobre a consulta marcada para o dia ' + moment(consultas[k].dateStart).format('DD/MM/YYYY') +' ás '+ moment(consultas[k].dateStart).format('HH:mm') +'. Escolha uma das opções abaixo para confirmar</p>'
+            html: '<p>Olá, estamos entrando em contato para lembrar sobre a consulta marcada para o dia ' + moment(consultas[k].dateStart).format('DD/MM/YYYY') +' ás '+ moment(consultas[k].dateStart).format('HH:mm') +'. confirmar</p><p>Caso deseje cancelar a consulta ligue para o número (69)3003-0001</p>'
 
         }
             //Configuração do servidor de email
@@ -47,7 +47,7 @@ async function sendEmail() {
             });
         }
     }
-    setInterval(sendEmail, 900000)
+    setInterval(sendEmail, 64800000)
 }
 
 
