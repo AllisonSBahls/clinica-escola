@@ -108,7 +108,8 @@ class MasterController {
                     req.flash('success_msg', 'Supervisor alterado com sucesso');
                     res.redirect('/supervisor');
                 }).catch((err)=>{
-                    res.send('err', err)
+                          req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
+                    res.redirect('/user/perfil');
                 });
             }
         }

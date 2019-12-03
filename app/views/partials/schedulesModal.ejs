@@ -82,8 +82,8 @@
                             </div>
                         </div>
                         <%if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2){%>
-                
-                           
+
+
                         <hr class="my-4" />
                         <div style="float: right;">
                             <a onclick="update()" class="btn btn-primary" value="Alterar"><img
@@ -177,45 +177,43 @@
                                         <select id="traineeId" class="form-control form-control-alternative"
                                             name="traineeId" data-placeholder="Selecione">
                                             <% if (trainees.length > 0) { %>
-                                            <% for (var i = 0; i < trainees.length; i++) { %>
-                                            <option value='<%= trainees[i].id %>'><%= trainees[i].name %></option>
-                                            <% } %>
-                                            <% } %>
-                                        </select>
+                    <% for (var i = 0; i < trainees.length; i++) { %>
+                    <option value='<%= trainees[i].id %>'><%= trainees[i].name %></option>
+                    <% } %>
+                    <% } %>
+                    </select>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="typeHidden" class="row-hidden">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Tipo da Consulta</label>
-                                        <select class="form-control" name="typeProcedure" id="typeProcedure"
-                                            data-placeholder="Selecione">
-                                            <% if (procedure.length > 0) { %>
-                                            <% for (var i = 0; i < procedure.length; i++) { %>
-                                            <option value='<%= procedure[i].id %>'><%= procedure[i].typeProcedure %>
-                                            </option>
-                                            <% } %>
-                                            <% } %>
-                                        </select>
+            </div>
+        </div>
+    </div>
+    <div id="typeHidden" class="row-hidden">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label class="form-control-label">Tipo da Consulta</label>
+                <select class="form-control" name="typeProcedure" id="typeProcedure" data-placeholder="Selecione">
+                    <% if (procedure.length > 0) { %>
+                    <% for (var i = 0; i < procedure.length; i++) { %>
+                    <option value='<%= procedure[i].id %>'><%= procedure[i].typeProcedure %>
+                    </option>
+                    <% } %>
+                    <% } %>
+                </select>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div>
-                                    <label class="form-control-label">Observação</label>
-                                    <textarea id="description" name="description"
-                                        class="form-control form-control-alternative"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div>
+            <label class="form-control-label">Observação</label>
+            <textarea id="description" name="description" class="form-control form-control-alternative"></textarea>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+        </div>
+    </div>
+</div>
+</div>
+</form>
 
                 <hr class="my-4" />
                 <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2){  %>
@@ -228,13 +226,12 @@
                     <a id="esperaHidden" onclick="wait()" class="btn btn-primary"><i
                             class="ni ni-lg ni-bullet-list-67 text-white"></i></a>
 
-                    <a id="deletarHidden" onclick="deletar()" class="btn btn-danger"><i
-                            class="ni ni-lg ni-basket text-white"></i></a>
+                    <a id="deletarHidden" onclick="deletar()" class="btn btn-danger"><i class="ni ni-lg ni-basket text-white"></i></a>
 
                     <a id="voltarHidden" class="btn btn-primary"><i class="ni ni-curved-next text-white"></i></a>
 
                 </div>
-            <%}%>
+                <%}%>
 
                 <form method="POST" id="waitPatient" action="waits/save">
                     <input type="hidden" id="id" name="consultationId">
@@ -253,232 +250,233 @@
 
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
     <% if (user.NivelPermissaoId == 1  || user.NivelPermissaoId == 2) { %>
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="registerModal">Nova Consulta</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="registerModal">Nova Consulta</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="/consultation/save" method="POST">
+                <h6 class="heading-small text-muted mb-4">Consulta</h6>
+                <div class="pl-lg-3">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" onclick="fieldsSchedulesShow();"
+                            id="defaultInline2" name="typeSchedule" value="1" checked="checked">
+                        <label class="custom-control-label" for="defaultInline2">Consultar</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" onclick="fieldsSchedulesHidden();"
+                            id="defaultInline3" name="typeSchedule" value="2">
+                        <label class="custom-control-label" for="defaultInline3">Agendar</label>
+                    </div>
+                    <hr class="my-4" />
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+
+                            <div id="patientSelect" class="form-group">
+                                <label class="form-control-label" for="input-username">Paciente:</label>
+                                <a id="buttonHiddenPatient" style="width: 10%; float:right; "
+                                    class="btn btn-primary btn-sm" onclick="showWait()" value=""><i
+                                        class="ni ni-lg ni-badge text-white"></i></a>
+
+                                <select id="patientModal" name="patientId"
+                                    class="form-control form-control-alternative">
+                                    <option value='0'>Selecione</option>
+                                    <% if (patients.length > 0) { %>
+                                    <% for (var i = 0; i < patients.length; i++) { %>
+                                    <option value='<%= patients[i].id %>'><%= patients[i].name %>
+                                    </option>
+                                    <% } %>
+                                    <% } %>
+
+                                </select>
+                            </div>
+
+                            <div style="display: none;" id="patientWaitSelect" class="form-group">
+                                <label class="form-control-label" for="input-username">Lista de
+                                    Espera</label>
+                                <a id="buttonHiddenPatient" style="width: 10%; float:right; "
+                                    class="btn btn-primary btn-sm" onclick="showAllPatient()" value=""><i
+                                        class="ni ni-lg ni-paper-diploma text-white"></i></a>
+
+                                <select id="patientWaitModal" name="patientWaitId"
+                                    class="form-control form-control-alternative" onchange="getHTML();">
+                                    <option value=''>Selecione</option>
+                                    <% if (waitPatients.length > 0) { %>
+                                    <% for (var i = 0; i < waitPatients.length; i++) { %>
+                                    <option value='<%= waitPatients[i].waitPatient.id %>'>
+                                        <%= waitPatients[i].waitPatient.name %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <form action="/consultation/save" method="POST">
-                                <h6 class="heading-small text-muted mb-4">Consulta</h6>
-                                <div class="pl-lg-3">
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input"
-                                            onclick="fieldsSchedulesShow();" id="defaultInline2" name="typeSchedule"
-                                            value="1" checked="checked">
-                                        <label class="custom-control-label" for="defaultInline2">Consultar</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input"
-                                            onclick="fieldsSchedulesHidden();" id="defaultInline3" name="typeSchedule"
-                                            value="2">
-                                        <label class="custom-control-label" for="defaultInline3">Agendar</label>
-                                    </div>
-                                    <hr class="my-4" />
-
-                                    <div class="row">
-
-                                        <div class="col-lg-6">
-
-                                            <div id="patientSelect" class="form-group">
-                                                <label class="form-control-label" for="input-username">Paciente:</label>
-                                                <a id="buttonHiddenPatient" style="width: 10%; float:right; "
-                                                    class="btn btn-primary btn-sm" onclick="showWait()" value=""><i
-                                                        class="ni ni-lg ni-badge text-white"></i></a>
-
-                                                <select id="patientModal" name="patientId"
-                                                    class="form-control form-control-alternative">
-                                                    <option value='0'>Selecione</option>
-                                                    <% if (patients.length > 0) { %>
-                                                    <% for (var i = 0; i < patients.length; i++) { %>
-                                                    <option value='<%= patients[i].id %>'><%= patients[i].name %>
-                                                    </option>
-                                                    <% } %>
-                                                    <% } %>
-
-                                                </select>
-                                            </div>
-
-                                            <div style="display: none;" id="patientWaitSelect" class="form-group">
-                                                <label class="form-control-label" for="input-username">Lista de
-                                                    Espera</label>
-                                                <a id="buttonHiddenPatient" style="width: 10%; float:right; "
-                                                    class="btn btn-primary btn-sm" onclick="showAllPatient()"
-                                                    value=""><i class="ni ni-lg ni-paper-diploma text-white"></i></a>
-
-                                                <select id="patientWaitModal" name="patientWaitId"
-                                                    class="form-control form-control-alternative" onchange="getHTML();">
-                                                    <option value=''>Selecione</option>
-                                                    <% if (waitPatients.length > 0) { %>
-                                                    <% for (var i = 0; i < waitPatients.length; i++) { %>
-                                                    <option value='<%= waitPatients[i].waitPatient.id %>'>
-                                                        <%= waitPatients[i].waitPatient.name %></option>
-                                                    <% } %>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Data</label>
-                                                <input type="date" id="dateStart" name="dateStart"
-                                                    class="form-control form-control-alternative">
-                                            </div>
-                                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Data</label>
+                                <input type="date" id="dateStart" name="dateStart"
+                                    class="form-control form-control-alternative">
+                            </div>
+                        </div>
 
 
-                                        <div id="registerHoursInit" class="col-lg-2">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Horario</label>
-                                                <input type="time" id="timeStart" name="timeStart"
-                                                    class="form-control form-control-alternative">
-                                            </div>
+                        <div id="registerHoursInit" class="col-lg-2">
+                            <div class="form-group">
+                                <label class="form-control-label">Horario</label>
+                                <input type="time" id="timeStart" name="timeStart"
+                                    class="form-control form-control-alternative">
+                            </div>
 
 
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
 
-                                    <div class="row" style="display: none;" id="registerHoursInitEnd">
-                                        <div class="col-lg-5">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Horario Inicial</label>
-                                                <input type="time" id="timeStart" name="timeStartInit"
-                                                    class="form-control form-control-alternative">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Horario Final</label>
-                                                <input type="time" id="timeEnd" name="timeEnd"
-                                                    class="form-control form-control-alternative">
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="row" style="display: none;" id="registerHoursInitEnd">
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <label class="form-control-label">Horario Inicial</label>
+                                <input type="time" id="timeStart" name="timeStartInit"
+                                    class="form-control form-control-alternative">
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <label class="form-control-label">Horario Final</label>
+                                <input type="time" id="timeEnd" name="timeEnd"
+                                    class="form-control form-control-alternative">
+                            </div>
+                        </div>
+                    </div>
 
-                                    <div class="row">
-                                        <div id="traineeSchedulesHidden" class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Estagiário</label>
-                                                <select id="traineeId" class="form-control form-control-alternative"
-                                                    name="traineeId" data-placeholder="Selecione">
-                                                    <% if (trainees.length > 0) { %>
-                                                    <% for (var i = 0; i < trainees.length; i++) { %>
-                                                    <option value='<%= trainees[i].id %>'><%= trainees[i].name %>
-                                                    </option>
-                                                    <% } %>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div id="typeConsultHidden" class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Tipo Consulta</label>
-                                                <select class="form-control" name="typeProcedure" id="typeProcedure"
-                                                    data-placeholder="Selecione">
-                                                    <% if (procedure.length > 0) { %>
-                                                    <% for (var i = 0; i < procedure.length; i++) { %>
-                                                    <option value='<%= procedure[i].id %>'>
-                                                        <%= procedure[i].typeProcedure %></option>
-                                                    <% } %>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div>
-                                                <label class="form-control-label">Observação</label>
-                                                <textarea id="description" name="description"
-                                                    class="form-control form-control-alternative"></textarea>
+                    <div class="row">
+                        <div id="traineeSchedulesHidden" class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Estagiário</label>
+                                <select id="traineeId" class="form-control form-control-alternative" name="traineeId"
+                                    data-placeholder="Selecione">
+                                    <% if (trainees.length > 0) { %>
+                                    <% for (var i = 0; i < trainees.length; i++) { %>
+                                    <option value='<%= trainees[i].id %>'><%= trainees[i].name %>
+                                    </option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="typeConsultHidden" class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Tipo Consulta</label>
+                                <select class="form-control" name="typeProcedure" id="typeProcedure"
+                                    data-placeholder="Selecione">
+                                    <% if (procedure.length > 0) { %>
+                                    <% for (var i = 0; i < procedure.length; i++) { %>
+                                    <option value='<%= procedure[i].id %>'>
+                                        <%= procedure[i].typeProcedure %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div>
+                                <label class="form-control-label">Observação</label>
+                                <textarea id="description" name="description"
+                                    class="form-control form-control-alternative"></textarea>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="my-3" />
-                                <input style="float: right;" type="submit" class="btn btn-success"
-                                    value="Marcar Consulta"></input>
-                            </form>
-
+                            </div>
                         </div>
                     </div>
                 </div>
-                <% }else if (user.NivelPermissaoId == 4) { %>
-                <div data-intro='Para solicitar Agendamento é necessário passar algumas informações' date-step="4"  class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/consultation/save" method="POST">
-                                <h6 class="heading-small text-muted mb-4">Agendamento</h6>
-                                <div class="pl-lg-11">
-                                    <div class="row">
-                                        <div  data-intro='O dia que gostaria da consulta, lembrando que a clínica pode ou não aderir a data' date-step="5"   class="col-lg-12">
-                                            <div class="form-group">
-                                                <label class="form-control-label">Data Desejada</label>
-                                                <input type="date" id="dateStart" name="dateStart"
-                                                    class="form-control form-control-alternative">
+                <hr class="my-3" />
+                <input style="float: right;" type="submit" class="btn btn-success" value="Marcar Consulta"></input>
+            </form>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label data-intro='Informar o horário desejado da consulta' date-step="6"  class="form-control-label">Horario Desejado</label>
-                                                <input type="time" id="timeStart" name="timeStart"
-                                                    class="form-control form-control-alternative">
+        </div>
+    </div>
+</div>
+<% }else if (user.NivelPermissaoId == 4) { %>
+<div 
+    class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="/consultation/save" method="POST">
+                <h6 class="heading-small text-muted mb-4">Agendamento</h6>
+                <div class="pl-lg-11">
+                    <div class="row">
+                        <div  class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Data Desejada</label>
+                                <input type="date" id="dateStart" name="dateStart"
+                                    class="form-control form-control-alternative">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label data-intro='(Opcional) Você também pode definir um intervalo de tempo que gostaria que marcasse a
-                                                 consulta e dentro desse intervalo a clínica escolheria o melhor horário' date-step="7" class="form-control-label">Horario Final</label>
-                                                <input type="time" id="timeEnd" name="timeEnd"
-                                                    class="form-control form-control-alternative">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div>
-                                                <label data-intro='(Opciona) Caso voce gostaria de deixar uma observação' date-step="8" class="form-control-label">Observação</label>
-                                                <textarea id="description" name="description"
-                                                    class="form-control form-control-alternative"></textarea>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="my-4" />
-                                <input type="submit"  data-intro='Para finalizar a solicitação basta clicar nesse botão' date-step="9"  class="btn btn-success" value="Marcar Agendamento"></input>
-                            </form>
-                        </div>
-                    </div>
-                </div> 
-                <% }else{ %>
-                    <div  class="modal-dialog modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
                             </div>
-                            <div class="modal-body">
-                                <div class="alert alert-primary" role="alert">
-                                    Você não pode solicitar um agendamento!
-                                    Procure a clínica
-                                  </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label 
+                                    class="form-control-label">Horario Desejado</label>
+                                <input type="time" id="timeStart" name="timeStart"
+                                    class="form-control form-control-alternative">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label
+                                     class="form-control-label">Horario Final</label>
+                                <input type="time" id="timeEnd" name="timeEnd"
+                                    class="form-control form-control-alternative">
+
                             </div>
                         </div>
                     </div>
-            <% } %>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div>
+                                <label
+                                    class="form-control-label">Observação</label>
+                                <textarea id="description" name="description"
+                                    class="form-control form-control-alternative"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <input type="submit"
+                    class="btn btn-success" value="Marcar Agendamento"></input>
+            </form>
+        </div>
+    </div>
+</div>
+<% }else{ %>
+<div 
+    class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-primary" role="alert">
+                Você não pode solicitar um agendamento!
+                Procure a clínica
             </div>
-           
+        </div>
+    </div>
+</div>
+<% } %>
+</div>

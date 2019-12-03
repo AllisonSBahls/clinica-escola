@@ -1,10 +1,13 @@
-<nav data-intro="O menu lateral, serve para direcionar o usuário á outras funcionalidades do sistema, através pode acessar calendário, perfil, entre outros." date-step="1"  class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+<nav
+  data-intro="O menu lateral, serve para direcionar o usuário á outras funcionalidades do sistema, através pode acessar calendário, perfil, entre outros."
+  date-step="1" class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
     <!-- Toggler -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
+      aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-   
+
     <!-- Brand -->
     <a class="" href="/">
       <!-- <img style="width: 80%;" src="/img/brand/logo.png" class="navbar-brand-img" alt="..."> -->
@@ -46,7 +49,8 @@
             </a> -->
           </div>
           <div class="col-6 collapse-close">
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main"
+              aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
               <span></span>
               <span></span>
             </button>
@@ -56,7 +60,8 @@
       <!-- Form -->
       <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
-          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search"
+            aria-label="Search">
           <div class="input-group-prepend">
             <div class="input-group-text">
               <span class="fa fa-search"></span>
@@ -74,13 +79,13 @@
         </li>
 
         <li class="nav-item">
-          <button id = "dropdown-btn" class="nav-link" >
+          <button id="dropdown-btn" class="nav-link">
             <i class="ni ni-calendar-grid-58 text-blue" style="margin-right: 0.7rem;"></i> Consultas
             <i class="ni ni-bold-down text-blacks"></i>
           </button>
         </li>
 
-        <div id = "dropdown-container-sidebar" class="dropdown-container">
+        <div id="dropdown-container-sidebar" class="dropdown-container">
           <li class="nav-item">
             <a class="nav-link" href="/calendar">
               <i class="ni ni-calendar-grid-58 text-success"></i> Calendario
@@ -88,7 +93,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/consultation">
-              <i class="ni ni-calendar-grid-58 text-blue"></i> Consultas 
+              <i class="ni ni-calendar-grid-58 text-blue"></i> Consultas
             </a>
           </li>
           <li class="nav-item">
@@ -130,102 +135,101 @@
           </a>
         </li>
         <% } else if (user.NivelPermissaoId == 3) {  %>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard">
-              <i class="ni ni-tv-2 text-success"></i> Painel
-            </a>
-          </li>
-        
-          <li class="nav-item">
-              <button id = "dropdown-btn" class="nav-link" 
-              style="background: none;
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">
+            <i class="ni ni-tv-2 text-success"></i> Painel
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <button id="dropdown-btn" class="nav-link" style="background: none;
               border: none;
               text-decoration: none;
               padding-left: 0.9rem;
               cursor: pointer;
-              outline: none;" 
-              onclick="dropdownSidebar();" >
-                <i class="ni ni-calendar-grid-58 text-blue" style="margin-right: 0.7rem;"></i> Minha Agenda
-                <i class="ni ni-bold-down text-blacks"></i>
-              </button>
-            </li>
-          <div id = "dropdown-container-sidebar" class="dropdown-container">
-              <li class="nav-item">
-                <a class="nav-link" href="/calendar">
-                  <i class="ni ni-calendar-grid-58 text-success"></i> Calendario
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/consultation">
-                  <i class="ni ni-calendar-grid-58 text-blue"></i> Consultas 
-                </a>
-              </li>
-            </div>
+              outline: none;" onclick="dropdownSidebar();">
+            <i class="ni ni-calendar-grid-58 text-blue" style="margin-right: 0.7rem;"></i> Minha Agenda
+            <i class="ni ni-bold-down text-blacks"></i>
+          </button>
+        </li>
+        <div id="dropdown-container-sidebar" class="dropdown-container">
           <li class="nav-item">
-            <a class="nav-link" href="/relatorios">
-              <i class="ni ni-collection text-info"></i> Relatóro Diário
+            <a class="nav-link" href="/calendar">
+              <i class="ni ni-calendar-grid-58 text-success"></i> Calendario
             </a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="/frequencias">
-                <i class="ni ni-badge text-info"></i> Frequencia
-              </a>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ni ni-circle-08 text-pink"></i> Supervisor
+            <a class="nav-link" href="/consultation">
+              <i class="ni ni-calendar-grid-58 text-blue"></i> Consultas
             </a>
           </li>
-          <% } else if (user.NivelPermissaoId == 4) {  %>
-            <li  class="nav-item">
-              <a class="nav-link" href="/dashboard">
-                <i class="ni ni-tv-2 text-success"></i> Inicio
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/calendar">
-                <i class="ni ni-calendar-grid-58 text-blue"></i> Calendário
-              </a>
-            </li>
-           
-            <li class="nav-item">
-              <a class="nav-link" href="/user/perfil">
-                <i class="ni ni-circle-08 text-info"></i> Meu Perfil
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="ni ni-istanbul text-pink"></i> Informações da Clínica
-              </a>
-            </li>
-            <% } %>
-              
+        </div>
+        <li class="nav-item">
+          <a class="nav-link" href="/relatorios">
+            <i class="ni ni-collection text-info"></i> Relatóro Diário
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/frequencias">
+            <i class="ni ni-badge text-info"></i> Frequencia
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="ni ni-circle-08 text-pink"></i> Supervisor
+          </a>
+        </li>
+        <% } else if (user.NivelPermissaoId == 4) {  %>
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">
+            <i class="ni ni-tv-2 text-success"></i> Inicio
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/calendar">
+            <i class="ni ni-calendar-grid-58 text-blue"></i> Calendário
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/user/perfil">
+            <i class="ni ni-circle-08 text-info"></i> Meu Perfil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="ni ni-istanbul text-pink"></i> Informações da Clínica
+          </a>
+        </li>
+        <% } %>
+
       </ul>
       <!-- Divider -->
       <% if (user.NivelPermissaoId == 4) {  %>
-        <hr class="my-3">
-        <h6 class="navbar-heading text-muted">Sistema</h6>
-        <ul class="navbar-nav mb-md-3">
+      <hr class="my-3">
+      <h6 class="navbar-heading text-muted">Sistema</h6>
+      <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
-            <button id = "btn-documentation-settings" data-toggle="modal" data-target=".bd-example-modal-lg" class="nav-link">
-              <i class="ni ni-chat-round"></i> Guia do Usuário
-            </button>
-                     </li>
-        </ul>
+          <button id="btn-documentation-settings" data-toggle="modal" data-target=".bd-example-modal-lg"
+            class="nav-link">
+            <i class="ni ni-chat-round"></i> Guia do Usuário
+          </button>
+        </li>
+      </ul>
 
-        <% }  %>
-        <% if (user.NivelPermissaoId == 3) {  %>
-          <hr class="my-3">
-          <h6 class="navbar-heading text-muted">Sistema</h6>
-          <ul class="navbar-nav mb-md-3">
-          <li class="nav-item">
-              <button id = "btn-documentation-settings" class="nav-link">
-                <i class="ni ni-chat-round"></i> Guia do Usuário
-              </button>
-                       </li>
-          </ul>
-  
-          <% }  %>
+      <% }  %>
+      <% if (user.NivelPermissaoId == 3) {  %>
+      <hr class="my-3">
+      <h6 class="navbar-heading text-muted">Sistema</h6>
+      <ul class="navbar-nav mb-md-3">
+        <li class="nav-item">
+          <button id="btn-documentation-settings" class="nav-link">
+            <i class="ni ni-chat-round"></i> Guia do Usuário
+          </button>
+        </li>
+      </ul>
+
+      <% }  %>
       <% if (user.NivelPermissaoId == 1) {  %>
 
       <hr class="my-3">
@@ -234,42 +238,42 @@
       <!-- Navigation-->
 
       <ul class="navbar-nav mb-md-3">
-          <li class="nav-item">
-              <button id = "btn-documentation-settings"  onClick="docpage('/ajuda#init-painel', 'Ajuda')" class="nav-link">
-                  <i class="ni ni-chat-round"></i> Informaçãos/Dúvidas
-                </button>
-            </li>
+        <li class="nav-item">
+          <button id="btn-documentation-settings" onClick="docpage('/ajuda#init-painel', 'Ajuda')" class="nav-link">
+            <i class="ni ni-chat-round"></i> Informaçãos/Dúvidas
+          </button>
+        </li>
 
         <li class="nav-item">
-          <button id = "btn-dropdown-settings"  class="nav-link" href="">
+          <button id="btn-dropdown-settings" class="nav-link" href="">
             <i class="ni ni-settings-gear-65"></i> Configuração
             <i class="ni ni-bold-down text-blacks"></i>
           </button>
         </li>
-        <div id = "dropdown-container-settings" class="dropdown-container">
+        <div id="dropdown-container-settings" class="dropdown-container">
 
-        <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="">
               <i class="ni ni-settings-gear-65"></i> Permissões
             </a>
           </li>
-        <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="">
               <i class="ni ni-settings-gear-65"></i> Procedimentos
             </a>
-        </li>
-        <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="">
               <i class="ni ni-settings-gear-65"></i> Consultas
             </a>
           </li>
         </div>
-  
+
       </ul>
       <% }  %>
 
     </div>
 
   </div>
- 
+
 </nav>

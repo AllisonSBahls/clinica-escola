@@ -125,26 +125,29 @@ searchNameTrainee(req, res){
         console.log(period)
         Trainee.updateTrainee(name, phone, period, course, traineeProfile.id).then(function () {
             req.flash("success_msg", "Estagiario alterado com sucesso");
-            res.redirect('/dashboard');
+            res.redirect('/user/perfil');
         }).catch(function (erro) {
             req.flash("error_msg", "Ocorreu um erro ao alterar o estagiario");
-            res.send("erro" + erro);
+            res.redirect('/user/perfil');
+            console.log(erro)
+
         })
 
         }else {
             const emailExist = await User.verifyEmail(email);
             if(emailExist.length >  0){
                 req.flash('error_msg', 'E-mail já existe');
-                res.redirect('/dashboard');
+                res.redirect('/user/perfil');
             }else{
                 await User.updateEmailUser(idUser, email);
                 
                 Trainee.updateTrainee(name, phone, period, course, traineeProfile.id).then(function () {
-                    req.flash("success_msg", "Estagiario alterado com sucesso");
-                    res.redirect('/dashboard');
+                    req.flash("success_msg", "Perfil alterado com sucesso");
+                    res.redirect('/user/perfil');
                 }).catch(function (erro) {
-                    req.flash("error_msg", "Ocorreu um erro ao alterar o estagiario");
-                    res.send("erro" + erro);
+                    req.flash("error_msg", "Ocorreu um erro ao alterar Perfil");
+                    res.redirect('/user/perfil');
+                    console.log(erro)
                 })
             }
         }

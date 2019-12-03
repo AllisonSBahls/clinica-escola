@@ -32,14 +32,14 @@
                   <ul class="nav nav-pills justify-content-end">
                     <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
 
-                      <a  id="btn-info-calendar" class="btn btn-primary btn-sm"  
+                      <a data-intro='Para mais informações sobre o calendário clique neste botão' data-step="5" id="btn-info-calendar" class="btn btn-primary btn-sm"  
                       onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')" ><img
                           src="img/icons/common/help.svg"></a>
 
 
                     </li>
                     <% if (user.NivelPermissaoId != 3 ){%> 
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-intro='Para marcar uma nova consulta clique neste botão'>
+                    <li data-intro='Para marcar uma nova consulta clique neste botão' data-step="4" class="nav-item" data-toggle="chart" data-target="#chart-sales" >
                       <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal" >
                         <span class="">Nova Consulta</span>
                       </a>
@@ -294,10 +294,6 @@
   });
 
     
-
-    
-
-
 </script>
 
 </html>

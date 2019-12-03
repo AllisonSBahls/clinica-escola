@@ -123,24 +123,28 @@ class SecretaryController {
         if (emailUser.email == email) {
             Patient.updateProfilePatient(name, phone, dateBirth, gender, patientProfile.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
                 req.flash("success_msg", "Paciente alterado com sucesso");
-                res.redirect('/paciente');
+                res.redirect('/user/perfil');
             }).catch(function (erro) {
                 req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
-                res.send("erro" + erro);
+                res.redirect('/user/perfil');
+                console.log(erro)
+
             })
         }else {
             const emailExist = await User.verifyEmail(email);
             if(emailExist.length >  0){
                 req.flash('error_msg', 'E-mail já existe');
-                res.redirect('/paciente');
+                res.redirect('/user/perfil');
             }else{
                 await User.updateEmailUser(idUser, email);
                 Patient.updateProfilePatient(name, phone, dateBirth, gender, patientProfile.id, address, district, number, schooling, spouse, maritalstatus, country, uf, cepCidade).then(function () {
                     req.flash("success_msg", "Paciente alterado com sucesso");
-                    res.redirect('/paciente');
+                    res.redirect('/user/perfil');
                 }).catch(function (erro) {
                     req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
-                    res.redirect('/dashboards');
+                    res.redirect('/user/perfil');
+                    console.log(erro)
+
 
                 })
             }

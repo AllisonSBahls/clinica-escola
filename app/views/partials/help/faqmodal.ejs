@@ -74,7 +74,7 @@
                   </div>
 
                 </div>
-
+                <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) { %>
                 <div class="panel panel-default">
                   <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
                     <h3 class="panel-title">
@@ -99,7 +99,7 @@
                     </div>
                   </div>
                 </div>
-
+              <% } %>
                 <div class="panel panel-default">
                   <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
                     <h3 class="panel-title">
