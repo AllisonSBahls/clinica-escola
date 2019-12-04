@@ -89,8 +89,8 @@ class PresenceController {
     }
 
     validateFrequence(req, res){
-        const{idPresence, validate } = req.body;
-        Presence.validateFrequence(idPresence, validate).then(()=>{
+        const{idPresence, validate, idConsult } = req.body;
+        Presence.validateFrequence(idPresence, validate, idConsult).then(()=>{
             req.flash("success_msg", "Presença confirmada")
             res.redirect('/estagiario')
         }).catch((err)=>{

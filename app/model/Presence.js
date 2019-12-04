@@ -32,7 +32,7 @@ Presence.insertFrequence = function(dateStart, dateEnd, Procedure, idTrainee, id
     }).then(() => {
 
         Consultation.update({
-            statusSchedules: 4
+            statusSchedules: 2
         },
         {
             where:{id: idConsult}
@@ -70,14 +70,24 @@ Presence.searchTraineeFrequence = function(id){
 }
 
 
-Presence.validateFrequence = function(id, idMaster){
+Presence.validateFrequence = function(id, idMaster, idConsult){
     return Presence.update({
         presenceMasterId: idMaster
     },{
         where:{
             id: id
         },
-    })
+    }).then(() => {
+            Consultation.update({
+                statusSchedules: 4,
+                color: "#19165E"
+            },
+            {
+                where:{id: idConsult}
+            }) 
+    }).catch((err) => {
+        
+    });
 }
 
 Presence.searchOneFrequence = async function(id){

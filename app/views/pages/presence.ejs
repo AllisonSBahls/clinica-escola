@@ -147,6 +147,8 @@
                                             <% if(result[i].presenceMasterId == null){ %>   
                                             <form  id="val-presence" action="/frequencias/validate" method="post">
                                             <input value=" <%= result[i].id %>" type="hidden" name="idPresence" id="id">
+                                            <input value=" <%= result[i].presenceConsultationId %>" type="hidden" name="idConsult" id="idConsult">
+                                            
                                             <input value=" <%= masterProfile.id %>" type="hidden" class="form-check-input" id="defaultInline1" name="validate">
                                             <% if (user.NivelPermissaoId == 1) { %>
                                                 <input type="submit"  class="btn btn-success btn-sm" title="Validar frequencia" value="Confirmar"></input>
