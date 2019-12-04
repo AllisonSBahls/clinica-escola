@@ -25,11 +25,7 @@ require('./config/auth')(passport);
 
 const app = express();
 
-// Sessões
-// app.use(cookieSession({
-// 	maxAge: 24*60*60*1000,
-// 	keys: [keys.session.cookieKey]
-// }))
+
 app.use(session({
 	secret: '****clinicasecretschool***',
 	resave: true,
