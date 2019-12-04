@@ -87,9 +87,9 @@
                         <hr class="my-4" />
                         <div style="float: right;">
                             <a onclick="update()" class="btn btn-primary" value="Alterar"><img
-                                    src="img/icons/common/edit.svg"></a>
+                                title="Alterar"    src="img/icons/common/edit.svg"></a>
 
-                            <a onclick="cancelar(), confirm('Você confirma o cancelamento?')" class="btn btn-danger"
+                            <a  title="Cancelar" onclick="cancelar(), confirm('Você confirma o cancelamento?')" class="btn btn-danger"
                                 value="Cancelar"><i class="ni ni-lg ni-basket text-white"></i></a>
                         </div>
                         <%}%>
@@ -219,16 +219,16 @@
                 <div class="buttons-schedules">
                         <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2){  %>
 
-                    <a id="confHidden" class="btn btn-success"><i class="ni ni-lg ni-check-bold text-white"></i></a>
+                    <a id="confHidden"  title="Confirmar" class="btn btn-success"><i class="ni ni-lg ni-check-bold text-white"></i></a>
 
                     <a id="saveHidden" onclick="confirmar()" class="btn btn-success"><i
-                            class="ni ni-lg ni-calendar-grid-58 text-white"></i></a>
+                        title="Salvar"   class="ni ni-lg ni-calendar-grid-58 text-white"></i></a>
 
                     <a id="esperaHidden" onclick="wait()" class="btn btn-primary"><i
-                            class="ni ni-lg ni-bullet-list-67 text-white"></i></a>
+                        title="Lista de Espera"   class="ni ni-lg ni-bullet-list-67 text-white"></i></a>
 
 
-                    <a id="voltarHidden" class="btn btn-primary"><i class="ni ni-curved-next text-white"></i></a>
+                    <a id="voltarHidden" title="Voltar " class="btn btn-primary"><i class="ni ni-curved-next text-white"></i></a>
                 <%}%>
                 <a id="deletarHidden"  onclick="deletar(); confirm('Você confirma a exclusão?')"  title="Deletar Consulta "class="btn btn-danger"><i class="ni ni-lg ni-basket text-white"></i></a>
 
