@@ -125,7 +125,7 @@ class SecretaryController {
                 req.flash("success_msg", "Paciente alterado com sucesso");
                 res.redirect('/user/perfil');
             }).catch(function (erro) {
-                req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
+                req.flash("error_msg", "Ocorreu um erro ao alterar o seu perfil");
                 res.redirect('/user/perfil');
                 console.log(erro)
 
@@ -141,7 +141,7 @@ class SecretaryController {
                     req.flash("success_msg", "Paciente alterado com sucesso");
                     res.redirect('/user/perfil');
                 }).catch(function (erro) {
-                    req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
+                    req.flash("error_msg", "Ocorreu um erro ao alterar o seu perfil");
                     res.redirect('/user/perfil');
                     console.log(erro)
 

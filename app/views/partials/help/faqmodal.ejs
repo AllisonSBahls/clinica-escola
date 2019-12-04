@@ -40,6 +40,9 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+                <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) { %>
 
                 <div class="panel panel-default">
                   <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
@@ -50,6 +53,7 @@
                       </a>
                     </h3>
                   </div>
+
 
                   <div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
                     <div class="panel-body px-3 mb-4">
@@ -74,7 +78,6 @@
                   </div>
 
                 </div>
-                <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) { %>
                 <div class="panel panel-default">
                   <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
                     <h3 class="panel-title">
@@ -99,7 +102,6 @@
                     </div>
                   </div>
                 </div>
-              <% } %>
                 <div class="panel panel-default">
                   <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
                     <h3 class="panel-title">
@@ -120,6 +122,42 @@
                     </div>
                   </div>
                 </div>
+
+                <% } else if (user.NivelPermissaoId == 4 ) { %>
+                  <div class="panel panel-default">
+                      <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
+                        <h3 class="panel-title">
+                          <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion"
+                            href="#schedulepatient" aria-expanded="true" aria-controls="schedulepatient">
+                            Solicitar uma consulta
+                          </a>
+                        </h3>
+                      </div>
+    
+    
+                      <div id="schedulepatient" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+                        <div class="panel-body px-3 mb-4">
+                          <p>Para solicitar uma consulta o paciente deve clicar no botão <img
+                              src="img/doc/btnnewconsult.png">. </p>
+                          <p>Após isso será aberta uma janela solicitando algumas informações do usuário.</p>
+                          <p>Solicitando a consulta</p>
+                          <img src="img/doc/schedule-patient.png" width="50%">
+                          <p>Os campos obrigatórios são: </p>
+                          <li>Data desejada  - O paciente deve informar qual dia gostaria de fazer a consulta</li>
+                          <li>Horário Desejado - O paciente a que horas gostaria que fosse o entendimento</li>
+                          <li>Horário Final  - Caso não tenha um horário o paciente pode definir um intervalo de horario.</li>
+                          <li>Exemplo das 08:00 até 12:00 - O horário Desejado é 08:00 e o final é as 12:00, a clínica irá marcar um atendimento dentro desse horário</li>
+                          <li>Observação - Opcional</li>
+    
+                          <p>Para finalizar basta clicar no botão <img src="img/doc/salvarconsulta.png"> </p>
+    
+    
+                          </p>
+                        </div>
+                      </div>
+    
+                    </div>
+                <% } %>
 
                 <div class="panel panel-default">
                   <div class="panel-heading p-3 mb-3" role="tab" id="heading2">

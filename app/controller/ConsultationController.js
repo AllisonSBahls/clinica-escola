@@ -216,7 +216,6 @@ class ConsultationController {
         const { dateStart, timeStart, timeEnd, timeStartInit, description, patientId, traineeId, typeSchedule, patientWaitId,typeProcedure } = req.body;
         //converter formato brasileiro para SQL
         const date = dateStart +' '+ timeStart
-        console.log(date)
         const datetime = dateFormat(date);
         
         const dateSchedule = dateStart +' '+ timeStartInit
@@ -371,7 +370,7 @@ class ConsultationController {
      * @param {*} res Argumento de resposta HTTP para a função de middleware, chamado de "res" por convenção.
      */
     deleteSchedules(req, res) {
-        if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
+        if (req.user.NivelPermissaoId != 3 ){
             /**
              * Método para deletar o agendamento
              * @method deleteSchedules
@@ -468,7 +467,6 @@ class ConsultationController {
          */
 
         var campo = '%' + req.body.namePatient + '%';
-        console.log(campo)
         Consultation.searchConsultNamePatient(campo).then((result) => {
             res.send(result);
         }).catch((err) => {

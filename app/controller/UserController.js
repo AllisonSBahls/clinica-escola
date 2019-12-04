@@ -74,19 +74,21 @@ class UserController {
         const passwordUser = await User.searchPasswordUser(req);
 
         if(!bcrypt.validPassword(passwordCurrent, passwordUser.password)){
-            console.log('senha invalida')
+            req.flash('error_msg', 'Senha invalida');
+            res.redirect('/user/password')
         }else { 
             if (passwordNew  ==  passwordConfirm){
                 var secretPassword = bcrypt.generateHash(passwordNew);
                 User.updatePassword(secretPassword, req).then(() => {
-                    res.redirect('/dashboard');
-                    req.flash("success_msg", "Senha alteradas com sucesso");
+                    req.flash("success_msg", "Senha alterada com sucesso");
+                    res.redirect('/user/password');
                 }).catch((err) => {
-                    req.flash('error_msg', 'Houve um erro ao alterar a senha');
-                    res.redirect('/')
+                    req.flash('error_msg', 'Erro - contate o administrador');
+                    res.redirect('/user/password')
                 });
             }else{
-                console.log('As senhas não conferem')
+                req.flash('error_msg', 'As senhas não conferem');
+                    res.redirect('/user/password')
             }
         };
     }

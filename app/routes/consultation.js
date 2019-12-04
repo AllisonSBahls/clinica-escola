@@ -10,7 +10,7 @@ router.post('/save', users, (req, res) =>{
     controller.saveConsult(req, res)
 })
 
-router.post('/delete', admin, (req, res) =>{
+router.post('/delete', users, (req, res) =>{
     controller.deleteSchedules(req, res)
 });
 

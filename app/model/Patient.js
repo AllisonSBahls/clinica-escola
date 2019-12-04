@@ -145,7 +145,7 @@ Patient.insertPatient = function(email, password, name, phone, dateBirth, gender
             maritalstatus:maritalstatus,
             country:country,
             cep:cep,
-            uf:uf,
+            UF:uf,
             userPatientId: user.id
         })
     }).catch((err) => {
@@ -173,7 +173,7 @@ Patient.updateProfilePatient = function(name, phone, dateBirth, gender, id, addr
             maritalstatus:maritalstatus,
             country:country,
             cep:cep,
-            uf:uf,
+            UF:uf,
         }, 
         { where: { id: id }
      }
