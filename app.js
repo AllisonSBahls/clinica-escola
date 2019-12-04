@@ -16,7 +16,7 @@ const index = require('./app/routes/index');
 const wait = require('./app/routes/wait');
 const session = require('express-session');
 const flash = require('connect-flash');
-const transporter = require('./config/emails')
+// const transporter = require('./config/emails')
 // const cookieSession =  require('cookie-session');
 const passport = require('passport');
 // const keys  = require ('./config/keys')
@@ -82,7 +82,7 @@ app.use('/frequencias', presence);
 
 //Envio de Emails
 
-transporter.sendEmail();
+// transporter.sendEmail();
 
 //Inicialização do Servidor
 const PORT  = process.env.PORT || 4000

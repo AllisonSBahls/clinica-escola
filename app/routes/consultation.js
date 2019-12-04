@@ -34,6 +34,13 @@ router.post('/both', admin, (req, res) =>{
     controller.searchConsultNameDate(req, res);
 })
 
+router.post('/conclude', admin, (req, res) =>{
+    controller.endConsultation(req, res);
+})
+
+router.post('/update', admin, (req, res) =>{
+    controller.updateConsult(req, res);
+})
 
 router.get('/', users, (req, res) =>{
     controller.listConsults(req, res);

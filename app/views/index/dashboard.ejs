@@ -18,26 +18,31 @@
     <div class="container-fluid mt--7 pt-md-6">
       <div class="row">
         <div class="col-lg-7 mb-5 mb-xl-0">
-          <div data-intro='No calendário podemos ver as consultas, de acordo com o mês. As consultas verdes não foram confirmadas, as Azuis foram feita as confirmações' date-step="3" class="card bg-gradient-default shadow">
+          <div
+            data-intro='No calendário podemos ver as consultas, de acordo com o mês. As consultas verdes não foram confirmadas, as Azuis foram feita as confirmações'
+            date-step="3" class="card bg-gradient-default shadow">
             <% include ../partials/message %>
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <ul class="navbar-nav align-items-center d-none d-md-flex">
                   <li class="nav-item dropdown">
-                    <a data-intro='Para mais informações sobre as funcionalidades basta clicar no botão que irá abrir uma janela' data-step="4" class="btn btn-primary btn-sm" onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')"><img
-                        src="img/icons/common/help.svg"></a>
+                    <a data-intro='Para mais informações sobre as funcionalidades basta clicar no botão que irá abrir uma janela'
+                      data-step="4" class="btn btn-primary btn-sm"
+                      onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')"><img src="img/icons/common/help.svg"></a>
                   </li>
                 </ul>
-                <div  class="col">
+                <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                     <li class="nav-item" data-toggle="chart" data-target="#chart-sales">
-                      <a id="btn-info-calendar" class="btn btn-primary btn-sm"  
-                      onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')" ><img src="img/icons/common/help.svg"></a>
+                      <a id="btn-info-calendar" class="btn btn-primary btn-sm"
+                        onClick="docpage('/ajuda#calendar-page-main', 'Ajuda')"><img
+                          src="img/icons/common/help.svg"></a>
 
                     </li>
-                    <% if (user.NivelPermissaoId != 3 ){%> 
-                    <li data-intro='Para marcar uma nova consulta clique neste botão' data-step="5" class="nav-item" data-toggle="chart" data-target="#chart-sales" >
-                      <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal" >
+                    <% if (user.NivelPermissaoId != 3 ){%>
+                    <li data-intro='Para marcar uma nova consulta clique neste botão' data-step="5" class="nav-item"
+                      data-toggle="chart" data-target="#chart-sales">
+                      <a href="#register" class="nav-link py-1 px-1 deactive" data-toggle="modal">
                         <span class="">Nova Consulta</span>
                       </a>
                     </li>
@@ -65,37 +70,40 @@
 
             <% } %>
 
-            <div   class="card-body">
+            <div class="card-body">
               <div style="font-size: 14px" id='calendarDashboard'></div>
             </div>
           </div>
 
         </div>
-        <div data-intro='Tabela com as suas próximas consultas marcadas' data-step="6" class="col-xl-5" id="viewConsultDashboard">
+        <div data-intro='Tabela com as suas próximas consultas marcadas' data-step="6" class="col-xl-5"
+          id="viewConsultDashboard">
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
                   <div class="form-group">
                     <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) {%>
-                    <button  style="float: right;" type="button" class="btn btn-success btn-sm">
+                    <button style="float: right;" type="button" class="btn btn-success btn-sm">
                       Agendamentos <span class="badge badge-light"><%= countSchedules[0].typeSchedule %></span>
                     </button>
                     <% }%>
 
-                    <a  class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-consult-list', 'Ajuda')"><img
+                    <a class="btn btn-primary btn-sm" onClick="docpage('/ajuda#doc-consult-list', 'Ajuda')"><img
                         src="img/icons/common/help.svg"></a>
 
                   </div>
-                  <button data-intro='Botão para listar na tabela apenas as consultas marcadas para hoje' data-step="7"  class="btn btn-primary primary btn-sm" id="allConsultDays">Hoje</button>
-                  <a data-intro='Lista novamente as próximas consultas' data-step="8" class="btn btn-primary primary  btn-sm" href="">Proximas</a>
+                  <button data-intro='Botão para listar na tabela apenas as consultas marcadas para hoje' data-step="7"
+                    class="btn btn-primary primary btn-sm" id="allConsultDays">Hoje</button>
+                  <a data-intro='Lista novamente as próximas consultas' data-step="8"
+                    class="btn btn-primary primary  btn-sm" href="">Proximas</a>
 
                 </div>
                 <div>
                 </div>
               </div>
             </div>
-            <div   class="card-body">
+            <div class="card-body">
               <div class="table-responsive chart">
                 <table class="table">
                   <thead>
@@ -116,7 +124,8 @@
           </div>
         </div>
       </div>
-      <div data-intro='Tabela completa com as seis próximas consultas e as solicitações de agendamento' data-step="9"  class="row mt-5">
+      <div data-intro='Tabela completa com as seis próximas consultas e as solicitações de agendamento' data-step="9"
+        class="row mt-5">
         <div class="col-xl-12 mb-5 mb-xl-0">
           <div class="card shadow">
             <div class="card-header border-0">
@@ -132,7 +141,8 @@
                 <div id="btn-table-complete" class="col text-right">
                   <a class="btn btn-sm btn-primary" id="allConsultNext">Proximas Consultas</a>
                   <a class="btn btn-sm btn-primary" id="completeConsultDays">Hoje</a>
-                  <a data-intro='Tabela completa todas as consultas e agendamentos' data-step="10" href="/consultation" class="btn btn-sm btn-primary">Todos</a>
+                  <a data-intro='Tabela completa todas as consultas e agendamentos' data-step="10" href="/consultation"
+                    class="btn btn-sm btn-primary">Todos</a>
                 </div>
               </div>
             </div>
@@ -198,6 +208,7 @@
             patientId: '<%= consultation[i].consultPatientId %>',
             typeProcedure: '<%= consultation[i].typeProcedureId %>',
             phone: '<%= consultation[i].consultPatient.phone %>',
+            statusSchedules: '<%= consultation[i].statusSchedules %>',
 
           },
           textColor: '#fff',
@@ -214,6 +225,8 @@
             description: '<%= consultation[i].description  %>',
             typeSchedule: '<%= consultation[i].typeSchedule  %>',
             patientId: '<%= consultation[i].consultPatientId %>',
+            statusSchedules: '<%= consultation[i].statusSchedules %>',
+
           },
           textColor: '#fff',
         },
@@ -242,6 +255,12 @@
           $('#viewConsult #typeProcedure').val(info.event.extendedProps.typeProcedure);
 
           $('#viewConsult').modal('show');
+          if (info.event.extendedProps.statusSchedules == 4) {
+            $("#ocultar-botoes").hide();
+          } else {
+            $("#ocultar-botoes").show();
+
+          }
 
         } else if (info.event.extendedProps.typeSchedule == 2) {
           var dt = moment(info.event.start);
@@ -259,6 +278,7 @@
           $('#viewConsultPatient').modal('show');
 
         }
+
       },
 
       selectable: true,
@@ -273,6 +293,8 @@
     });
 
     calendarDashboard.render();
+
+
   });
 
   $('.close').click(function (event) {
@@ -291,7 +313,7 @@
     localStorage.setItem("modal", false);
   });
 
-    
+
 </script>
 
 </html>

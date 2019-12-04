@@ -300,7 +300,9 @@ function getHTML() {
 function confirmar() {
     document.getElementById("confirmSchedules").submit();
 }
-
+function updateConsultation() {
+    document.getElementById("update-consultation").submit();
+}
 
 function sendReport() {
     document.getElementById("form-reports").submit();
@@ -312,12 +314,22 @@ function registerPresence() {
 function validatePresence() {
     document.getElementById("val-presence").submit();
 }
-function deletar() {
-    document.getElementById("deleteSchedules").submit();
+function deletar(){ 
+    if (confirm("Deseja mesmo deletar a solicitação?")){
+        document.getElementById("deleteSchedules").submit();
+    }
 }
+
 function cancelar() {
+    if (confirm("Deseja mesmo deletar a solicitação?")){
     document.getElementById("cancelSchedules").submit();
 }
+}
+
+function finalizarConsulta() {
+    document.getElementById("end-consultation").submit();
+}
+
 
 function wait() {
     document.getElementById("waitPatient").submit();
@@ -385,12 +397,19 @@ $(document).ready(function () {
     $("#search-filter-buttons").hide();
     $("#button-filter").click(function () {
         $(this).toggleClass("active").next().slideToggle("slow");
+        $(".search-filter-name-date").hide("slow");
+        $(".search-filter-date").hide("slow");
+        $(".search-filter-name").hide("slow");
+
         return false;
     })
 
     $(".search-filter-name").hide();
     $("#btn-filter-name").click(function () {
         $(".search-filter-name").toggleClass("active").slideToggle("slow");
+        $(".search-filter-name-date").hide("slow");
+        $(".search-filter-date").hide("slow");
+
         return false;
     })
     $("#form-select").hide();
@@ -404,6 +423,9 @@ $(document).ready(function () {
     $(".search-filter-date").hide();
     $("#btn-filter-date").click(function () {
         $(".search-filter-date").toggleClass("active").slideToggle("slow");
+        $(".search-filter-name-date").hide("slow");
+        $(".search-filter-name").hide("slow");
+
         return false;
     })
 
@@ -416,6 +438,9 @@ $(document).ready(function () {
     $(".search-filter-name-date").hide();
     $("#btn-filter-name-date").click(function () {
         $(".search-filter-name-date").toggleClass("active").slideToggle("slow");
+        $(".search-filter-date").hide("slow");
+        $(".search-filter-name").hide("slow");
+
         return false;
     })
 
@@ -425,6 +450,9 @@ $(document).ready(function () {
         return false;
     })
 
+
+
+    
     $("#update-form").hide();
     $("#enable-update").click(function () {
         $("#update-form").show();
@@ -470,6 +498,44 @@ $("#confHidden").click(function () {
 
 })
 
+$("#update-consult").hide();
+$("#voltar-consult").hide();
+$("#updateHidden").click(function () {
+    $(".confirm-hidden").toggleClass("active").slideToggle("slow");
+    $("#updateHidden").hide();
+    $("#update-consult").show();
+    $("#Finalizar").hide();
+    $("#updateHidden").hide();
+    $("#Cancelar").hide();
+    $("#voltar-consult").show();
+
+    
+    $('#typeProcedure').attr('disabled', false);
+    $('#traineeId').attr('disabled', false);
+    $('#dateStart').attr('disabled', false);
+    $('#timeStart').attr('disabled', false);
+    $('#patientId').attr('disabled', false);
+    $('#description').attr('disabled', false);
+
+})
+
+$("#voltar-consult").click(function () {
+    $(".confirm-hidden").toggleClass("active").slideToggle("slow");
+    $("#updateHidden").show();
+    $("#update-consult").hide();
+    $("#Finalizar").show();
+    $("#updateHidden").show();
+    $("#Cancelar").show();
+    $("#voltar-consult").hide();
+
+    $('#typeProcedure').attr('disabled', true);
+    $('#traineeId').attr('disabled', true);
+    $('#dateStart').attr('disabled', true);
+    $('#timeStart').attr('disabled', true);
+    $('#patientId').attr('disabled', true);
+    $('#description').attr('disabled', true);
+
+})
 
     $("#voltarHidden").click(function () {
         $(".confirm-hidden").toggleClass("deactive").slideToggle("slow");

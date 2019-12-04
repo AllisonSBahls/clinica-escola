@@ -426,7 +426,7 @@ class ConsultationController {
              *Utilizando o body parser para buscar as informações digitadas pelo usuário  
              */
 
-            const {dateInit, consultationId, traineeId, description, timeStart} = req.body;
+            const {dateInit, consultationId, traineeId, description, timeStart, typeProcedure} = req.body;
             const date = dateInit +' '+ timeStart
             const datetime = dateFormat(date);
 
@@ -438,7 +438,7 @@ class ConsultationController {
              * @param {Integer} traineeId ID do estagiário.
              * @param {String} description Descrição da consulta
              */
-            Consultation.confirmSchedule(datetime, consultationId, traineeId, description).then((result) => {
+            Consultation.confirmSchedule(datetime, consultationId, traineeId, description, typeProcedure).then((result) => {
                 req.flash("success_msg", "Consulta confirmada com ssucesso")
                 res.redirect('/dashboard')
             }).catch((err) => {
@@ -508,8 +508,30 @@ class ConsultationController {
 
 }
 
+    async endConsultation(req,res){
+        Consultation.finalizarConsulta(req.body.consultationId).then((result) => {
+            req.flash("success_msg", "Consulta finalizada com ssucesso")
+            res.redirect('/dashboard')
+        }).catch((err) => {
+            req.flash("error_msg", "Erro ao finalizar a consulta")
+            res.redirect('/dashboard')
+            console.log(err)
+    })
+    }
 
-    
+    async updateConsult(req,res){
+        const {dateStart, consultationId, traineeId, description, timeStart, typeProcedure} = req.body;
+        const date = dateStart +' '+ timeStart
+        const datetime = dateFormat(date);
+        Consultation.updateConsult(datetime, traineeId, typeProcedure, description, consultationId).then((result) => {
+            req.flash("success_msg", "Consulta alterada com ssucesso")
+            res.redirect('/dashboard')
+        }).catch((err) => {
+            req.flash("error_msg", "Erro ao alterar a consulta")
+            res.redirect('/dashboard')
+            console.log(err)
+    })
+    }
 }
 
 module.exports = ConsultationController;

@@ -167,6 +167,7 @@ Consultation.searchConsultsPatients = function (id) {
         where: {
             consultPatientId: id,
             statusSchedules: { [Op.ne]: 5 },
+            
         },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -241,7 +242,7 @@ Consultation.cancelConsultation = function (cancelId) {
     })
 }
 
-Consultation.confirmSchedule = function(dateStart, consultID, traineeId, description) {
+Consultation.confirmSchedule = function(dateStart, consultID, traineeId, description, idProcedure) {
     return Consultation.update({
         dateStart: dateStart,
         dateEnd:  null,
@@ -249,10 +250,41 @@ Consultation.confirmSchedule = function(dateStart, consultID, traineeId, descrip
         description:description,
         typeSchedule: 1,
         color: '#2B56E2',
-        statusSchedules: 2
+        statusSchedules: 2,
+        typeProcedureId: idProcedure,
+
     }, {
         where: {
             id: consultID
+        },
+    })
+}
+
+Consultation.finalizarConsulta = function (consultID) {
+    return Consultation.update({
+        statusSchedules: 4,
+        color: '#19165E',
+    }, {
+        where: {
+            id: consultID
+        },
+    })
+}
+
+Consultation.updateConsult = function(dateStart, traineeId, typeProcedure, description, consultationId) {
+    return Consultation.update({
+        dateStart: dateStart,
+        dateEnd:  null,
+        consultTraineeId:traineeId,
+        description:description,
+        typeSchedule: 1,
+        color: '#2B56E2',
+        statusSchedules: 2,
+        typeProcedureId: typeProcedure,
+
+    }, {
+        where: {
+            id: consultationId
         },
     })
 }
@@ -263,29 +295,12 @@ Consultation.searchNextConsultation = async function (){
         limit: 6,
         where: {
             dateStart: {
-                    [Op.gte]:moment.utc()
-                },
-            },
-        include: [{
-            model: Patient, as: 'consultPatient',
-        },{
-            model: Master, as: 'consultMaster',
-        }, {
-            model: Trainee, as: 'consultTrainee',
-        }, {
-            model: Secretary, as: 'consultSecretary',
-        }]
-    });
-}
-
-Consultation.searchNextConsultation = async function (){
-    return await Consultation.findAll({
-        order:['dateStart'],
-        limit: 6,
-        where: {
-            dateStart: {
                 [Op.gte]:moment.utc()
             },
+            typeSchedule: {
+                [Op.notIn]: [3, 4]
+            }
+
         },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -306,7 +321,11 @@ Consultation.searchConsultNextPatient  = async function (patientId){
             consultPatientId: patientId, 
             dateStart: {
                 [Op.gte]:moment.utc()
+                
             },
+            typeSchedule: {
+                [Op.notIn]: [3, 4]
+            }
         },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -329,6 +348,7 @@ Consultation.searchConsultNextTrainee  = async function (traineeId){
             dateStart: {
                 [Op.gte]:moment.utc()
             },
+            
         },
         include: [{
             model: Patient, as: 'consultPatient',
@@ -384,6 +404,8 @@ Consultation.searchConsultDayTrainee = async function (startDay, endDay, trainee
         }]
     });
 } 
+
+
 Consultation.searchConsultDayPatient = async function (startDay, endDay, patientId){    
     return await Consultation.findAll({
         order:['dateStart'],
