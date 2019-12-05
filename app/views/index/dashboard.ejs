@@ -273,6 +273,7 @@
           $('#viewConsultPatient #dateInit').val(dt.format('YYYY-MM-DD'));
           $('#viewConsultPatient #timeStart').val(dt.format('HH:mm'));
           $('#viewConsultPatient #timeEnd').val(dtEnd.format('HH:mm'));
+          $('#viewConsultPatient #description').val(info.event.extendedProps.description);
 
           $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
           $('#viewConsultPatient').modal('show');
