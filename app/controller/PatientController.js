@@ -98,11 +98,11 @@ class SecretaryController {
         const { email, name, phone, dateBirth, gender, idUser, district, number, address, spouse, maritalstatus, schooling, country, uf, cepCidade } = req.body;
         const emailUser = await User.searchEmailUserUpdate(idUser)
 
-        const addressCrypt = crypt.encryptReport(address);
-        const ufCrypt = crypt.encryptReport(uf);
-        const districtCrypt = crypt.encryptReport(district);
-        const countryCrypt = crypt.encryptReport(country);
-        const spouseCrypt = crypt.encryptReport(spouse);
+        const addressCrypt = 'crypt.encryptReport(address)';
+        const ufCrypt = 'crypt.encryptReport(uf)';
+        const districtCrypt = 'crypt.encryptReport(district)';
+        const countryCrypt = 'crypt.encryptReport(country)';
+        const spouseCrypt = 'crypt.encryptReport(spouse)';
 
         if (emailUser.email == email) {
             Patient.updateProfilePatient(name, phone, dateBirth, gender, req.params.id, addressCrypt, districtCrypt, number, schooling, spouseCrypt, maritalstatus, countryCrypt, ufCrypt, cepCidade).then(function () {
