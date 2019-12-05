@@ -47,6 +47,7 @@ app.use((req, res, next) => {
 
 //Templates
 app.set('view engine', 'ejs');
+
 app.set('views', path.join(__dirname, './app/views'));
 
 //Globais

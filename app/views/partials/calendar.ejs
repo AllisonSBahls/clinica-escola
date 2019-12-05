@@ -88,7 +88,7 @@
                     color: '<%= consultation[i].color  %>',
                     extendedProps: {
                         trainee: '<%= consultation[i].consultTrainee.name %>',
-                        description: '<%= consultation[i].description  %>',
+                        description: utf8_encode('<%= consultation[i].description  %>'),
                         typeSchedule: '<%= consultation[i].typeSchedule  %>',
                         patientId: '<%= consultation[i].consultPatientId %>',
                         typeProcedure: '<%= consultation[i].typeProcedureId %>',
@@ -132,6 +132,12 @@
 
                     $('#viewConsult').modal('show');
 
+                    if (info.event.extendedProps.statusSchedules == 4) {
+                        $("#ocultar-botoes").hide();
+                    } else {
+                        $("#ocultar-botoes").show();
+                    }
+
                 } else if (info.event.extendedProps.typeSchedule == 2) {
                     var dt = moment(info.event.start);
                     var dtEnd = moment(info.event.end);
@@ -142,6 +148,7 @@
                     $('#viewConsultPatient #dateStart').val(dt.format('YYYY-MM-DD'));
                     $('#viewConsultPatient #timeStart').val(dt.format('HH:mm'));
                     $('#viewConsultPatient #timeEnd').val(dtEnd.format('HH:mm'));
+                    $('#viewConsultPatient #description').val(info.event.extendedProps.description);
 
                     $('#viewConsultPatient #typeScheduleSchedules').val(info.event.extendedProps.typeSchedule);
                     $('#viewConsultPatient').modal('show');
