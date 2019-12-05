@@ -25,6 +25,11 @@ router.get('/reports/:id', (req, res) => {
     controller.reportFindAllTraineeMaster(req, res);
 })
 
+router.post('/update', (req, res) => {
+    controller.updateReport(req, res);
+})
+
+
 router.post('/date', (req, res)  => {
     controller.reportFindDate(req, res);
 })

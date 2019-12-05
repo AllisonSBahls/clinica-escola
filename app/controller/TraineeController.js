@@ -8,16 +8,16 @@ const validate = require('../common/validateFields');
 class TraineeController {
 
     async form_admin_trainee(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
-        res.render("forms/form_register_trainee", {masterProfile: masterProfile, secretaryrProfile: secretaryrProfile})
+        res.render("forms/form_register_trainee", {masterProfile: masterProfile, secretaryProfile: secretaryProfile})
     }
 
     async registerTrainee(req, res) {
         const { email, name, phone, course, period, password } = req.body;
 
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
         var secretPassword = hash.generateHash(password);
@@ -28,7 +28,7 @@ class TraineeController {
         const erros = validate.validateFields(emailUser, email, name, password);
 
         if (erros) {
-            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
+            res.render('forms/form_register_master', { erros: erros, masterProfile: masterProfile, secretaryProfile:secretaryProfile  })
         } else {
             //Registrar informações pessoais do supervisor
             Trainee.insertTrainee(name, email, phone, course, period, secretPassword).then(() => {
@@ -52,10 +52,10 @@ searchNameTrainee(req, res){
 }
 
     async trainees(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
         await Trainee.searchAllTraineesUsers().then(function (trainees) {
-            res.render("pages/trainee", { trainees: trainees, secretaryrProfile:secretaryrProfile, masterProfile:masterProfile })
+            res.render("pages/trainee", { trainees: trainees, secretaryProfile:secretaryProfile, masterProfile:masterProfile })
         });
     }
 
@@ -72,10 +72,10 @@ searchNameTrainee(req, res){
   
 
     async profileTrainee(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
         Trainee.searchOneTrainee(req.params.id).then((trainee) => {
-            res.render("forms/form_profile_trainee", { trainee: trainee, secretaryrProfile:secretaryrProfile, masterProfile:masterProfile });
+            res.render("forms/form_profile_trainee", { trainee: trainee, secretaryProfile:secretaryProfile, masterProfile:masterProfile });
 
         }).catch((erro) => {
             res.send("erro" + erro);

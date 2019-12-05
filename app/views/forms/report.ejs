@@ -64,16 +64,16 @@
                                             <div class="form-group">
                                                 <label class="form-control-label"
                                                     for="input-username">Estagiario</label>
-                                                <input type="text" id="nameTrainee" name="name"
-                                                    class="form-control form-control-alternative" require
+                                                <input type="text" id="nameTrainee" name="name" disabled
+                                                    class="form-control form-control-alternative" required
                                                     >
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Supervisor</label>
-                                                <input type="text" id="nameMaster" name="name"
-                                                    class="form-control form-control-alternative" require
+                                                <input type="text" id="nameMaster" name="name" disabled
+                                                    class="form-control form-control-alternative" required
                                                    >
                                             </div>
                                         </div>
@@ -85,7 +85,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-username">Nome do
                                                     Paciente</label>
-                                                <input type="text" id="namePatient" name="name"
+                                                <input type="text" id="namePatient" name="name" disabled
                                                     class="form-control form-control-alternative" require
                                                    >
                                             </div>
@@ -93,7 +93,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Data da Consulta</label>
-                                                <input type="text" id="dateConsult" name="phone"
+                                                <input type="text" id="dateConsult" name="phone" disabled
                                                     class="form-control form-control-alternative" require
                                                >
                                             </div>
@@ -104,21 +104,34 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-email">Relatório</label>
-                                                <textarea id="report" name="report" style="height:500px;"
+                                                <textarea id="report" name="report" style="height:500px;" disabled
                                                     class="form-control form-control-alternative"
                                                     require></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="form-control-label">Data de Envio</label>
-                                        <input type="text" id="telefoneRecepcionista" name="phone"
-                                            class="form-control form-control-alternative" require
+                                        <input type="text" id="telefoneRecepcionista" name="phone" disabled
+                                            class="form-control form-control-alternative" required>
                                     </div>
                                 </div>
+                                <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Data de Edição</label>
+                                            <input type="text" id="telefoneRecepcionista" name="phone" disabled
+                                                class="form-control form-control-alternative" required>
+                                        </div>
+                                    </div>
+                            </div>
+
                                 <hr class="my-4" />
+                                <input type="button" onclick="funcao_pdf()" class="btn btn-primary" value="Editar"></input>
+
                                 <input type="button" onclick="funcao_pdf()" class="btn btn-info" value="Gerar PDF do Relatório"></input>
                             </form>
                         </div>

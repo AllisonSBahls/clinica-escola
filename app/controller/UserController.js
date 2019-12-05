@@ -4,6 +4,7 @@ const Secretary = require('../model/Secretary');
 const Master = require('../model/Master');
 const Trainee = require('../model/Trainee');
 const Patient = require('../model/Patient');
+const crypt = require('../common/encrypt');
 
 class UserController {
     profileUser(req, res) {
@@ -62,7 +63,39 @@ class UserController {
                     model: User, as: 'userPatient'
                 }]
             }).then((patientProfile) => {
-                res.render("forms/form_profile", { patientProfile: patientProfile });
+                let spouseDecrypt 
+                let addressDecrypt 
+                let districtDecrypt
+                let countryDecrypt
+                let UFDecrypt
+                if (patientProfile.spouse == null || patientProfile.cep == null) {
+                    spouseDecrypt = '';
+                    addressDecrypt = '';
+                    districtDecrypt = '';
+                    countryDecrypt = '';
+                    UFDecrypt = '';
+                } else if (patientProfile.cep == null) {
+                    spouseDecrypt = crypt.decryptReport(patientProfile.spouse);
+                    addressDecrypt = '';
+                    districtDecrypt = '';
+                    countryDecrypt = '';
+                    UFDecrypt = '';
+                } else if (patientProfile.spouse == null) {
+                    spouseDecrypt = '';
+                    addressDecrypt = crypt.decryptReport(patientProfile.address);
+                    districtDecrypt = crypt.decryptReport(patientProfile.district);
+                    countryDecrypt = crypt.decryptReport(patientProfile.country);
+                    UFDecrypt = crypt.decryptReport(patientProfile.UF);
+
+                } else {
+                    spouseDecrypt = crypt.decryptReport(patientProfile.spouse);
+                    addressDecrypt = crypt.decryptReport(patientProfile.address);
+                    districtDecrypt = crypt.decryptReport(patientProfile.district);
+                    countryDecrypt = crypt.decryptReport(patientProfile.country);
+                    UFDecrypt = crypt.decryptReport(patientProfile.UF);
+                }
+                res.render("forms/form_profile", { UFDecrypt: UFDecrypt, countryDecrypt: countryDecrypt, spouseDecrypt: spouseDecrypt, addressDecrypt: addressDecrypt, districtDecrypt: districtDecrypt, patientProfile: patientProfile });
+
             }).catch((erro) => {
                 res.send("erro" + erro);
             })
@@ -70,14 +103,14 @@ class UserController {
     }
 
     async passwordUpdate(req, res) {
-        const {passwordCurrent, passwordNew, passwordConfirm } = req.body;
+        const { passwordCurrent, passwordNew, passwordConfirm } = req.body;
         const passwordUser = await User.searchPasswordUser(req);
 
-        if(!bcrypt.validPassword(passwordCurrent, passwordUser.password)){
+        if (!bcrypt.validPassword(passwordCurrent, passwordUser.password)) {
             req.flash('error_msg', 'Senha invalida');
             res.redirect('/user/password')
-        }else { 
-            if (passwordNew  ==  passwordConfirm){
+        } else {
+            if (passwordNew == passwordConfirm) {
                 var secretPassword = bcrypt.generateHash(passwordNew);
                 User.updatePassword(secretPassword, req).then(() => {
                     req.flash("success_msg", "Senha alterada com sucesso");
@@ -86,22 +119,22 @@ class UserController {
                     req.flash('error_msg', 'Erro - contate o administrador');
                     res.redirect('/user/password')
                 });
-            }else{
+            } else {
                 req.flash('error_msg', 'As senhas não conferem');
-                    res.redirect('/user/password')
+                res.redirect('/user/password')
             }
         };
     }
-    
 
-    async passwordUser(req, res){
+
+    async passwordUser(req, res) {
         const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
         const patientProfile = await Patient.searchProfilePatient(req);
 
         const traineeProfile = await Trainee.searchProfileTraineeUser(req);
 
-        res.render('forms/form_password', {traineeProfile:traineeProfile, patientProfile:patientProfile, masterProfile:masterProfile, secretaryProfile:secretaryProfile})
+        res.render('forms/form_password', { traineeProfile: traineeProfile, patientProfile: patientProfile, masterProfile: masterProfile, secretaryProfile: secretaryProfile })
     }
 
 }

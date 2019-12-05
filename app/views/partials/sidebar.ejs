@@ -129,11 +129,14 @@
             <i class="ni ni-circle-08 text-pink"></i> Supervisores
           </a>
         </li>
+        <% if (user.NivelPermissaoId == 1) { %>
+
         <li class="nav-item">
           <a class="nav-link" href="/relatorios">
             <i class="ni ni-collection text-red"></i> Relatórios
           </a>
         </li>
+        <% } %>
         <% } else if (user.NivelPermissaoId == 3) {  %>
         <li class="nav-item">
           <a class="nav-link" href="/dashboard">
@@ -230,7 +233,7 @@
       </ul>
 
       <% }  %>
-      <% if (user.NivelPermissaoId == 1) {  %>
+      <% if (user.NivelPermissaoId == 1 || user.NivelPermissaoId == 2) {  %>
 
       <hr class="my-3">
       <!-- Heading -->

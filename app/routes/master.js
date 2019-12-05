@@ -24,6 +24,9 @@ router.post('/update/:id', admin, async (req, res) =>{
     await controller.updateMaster(req, res)
 });
 
+router.post('/edit', admin, (req, res) =>{
+    controller.editMaster(req, res)
+});
 
 router.get('/register', admin,  (req, res) =>{
     controller.form_admin_master(req, res)

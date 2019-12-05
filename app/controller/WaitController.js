@@ -47,19 +47,7 @@ class WaitController {
                     model: Master, as: 'waitMaster',
                 }],
             }).then((waits) => {
-                res.render('pages/waits', { waits: waits, masterProfile: master });
-            })
-        } else if (req.user.NivelPermissaoId == 2) {
-            Wait.findAll({
-                include: [{
-                    model: Patient, as: 'waitPatient',
-                }, {
-                    model: Secretary, as: 'waitSecretary',
-                }, {
-                    model: Master, as: 'waitMaster',
-                }],
-            }).then((waits) => {
-                res.render('pages/waits', { waits: waits, secretaryProfile: secretary });
+                res.render('pages/waits', { waits: waits, masterProfile: master, secretaryProfile: secretary });
             })
         }
     }

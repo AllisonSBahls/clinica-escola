@@ -158,6 +158,7 @@ class IndexController {
         } else {
             //Paciente se cadastrando pelo site
             Patient.insertPatientRegister(email, secretPassword, name, phone).then(() => {
+                req.flash("success_msg", "Conta criada com sucesso");
                 res.redirect('/')
             }).catch((err) => {
                 res.send(err);

@@ -67,17 +67,17 @@ function funcao_pdf_consultas() {
     janela.document.write('<th scope="col">HORÁRIO</th>')
     janela.document.write('<th scope="col">ESTAGIÁRIO</th>')
     janela.document.write('<th scope="col">USUÁRIO</th>')
-    janela.document.write('<tbody style="font-size: 1em; line-height: 150%">'+table+'</tbody>')
+    janela.document.write('<tbody style="font-size: 1em; line-height: 150%">' + table + '</tbody>')
     janela.document.write('<table>')
     janela.document.write('</body></html>')
     janela.document.close();
     janela.print();
 
-  }
+}
 
-  function docpage(url, namepage){
-    window.open(url, namepage,'resizable, height=800,width=600'); return false;
-  }
+function docpage(url, namepage) {
+    window.open(url, namepage, 'resizable, height=800,width=600'); return false;
+}
 
 function fillTableConsultComplete(data) {
     for (var i = 0; i < data.length; i++) {
@@ -103,16 +103,23 @@ function fillTableConsultComplete(data) {
         } else {
             trainee = data[i].consultTrainee.name
         }
-        const name = truncar(data[i].consultPatient.name, 20)
+         if (data[i].statusSchedules == 1) {
+            status= 'Pendente'
+            } else if (data[i].statusSchedules == 2) { 
+            status = 'Confirmado'
+            } else if (data[i].statusSchedules == 4) { 
+            status = 'Concluido'
+            } 
+         const name = truncar(data[i].consultPatient.name, 20)
 
-        $('#table-complete-all').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
+        $('#table-complete-all').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td><td>' + status + '</td></tr>');
     }
 }
 
 function fillTableReports(data) {
     for (i = 0; i < data.length; i++) {
 
-        $('#table-reports').append('<tr><th>' + moment(data[i].dateSend).format('DD/MM/YYYY') + '</th><td>' + moment(data[i].dataConsult).format('DD/MM/YYYY HH:mm') + '</td><td>' + data[i].reportTrainee.name + '</td><td>' +'</td><td>' + data[i].reportMasterId + '</td><td>'+ '<a class="btn btn-primary btn-sm" href="relatorios/report/' + data[i].id + '"><img src="img/icons/common/eye.svg">Visualizar </a>       ' +'</td></tr>');
+        $('#table-reports').append('<tr><th>' + moment(data[i].dateSend).format('DD/MM/YYYY') + '</th><td>' + moment(data[i].dataConsult).format('DD/MM/YYYY HH:mm') + '</td><td>' + data[i].reportTrainee.name + '</td><td>' + '</td><td>' + data[i].reportMasterId + '</td><td>' + '<a class="btn btn-primary btn-sm" href="relatorios/report/' + data[i].id + '"><img src="img/icons/common/eye.svg">Visualizar </a>       ' + '</td></tr>');
     }
 }
 
@@ -314,20 +321,23 @@ function registerPresence() {
 function validatePresence() {
     document.getElementById("val-presence").submit();
 }
-function deletar(){ 
-    if (confirm("Deseja mesmo deletar a solicitação?")){
+function deletar() {
+    if (confirm("Deseja mesmo deletar a solicitação?")) {
         document.getElementById("deleteSchedules").submit();
     }
 }
 
 function cancelar() {
-    if (confirm("Deseja mesmo deletar a solicitação?")){
-    document.getElementById("cancelSchedules").submit();
-}
+    if (confirm("Deseja mesmo deletar a solicitação?")) {
+        document.getElementById("cancelSchedules").submit();
+    }
 }
 
 function finalizarConsulta() {
     document.getElementById("end-consultation").submit();
+}
+function updateReport() {
+    document.getElementById("update-form-report").submit();
 }
 
 
@@ -418,7 +428,7 @@ $(document).ready(function () {
         return false;
     })
 
-   
+
 
     $(".search-filter-date").hide();
     $("#btn-filter-date").click(function () {
@@ -451,8 +461,19 @@ $(document).ready(function () {
     })
 
 
+    $("#update-reports").hide();
+    $("#edit-reports").click(function () {
+        $("#update-reports").show();
+        $("#edit-reports").hide();
+        $("#report").prop("disabled", false);
+        $("#namePatient").prop("disabled", false);
+        $("#dateConsult").prop("disabled", false);
+        return false;
 
-    
+    })
+
+
+
     $("#update-form").hide();
     $("#enable-update").click(function () {
         $("#update-form").show();
@@ -478,64 +499,64 @@ $(document).ready(function () {
         return false;
     })
 
-  
+
     $(".confirm-hidden").hide();
     $("#saveHidden").hide();
     $("#voltarHidden").hide();
     $("#time-begin").hide();
 
-$("#confHidden").click(function () {
-    $(".confirm-hidden").toggleClass("active").slideToggle("slow");
-    $("#deletarHidden").hide();
-    $("#saveHidden").show();
-    $("#esperaHidden").hide();
-    $("#voltarHidden").show();
-    $("#confHidden").hide();
-    $("#time-hour-start").hide();
-    $("#time-hour-end").hide();
-    $("#time-begin").show();
-    $('#dateInit').attr('disabled', false);
+    $("#confHidden").click(function () {
+        $(".confirm-hidden").toggleClass("active").slideToggle("slow");
+        $("#deletarHidden").hide();
+        $("#saveHidden").show();
+        $("#esperaHidden").hide();
+        $("#voltarHidden").show();
+        $("#confHidden").hide();
+        $("#time-hour-start").hide();
+        $("#time-hour-end").hide();
+        $("#time-begin").show();
+        $('#dateInit').attr('disabled', false);
 
-})
+    })
 
-$("#update-consult").hide();
-$("#voltar-consult").hide();
-$("#updateHidden").click(function () {
-    $(".confirm-hidden").toggleClass("active").slideToggle("slow");
-    $("#updateHidden").hide();
-    $("#update-consult").show();
-    $("#Finalizar").hide();
-    $("#updateHidden").hide();
-    $("#Cancelar").hide();
-    $("#voltar-consult").show();
-
-    
-    $('#typeProcedure').attr('disabled', false);
-    $('#traineeId').attr('disabled', false);
-    $('#dateStart').attr('disabled', false);
-    $('#timeStart').attr('disabled', false);
-    $('#patientId').attr('disabled', false);
-    $('#description').attr('disabled', false);
-
-})
-
-$("#voltar-consult").click(function () {
-    $(".confirm-hidden").toggleClass("active").slideToggle("slow");
-    $("#updateHidden").show();
     $("#update-consult").hide();
-    $("#Finalizar").show();
-    $("#updateHidden").show();
-    $("#Cancelar").show();
     $("#voltar-consult").hide();
+    $("#updateHidden").click(function () {
+        $(".confirm-hidden").toggleClass("active").slideToggle("slow");
+        $("#updateHidden").hide();
+        $("#update-consult").show();
+        $("#Finalizar").hide();
+        $("#updateHidden").hide();
+        $("#Cancelar").hide();
+        $("#voltar-consult").show();
 
-    $('#typeProcedure').attr('disabled', true);
-    $('#traineeId').attr('disabled', true);
-    $('#dateStart').attr('disabled', true);
-    $('#timeStart').attr('disabled', true);
-    $('#patientId').attr('disabled', true);
-    $('#description').attr('disabled', true);
 
-})
+        $('#typeProcedure').attr('disabled', false);
+        $('#traineeId').attr('disabled', false);
+        $('#dateStart').attr('disabled', false);
+        $('#timeStart').attr('disabled', false);
+        $('#patientId').attr('disabled', false);
+        $('#description').attr('disabled', false);
+
+    })
+
+    $("#voltar-consult").click(function () {
+        $(".confirm-hidden").toggleClass("active").slideToggle("slow");
+        $("#updateHidden").show();
+        $("#update-consult").hide();
+        $("#Finalizar").show();
+        $("#updateHidden").show();
+        $("#Cancelar").show();
+        $("#voltar-consult").hide();
+
+        $('#typeProcedure').attr('disabled', true);
+        $('#traineeId').attr('disabled', true);
+        $('#dateStart').attr('disabled', true);
+        $('#timeStart').attr('disabled', true);
+        $('#patientId').attr('disabled', true);
+        $('#description').attr('disabled', true);
+
+    })
 
     $("#voltarHidden").click(function () {
         $(".confirm-hidden").toggleClass("deactive").slideToggle("slow");

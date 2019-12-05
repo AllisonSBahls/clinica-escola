@@ -80,6 +80,14 @@ Master.updateProfileMaster = function(name, phone, idMaster){
     )
 }
 
+Master.editProfileMaster = function(name, phone, idMaster){
+    return Master.update({
+        name: name,
+        phone: phone,
+    },
+        { where: { id: idMaster } }
+    )
+}
 
 //Master.sync({force: true});       
 

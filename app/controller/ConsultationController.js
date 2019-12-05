@@ -353,13 +353,20 @@ class ConsultationController {
                  /**
                  * Método para possibilitar o paciente solicitar o agendamento
                  */
-                Consultation.insertSchedules(datetime, datetimeEnd, patientProfile.id, color, description).then(function () {
-                    req.flash("success_msg", "Agendamento marcado com sucesso");
+                console.log(patientProfile)
+                if (patientProfile.phone == null || patientProfile.phone == ''){
+                    req.flash("error_msg","Por favor cadastre o telefone no Perfil");
                     res.redirect('/dashboard');
-                }).catch(function (err) {
-                    req.flash("error_msg","Erro ao marcar o agendamento");
-                    res.redirect('/dashboard');
-                })
+              
+                }else{
+                    Consultation.insertSchedules(datetime, datetimeEnd, patientProfile.id, color, description).then(function () {
+                        req.flash("success_msg", "Agendamento marcado com sucesso");
+                        res.redirect('/dashboard');
+                    }).catch(function (err) {
+                        req.flash("error_msg","Erro ao marcar o agendamento");
+                        res.redirect('/dashboard');
+                    })
+            }
             }
         }
     }

@@ -55,9 +55,37 @@ class ReportController {
         // let b = crypt.decryptStringWithRsaPrivateKey(a, "private.pem");
 
         Report.sendReports(reportCrypt, nameCrypt, idConsult, dateConsult, idtrainee, masterId).then(function () {
+            req.flash("success_msg", "Relatório enviado com sucesso");
             res.redirect('/relatorios');
         }).catch(function (erro) {
-            res.send("erro" + erro);
+            req.flash("error_msg", "Erro ao enviar o relatório");
+            res.redirect('/relatorios');
+            console.log("erro" + erro);
+        })
+    }
+
+    async updateReport(req, res) {
+        const { idReport, dateConsult, report, namePatient } = req.body
+        // let reportCrypt = req.body.report;
+        const traineeProfile = await Trainee.searchProfileTraineeUser(req);
+        const idtrainee = traineeProfile.id
+
+        const datetime = dateFormat(dateConsult);
+
+        //Criptografando o relatorio
+        const reportCrypt = crypt.encryptReport(report);
+
+        //criptografando as variaveis
+        let nameCrypt = crypt.encryptReport(namePatient)
+        // let b = crypt.decryptStringWithRsaPrivateKey(a, "private.pem");
+
+        Report.updateReport(reportCrypt, nameCrypt, datetime, idReport).then(function () {
+            req.flash("success_msg", "Relatório alterado com sucesso");
+            res.redirect('/relatorios');
+        }).catch(function (erro) {
+            req.flash("error_msg", "Erro ao alterar o relatório");
+            res.redirect('/relatorios');
+            console.log("erro" + erro);
         })
     }
 

@@ -317,6 +317,7 @@ Consultation.searchNextConsultation = async function (){
 Consultation.searchConsultNextPatient  = async function (patientId){
     return await Consultation.findAll({
         order:['dateStart'],
+        limit: 6,
         where: {
             consultPatientId: patientId, 
             dateStart: {
@@ -342,6 +343,7 @@ Consultation.searchConsultNextPatient  = async function (patientId){
 Consultation.searchConsultNextTrainee  = async function (traineeId){
     return await Consultation.findAll({
         order:['dateStart'],
+        limit: 6,
         where: {    
             typeSchedule: 1,
             consultTraineeId: traineeId,
@@ -430,7 +432,7 @@ Consultation.searchConsultDayPatient = async function (startDay, endDay, patient
 Consultation.searchConsultNamePatient = async function (name){
     return await Consultation.findAll({
         order:['dateStart'],
-      
+        limit: 30,
         include: [{
             model: Patient, as: 'consultPatient',
             where: {
@@ -451,6 +453,7 @@ Consultation.searchConsultNamePatient = async function (name){
 Consultation.searchConsultDate = async function (dateFirst, dateEnd){    
     return await Consultation.findAll({
         order:['dateStart'],
+        limit: 30,
         where: {
             dateStart: {
                 [Op.between]: [dateFirst, dateEnd]},
@@ -470,6 +473,7 @@ Consultation.searchConsultDate = async function (dateFirst, dateEnd){
 Consultation.searchConsultNameDate = async function (name, dateFirst, dateEnd){    
     return await Consultation.findAll({
         order:['dateStart'],
+        limit: 30,
         where: {
             dateStart: {
                 [Op.between]: [dateFirst, dateEnd]},

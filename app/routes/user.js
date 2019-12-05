@@ -14,6 +14,7 @@ router.get('/perfil', users, async (req, res) => {
     controller.myProfile(req, res);
 });
 
+
 router.get('/password', users, async (req, res) => {
     controller.passwordUser(req, res);
 })

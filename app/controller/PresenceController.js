@@ -13,10 +13,10 @@ class PresenceController {
     async presences(req, res) {
         if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
         const masterProfile = await Master.searchProfileMaster(req);
-        const secretaryProfile = await Master.searchProfileMaster(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const consult = await Consultation.searchAllConsults();
         Presence.searchAllFrequence().then((result) => {
-            res.render('pages/presence', {consult:consult, masterProfile:masterProfile, result:result})
+            res.render('pages/presence', {secretaryProfile:secretaryProfile, consult:consult, masterProfile:masterProfile, result:result})
         }).catch((err) => {
             res.send(err)
         });
@@ -60,9 +60,9 @@ class PresenceController {
     async findAllFrequence(req, res){
          if (req.user.NivelPermissaoId == 1 || req.user.NivelPermissaoId == 2){
         const masterProfile = await Master.searchProfileMaster(req);
-        const secretaryProfile = await Master.searchProfileMaster(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         Presence.searchAllFrequence().then((result) => {
-            res.render('pages/presence', {masterProfile:masterProfile, result:result})
+            res.render('pages/presence', {secretaryProfile:secretaryProfile, masterProfile:masterProfile, result:result})
         }).catch((err) => {
             res.send(err)
         });
@@ -79,10 +79,12 @@ class PresenceController {
 
     async findTraineeFrequence(req, res){
         const masterProfile = await Master.searchProfileMaster(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+
         const id = req.params.id
         const consult = await Consultation.searchAllConsults();
         Presence.searchTraineeFrequence(id).then((result) => {
-            res.render('pages/presence', {consult:consult, masterProfile:masterProfile, result:result})
+            res.render('pages/presence', {secretaryProfile:secretaryProfile, consult:consult, masterProfile:masterProfile, result:result})
         }).catch((err) => {
             res.send(err)
         });
@@ -94,7 +96,9 @@ class PresenceController {
             req.flash("success_msg", "Presença confirmada")
             res.redirect('/estagiario')
         }).catch((err)=>{
-            console.log(err);
+            res.send("error_msg", "Erro ao confirmar a presença", err);
+            res.redirect('/estagiario');
+            console.log(err)
         })
     }
 
@@ -102,7 +106,7 @@ class PresenceController {
         await Presence.searchOneFrequence(req.params.id)
         Presence.deleteFrequence(req.params.id).then(()=>{
             req.flash("success_msg", "Presença confirmada")
-            res.redirect('/frequencias')
+            res.redirect('/frequencias/'+req.params.id)
         }).catch((err)=>{
             console.log(err);
         })

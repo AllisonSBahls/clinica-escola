@@ -15,14 +15,14 @@ class MasterController {
      * @param {*} res Argumento de resposta HTTP para a função de middleware, chamado de "res" por convenção.
      */
     async form_admin_master(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
-        res.render("forms/register/form-register-master", { erros: {}, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
+        res.render("forms/register/form-register-master", { erros: {}, masterProfile: masterProfile, secretaryProfile:secretaryProfile })
     }
     async registerMaster(req, res) {
         const masterProfile = await Master.searchProfileMaster(req);
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
 
         const { email, name, phone, password } = req.body;
         //Verificar Email Existente
@@ -33,7 +33,7 @@ class MasterController {
         const erros = validate.validateFields(emailUser, email, name, password);
 
         if (erros) {
-            res.render('forms/register/form-register-master', { erros: erros, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile  })
+            res.render('forms/register/form-register-master', { erros: erros, masterProfile: masterProfile, secretaryProfile:secretaryProfile  })
         }
         else {
             //Registrar informações do supervisor
@@ -47,11 +47,11 @@ class MasterController {
         }
     }
     async masters(req, res) {
-        const secretaryrProfile = await Secretary.searchProfileSecretary(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
         const masterProfile = await Master.searchProfileMaster(req);
 
         Master.searchMasters().then(function (masters) {
-                res.render("pages/master", { masters: masters, masterProfile: masterProfile, secretaryrProfile:secretaryrProfile })
+                res.render("pages/master", { masters: masters, masterProfile: masterProfile, secretaryProfile:secretaryProfile })
             }).catch((err)=>{
                 res.send(err)
             });
@@ -78,8 +78,10 @@ class MasterController {
 
     async profileMaster(req, res) {
         const masterProfile = await Master.searchProfileMaster(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+
         Master.searchOneMaster(req.params.id).then((master) => {
-            res.render("forms/form_profile_master", { master: master, masterProfile: masterProfile });
+            res.render("forms/form_profile_master", {secretaryProfile:secretaryProfile, master: master, masterProfile: masterProfile });
         }).catch((erro) => {
             res.send("erro" + erro);
         })
@@ -115,6 +117,35 @@ class MasterController {
         }
     }
 
+    async editMaster(req, res) {
+        let {email, name, phone, idUser} = req.body;
+        const masterProfile = await Master.searchProfileMaster(req);
+        const emailUser = await User.searchEmailUserUpdate(idUser)
+        //Verifica se o usuário manteve o e-mail;
+        if (emailUser.email == email) {
+            Master.editProfileMaster(name, phone, masterProfile.id).then(function () {
+                req.flash('success_msg', 'Supervisor alterado com sucesso');
+                res.redirect('/user/perfil');
+            }).catch((err)=>{
+                res.send('err', err)
+            });
+        }else {
+            const emailExist = await User.verifyEmail(email);
+            if(emailExist.length >  0){
+                req.flash('error_msg', 'E-mail já existe');
+                res.redirect('/user/perfil');
+            }else{
+                await User.updateEmailUser(idUser, email);
+                Master.editProfileMaster(name, phone, masterProfile.id).then(function () {
+                    req.flash('success_msg', 'Supervisor alterado com sucesso');
+                    res.redirect('/user/perfil');
+                }).catch((err)=>{
+                          req.flash("error_msg", "Ocorreu um erro ao alterar o paciente");
+                    res.redirect('/user/perfil');
+                });
+            }
+        }
+    }
 
 }
 

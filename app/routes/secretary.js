@@ -25,6 +25,10 @@ router.post('/update/:id', admin, (req, res) =>{
     controller.updateSecretary(req, res)
 });
 
+router.post('/edit', admin, (req, res) =>{
+    controller.editSecretary(req, res)
+});
+
 
 router.get('/register', admin, (req, res) =>{
     controller.form_admin_secretary(req, res)

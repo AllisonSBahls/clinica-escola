@@ -73,10 +73,12 @@
                                         <a class="btn btn-primary primary btn-sm"
                                             href="frequencias/<%= trainees[i].id %>"><img src="img/icons/common/list.svg"></a>
                                     </td>
+                                    <% if(user.NivelPermissaoId == 1) { %> 
                                     <td >
                                         <a class="btn btn-primary primary btn-sm"
                                             href="relatorios/reports/<%= trainees[i].id %>"><i class="ni ni-lg ni-collection text-white"></i> </a>
                                     </td>
+                                        <%}%>
                                     <td class="col-pad">
                                         <a class="btn btn-danger delete btn-sm"
                                             onclick="return confirm('Você confirma a exclusão?')"

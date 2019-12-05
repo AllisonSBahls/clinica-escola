@@ -45,6 +45,19 @@ Reports.sendReports = function (reports, namePatient, IdConsult, dateConsult, id
 
     })
 }
+
+Reports.updateReport = function (reports, namePatient, dateConsult, idReport) {
+    return Reports.update({
+        reports: reports,
+        namePatient: namePatient,
+        dateConsult: dateConsult,
+    }, {
+        where: {
+            id: idReport
+        }
+    })
+}
+
 Reports.searchOneReport = (id) => {
     return Reports.findOne({
         where: { 'id': id },

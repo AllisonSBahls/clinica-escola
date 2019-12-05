@@ -124,6 +124,7 @@
                   <th scope="col">Horario</th>
                   <th scope="col">Estagiário</th>
                   <th scope="col">Usuario</th>
+                  <th scope="col">Status</th>
 
                 </tr>
               </thead>
@@ -171,6 +172,20 @@
                     <%= consultation[i].consultMaster.name %>
                   </td>
                   <% }  %>
+
+                  <% if (consultation[i].statusSchedules == 1) {%>
+                  <td id="status">
+                   Pendente
+                  </td>
+                  <% } else if (consultation[i].statusSchedules == 2) { %>
+                  <td id="status">
+                  Confirmado
+                  </td>
+                  <% } else if (consultation[i].statusSchedules == 4) { %>
+                  <td id="status">
+                  Concluido
+                  </td>
+                  <% } %>
 
                 </tr>
                 <% } %>

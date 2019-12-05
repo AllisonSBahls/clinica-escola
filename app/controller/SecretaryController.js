@@ -114,6 +114,37 @@ class SecretaryController {
             }
         }
     }
+
+    async editSecretary(req, res) {
+        const { email, name, phone, idUser } = req.body;
+        const emailUser = await User.searchEmailUserUpdate(idUser)
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+
+        if (emailUser.email == email) {
+            Secretary.updateSecretary(name, phone, secretaryProfile.id).then(function () {
+                req.flash("success_msg", "Recepcionista alterada com sucesso");
+                res.redirect('/recepcionista');
+            }).catch(function (erro) {
+                req.flash("error_msg", "Ocorreu um erro ao alterar a recepcionista");
+                res.send("erro" + erro);
+            })
+        }else {
+            const emailExist = await User.verifyEmail(email);
+            if(emailExist.length >  0){
+                req.flash('error_msg', 'E-mail já existe');
+                res.redirect('/recepcionista');
+            }else{
+                await User.updateEmailUser(idUser, email);
+                Secretary.updateSecretary(name, phone, secretaryProfile.id).then(function () {
+                    req.flash("success_msg", "Recepcionista alterada com sucesso");
+                    res.redirect('/recepcionista');
+                }).catch(function (erro) {
+                    req.flash("error_msg", "Ocorreu um erro ao alterar a recepcionista");
+                    res.send("erro" + erro);
+                })
+            }
+        }
+    }
 }
 
 
