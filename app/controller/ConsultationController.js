@@ -7,6 +7,7 @@ const Procedure = require('../model/Procedure');
 const Wait = require('../model/Wait');
 const dateFormat = require('../common/dateFormat')
 const moment = require('moment');
+const transporter = require('../../config/emails')
 
 /**
  * Classe do controlador das consultas
@@ -315,7 +316,7 @@ class ConsultationController {
              * Verificando se o funcionario está marcando um agendamento para um paciente da lista de espera ou não.
              */
             if (patientId != null) {
-                Consultation.insertSchedules(datetime, datetimeInit, patientId, color, description).then(function () {
+                Consultation.insertSchedules(datetimeInit, datetimeEnd, patientId, color, description).then(function () {
                     req.flash("success_msg", "Agendamento marcada com sucesso");
                     res.redirect('/dashboard');
                 }).catch(function (err) {
@@ -325,7 +326,7 @@ class ConsultationController {
 
                 })
             } else {
-                Consultation.insertSchedules(datetime, datetimeInit, patientWaitId, color, description).then(function () {
+                Consultation.insertSchedules(datetimeInit, datetimeEnd, patientWaitId, color, description).then(function () {
                     Wait.searchUpdateWait(patientWaitId)
                     req.flash("success_msg", "Consulta marcada com sucesso");
                     res.redirect('/dashboard');
@@ -433,7 +434,7 @@ class ConsultationController {
              *Utilizando o body parser para buscar as informações digitadas pelo usuário  
              */
 
-            const {dateInit, consultationId, traineeId, description, timeStart, typeProcedure} = req.body;
+            const {dateInit, consultationId, traineeId, description, timeStart, typeProcedure, idHiddenPatientEmail} = req.body;
             const date = dateInit +' '+ timeStart
             const datetime = dateFormat(date);
 
@@ -445,11 +446,14 @@ class ConsultationController {
              * @param {Integer} traineeId ID do estagiário.
              * @param {String} description Descrição da consulta
              */
-            Consultation.confirmSchedule(datetime, consultationId, traineeId, description, typeProcedure).then((result) => {
+
+            Consultation.confirmSchedule(datetime, consultationId, traineeId, description, typeProcedure).then(async (result ) => {
+                const patient = await Patient.searchOnePatient(idHiddenPatientEmail);
+                transporter.sendConsultEmail(patient.userPatient.email);
                 req.flash("success_msg", "Consulta confirmada com ssucesso")
                 res.redirect('/dashboard')
             }).catch((err) => {
-                req.flash("error_msg", "Você ao confirmar a consulta")
+                req.flash("error_msg", "Erro ao confirmar a consulta")
                 res.redirect('/dashboard')
                 console.log(err)
                 

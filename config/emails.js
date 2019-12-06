@@ -20,7 +20,7 @@ async function sendEmail() {
         for(k = 0; k < users.length; k++) {
             //Mensagem a ser enviada
             const email = {
-            from: 'allison_sousa_bahls@hotmail.com',
+            from: 'clinschool@hotmail.com',
             to: users[k].email,
             subject: 'ClinSchool - Consulta Marcada',
             text: 'Olá, estamos entrando em contato para lembrar sobre a consulta marcada para o dia ' + moment(consultas[k].dateStart).format('DD/MM/YYYY') +' ás '+ moment(consultas[k].dateStart).format('HH:mm') +'. Escolha uma das opções abaixo para confirmar',
@@ -31,8 +31,8 @@ async function sendEmail() {
             var transporter = nodemailer.createTransport({
                 service: 'Hotmail',
                 auth: {
-                    user: 'allison_sousa_bahls@hotmail.com',
-                    pass: 'allison2121997',
+                    user: 'clinschool@hotmail.com',
+                    pass: '$uportE99',
             }
             });
             
@@ -50,7 +50,40 @@ async function sendEmail() {
     setInterval(sendEmail, 64800000)
 }
 
+async function sendConsultEmail(emailDestinatario) {
+
+                //Mensagem a ser enviada
+            const email = {
+            from: 'clinschool@hotmail.com',
+            to: emailDestinatario,
+            subject: 'ClinSchool - Consulta Confirmada',
+            text: 'Olá, A clínica aceitou a sua solicitação de agendamento feito no dia',
+            html: '<p>Olá, A clínica aceitou a sua solicitação de agendamento feito no dia. Em caso de dúvidas ligue para o número (69)3003-0001</p>'
+
+        }
+            //Configuração do servidor de email
+            var transporter = nodemailer.createTransport({
+                service: 'Hotmail',
+                auth: {
+                    user: 'clinschool@hotmail.com',
+                    pass: '$uportE99',
+            }
+            });
+            
+            // Envia o Email
+
+            transporter.sendMail(email, function(err, info){
+                if(err){
+                    return console.log(err);
+                }else{
+                    return console.log('Mensagem enviada com sucesso');
+                }
+            });
+        }
+    
+
 
 module.exports = {
-    sendEmail
+    sendEmail,
+    sendConsultEmail
 }
