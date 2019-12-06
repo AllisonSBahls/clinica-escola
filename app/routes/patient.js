@@ -35,6 +35,10 @@ router.get('/register', admin, (req, res) =>{
 
 router.post('/search', admin, (req, res) =>{
     controller.searchNamePatient(req,res)
+});
+
+router.get('/cancelado/:id', users, (req, res) => {
+    controller.allCancelConsultsPatient(req,res);
 })
 
 module.exports = router;

@@ -5,7 +5,7 @@ const Secretary = require('../model/Secretary');
 const hash = require('../common/generateHash');
 const validate = require('../common/validateFields');
 const crypt = require('../common/encrypt');
-
+const Consultation = require('../model/Consultations')
 class SecretaryController {
 
     async form_admin_patient(req, res) {
@@ -172,6 +172,17 @@ class SecretaryController {
                 })
             }
         }
+    }
+    async allCancelConsultsPatient(req, res){
+        const masterProfile = await Master.searchProfileMaster(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+
+        Consultation.searchAllCancelPatient(req.params.id).then((result) => {
+            res.render('pages/cancel', {masterProfile: masterProfile, secretaryProfile:secretaryProfile, result:result})
+        }).catch((err) => {
+            req.flash("error_msg", "Erro ao buscar os cancelamentos")
+            console.log(err)
+        });
     }
 }
 

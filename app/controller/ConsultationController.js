@@ -543,6 +543,18 @@ class ConsultationController {
             console.log(err)
     })
     }
+
+    async allCancelConsults(req, res){
+        const masterProfile = await Master.searchProfileMaster(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+        
+        Consultation.searchAllCancel().then((result) => {
+            res.render('pages/cancel', {masterProfile: masterProfile, secretaryProfile:secretaryProfile, result:result})
+        }).catch((err) => {
+            req.flash("error_msg", "Erro ao buscar os cancelamentos")
+            console.log(err)
+        });
+    }
 }
 
 module.exports = ConsultationController;

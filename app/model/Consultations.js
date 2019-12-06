@@ -497,6 +497,7 @@ Consultation.searchConsultNameDate = async function (name, dateFirst, dateEnd){
 
 Consultation.searchConsultSendEmail = async function(StartDay, endDay){
     return await Consultation.findAll({
+        limit: 10,
         where: {
             dateStart: {
                 [Op.between]: [StartDay, endDay]},
@@ -511,6 +512,43 @@ Consultation.searchConsultSendEmail = async function(StartDay, endDay){
             model: Secretary, as: 'consultSecretary',
         }]
     });
+}
+
+Consultation.searchAllCancel = async function(){
+    return await Consultation.findAll({
+        where:{
+            typeSchedule: 3
+        }, 
+        include: [{
+            model: Patient, as: 'consultPatient',
+        },{
+            model: Master, as: 'consultMaster',
+        },{
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    })
+}
+
+Consultation.searchAllCancelPatient = async function(idPatient){
+    return await Consultation.findAll({
+        where:{
+            typeSchedule: 3,
+        }, 
+        include: [{
+            model: Patient, as: 'consultPatient',
+            where:{
+                id: idPatient
+            }
+        },{
+            model: Master, as: 'consultMaster',
+        },{
+            model: Trainee, as: 'consultTrainee',
+        }, {
+            model: Secretary, as: 'consultSecretary',
+        }]
+    })
 }
 
 module.exports = Consultation;

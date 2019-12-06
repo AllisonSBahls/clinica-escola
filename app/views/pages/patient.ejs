@@ -50,6 +50,8 @@
                                     <th  class="col-5" >Telefone</th>
                                     <th></th>
                                     <th  ></th>
+                                    <th  ></th>
+
 
                                     <!-- <th scope="col">Bounce rate</th> -->
                                 </tr>
@@ -71,6 +73,10 @@
                                         <a class="btn btn-primary primary btn-sm"
                                             href="paciente/profile/<%= patients[i].id %>"><img src="img/icons/common/eye.svg"></a>
                                     </td>
+                                    <td>
+                                            <a class="btn btn-info info btn-sm"
+                                                href="paciente/cancelado/<%= patients[i].id %>"><i class="ni ni-lg ni-archive-2 text-white"></a>
+                                        </td>
                                     <td>
                                         <a class="btn btn-danger delete btn-sm"
                                             onclick="return confirm('Você confirma a exclusão?')"

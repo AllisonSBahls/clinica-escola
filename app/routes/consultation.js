@@ -46,4 +46,7 @@ router.get('/', users, (req, res) =>{
     controller.listConsults(req, res);
 })
 
+router.get('/canceladas', admin, (req, res) => {
+    controller.allCancelConsults(req,res);
+})
 module.exports = router;
