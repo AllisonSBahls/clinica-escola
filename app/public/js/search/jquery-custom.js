@@ -136,7 +136,7 @@
                 data: dados,
                 success: function (data) {
                     $('#consult-id').val(data.id)
-                    var dt = moment(data.dateStart);
+                    var dt = moment(data.dateStart).add(1,'hours');
                     $('#date-consult').val(dt.format('YYYY-MM-DD'))
                     $('#hours-consult').val(dt.format('HH:mm'))
                 }
@@ -161,7 +161,7 @@ $(document).ready(function () {
             data: dados,
             success: function (data) {
                 $('#consult-id').val(data.id)
-                var dt = moment(data.dateStart);
+                var dt = moment(data.dateStart).add(1,'hours');
                 $('#datetime-consult').val(dt.format('YYYY-MM-DDTHH:mm'))
                 $('#patient-name').val(data.consultPatient.name)
                 // console.log(data.consultPatient.name)
