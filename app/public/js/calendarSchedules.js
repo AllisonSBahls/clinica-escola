@@ -46,7 +46,7 @@ function fillTableComplete(data) {
         }
         const name = truncar(data[i].consultPatient.name, 20)
 
-        $('#table-complete').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
+        $('#table-complete').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment.parseZone(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td></tr>');
     }
 }
 
@@ -112,14 +112,14 @@ function fillTableConsultComplete(data) {
             } 
          const name = truncar(data[i].consultPatient.name, 20)
 
-        $('#table-complete-all').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td><td>' + status + '</td></tr>');
+        $('#table-complete-all').append('<tr><td>' + schedule + '</td><td>' + name + '</td><td>' + data[i].consultPatient.phone + '</td><td>' + moment.parseZone(data[i].dateStart).format('DD/MM/YYYY HH:mm') + '</td><td>' + trainee + '</td><td>' + user + '</td><td>' + status + '</td></tr>');
     }
 }
 
 function fillTableReports(data) {
     for (i = 0; i < data.length; i++) {
 
-        $('#table-reports').append('<tr><th>' + moment(data[i].dateSend).format('DD/MM/YYYY') + '</th><td>' + moment(data[i].dataConsult).format('DD/MM/YYYY HH:mm') + '</td><td>' + data[i].reportTrainee.name + '</td><td>' + '</td><td>' + data[i].reportMasterId + '</td><td>' + '<a class="btn btn-primary btn-sm" href="relatorios/report/' + data[i].id + '"><img src="img/icons/common/eye.svg">Visualizar </a>       ' + '</td></tr>');
+        $('#table-reports').append('<tr><th>' + moment(data[i].dateSend).format('DD/MM/YYYY') + '</th><td>' + moment(data[i].dataConsult).format.parseZone('DD/MM/YYYY HH:mm') + '</td><td>' + data[i].reportTrainee.name + '</td><td>' + '</td><td>' + data[i].reportMasterId + '</td><td>' + '<a class="btn btn-primary btn-sm" href="relatorios/report/' + data[i].id + '"><img src="img/icons/common/eye.svg">Visualizar </a>       ' + '</td></tr>');
     }
 }
 
@@ -154,7 +154,7 @@ $(document).ready(() => {
             for (var i = 0; i < data.length; i++) {
                 if (data[i].typeSchedule == 1) {
                     const name = truncar(data[i].consultPatient.name, 20)
-                    $('#table-day').append('<tr><td>' + name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
+                    $('#table-day').append('<tr><td>' + name + '</td><td>' + moment(data[i].dateStart).local().format('DD/MM/YYYY') + '</td><td>' + moment.parseZone(data[i].dateStart).format("HH:mm") + '</td></tr>');
                 }
             }
         }
@@ -168,7 +168,7 @@ $(document).ready(() => {
             dataType: 'json',
             success: (data) => {
                 for (var i = 0; i < data.length; i++) {
-                    $('#table-day').append('<tr><td>' + data[i].consultPatient.name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment(data[i].dateStart).format('HH:mm') + '</td></tr>');
+                    $('#table-day').append('<tr><td>' + data[i].consultPatient.name + '</td><td>' + moment(data[i].dateStart).format('DD/MM/YYYY') + '</td><td>' + moment.parseZone(data[i].dateStart).format('HH:mm') + '</td></tr>');
                 }
             }
         })
