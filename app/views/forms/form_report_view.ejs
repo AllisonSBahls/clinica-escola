@@ -152,8 +152,10 @@
                             </div>
 
                                 <hr class="my-4" />
-                                <input type="button" id="edit-reports" class="btn btn-primary" value="Editar Relatório"></input>
+                                <% if (user.NivelPermissaoId == 3) { %>
+                                    <input type="button" id="edit-reports" class="btn btn-primary" value="Editar Relatório"></input>
                                 <input type="button" id= "update-reports" onclick="updateReport()" class="btn btn-success" value="Salvar Alterações"></input>
+                                <% } %>
 
                                 <input style="float:right" type="button" onclick="funcao_pdf()" class="btn btn-info" value="Gerar PDF do Relatório"></input>
                             </form>
