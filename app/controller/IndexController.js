@@ -72,8 +72,10 @@ class IndexController {
         const trainees = await Trainee.searchAllTrainees();
         const countSchedules = await Consultation.countSchedule();
         const masterProfile = await Master.searchProfileMaster(req);
+        const secretaryProfile = await Secretary.searchProfileSecretary(req);
+
         Consultation.searchOnlySchedules().then((consultation) => {
-            res.render('index/dashboard', {procedure:procedure,  countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+            res.render('index/dashboard', {secretaryProfile:secretaryProfile, procedure:procedure,  countSchedules: countSchedules, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
         }).catch((err) => {
             res.send('erro' + err);
         });

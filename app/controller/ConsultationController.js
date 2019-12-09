@@ -196,11 +196,13 @@ class ConsultationController {
         //Usuário Administrador
             //Busca o nome do usuário ADMINISTRADOR
             const masterProfile = await Master.searchProfileMaster(req);
+            const secretaryProfile = await Secretary.searchProfileSecretary(req);
+
             /** Função que busca apenas os agendamentos para o supervisor ou secretária
              * @method searchAllConsults
             */
             Consultation.searchOnlySchedules().then((consultation) => {
-                res.render('partials/calendar', { waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
+                res.render('partials/calendar', {secretaryProfile:secretaryProfile, waitPatients: waitPatients, masterProfile: masterProfile, consultation: consultation, patients: patients, trainees: trainees });
             }).catch((err) => {
                 res.send('erro' + err);
             });
