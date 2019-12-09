@@ -29,7 +29,7 @@
 <li>Gerenciamento geral das consultas ou agendamentos.</li>
 </ul>
 
- <h3> h2 Instalação  </h3>
+ <h3>Instalação  </h3>
 <p>Para a instalação é preciso ter instalado</p>
 <ul>
 <li>Node.js </li>
