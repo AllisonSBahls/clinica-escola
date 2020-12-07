@@ -38,7 +38,7 @@
 
 <p>Após ter esses programas instalados, basta abrir o cmd e digitar o comando na pasta desejada para clonar o projeto.</p>
 <ul>
-<li>git clone https://github.com/AllisonSBahls/tcc-clinicaescola</li>
+<li>git clone https://github.com/AllisonSBahls/clinica-escola</li>
 <li>Criar uma base de dados com o nome “dbclinica”</li>
 </ul>	
 	<p>Após clonar o projeto, rode no CMD os seguintes comandos</p>
