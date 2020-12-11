@@ -1,7 +1,7 @@
 # Aplicação Web - Cliníca Escola
 
 <h3> Funcionalidades </h3>
-<p>O sistema é uma aplicação web desenvolvida com node.js, com foco em no gerenciamento clínicas escola. Suas funcionalidades são:</p>
+<p>O sistema é uma aplicação web desenvolvida com node.js e o template EJS, com foco em no gerenciamento clínicas escola. Suas funcionalidades são:</p>
 <ul>
 <li>Gerenciamento do paciente.</li>
 <li>Gerenciamento do supervisor.</li>
