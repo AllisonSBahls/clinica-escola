@@ -51,8 +51,9 @@ Todo esse procedimento pode ser encontrado na página principal da documentaçã
 <p>Acesse: </p>
 https://clinschool.herokuapp.com/
 
-<p>Tela principal </p>
+Tela principal
 ![Alt Text](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/Sem%20t%C3%ADtulo.png)
+
 Consultando Agendamento
 ![Alt Text](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/2.png)
 
