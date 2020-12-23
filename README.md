@@ -48,3 +48,8 @@
 	</ol>
 	Por fim para executar o projeto, na pasta principal do projeto rode o comando node app.js. Após isso basta acessar http://localhost:4000.
 Todo esse procedimento pode ser encontrado na página principal da documentação gerada pelo JSDoc e no github.
+
+
+
+Acesse:
+https://clinschool.herokuapp.com/
