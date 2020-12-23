@@ -48,12 +48,12 @@
 	</ol>
 	Por fim para executar o projeto, na pasta principal do projeto rode o comando node app.js. Após isso basta acessar http://localhost:4000.
 Todo esse procedimento pode ser encontrado na página principal da documentação gerada pelo JSDoc e no github.
-Acesse:
-https://clinschool.herokuapp.com/
-
+<p>Acesse: </p>
+<p>https://clinschool.herokuapp.com/</p>
+<br />
 Tela principal
 ![Alt Text](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/Sem%20t%C3%ADtulo.png)
-
+<br />
 Consultando Agendamento
 ![Alt Text](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/2.png)
 
