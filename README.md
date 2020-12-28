@@ -9,32 +9,32 @@ O ClinSchool é uma aplicação Node.js com Template EJS com foco em no gerencia
 
 A aplicação consiste no agendamento de consultas utilizando o calendário dentro dos sitema, com diferentes niveis de acesso, como acesso de Paciente, Estagiário, Secretária e Professor, cada com acesso apenas as suas informações.
 
-# Funcionalidades
+## Funcionalidades
 ```bash
-Gerenciamento do paciente.
-Gerenciamento do supervisor.
-Verificar o Relatório.
-Confirmar as presenças.
-Gerenciamento do estagiário.
-Envio de Relatórios por meio do sistema.
-Registrar frequências.
-Acesso com autenticação definidos por níveis de permissão.
-Acesso por conta do google (Disponível apenas para pacientes).
-Cada tipo de permissão tem uma tela diferente.
-Pacientes podem realizar o próprio registro.
-Marcar consulta.</li>
-O paciente pode fazer um agendamento na própria casa.
-Informações totalmente criptografadas no banco de dados.
-Facilidade em encontrar as consultas.
-Cada usuário tem acesso apenas às suas informações e aos atendimentos .que tenha vínculo.
-Diversos modos de ver as consultas.
-Por Semana.
-Por Dia.
-Por Mês.
-Filtrar as consultas por nome, data ou ambos.
-Ver apenas as consultas no intervalo de dias.
-Colocar o paciente na lista de espera.
-Gerenciamento geral das consultas ou agendamentos.
+#Gerenciamento do paciente.
+#Gerenciamento do supervisor.
+#Verificar o Relatório.
+#Confirmar as presenças.
+#Gerenciamento do estagiário.
+#Envio de Relatórios por meio do sistema.
+#Registrar frequências.
+#Acesso com autenticação definidos por níveis de permissão.
+#Acesso por conta do google (Disponível apenas para pacientes).
+#Cada tipo de permissão tem uma tela diferente.
+#Pacientes podem realizar o próprio registro.
+#Marcar consulta.
+#O paciente pode fazer um agendamento na própria casa.
+#Informações totalmente criptografadas no banco de dados.
+#Facilidade em encontrar as consultas.
+#Cada usuário tem acesso apenas às suas informações e aos atendimentos .que tenha vínculo.
+#Diversos modos de ver as consultas.
+#Por Semana.
+#Por Dia.
+#Por Mês.
+#Filtrar as consultas por nome, data ou ambos.
+#Ver apenas as consultas no intervalo de dias.
+#Colocar o paciente na lista de espera.
+#Gerenciamento geral das consultas ou agendamentos.
 ```
 
 ## Layout web
@@ -68,18 +68,21 @@ git clone https://github.com/AllisonSBahls/clinica-escola
 # Base de Dados 
 Criar uma base de dados com o nome “dbclinica” no MySQL
 
-# Rode no CMD os seguintes comandos
-# para instalar todos os módulos e bibliotecas utilizados pela aplicação
+# Instalar as dependências
 npm i ou npm install
-#Para criar as tabelas do banco de dados "dbclinica" e logo em seguida e validação das funções
+
+#Criar as tabelas do banco de dados "dbclinica" e logo em seguida e validação das funções
 npm test 
 
-Por fim para executar o projeto, na pasta principal do projeto rode o comando node app.js. Após isso basta acessar http://localhost:4000.
+# Exercutar o projeto
+node app.js. 
+
+# Acessar - http://localhost:4000.
 ```
 
 # Autor
+Allison Sousa Bahls 
 
-Allison Sousa Bahls
 https://www.linkedin.com/in/allison-sousa-289073107/
 
 
