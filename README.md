@@ -11,30 +11,30 @@ A aplicação consiste no agendamento de consultas utilizando o calendário dent
 
 ## Funcionalidades
 ```bash
-#Gerenciamento do paciente.
-#Gerenciamento do supervisor.
-#Verificar o Relatório.
-#Confirmar as presenças.
-#Gerenciamento do estagiário.
-#Envio de Relatórios por meio do sistema.
-#Registrar frequências.
-#Acesso com autenticação definidos por níveis de permissão.
-#Acesso por conta do google (Disponível apenas para pacientes).
-#Cada tipo de permissão tem uma tela diferente.
-#Pacientes podem realizar o próprio registro.
-#Marcar consulta.
-#O paciente pode fazer um agendamento na própria casa.
-#Informações totalmente criptografadas no banco de dados.
-#Facilidade em encontrar as consultas.
-#Cada usuário tem acesso apenas às suas informações e aos atendimentos .que tenha vínculo.
-#Diversos modos de ver as consultas.
-#Por Semana.
-#Por Dia.
-#Por Mês.
-#Filtrar as consultas por nome, data ou ambos.
-#Ver apenas as consultas no intervalo de dias.
-#Colocar o paciente na lista de espera.
-#Gerenciamento geral das consultas ou agendamentos.
+# Gerenciamento do paciente.
+# Gerenciamento do supervisor.
+# Verificar o Relatório.
+# Confirmar as presenças.
+# Gerenciamento do estagiário.
+# Envio de Relatórios por meio do sistema.
+# Registrar frequências.
+# Acesso com autenticação definidos por níveis de permissão.
+# Acesso por conta do google (Disponível apenas para pacientes).
+# Cada tipo de permissão tem uma tela diferente.
+# Pacientes podem realizar o próprio registro.
+# Marcar consulta.
+# O paciente pode fazer um agendamento na própria casa.
+# Informações totalmente criptografadas no banco de dados.
+# Facilidade em encontrar as consultas.
+# Cada usuário tem acesso apenas às suas informações e aos atendimentos .que tenha vínculo.
+# Diversos modos de ver as consultas.
+# Por Semana.
+# Por Dia.
+# Por Mês.
+# Filtrar as consultas por nome, data ou ambos.
+# Ver apenas as consultas no intervalo de dias.
+# Colocar o paciente na lista de espera.
+# Gerenciamento geral das consultas ou agendamentos.
 ```
 
 ## Layout web
@@ -59,7 +59,7 @@ A aplicação consiste no agendamento de consultas utilizando o calendário dent
 - Banco de dados: MySQL
 
 # Como executar o projeto
-## Pré-requisitos: Nodem, Mysql
+## Pré-requisitos: Node
 (Desatualizado)
 ```bash
 # clonar repositório
