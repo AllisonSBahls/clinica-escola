@@ -1,7 +1,7 @@
-## ClinSchool - Aplicação Web Clinca Escola de Psicologia
+## ClinSchool - Sistema web para Clínicas Escolas de Psicologia
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/AllisonSBahls/clinica-escola/blob/master/LICENSE) 
 
-<p align="center">Sistema web de gerenciamento de Clínicas Escolas de Psicologia - https://clinschool.herokuapp.com/</p>
+<p align="center">Sistema web para gerenciamento de Clínicas Escolas de Psicologia - https://clinschool.herokuapp.com/</p>
 <p align="center">
   <a href="https://i.imgur.com/epWbXgf.png">
     <img src="https://i.imgur.com/epWbXgf.png" alt="Dashboard" height="225">
@@ -19,8 +19,6 @@ O ClinSchool é uma aplicação Node.js com Template EJS com foco em no gerencia
 A aplicação foi desenvolvida para auxliar nos registros de atentimentos da clinica escola de Psicologia da Faculdade da Amazônia, falicitando os pacientes visualizarem as suas consultas e permite o estagiário e coordenador um controle melhor os atendimentos marcados.
 
 A aplicação consiste no agendamento de consultas utilizando o calendário dentro dos sitema, com diferentes niveis de acesso, como acesso de Paciente, Estagiário, Secretária e Professor, cada com acesso apenas as suas informações.
-
-
 
 ### **Funcionalidades**
 -   Gerenciamento do paciente.
