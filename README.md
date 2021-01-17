@@ -1,9 +1,18 @@
-# ClinSchool - Aplicação Web Clinca Escola de Psicologia
+## ClinSchool - Aplicação Web Clinca Escola de Psicologia
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/AllisonSBahls/clinica-escola/blob/master/LICENSE) 
 
-# Sobre o projeto
+<p align="center">Sistema web de Gerenciamento de Clínicas Escolas de Psicologia - https://clinschool.herokuapp.com/</p>
+<p align="center">
+  <a href="https://clinschool.herokuapp.com">
+    <img src="https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/Sem%20t%C3%ADtulo.png" alt="Logo" height="225">
+  </a>
+   <a href="https://clinschool.herokuapp.com">
+    <img src="https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/2.png" alt="Lista de Pedidos" height="225">
+  </a>
+</p>
 
-https://clinschool.herokuapp.com/
+
+### Sobre o projeto
 
 O ClinSchool é uma aplicação Node.js com Template EJS com foco em no gerenciamento de clínicas escolas de psicologia, desenvolvido como Trabalho de Conclusão de Curso em Análise e Desenvolvimento de Sistemas.
 
@@ -13,57 +22,49 @@ A aplicação consiste no agendamento de consultas utilizando o calendário dent
 
 
 
-## Funcionalidades
-```bash
-# Gerenciamento do paciente.
-# Gerenciamento do supervisor.
-# Verificar o Relatório.
-# Confirmar as presenças.
-# Gerenciamento do estagiário.
-# Envio de Relatórios por meio do sistema.
-# Registrar frequências.
-# Acesso com autenticação definidos por níveis de permissão.
-# Acesso por conta do google (Disponível apenas para pacientes).
-# Cada tipo de permissão tem uma tela diferente.
-# Pacientes podem realizar o próprio registro.
-# Marcar consulta.
-# O paciente pode fazer um agendamento na própria casa.
-# Informações totalmente criptografadas no banco de dados.
-# Facilidade em encontrar as consultas.
-# Cada usuário tem acesso apenas às suas informações e aos atendimentos .que tenha vínculo.
-# Diversos modos de ver as consultas.
-# Por Semana.
-# Por Dia.
-# Por Mês.
-# Filtrar as consultas por nome, data ou ambos.
-# Ver apenas as consultas no intervalo de dias.
-# Colocar o paciente na lista de espera.
-# Gerenciamento geral das consultas ou agendamentos.
-```
-
-## Layout web
-![Web 1](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/Sem%20t%C3%ADtulo.png)
-
-![Web 2](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/2.png)
+### **Funcionalidades**
+-   Gerenciamento do paciente.
+-   Gerenciamento do supervisor.
+-   Verificar o Relatório.
+-   Confirmar as presenças.
+-   Gerenciamento do estagiário.
+-   Envio de Relatórios por meio do sistema.
+-   Registrar frequências.
+-   Acesso com autenticação definidos por níveis de permissão.
+-   Acesso por conta do google (Disponível apenas para pacientes).
+-   Cada tipo de permissão tem uma tela diferente.
+-   Pacientes podem realizar o próprio registro.
+-   Marcar consulta.
+-   O paciente pode fazer um agendamento na própria casa.
+-   Informações totalmente criptografadas no banco de dados.
+-   Facilidade em encontrar as consultas.
+-   Cada usuário tem acesso apenas às suas informações e aos atendimentos .que tenha vínculo.
+-   Diversos modos de ver as consultas.
+-   Por Semana.
+-   Por Dia.
+-   Por Mês.
+-   Filtrar as consultas por nome, data ou ambos.
+-   Ver apenas as consultas no intervalo de dias.
+-   Colocar o paciente na lista de espera.
+-   Gerenciamento geral das consultas ou agendamentos.
 
 ## Arquitetura Cliente Servidor (MVC)
 ![Arquitetura Cliente Servidor (MVC)](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/Arquitetura.JPG)
 
-# Tecnologias utilizadas
-## Aplicação Web
+### Tecnologias e Bibliotecas
+#### Aplicação Web
 - Node.js
 - Template EJS
 - Passport para autenticação
 - Sequelize ORM
 - FullCalendar
-- UML
 
-## Implantação em produção
+### Implantação
 - Heroku
 - Banco de dados: MySQL
 
-# Como executar o projeto
-## Pré-requisitos: Node
+### Como executar o projeto
+#### Pré-requisitos: Node
 ```bash
 # clonar repositório
 git clone https://github.com/AllisonSBahls/clinica-escola
