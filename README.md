@@ -48,7 +48,7 @@ A aplicação consiste no agendamento de consultas utilizando o calendário dent
 -   Colocar o paciente na lista de espera.
 -   Gerenciamento geral das consultas ou agendamentos.
 
-## Arquitetura Cliente Servidor (MVC)
+### Arquitetura Cliente Servidor (MVC)
 ![Arquitetura Cliente Servidor (MVC)](https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/Arquitetura.JPG)
 
 ### Tecnologias e Bibliotecas
