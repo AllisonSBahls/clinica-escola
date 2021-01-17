@@ -1,18 +1,18 @@
 ## ClinSchool - Aplicação Web Clinca Escola de Psicologia
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/AllisonSBahls/clinica-escola/blob/master/LICENSE) 
 
-<p align="center">Sistema web de Gerenciamento de Clínicas Escolas de Psicologia - https://clinschool.herokuapp.com/</p>
+<p align="center">Sistema web de gerenciamento de Clínicas Escolas de Psicologia - https://clinschool.herokuapp.com/</p>
 <p align="center">
-  <a href="https://clinschool.herokuapp.com">
-    <img src="https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/Sem%20t%C3%ADtulo.png" alt="Logo" height="225">
+  <a href="https://i.imgur.com/epWbXgf.png">
+    <img src="https://i.imgur.com/epWbXgf.png" alt="Dashboard" height="225">
   </a>
-   <a href="https://clinschool.herokuapp.com">
-    <img src="https://github.com/AllisonSBahls/clinica-escola/blob/master/app/public/img/doc/2.png" alt="Lista de Pedidos" height="225">
+   <a href="https://i.imgur.com/9wWP4Gj.png">
+    <img src="https://i.imgur.com/9wWP4Gj.png" alt="Agendamentos" height="225">
   </a>
 </p>
 
 
-### Sobre o projeto
+### O Projeto
 
 O ClinSchool é uma aplicação Node.js com Template EJS com foco em no gerenciamento de clínicas escolas de psicologia, desenvolvido como Trabalho de Conclusão de Curso em Análise e Desenvolvimento de Sistemas.
 
@@ -55,13 +55,17 @@ A aplicação consiste no agendamento de consultas utilizando o calendário dent
 #### Aplicação Web
 - Node.js
 - Template EJS
-- Passport para autenticação
+- Passport
 - Sequelize ORM
 - FullCalendar
+- Express
+- Moment
+- Mysql
+- Nodemailer
+- BCrypt
 
 ### Implantação
 - Heroku
-- Banco de dados: MySQL
 
 ### Como executar o projeto
 #### Pré-requisitos: Node
@@ -85,8 +89,7 @@ node app.js.
 ```
 
 # Autor
-Allison Sousa Bahls 
+Allison Sousa Bahls
 
-https://www.linkedin.com/in/allison-sousa-289073107/
-
+https://www.linkedin.com/in/allison-bahls/
 
