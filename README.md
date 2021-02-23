@@ -14,7 +14,7 @@
 
 ### O Projeto
 
-O ClinSchool é uma aplicação Node.js com Template EJS com foco em no gerenciamento de clínicas escolas de psicologia, desenvolvido como Trabalho de Conclusão de Curso em Análise e Desenvolvimento de Sistemas.
+O ClinSchool é uma aplicação Node.js com Template EJS com foco no gerenciamento de clínicas escolas de psicologia, desenvolvido como Trabalho de Conclusão de Curso em Análise e Desenvolvimento de Sistemas.
 
 A aplicação foi desenvolvida para auxiliar nos registros de atentimentos da clinica escola de Psicologia da Faculdade da Amazônia, facilitando os pacientes visualizarem as suas consultas e permitir o estagiário e coordenador um controle melhor os atendimentos marcados.
 
