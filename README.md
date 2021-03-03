@@ -19,6 +19,7 @@ O ClinSchool é uma aplicação Node.js com Template EJS com foco no gerenciamen
 A aplicação foi desenvolvida para auxiliar nos registros de atentimentos da clinica escola de Psicologia da Faculdade da Amazônia, facilitando os pacientes visualizarem as suas consultas e permitir o estagiário e coordenador um controle melhor os atendimentos marcados.
 
 A aplicação consiste no agendamento de consultas utilizando o calendário dentro dos sitema, com diferentes niveis de acesso, como acesso de Paciente, Estagiário, Secretária e Professor, cada com acesso apenas as suas informações.
+Usuário para testes -> Login: admin@gmail.com Senha:admin
 
 ### **Funcionalidades**
 -   Gerenciamento do paciente.
