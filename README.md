@@ -1,5 +1,5 @@
 ## ClinSchool - Sistema web para Clínicas Escolas de Psicologia
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/AllisonSBahls/clinica-escola/blob/master/LICENSE) 
+[![NPM](https://img.shields.io/npm/l/react)]
 
 <p align="center">Sistema web para gerenciamento de Clínicas Escolas de Psicologia - https://clinschool.herokuapp.com/</p>
 <p align="center">
